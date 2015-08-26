@@ -128,7 +128,9 @@ void shift_out(uint8_t data){
 int main(){
 	uint8_t sdata;
 	uint8_t prev_sdata = 0x00;
-
+	uint8_t rdata;
+	uint8_t prev_rdata = 0x00;
+	
 	DDRB = 0x00;
 	DDRC = 0x00;
 	DDRD = 0x00;
@@ -151,15 +153,22 @@ int main(){
 	
 	for(;;) {
 		// swの押し下げ状態を読み取る
-		sdata  = (~PIND & 0b00011111);
-		sdata |= ((~PINB & 0b11000000) >> 1);
-		sdata |= ((~PIND & 0b00100000) << 2);
+		do {
+			rdata  = (~PIND & 0b00011111);
+			rdata |= ((~PINB & 0b11000000) >> 1);
+			rdata |= ((~PIND & 0b00100000) << 2);
+		} while (rdata == prev_rdata);
+		
+		prev_rdata = rdata;
 		
 		// toggle
-		sdata = prev_sdata ^ sdata;
+		sdata = prev_sdata ^ rdata;
 		
-		//データを送信する。
-		twi_send(sdata);
+		// データをShift Registerに送信する。
+		shift_out(sdata);
+		
+		// データをTWI送信する。
+		//twi_send(sdata);
 		
 		prev_sdata = sdata;
 	}
