@@ -27,10 +27,18 @@
 #include 	<avr/io.h>
 #include	<util/delay.h>
 
-//TWI 状態値
+// TWI 状態値
 #define SR_SLA_ACK  0xA8		//SLA_R 受信チェック
 #define	SR_DATA_ACK	0xC0		//送信パケットチェック
 #define	SR_ENDP_ACK	0xA0		//終了orリピートチェック
+
+// Shift Register
+#define SHIFT_PORT PORTB
+#define SHIFT_DATA PB4
+#define SHIFT_RCK PB5
+
+#define SHIFT_PORT_SCK PORTC
+#define SHIFT_SCK PC0
 
 //------------------------------------------------//
 // TWI
@@ -76,6 +84,44 @@ void twi_send(uint8_t sdata){
 }
 
 //------------------------------------------------//
+// Shift Register (74HC595)
+//
+//------------------------------------------------//
+
+//シフトレジスタクロックを一つ送信
+void _shift_sck()
+{	
+	SHIFT_PORT_SCK |= (1<<SHIFT_SCK);
+	SHIFT_PORT_SCK &= ~(1<<SHIFT_SCK);
+}
+
+//ラッチクロックを一つ送信
+void _shift_rck()
+{	
+	SHIFT_PORT &= ~(1<<SHIFT_RCK);
+	SHIFT_PORT |= (1<<SHIFT_RCK);
+}
+
+//シリアルデータをSERに出力
+void _shift_data(uint8_t bit)
+{
+	if (bit) {
+		SHIFT_PORT |= (1<<SHIFT_DATA);
+	} else {
+		SHIFT_PORT &= ~(1<<SHIFT_DATA);
+	}
+}
+
+void shift_out(uint8_t data){
+	int8_t i;
+	for (i=7; i>=0; i--) {   //上位ビットから８個送信
+		_shift_data((data>>i)&1);
+		_shift_sck();
+	}
+	_shift_rck();   //ラッチを更新
+}
+
+//------------------------------------------------//
 // Main routine
 //
 //------------------------------------------------//
@@ -83,13 +129,17 @@ int main(){
 	uint8_t sdata;
 	uint8_t prev_sdata = 0x00;
 
+	DDRB = 0x00;
+	DDRC = 0x00;
+	DDRD = 0x00;
 
 	//sw input / pull up
-	DDRD = 0x00;
 	PORTD = 0b00111111;
-	
-	DDRB = 0x00;
 	PORTB = 0b11000000;
+	
+	//Shift Register: SER, SCK, RCK output
+	DDRB |= 0b00110000;
+	DDRC |= 0b00000001;
 	
 	//Error LED
 	DDRB |= 0b11000010;
