@@ -28,6 +28,7 @@
  * 
  * AtmelStudio 6.2
  *
+ * 2015.08.30 Pin Change Interruptとチャタリング対策
  * 2015.08.30 I2Cを割り込み処理
  *
  */ 
@@ -51,8 +52,9 @@
 #define SHIFT_PORT_SCK PORTC
 #define SHIFT_SCK PC0
 
-volatile uint8_t sdata = 0x00;
-volatile uint8_t prev_sdata = 0x00;
+// 大域変数
+volatile uint8_t sdata;		// スイッチのトグル状態
+volatile uint8_t rdata;		// スイッチの読み取り値
 
 //------------------------------------------------//
 // TWI
@@ -129,7 +131,8 @@ void _shift_data(uint8_t bit)
 	}
 }
 
-void shift_out(uint8_t data){
+void shift_out(uint8_t data)
+{
 	int8_t i;
 	for (i=7; i>=0; i--) {   //上位ビットから８個送信
 		_shift_data((data>>i)&1);
@@ -139,13 +142,82 @@ void shift_out(uint8_t data){
 }
 
 //------------------------------------------------//
+// Switchの処理
+//
+//------------------------------------------------//
+
+void init_switches()
+{
+	// Pin Change Interruptの有効化
+	PCICR = (1 << PCIE0) | (1 << PCIE2);
+	PCMSK0 = 0b11000000;
+	PCMSK2 = 0b00111111;
+	
+	// TIMER0 オーバーフロー割り込みの有効化
+	TCCR0B = 0x00;	// Timer0停止
+	TIMSK0 = (1 << TOIE0);
+}
+
+// swの押し下げ状態を読み取る
+uint8_t read_switches()
+{
+	uint8_t data;
+	
+	data  = (~PIND & 0b00011111);
+	data |= ((~PINB & 0b11000000) >> 1);
+	data |= ((~PIND & 0b00100000) << 2);
+	
+	return data;
+}
+		
+ISR (TIMER0_OVF_vect)
+{
+	// Timer0を停止
+	TCCR0B = 0x00;
+		
+	uint8_t tmp = read_switches();	// PINxレジスタの値はいったん変数に代入しないと比較がうまくいかない
+	if (rdata == tmp) {
+		sdata ^= rdata;
+		
+		// トグル状態をLEDに表示
+		shift_out(sdata);
+	}
+		
+	// Pin Change Interruptの有効化
+	PCICR = (1 << PCIE0) | (1 << PCIE2);
+}
+
+void pin_change_interrupt_handler()
+{
+	// Pin Change Interruptを無効化
+	PCICR = 0x00;
+	
+	// 割り込みごとにLEDを点滅（デバッグ用）
+	PORTD ^= (1 << PD6);
+		
+	rdata = read_switches();
+	
+	// Timer0を起動
+	TCCR0B = 0x05;	// プリスケーラ：1024
+	TCNT0 = 80;		// about: 10ms	
+}
+
+ISR (PCINT0_vect)
+{
+	pin_change_interrupt_handler();
+}
+
+ISR (PCINT2_vect)
+{
+	pin_change_interrupt_handler();
+}
+
+//------------------------------------------------//
 // Main routine
 //
 //------------------------------------------------//
-int main(){
-	uint8_t rdata;
-	uint8_t prev_rdata = 0x00;
-	
+int main()
+{
 	DDRB = 0x00;
 	DDRC = 0x00;
 	DDRD = 0x00;
@@ -155,8 +227,8 @@ int main(){
 	PORTB = 0b11000000;
 	
 	//Shift Register: SER, SCK, RCK output
-	DDRB |= 0b00110000;
-	DDRC |= 0b00000001;
+	DDRB |= (1 << SHIFT_DATA) | (1 << SHIFT_RCK);
+	DDRC |= (1 << SHIFT_SCK);	
 	
 	// LED Check
 	PORTD |= 0b11000000;
@@ -168,30 +240,12 @@ int main(){
 	_delay_ms(100);
 	PORTD &= 0b01111111;
 	
-	//通信モジュール初期化
+	init_switches();
 	twi_init();
-	
+		
 	sei();
 	
 	for(;;) {
-		// swの押し下げ状態を読み取る
-		do {
-			rdata  = (~PIND & 0b00011111);
-			rdata |= ((~PINB & 0b11000000) >> 1);
-			rdata |= ((~PIND & 0b00100000) << 2);
-		} while (rdata == prev_rdata);
-		
-		prev_rdata = rdata;
-		
-		// toggle
-		sdata = prev_sdata ^ rdata;
-		
-		// データをShift Registerに送信する。
-		shift_out(sdata);
-		
-		// データをTWI送信する。
-		//twi_send(sdata);
-		
-		prev_sdata = sdata;
+		// 
 	}
 }
