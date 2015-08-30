@@ -39,6 +39,9 @@
 #include	<avr/interrupt.h>
 #include	<util/delay.h>
 
+// TWI スレーブ・アドレス
+#define TWI_SLAVE_ADDRESS 0xFE
+
 // TWI 状態値
 #define SR_SLA_ACK  0xA8		//SLA_R 受信チェック
 #define	SR_DATA_ACK	0xC0		//送信パケットチェック
@@ -77,7 +80,7 @@ void twi_init()
 	TWSR = 0x02;
 	
 	//slave address
-	TWAR=0xfe;
+	TWAR = TWI_SLAVE_ADDRESS;
 	
 	// 割り込みを許可
 	// Enable TWI port, ACK, IRQ and clear interrupt flag
