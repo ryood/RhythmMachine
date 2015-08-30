@@ -4,9 +4,9 @@
  * Created: 2015/08/26 17:08:41
  *  Author: gizmo
  *
- * クロック：内蔵1MHz
+ * クロック：内蔵8MHz
  * デバイス：ATmega88V
- * Fuse bit：hFuse:DFh lFuse:62h eFuse:01h
+ * Fuse bit：hFuse:DFh lFuse:E2h eFuse:01h
  *
  * PC4:SDA
  * PC5:SCK
@@ -18,13 +18,24 @@
  * PortD[PD6..PD7]: LEDx2
  * PortD[PB0]     : SWx1
  *
+ * PORTB[PB1]     : Rotary Encoder SW
+ * PORTB[PB2]     : Rotary Encoder A
+ * PORTB[PB3]     : Rotary Encoder B
+ *
+ * PORTB[PB4]     : 74HC595 SER
+ * PORTB[PB5]     : 74HC595 RCK
+ * PORTC[PC0]     : 74HC595 SCK
+ * 
  * AtmelStudio 6.2
+ *
+ * 2015.08.30 I2Cを割り込み処理
  *
  */ 
 
-#define 	F_CPU 1000000UL  // 1MHz
+#define 	F_CPU 8000000UL  // 8MHz
 
 #include 	<avr/io.h>
+#include	<avr/interrupt.h>
 #include	<util/delay.h>
 
 // TWI 状態値
@@ -40,47 +51,53 @@
 #define SHIFT_PORT_SCK PORTC
 #define SHIFT_SCK PC0
 
+volatile uint8_t sdata = 0x00;
+volatile uint8_t prev_sdata = 0x00;
+
 //------------------------------------------------//
 // TWI
 //
 //------------------------------------------------//
-void twi_error(){
-	PORTD = 0b11000000;
-	while(1);
+void twi_error()
+{
+	while(1) {
+		PORTD = 0b10000000;
+		_delay_ms(100);
+		PORTD = 0b01000000;
+		_delay_ms(100);
+	}
 }
 
-void twi_init(){
-	//TWBR = 0xFF;	//分周	2KHz
+void twi_init()
+{
 	// 8MHz clk, bit rate 100kHz
 	TWBR = 2;
 	TWSR = 0x02;
-	TWCR = 1<< TWEN;
 	
 	//slave address
 	TWAR=0xfe;
+	
+	// 割り込みを許可
+	// Enable TWI port, ACK, IRQ and clear interrupt flag
+	TWCR = ((1<<TWEN) | (1<<TWEA) | (1<<TWIE) | (1<<TWINT));
 }
 
-//データパケットを１バイト送る。
-void twi_send(uint8_t sdata){
+ISR (TWI_vect)
+{
+	// 割り込みごとにLEDを点滅（デバッグ用）
+	PORTD ^= 0b10000000;
 	
-	TWCR = (1<<TWINT) | (1<<TWEA) | (1<<TWEN);
-	
-	//　Wait for TWINT Flag set.
-	while( !( TWCR & (1<<TWINT) ) );
-	
-	if( (TWSR & 0xF8 ) != SR_SLA_ACK )
+	switch (TWSR & 0xF8) {
+	case SR_SLA_ACK:
+		TWDR = sdata;
+		break;
+	case SR_DATA_ACK:
+		break;
+	default:
 		twi_error();
-		
-	// データを送信
-	TWDR = sdata;
+	}
 	
-	TWCR = (1<<TWINT) | (1<<TWEA) | (1<<TWEN );
-
-	//　Wait for TWINT Flag set.
-	while(  ! ( TWCR & ( 1<<TWINT ) ) );
-	
-	if((TWSR & 0xF8 ) != SR_DATA_ACK)
-		twi_error();
+	TWCR |= (1<<TWINT);	// Clear TWI interrupt flag
 }
 
 //------------------------------------------------//
@@ -126,8 +143,6 @@ void shift_out(uint8_t data){
 //
 //------------------------------------------------//
 int main(){
-	uint8_t sdata;
-	uint8_t prev_sdata = 0x00;
 	uint8_t rdata;
 	uint8_t prev_rdata = 0x00;
 	
@@ -143,13 +158,20 @@ int main(){
 	DDRB |= 0b00110000;
 	DDRC |= 0b00000001;
 	
-	//Error LED
-	DDRB |= 0b11000010;
-
-	//PORTB = 0b11000000;
-
+	// LED Check
+	PORTD |= 0b11000000;
+	for (int i = 0; i <= 8; i++) {
+		shift_out(0xFF >> i);
+		_delay_ms(100);
+	}
+	PORTD &= 0b10111111;
+	_delay_ms(100);
+	PORTD &= 0b01111111;
+	
 	//通信モジュール初期化
 	twi_init();
+	
+	sei();
 	
 	for(;;) {
 		// swの押し下げ状態を読み取る
