@@ -56,8 +56,19 @@
 #define SHIFT_SCK PC0
 
 // 大域変数
-volatile uint8_t sdata;		// スイッチのトグル状態
-volatile uint8_t rdata;		// スイッチの読み取り値
+// シーケンス・スイッチ
+volatile uint8_t sequence_data[2];		// シーケンス・スイッチのトグル状態
+volatile uint8_t sequence_n;			// シーケンスの表裏 
+volatile uint8_t sequence_rd;			// シーケンス・スイッチの読み取り値
+volatile uint8_t sequence_n_rd;
+
+// Potentiometer
+volatile uint8_t pot_data[2];
+
+// Rotary Encoder
+volatile uint8_t re_data;
+volatile uint8_t re_sw;
+
 
 //------------------------------------------------//
 // TWI
@@ -94,7 +105,7 @@ ISR (TWI_vect)
 	
 	switch (TWSR & 0xF8) {
 	case SR_SLA_ACK:
-		TWDR = sdata;
+		TWDR = sequence_data[sequence_n];
 		break;
 	case SR_DATA_ACK:
 		break;
@@ -153,16 +164,16 @@ void init_switches()
 {
 	// Pin Change Interruptの有効化
 	PCICR = (1 << PCIE0) | (1 << PCIE2);
-	PCMSK0 = 0b11000000;
-	PCMSK2 = 0b00111111;
+	PCMSK0 = 0b11000001;	// PORTB
+	PCMSK2 = 0b00111111;	// PORTD
 	
 	// TIMER0 オーバーフロー割り込みの有効化
 	TCCR0B = 0x00;	// Timer0停止
 	TIMSK0 = (1 << TOIE0);
 }
 
-// swの押し下げ状態を読み取る
-uint8_t read_switches()
+// シーケンス・スイッチの押し下げ状態を読み取り
+uint8_t read_sequence_switches()
 {
 	uint8_t data;
 	
@@ -172,18 +183,36 @@ uint8_t read_switches()
 	
 	return data;
 }
-		
+
 ISR (TIMER0_OVF_vect)
 {
+	uint8_t tmp;
+	
 	// Timer0を停止
 	TCCR0B = 0x00;
-		
-	uint8_t tmp = read_switches();	// PINxレジスタの値はいったん変数に代入しないと比較がうまくいかない
-	if (rdata == tmp) {
-		sdata ^= rdata;
+	
+	// シーケンス表裏切り替えスイッチをトグル動作で読み取り
+	// PINxレジスタの値はいったん変数に代入しないと比較がうまくいかない
+	tmp = (~PINB & (1 << PB0));
+	if (sequence_n_rd == tmp) {
+		sequence_n ^= sequence_n_rd;
 		
 		// トグル状態をLEDに表示
-		shift_out(sdata);
+		if (sequence_n) {
+			PORTD &= ~(1 << PD6);
+			PORTD |= (1 << PD7);
+		} else {
+			PORTD &= ~(1 << PD7);
+			PORTD |= (1 << PD6);
+		}		
+	}
+	
+	tmp = read_sequence_switches();
+	if (sequence_rd == tmp) {
+		sequence_data[sequence_n] ^= sequence_rd;
+		
+		// トグル状態をLEDに表示
+		shift_out(sequence_data[sequence_n]);
 	}
 		
 	// Pin Change Interruptの有効化
@@ -198,7 +227,8 @@ void pin_change_interrupt_handler()
 	// 割り込みごとにLEDを点滅（デバッグ用）
 	PORTD ^= (1 << PD6);
 		
-	rdata = read_switches();
+	sequence_rd = read_sequence_switches();
+	sequence_n_rd = (~PINB & (1 << PB0));
 	
 	// Timer0を起動
 	TCCR0B = 0x05;	// プリスケーラ：1024
@@ -227,7 +257,7 @@ int main()
 
 	//sw input / pull up
 	PORTD = 0b00111111;
-	PORTB = 0b11000000;
+	PORTB = 0b11000001;
 	
 	//Shift Register: SER, SCK, RCK output
 	DDRB |= (1 << SHIFT_DATA) | (1 << SHIFT_RCK);
