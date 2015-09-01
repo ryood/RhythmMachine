@@ -30,6 +30,7 @@
  * 
  * AtmelStudio 6.2
  *
+ * 2015.09.01 TWIエラー時にステータスコードをLEDに表示
  * 2015.09.01 デバッグ用にPC3にLEDを接続
  * 2015.09.01 シーケンスを配列に変更
  * 2015.08.30 Pin Change Interruptとチャタリング対策
@@ -74,12 +75,18 @@ volatile uint8_t re_data;
 volatile uint8_t re_sw;
 
 
+void shift_out(uint8_t data);
+
 //------------------------------------------------//
 // TWI
 //
 //------------------------------------------------//
 void twi_error()
 {
+	uint8_t twi_status = TWSR & 0xF8;
+	
+	shift_out(twi_status);	
+	
 	while(1) {
 		PORTD = 0b10000000;
 		_delay_ms(100);
