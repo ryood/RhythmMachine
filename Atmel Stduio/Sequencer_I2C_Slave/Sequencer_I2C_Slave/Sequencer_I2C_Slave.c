@@ -25,9 +25,13 @@
  * PORTB[PB4]     : 74HC595 SER
  * PORTB[PB5]     : 74HC595 RCK
  * PORTC[PC0]     : 74HC595 SCK
+ *
+ * PORTC[PC3]     : LED(デバッグ用)
  * 
  * AtmelStudio 6.2
  *
+ * 2015.09.01 デバッグ用にPC3にLEDを接続
+ * 2015.09.01 シーケンスを配列に変更
  * 2015.08.30 Pin Change Interruptとチャタリング対策
  * 2015.08.30 I2Cを割り込み処理
  *
@@ -101,7 +105,7 @@ void twi_init()
 ISR (TWI_vect)
 {
 	// 割り込みごとにLEDを点滅（デバッグ用）
-	PORTD ^= 0b10000000;
+	PORTC ^= (1 << PC3);
 	
 	switch (TWSR & 0xF8) {
 	case SR_SLA_ACK:
@@ -225,7 +229,7 @@ void pin_change_interrupt_handler()
 	PCICR = 0x00;
 	
 	// 割り込みごとにLEDを点滅（デバッグ用）
-	PORTD ^= (1 << PD6);
+	PORTC ^= (1 << PC3);
 		
 	sequence_rd = read_sequence_switches();
 	sequence_n_rd = (~PINB & (1 << PB0));
@@ -255,30 +259,37 @@ int main()
 	DDRC = 0x00;
 	DDRD = 0x00;
 
-	//sw input / pull up
+	// Switch input / pull up
 	PORTD = 0b00111111;
 	PORTB = 0b11000001;
 	
-	//Shift Register: SER, SCK, RCK output
+	// Shift Register: SER, SCK, RCK output
 	DDRB |= (1 << SHIFT_DATA) | (1 << SHIFT_RCK);
-	DDRC |= (1 << SHIFT_SCK);	
+	DDRC |= (1 << SHIFT_SCK);
+	
+	// LED
+	DDRD |= (1 << PD7) | (1 << PD6);
+	DDRC |= (1 << PC3);		// デバッグ用
 	
 	// LED Check
-	PORTD |= 0b11000000;
+	PORTD |= (1 << PD7) | (1 << PD6);
+	PORTC |= (1 << PC3);	// デバッグ用
 	for (int i = 0; i <= 8; i++) {
 		shift_out(0xFF >> i);
 		_delay_ms(100);
 	}
-	PORTD &= 0b10111111;
+	PORTD &= ~(1 << PD6);
 	_delay_ms(100);
-	PORTD &= 0b01111111;
-	
+	PORTD &= ~(1 << PD7);
+	_delay_ms(100);
+	PORTC &= ~(1 << PC3);	// デバッグ用
+		
 	init_switches();
 	twi_init();
 		
 	sei();
 	
 	for(;;) {
-		// 
+		// nop
 	}
 }
