@@ -30,6 +30,7 @@
  * 
  * AtmelStudio 6.2
  *
+ * 2015.09.01 シーケンスを2バイト送信
  * 2015.09.01 TWIエラー時にステータスコードをLEDに表示
  * 2015.09.01 デバッグ用にPC3にLEDを接続
  * 2015.09.01 シーケンスを配列に変更
@@ -47,10 +48,10 @@
 // TWI スレーブ・アドレス
 #define TWI_SLAVE_ADDRESS 0xFE
 
-// TWI 状態値
-#define SR_SLA_ACK  0xA8		//SLA_R 受信チェック
-#define	SR_DATA_ACK	0xC0		//送信パケットチェック
-#define	SR_ENDP_ACK	0xA0		//終了orリピートチェック
+// 状態値
+#define SR_SLA_ACK   0xA8		// SLA_R 受信チェック
+#define	SR_DATA_ACK	 0xB8		// 送信パケットチェック バイト列の送信
+#define SR_DATA_NACK 0xC0		// 送信パケットチェック 最後のバイトを送信
 
 // Shift Register
 #define SHIFT_PORT PORTB
@@ -74,6 +75,8 @@ volatile uint8_t pot_data[2];
 volatile uint8_t re_data;
 volatile uint8_t re_sw;
 
+// TWI
+volatile uint8_t twi_data_n;
 
 void shift_out(uint8_t data);
 
@@ -116,9 +119,20 @@ ISR (TWI_vect)
 	
 	switch (TWSR & 0xF8) {
 	case SR_SLA_ACK:
-		TWDR = sequence_data[sequence_n];
-		break;
+		twi_data_n = 0;
 	case SR_DATA_ACK:
+		switch (twi_data_n) {
+		case 0:
+		case 1:
+			// シーケンスのトグル状態を送信
+			TWDR = sequence_data[twi_data_n];
+			break;
+		default:
+			twi_error();
+		}
+		twi_data_n++;
+		break;
+	case SR_DATA_NACK:
 		break;
 	default:
 		twi_error();
