@@ -29,7 +29,7 @@ void setup()
 
 void loop()
 {
-  Wire.requestFrom(0x7f, 3);    // request 3 bytes from slave device 0x7f
+  Wire.requestFrom(0x7f, 4);    // request 4 bytes from slave device 0x7f
 
   while (Wire.available())   // slave may send less than requested
   {

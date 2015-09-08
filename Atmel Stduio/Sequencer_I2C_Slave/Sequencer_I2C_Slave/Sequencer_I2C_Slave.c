@@ -21,13 +21,12 @@
  * PORTB[PB1]     : Rotary Encoder SW
  * PORTB[PB2]     : Rotary Encoder A
  * PORTB[PB3]     : Rotary Encoder B
+ * PORTC[PC3]     : LED
  *
  * PORTB[PB4]     : 74HC595 SER
  * PORTB[PB5]     : 74HC595 RCK
  * PORTC[PC0]     : 74HC595 SCK
  *
- * PORTC[PC3]     : LED(デバッグ用)
- * 
  * AtmelStudio 6.2
  *
  * 2015.09.08 Rotary Encoderの処理を追加
@@ -117,7 +116,7 @@ void twi_init()
 ISR (TWI_vect)
 {
 	// 割り込みごとにLEDを点滅（デバッグ用）
-	PORTC ^= (1 << PC3);
+	//PORTC ^= (1 << PC3);
 	
 	switch (TWSR & 0xF8) {
 	case SR_SLA_ACK:
@@ -132,6 +131,10 @@ ISR (TWI_vect)
 		case 2:
 			// Rotary EncoderのSWのトグル状態を送信
 			TWDR = (re_sw ? 1 : 0);
+			break;
+		case 3:
+			// Rotary Encoderの値を送信
+			TWDR = re_data;
 			break;
 		default:
 			twi_error();
@@ -195,7 +198,7 @@ void init_switches()
 {
 	// Pin Change Interruptの有効化
 	PCICR = (1 << PCIE0) | (1 << PCIE2);
-	PCMSK0 = 0b11000111;	// PORTB
+	PCMSK0 = 0b11000011;	// PORTB
 	PCMSK2 = 0b00111111;	// PORTD
 	
 	// TIMER0 オーバーフロー割り込みの有効化
@@ -244,7 +247,7 @@ ISR (TIMER0_OVF_vect)
 		sequence_data[sequence_n] ^= sequence_rd;
 		
 		// トグル状態をLEDに表示
-		shift_out(sequence_data[sequence_n]);
+		//shift_out(sequence_data[sequence_n]);
 	}
 	
 	// Rotary Encoderのスイッチの読み取り
@@ -278,7 +281,7 @@ void pin_change_interrupt_handler()
 	
 	// Timer0を起動
 	TCCR0B = 0x05;	// プリスケーラ－:1024, 1/(8MHz/1024)=128us
-	TCNT0 = 216;		// 128us*(256-216)=5.12ms
+	TCNT0 = 100;	// 128us*(256-100)=19.968ms
 }
 
 ISR (PCINT0_vect)
@@ -295,6 +298,41 @@ ISR (PCINT2_vect)
 // Rotary Encoder
 //
 //------------------------------------------------//
+// 戻り値: ロータリーエンコーダーの回転方向
+//         0:変化なし 1:時計回り -1:反時計回り
+//
+int8_t read_re(void)
+{
+	static uint8_t index;
+	int8_t ret_val = 0;
+	uint8_t rd;
+	
+	rd = ((PINB & 0b00001100) >> 2);
+	
+	_delay_ms(1);
+	
+	if (rd == ((PINB & 0b00001100) >> 2)) {
+		//PORTC ^= (1 << PC3);	// (デバッグ用)
+		
+		index = (index << 2) | rd;
+		index &= 0b1111;
+		
+		switch (index) {
+			// 時計回り
+			case 0b0001:	// 00 -> 01
+			case 0b1110:	// 11 -> 10
+			ret_val = 1;
+			break;
+			// 反時計回り
+			case 0b0010:	// 00 -> 10
+			case 0b1101:	// 11 -> 01
+			ret_val = -1;
+			break;
+		}
+	}
+	
+	return ret_val;
+}
 
 
 //------------------------------------------------//
@@ -308,8 +346,11 @@ int main()
 	DDRD = 0x00;
 
 	// Switch input / pull up
-	PORTD = 0b00111111;
-	PORTB = 0b11000111;
+	PORTD |= 0b00111111;
+	PORTB |= 0b11000011;
+	
+	// Rotary Encoder input / pull up
+	PORTB |= 0b00001100;
 	
 	// Shift Register: SER, SCK, RCK output
 	DDRB |= (1 << SHIFT_DATA) | (1 << SHIFT_RCK);
@@ -338,6 +379,9 @@ int main()
 	sei();
 	
 	for(;;) {
-		// nop
+		re_data += read_re();
+		
+		// Rotary Encoderのカウントを表示
+		shift_out(re_data);
 	}
 }
