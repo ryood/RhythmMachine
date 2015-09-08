@@ -30,6 +30,7 @@
  * 
  * AtmelStudio 6.2
  *
+ * 2015.09.08 Rotary Encoderの処理を追加
  * 2015.09.01 シーケンスを2バイト送信
  * 2015.09.01 TWIエラー時にステータスコードをLEDに表示
  * 2015.09.01 デバッグ用にPC3にLEDを接続
@@ -74,6 +75,7 @@ volatile uint8_t pot_data[2];
 // Rotary Encoder
 volatile uint8_t re_data;
 volatile uint8_t re_sw;
+volatile uint8_t re_sw_rd;
 
 // TWI
 volatile uint8_t twi_data_n;
@@ -126,6 +128,10 @@ ISR (TWI_vect)
 		case 1:
 			// シーケンスのトグル状態を送信
 			TWDR = sequence_data[twi_data_n];
+			break;
+		case 2:
+			// Rotary EncoderのSWのトグル状態を送信
+			TWDR = (re_sw ? 1 : 0);
 			break;
 		default:
 			twi_error();
@@ -189,7 +195,7 @@ void init_switches()
 {
 	// Pin Change Interruptの有効化
 	PCICR = (1 << PCIE0) | (1 << PCIE2);
-	PCMSK0 = 0b11000001;	// PORTB
+	PCMSK0 = 0b11000111;	// PORTB
 	PCMSK2 = 0b00111111;	// PORTD
 	
 	// TIMER0 オーバーフロー割り込みの有効化
@@ -232,12 +238,26 @@ ISR (TIMER0_OVF_vect)
 		}		
 	}
 	
+	// シーケンス・スイッチ列の読み取り
 	tmp = read_sequence_switches();
 	if (sequence_rd == tmp) {
 		sequence_data[sequence_n] ^= sequence_rd;
 		
 		// トグル状態をLEDに表示
 		shift_out(sequence_data[sequence_n]);
+	}
+	
+	// Rotary Encoderのスイッチの読み取り
+	if (re_sw_rd == (~PINB & (1 << PB1))) {
+		re_sw ^= re_sw_rd;
+		
+		// トグル状態をLEDに表示
+		if (re_sw) {
+			PORTC |= (1 << PC3);
+		} else {
+			PORTC &= ~(1 << PC3);
+		}
+		//shift_out(re_sw);
 	}
 		
 	// Pin Change Interruptの有効化
@@ -250,14 +270,15 @@ void pin_change_interrupt_handler()
 	PCICR = 0x00;
 	
 	// 割り込みごとにLEDを点滅（デバッグ用）
-	PORTC ^= (1 << PC3);
+	//PORTC ^= (1 << PC3);
 		
 	sequence_rd = read_sequence_switches();
-	sequence_n_rd = (~PINB & (1 << PB0));
+	sequence_n_rd = (~PINB & (1 << PB0));	// シーケンス切替スイッチ
+	re_sw_rd = (~PINB & (1 << PB1));		// Rotary Encoderのスイッチ
 	
 	// Timer0を起動
-	TCCR0B = 0x05;	// プリスケーラ：1024
-	TCNT0 = 80;		// about: 10ms	
+	TCCR0B = 0x05;	// プリスケーラ－:1024, 1/(8MHz/1024)=128us
+	TCNT0 = 216;		// 128us*(256-216)=5.12ms
 }
 
 ISR (PCINT0_vect)
@@ -271,6 +292,12 @@ ISR (PCINT2_vect)
 }
 
 //------------------------------------------------//
+// Rotary Encoder
+//
+//------------------------------------------------//
+
+
+//------------------------------------------------//
 // Main routine
 //
 //------------------------------------------------//
@@ -282,7 +309,7 @@ int main()
 
 	// Switch input / pull up
 	PORTD = 0b00111111;
-	PORTB = 0b11000001;
+	PORTB = 0b11000111;
 	
 	// Shift Register: SER, SCK, RCK output
 	DDRB |= (1 << SHIFT_DATA) | (1 << SHIFT_RCK);
@@ -290,11 +317,11 @@ int main()
 	
 	// LED
 	DDRD |= (1 << PD7) | (1 << PD6);
-	DDRC |= (1 << PC3);		// デバッグ用
+	DDRC |= (1 << PC3);
 	
 	// LED Check
 	PORTD |= (1 << PD7) | (1 << PD6);
-	PORTC |= (1 << PC3);	// デバッグ用
+	PORTC |= (1 << PC3);
 	for (int i = 0; i <= 8; i++) {
 		shift_out(0xFF >> i);
 		_delay_ms(100);
@@ -303,7 +330,7 @@ int main()
 	_delay_ms(100);
 	PORTD &= ~(1 << PD7);
 	_delay_ms(100);
-	PORTC &= ~(1 << PC3);	// デバッグ用
+	PORTC &= ~(1 << PC3);
 		
 	init_switches();
 	twi_init();
