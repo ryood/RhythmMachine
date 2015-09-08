@@ -131,19 +131,21 @@ ISR (TWI_vect)
 			TWDR = sequence_data[twi_data_n];
 			break;
 		case 2:
-			// Rotary EncoderのSWのトグル状態を送信
-			TWDR = (re_sw ? 1 : 0);
+			// POT1のADCの読み取り値を送信
+			TWDR = pot_data[0];
 			break;
 		case 3:
+			// POT2のADCの読み取り値を送信
+			TWDR = pot_data[1];
+			break;
+		case 4:
 			// Rotary Encoderの値を送信
 			TWDR = re_data;
 			break;
-		case 4:
-			TWDR = pot_data[0];
-			break;
 		case 5:
-			TWDR = pot_data[1];
-			break;		
+			// Rotary EncoderのSWのトグル状態を送信
+			TWDR = (re_sw ? 1 : 0);
+			break;
 		default:
 			twi_error();
 		}
@@ -255,7 +257,7 @@ ISR (TIMER0_OVF_vect)
 		sequence_data[sequence_n] ^= sequence_rd;
 		
 		// トグル状態をLEDに表示
-		//shift_out(sequence_data[sequence_n]);
+		shift_out(sequence_data[sequence_n]);
 	}
 	
 	// Rotary Encoderのスイッチの読み取り
@@ -281,7 +283,7 @@ void pin_change_interrupt_handler()
 	PCICR = 0x00;
 	
 	// 割り込みごとにLEDを点滅（デバッグ用）
-	//PORTC ^= (1 << PC3);
+	PORTC ^= (1 << PC3);
 		
 	sequence_rd = read_sequence_switches();
 	sequence_n_rd = (~PINB & (1 << PB0));	// シーケンス切替スイッチ
@@ -408,6 +410,8 @@ int main()
 	PORTC &= ~(1 << PC3);
 		
 	init_switches();
+	PORTD |= (1 << PD6);		// トグル表示の初期値
+	
 	twi_init();
 	
 	// Potentiometer
