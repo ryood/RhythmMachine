@@ -29,6 +29,7 @@
  *
  * AtmelStudio 6.2
  *
+ * 2015.09.08 POTの処理を追加
  * 2015.09.08 Rotary Encoderの処理を追加
  * 2015.09.01 シーケンスを2バイト送信
  * 2015.09.01 TWIエラー時にステータスコードをLEDに表示
@@ -70,6 +71,7 @@ volatile uint8_t sequence_n_rd;
 
 // Potentiometer
 volatile uint8_t pot_data[2];
+volatile uint8_t pot_n;
 
 // Rotary Encoder
 volatile uint8_t re_data;
@@ -136,6 +138,12 @@ ISR (TWI_vect)
 			// Rotary Encoderの値を送信
 			TWDR = re_data;
 			break;
+		case 4:
+			TWDR = pot_data[0];
+			break;
+		case 5:
+			TWDR = pot_data[1];
+			break;		
 		default:
 			twi_error();
 		}
@@ -147,7 +155,7 @@ ISR (TWI_vect)
 		twi_error();
 	}
 	
-	TWCR |= (1<<TWINT);	// Clear TWI interrupt flag
+	TWCR |= (1 << TWINT);	// Clear TWI interrupt flag
 }
 
 //------------------------------------------------//
@@ -247,7 +255,7 @@ ISR (TIMER0_OVF_vect)
 		sequence_data[sequence_n] ^= sequence_rd;
 		
 		// トグル状態をLEDに表示
-		shift_out(sequence_data[sequence_n]);
+		//shift_out(sequence_data[sequence_n]);
 	}
 	
 	// Rotary Encoderのスイッチの読み取り
@@ -292,6 +300,33 @@ ISR (PCINT0_vect)
 ISR (PCINT2_vect)
 {
 	pin_change_interrupt_handler();
+}
+
+//------------------------------------------------//
+// Rotary Encoder
+//
+//------------------------------------------------//
+ISR(ADC_vect)
+{
+	switch (pot_n) {
+	case 0:
+		pot_data[0] = ADCH;
+		pot_n = 1;
+		
+		// リファレンス電圧: AVCC, 変換結果は左詰め, ADC2シングルエンド入力
+		ADMUX = (1 << REFS0) | (1 << ADLAR) | (1 << MUX1);
+		ADCSRA |= (1 << ADSC);		// Start Conversion
+		break;
+	case 1:
+		pot_data[1] = ADCH;
+		pot_n = 0;
+		
+		// リファレンス電圧: AVCC, 変換結果は左詰め, ADC1シングルエンド入力
+		ADMUX = (1 << REFS0) | (1 << ADLAR) | (1 << MUX0);
+		ADCSRA |= (1 << ADSC);		// Start Conversion
+		break;
+	}
+	//shift_out(pot_data[(re_sw ? 1 : 0)]);
 }
 
 //------------------------------------------------//
@@ -374,8 +409,20 @@ int main()
 		
 	init_switches();
 	twi_init();
+	
+	// Potentiometer
+	//
+	// Enable the ADC and its interrupt feature
+	// and set the ACD clock pre-scalar to clk/128
+	ADCSRA = (1 << ADEN) | (1 << ADIE) | (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
+	
+	// リファレンス電圧: AVCC, 変換結果は左詰め, ADC1シングルエンド入力
+	ADMUX = (1 << REFS0) | (1 << ADLAR) | (1 << MUX0);
+	pot_n = 0;
 		
 	sei();
+	
+	ADCSRA |= (1 << ADSC);		// Start Conversion
 	
 	for(;;) {
 		re_data += read_re();

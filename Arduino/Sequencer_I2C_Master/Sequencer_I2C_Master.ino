@@ -29,13 +29,13 @@ void setup()
 
 void loop()
 {
-  Wire.requestFrom(0x7f, 4);    // request 4 bytes from slave device 0x7f
+  Wire.requestFrom(0x7f, 6);    // request 6 bytes from slave device 0x7f
 
   while (Wire.available())   // slave may send less than requested
   {
     int x = Wire.read(); // receive a byte as character
     
-    Serial.print(x, BIN);    
+    Serial.print(x);    
     Serial.print("\t");         // print the character
   }
   Serial.println("");
