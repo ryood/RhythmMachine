@@ -247,7 +247,7 @@ ISR (TIMER0_OVF_vect)
 		sequence_data[sequence_n] ^= sequence_rd;
 		
 		// トグル状態をLEDに表示
-		//shift_out(sequence_data[sequence_n]);
+		shift_out(sequence_data[sequence_n]);
 	}
 	
 	// Rotary Encoderのスイッチの読み取り
@@ -334,7 +334,6 @@ int8_t read_re(void)
 	return ret_val;
 }
 
-
 //------------------------------------------------//
 // Main routine
 //
@@ -382,6 +381,6 @@ int main()
 		re_data += read_re();
 		
 		// Rotary Encoderのカウントを表示
-		shift_out(re_data);
+		//shift_out(re_data);
 	}
 }
