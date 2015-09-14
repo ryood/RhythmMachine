@@ -15421,7 +15421,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <part name="GND3" library="supply1" deviceset="GND" device=""/>
 <part name="IC2" library="74xx-eu" deviceset="74*595" device="N" technology="HC"/>
 <part name="+3V3" library="supply1" deviceset="+3V3" device=""/>
-<part name="R2" library="rcl" deviceset="R-EU_" device="0207/7" value="1.5k"/>
+<part name="R2" library="rcl" deviceset="R-EU_" device="0207/7" value="2k"/>
 <part name="LED1" library="led" deviceset="LED" device="3MM"/>
 <part name="GND4" library="supply1" deviceset="GND" device=""/>
 <part name="LED2" library="led" deviceset="LED" device="3MM"/>
@@ -15441,7 +15441,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <part name="LED8" library="led" deviceset="LED" device="3MM"/>
 <part name="LED9" library="led" deviceset="LED" device="3MM"/>
 <part name="GND5" library="supply1" deviceset="GND" device=""/>
-<part name="R11" library="rcl" deviceset="R-EU_" device="0207/7" value="1.5k"/>
+<part name="R11" library="rcl" deviceset="R-EU_" device="0207/7" value="2k"/>
 <part name="R12" library="rcl" deviceset="R-EU_" device="0207/7" value="1.5k"/>
 <part name="LED10" library="led" deviceset="LED" device="3MM"/>
 <part name="LED11" library="led" deviceset="LED" device="3MM"/>
@@ -15465,7 +15465,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <part name="POT1" library="pinhead" deviceset="PINHD-1X5" device=""/>
 <part name="POT2" library="pinhead" deviceset="PINHD-1X5" device=""/>
 <part name="LED12" library="led" deviceset="LED" device="3MM"/>
-<part name="R1" library="rcl" deviceset="R-EU_" device="0207/7" value="1.5k"/>
+<part name="R1" library="rcl" deviceset="R-EU_" device="0207/7" value="2k"/>
 <part name="LED13" library="led" deviceset="LED" device="3MM"/>
 <part name="R13" library="rcl" deviceset="R-EU_" device="0207/7" value="1.5k"/>
 <part name="+3V6" library="supply1" deviceset="+3V3" device=""/>
