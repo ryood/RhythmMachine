@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="dots" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
@@ -15415,7 +15415,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <part name="U$6" library="mylib" deviceset="AK_TCTSW" device=""/>
 <part name="U$7" library="mylib" deviceset="AK_TCTSW" device=""/>
 <part name="U$8" library="mylib" deviceset="AK_TCTSW" device=""/>
-<part name="JP1" library="pinhead" deviceset="PINHD-1X2" device="" value="3.3VIN"/>
+<part name="JP1" library="pinhead" deviceset="PINHD-1X2" device="/90" value="3.3VIN"/>
 <part name="+3V1" library="supply1" deviceset="+3V3" device=""/>
 <part name="GND1" library="supply1" deviceset="GND" device=""/>
 <part name="GND3" library="supply1" deviceset="GND" device=""/>
@@ -15459,7 +15459,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <part name="C1" library="rcl" deviceset="C-EU" device="025-024X044" value="0.1uF"/>
 <part name="RE_AB" library="pinhead" deviceset="PINHD-1X3" device=""/>
 <part name="RE_SW" library="pinhead" deviceset="PINHD-1X3" device=""/>
-<part name="JP2" library="pinhead" deviceset="PINHD-1X3" device="" value="I2C"/>
+<part name="JP2" library="pinhead" deviceset="PINHD-1X3" device="/90" value="I2C"/>
 <part name="+3V5" library="supply1" deviceset="+3V3" device=""/>
 <part name="GND11" library="supply1" deviceset="GND" device=""/>
 <part name="POT1" library="pinhead" deviceset="PINHD-1X5" device=""/>
