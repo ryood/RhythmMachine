@@ -29,6 +29,7 @@
  *
  * AtmelStudio 6.2
  *
+ * 2015.09.28 再生中のノートを受信
  * 2015.09.08 POTの処理を追加
  * 2015.09.08 Rotary Encoderの処理を追加
  * 2015.09.01 シーケンスを2バイト送信
@@ -47,12 +48,17 @@
 #include	<util/delay.h>
 
 // TWI スレーブ・アドレス
-#define TWI_SLAVE_ADDRESS 0xFE
+#define TWI_SLAVE_ADDRESS	0xFE
 
-// 状態値
-#define SR_SLA_ACK   0xA8		// SLA_R 受信チェック
-#define	SR_DATA_ACK	 0xB8		// 送信パケットチェック バイト列の送信
-#define SR_DATA_NACK 0xC0		// 送信パケットチェック 最後のバイトを送信
+// TWI ステータスコード
+// Rx
+#define	TWI_SLA_W_ACK		0x60
+#define	TWI_RX_DATA_ACK		0x80
+#define	TWI_RX_STOP			0xA0
+// Tx
+#define	TWI_SLA_R_ACK		0xA8
+#define	TWI_TX_DATA_ACK		0xB8
+#define	TWI_TX_DATA_NACK	0xC0
 
 // Shift Register
 #define SHIFT_PORT PORTB
@@ -78,6 +84,9 @@ volatile uint8_t re_data;
 volatile uint8_t re_sw;
 volatile uint8_t re_sw_rd;
 
+// 再生中のnoteナンバー
+volatile uint8_t playing_note_n;
+
 // TWI
 volatile uint8_t twi_data_n;
 
@@ -91,7 +100,7 @@ void twi_error()
 {
 	uint8_t twi_status = TWSR & 0xF8;
 	
-	shift_out(twi_status);	
+	shift_out(twi_status);
 	
 	while(1) {
 		PORTD = 0b10000000;
@@ -121,10 +130,12 @@ ISR (TWI_vect)
 	//PORTC ^= (1 << PC3);
 	
 	switch (TWSR & 0xF8) {
-	case SR_SLA_ACK:
+	case TWI_SLA_R_ACK:
 		twi_data_n = 0;
-	case SR_DATA_ACK:
+	case TWI_TX_DATA_ACK:
 		switch (twi_data_n) {
+		// Slave TX
+		//
 		case 0:
 		case 1:
 			// シーケンスのトグル状態を送信
@@ -151,7 +162,16 @@ ISR (TWI_vect)
 		}
 		twi_data_n++;
 		break;
-	case SR_DATA_NACK:
+	case TWI_TX_DATA_NACK:
+		break;
+	// Slave RX
+	//
+	case TWI_SLA_W_ACK:
+		break;
+	case TWI_RX_DATA_ACK:
+		playing_note_n = TWDR;
+		break;
+	case TWI_RX_STOP:
 		break;
 	default:
 		twi_error();
@@ -257,7 +277,7 @@ ISR (TIMER0_OVF_vect)
 		sequence_data[sequence_n] ^= sequence_rd;
 		
 		// トグル状態をLEDに表示
-		shift_out(sequence_data[sequence_n]);
+		//shift_out(sequence_data[sequence_n]);
 	}
 	
 	// Rotary Encoderのスイッチの読み取り
@@ -283,7 +303,7 @@ void pin_change_interrupt_handler()
 	PCICR = 0x00;
 	
 	// 割り込みごとにLEDを点滅（デバッグ用）
-	PORTC ^= (1 << PC3);
+	//PORTC ^= (1 << PC3);
 		
 	sequence_rd = read_sequence_switches();
 	sequence_n_rd = (~PINB & (1 << PB0));	// シーケンス切替スイッチ
@@ -431,7 +451,16 @@ int main()
 	for(;;) {
 		re_data += read_re();
 		
-		// Rotary Encoderのカウントを表示
-		//shift_out(re_data);
+		uint16_t led_pos = 0; 
+		if (re_sw == 0) {
+			// 再生中
+			// シーケンスの表裏に合わせてNoteのLED表示位置て設定
+			led_pos = (1 << playing_note_n);
+			led_pos = (sequence_n ? (led_pos >> 8) : led_pos);
+			led_pos &= 0xff;
+		}
+		
+		// シーケンスのトグル状態をNoteの表示位置とORしてLEDを点灯
+		shift_out(sequence_data[sequence_n] | led_pos);
 	}
 }

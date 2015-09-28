@@ -1,17 +1,11 @@
-// Wire Master Reader
-// by Nicholas Zambetti <http://www.zambetti.com>
-
-// Demonstrates use of the Wire library
-// Reads data from an I2C/TWI slave device
-// Refer to the "Wire Slave Sender" example for use with this
-
-// Created 29 March 2006
-
-// This example code is in the public domain.
-
+// Sequencer Board Control
 
 #include <Wire.h>
 #include <stdio.h>
+
+#define TWI_SLAVE_ADDRESS	0x7f
+
+byte note_n = 0;
 
 void setup()
 {
@@ -29,17 +23,29 @@ void setup()
 
 void loop()
 {
-  Wire.requestFrom(0x7f, 6);    // request 6 bytes from slave device 0x7f
+  // Reciever
+  //
+  Wire.requestFrom(TWI_SLAVE_ADDRESS, 6);    // request 6 bytes from slave device 0x7f
 
-  while (Wire.available())   // slave may send less than requested
+  while (Wire.available())                   // slave may send less than requested
   {
-    int x = Wire.read(); // receive a byte as character
+    int x = Wire.read();                     // receive a byte as character
     
     Serial.print(x);    
-    Serial.print("\t");         // print the character
+    Serial.print("\t");
   }
-  Serial.println("");
   
+  // Trancemitter
+  //
+  Wire.beginTransmission(TWI_SLAVE_ADDRESS); // transmit to slave device
+  Wire.write(note_n);                        // sends value byte  
+  Wire.endTransmission();                    // stop transmitting
+  Serial.println(note_n);
+  
+  note_n++;
+  if (note_n == 16)
+    note_n = 0;
+
   digitalWrite(13, HIGH);
   delay(100);
   digitalWrite(13, LOW);
