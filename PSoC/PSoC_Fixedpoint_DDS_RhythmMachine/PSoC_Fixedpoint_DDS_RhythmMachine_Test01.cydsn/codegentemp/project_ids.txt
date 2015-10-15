@@ -1,0 +1,5 @@
+D:\Users\gizmo\Documents\PSoC\PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.cydsn\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.cyprj|f37085b6-0f4e-4572-9525-688de07a427d
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|e81560fe-e741-447a-bd08-cb5b60895fcd
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|41c57362-3563-464e-86b6-676cfc6f4fee
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|ffc0980d-d271-4208-ad7c-409bf33d2b55
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|de73b18c-dffb-4fe4-bb69-7802005c376f
