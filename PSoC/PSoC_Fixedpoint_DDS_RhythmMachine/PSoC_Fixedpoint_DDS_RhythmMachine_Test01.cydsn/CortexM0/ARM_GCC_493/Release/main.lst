@@ -1,0 +1,5082 @@
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 4
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"main.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global	__aeabi_i2d
+  18              		.global	__aeabi_dmul
+  19              		.global	__aeabi_d2iz
+  20              		.section	.text.fp32_to_int_1000,"ax",%progbits
+  21              		.align	1
+  22              		.global	fp32_to_int_1000
+  23              		.code	16
+  24              		.thumb_func
+  25              		.type	fp32_to_int_1000, %function
+  26              	fp32_to_int_1000:
+  27              	.LFB33:
+  28              		.file 1 ".\\main.c"
+   1:.\main.c      **** /* ========================================
+   2:.\main.c      ****  *
+   3:.\main.c      ****  * Copyright YOUR COMPANY, THE YEAR
+   4:.\main.c      ****  * All Rights Reserved
+   5:.\main.c      ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:.\main.c      ****  *
+   7:.\main.c      ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:.\main.c      ****  * WHICH IS THE PROPERTY OF your company.
+   9:.\main.c      ****  *
+  10:.\main.c      ****  * 2015.10.15 Timerを使って実行時間計測
+  11:.\main.c      ****  * 2015.10.13 Created. 実行時間計測 (途中)
+  12:.\main.c      ****  *
+  13:.\main.c      ****  * ========================================
+  14:.\main.c      ****  */
+  15:.\main.c      **** 
+  16:.\main.c      **** #include <project.h>
+  17:.\main.c      **** 
+  18:.\main.c      **** #include <stdio.h>
+  19:.\main.c      **** #include <stdlib.h>
+  20:.\main.c      **** #include <stdint.h>
+  21:.\main.c      **** #include <math.h>
+  22:.\main.c      **** #include <time.h>
+  23:.\main.c      **** 
+  24:.\main.c      **** #include "fixedpoint.h"
+  25:.\main.c      **** #include "WaveTableFp32.h"
+  26:.\main.c      **** #include "ModTableFp32.h"
+  27:.\main.c      **** 
+  28:.\main.c      **** #define _UART_OUT_HEADER_ 0
+  29:.\main.c      **** #define _UART_OUT_12BIT_ 0
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 2
+
+
+  30:.\main.c      **** #define _UART_OUT_RUNTIME_ 1
+  31:.\main.c      **** 
+  32:.\main.c      **** #define _TRACE_ 0
+  33:.\main.c      **** #define _TRACE_TRACK_ 0
+  34:.\main.c      **** #define _TRACE_GENERATE_WAVE_DDS_ 0
+  35:.\main.c      **** #define _TRACE_GENERATE_WAVE_NOISE_ 0
+  36:.\main.c      **** 
+  37:.\main.c      **** #define LOOP_N 48000
+  38:.\main.c      **** 
+  39:.\main.c      **** /*********************************************************
+  40:.\main.c      **** waveLookupTable   : fp32 Q16 : -1.0 .. +1.0
+  41:.\main.c      **** decayLookupTable  : fp32 Q16 : -1.0 .. +1.0
+  42:.\main.c      **** 
+  43:.\main.c      **** wavePhaseRegister : 32bit
+  44:.\main.c      **** waveTunigWord     : 32bit
+  45:.\main.c      **** decayPhaseRegister: 32bit
+  46:.\main.c      **** decayTuningWord   : 32bit
+  47:.\main.c      **** 
+  48:.\main.c      **** waveFrequency     : double
+  49:.\main.c      **** ampAmount         : 8bit
+  50:.\main.c      **** toneAmount        : 8bit
+  51:.\main.c      **** decayAmount       : 8bit
+  52:.\main.c      **** 
+  53:.\main.c      **** bpmAmount         : 8bit
+  54:.\main.c      **** **********************************************************/
+  55:.\main.c      **** 
+  56:.\main.c      **** #define SAMPLE_CLOCK			(48000u)	// 48kHz
+  57:.\main.c      **** 
+  58:.\main.c      **** #define TRACK_N					(3u)		// トラックの個数
+  59:.\main.c      **** #define WAVE_LOOKUP_TABLE_SIZE	(1024u)		// Lookup Table の要素数
+  60:.\main.c      **** #define MOD_LOOKUP_TABLE_SIZE	(128u)
+  61:.\main.c      **** #define SEQUENCE_LEN		 	(16u)
+  62:.\main.c      **** 
+  63:.\main.c      **** #define POW_2_32				(4294967296ull) // 2の32乗
+  64:.\main.c      **** 
+  65:.\main.c      **** // 変数の初期値
+  66:.\main.c      **** #define INITIAL_BPM				(120u)
+  67:.\main.c      **** 
+  68:.\main.c      **** //*******************************************************************
+  69:.\main.c      **** // 大域変数
+  70:.\main.c      **** //
+  71:.\main.c      **** 
+  72:.\main.c      **** // カウンター
+  73:.\main.c      **** int tick = -1;				// 初回に0にインクリメント
+  74:.\main.c      **** int noteCount = 0;
+  75:.\main.c      **** 
+  76:.\main.c      **** // BPM
+  77:.\main.c      **** uint8_t bpm;				// 1分あたりのbeat数 (beat=note*4)
+  78:.\main.c      **** uint32_t ticksPerNote;		// noteあたりのサンプリング数
+  79:.\main.c      **** 
+  80:.\main.c      **** // UART出力用
+  81:.\main.c      **** static char lineBuffer[80];
+  82:.\main.c      **** 
+  83:.\main.c      **** struct track {
+  84:.\main.c      **** 	const fp32 *waveLookupTable;
+  85:.\main.c      **** 	const fp32 *decayLookupTable;
+  86:.\main.c      **** 	double waveFrequency;
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 3
+
+
+  87:.\main.c      **** 	uint8_t decayAmount;
+  88:.\main.c      **** 	uint8_t ampAmount;
+  89:.\main.c      **** 	uint8_t toneAmount;
+  90:.\main.c      **** 	
+  91:.\main.c      **** 	uint32_t wavePhaseRegister;
+  92:.\main.c      **** 	uint32_t waveTuningWord;
+  93:.\main.c      **** 	fp32 waveValue;
+  94:.\main.c      **** 	
+  95:.\main.c      **** 	uint32_t decayPhaseRegister;
+  96:.\main.c      **** 	uint32_t decayTuningWord;
+  97:.\main.c      **** 	uint32_t decayPeriod;
+  98:.\main.c      **** 	uint8_t decayStop;
+  99:.\main.c      **** 	fp32 decayValue;
+ 100:.\main.c      **** 	
+ 101:.\main.c      **** 	uint8_t sequence[SEQUENCE_LEN];	// Velocity
+ 102:.\main.c      **** } tracks[TRACK_N];
+ 103:.\main.c      **** 
+ 104:.\main.c      **** //*******************************************************************
+ 105:.\main.c      **** // PSoC用
+ 106:.\main.c      **** // 固定小数点数を1000倍してintに変換
+ 107:.\main.c      **** //
+ 108:.\main.c      **** int32 fp32_to_int_1000(fp32 fv)
+ 109:.\main.c      **** {
+  29              		.loc 1 109 0
+  30              		.cfi_startproc
+  31              	.LVL0:
+  32 0000 08B5     		push	{r3, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+ 110:.\main.c      ****     return (int32)(fp32_to_double(fv) * 1000);    
+  36              		.loc 1 110 0
+  37 0002 FFF7FEFF 		bl	__aeabi_i2d
+  38              	.LVL1:
+  39 0006 0022     		mov	r2, #0
+  40 0008 044B     		ldr	r3, .L2
+  41 000a FFF7FEFF 		bl	__aeabi_dmul
+  42              	.LVL2:
+  43 000e 0022     		mov	r2, #0
+  44 0010 034B     		ldr	r3, .L2+4
+  45 0012 FFF7FEFF 		bl	__aeabi_dmul
+  46              	.LVL3:
+  47 0016 FFF7FEFF 		bl	__aeabi_d2iz
+  48              	.LVL4:
+ 111:.\main.c      **** }   
+  49              		.loc 1 111 0
+  50              		@ sp needed
+  51 001a 08BD     		pop	{r3, pc}
+  52              	.L3:
+  53              		.align	2
+  54              	.L2:
+  55 001c 0000F03E 		.word	1055916032
+  56 0020 00408F40 		.word	1083129856
+  57              		.cfi_endproc
+  58              	.LFE33:
+  59              		.size	fp32_to_int_1000, .-fp32_to_int_1000
+  60              		.section	.text.initTracks,"ax",%progbits
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 4
+
+
+  61              		.align	1
+  62              		.global	initTracks
+  63              		.code	16
+  64              		.thumb_func
+  65              		.type	initTracks, %function
+  66              	initTracks:
+  67              	.LFB34:
+ 112:.\main.c      **** 
+ 113:.\main.c      **** //*******************************************************************
+ 114:.\main.c      **** // トラックの初期化
+ 115:.\main.c      **** //
+ 116:.\main.c      **** void initTracks()
+ 117:.\main.c      **** {
+  68              		.loc 1 117 0
+  69              		.cfi_startproc
+  70 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  71              		.cfi_def_cfa_offset 20
+  72              		.cfi_offset 4, -20
+  73              		.cfi_offset 5, -16
+  74              		.cfi_offset 6, -12
+  75              		.cfi_offset 7, -8
+  76              		.cfi_offset 14, -4
+ 118:.\main.c      **** 	const uint8_t kickSequence[]  = { 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 };
+  77              		.loc 1 118 0
+  78 0002 1027     		mov	r7, #16
+  79 0004 344E     		ldr	r6, .L5
+ 117:.\main.c      **** 	const uint8_t kickSequence[]  = { 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 };
+  80              		.loc 1 117 0
+  81 0006 8FB0     		sub	sp, sp, #60
+  82              		.cfi_def_cfa_offset 80
+ 119:.\main.c      **** 	const uint8_t snareSequence[] = { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 };
+  83              		.loc 1 119 0
+  84 0008 06AC     		add	r4, sp, #24
+ 118:.\main.c      **** 	const uint8_t kickSequence[]  = { 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 };
+  85              		.loc 1 118 0
+  86 000a 311C     		mov	r1, r6
+  87 000c 3A1C     		mov	r2, r7
+  88 000e 02A8     		add	r0, sp, #8
+  89 0010 FFF7FEFF 		bl	memcpy
+  90              	.LVL5:
+  91              		.loc 1 119 0
+  92 0014 3A1C     		mov	r2, r7
+  93 0016 201C     		mov	r0, r4
+  94 0018 0021     		mov	r1, #0
+  95 001a FFF7FEFF 		bl	memset
+  96              	.LVL6:
+ 120:.\main.c      **** 	const uint8_t hihatSequnce[]  = { 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1 };
+  97              		.loc 1 120 0
+  98 001e F119     		add	r1, r6, r7
+  99 0020 3A1C     		mov	r2, r7
+ 100 0022 0AA8     		add	r0, sp, #40
+ 101 0024 FFF7FEFF 		bl	memcpy
+ 102              	.LVL7:
+ 121:.\main.c      **** 
+ 122:.\main.c      **** 	// Kick
+ 123:.\main.c      **** 	tracks[0].waveLookupTable = waveTableSine;
+ 124:.\main.c      **** 	tracks[0].decayLookupTable = modTableDown;
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 5
+
+
+ 125:.\main.c      **** 	tracks[0].waveFrequency = 60.0f;
+ 103              		.loc 1 125 0
+ 104 0028 0020     		mov	r0, #0
+ 123:.\main.c      **** 	tracks[0].decayLookupTable = modTableDown;
+ 105              		.loc 1 123 0
+ 106 002a 2C4B     		ldr	r3, .L5+4
+ 107              		.loc 1 125 0
+ 108 002c 2C49     		ldr	r1, .L5+8
+ 124:.\main.c      **** 	tracks[0].waveFrequency = 60.0f;
+ 109              		.loc 1 124 0
+ 110 002e 2D4A     		ldr	r2, .L5+12
+ 111              		.loc 1 125 0
+ 112 0030 9860     		str	r0, [r3, #8]
+ 113 0032 D960     		str	r1, [r3, #12]
+ 126:.\main.c      **** 	tracks[0].decayAmount = 200;
+ 114              		.loc 1 126 0
+ 115 0034 C821     		mov	r1, #200
+ 116 0036 1974     		strb	r1, [r3, #16]
+ 127:.\main.c      **** 	tracks[0].ampAmount = 255;
+ 117              		.loc 1 127 0
+ 118 0038 3731     		add	r1, r1, #55
+ 119 003a 5974     		strb	r1, [r3, #17]
+ 120 003c 8C46     		mov	ip, r1
+ 128:.\main.c      **** 	tracks[0].toneAmount = 127;
+ 129:.\main.c      **** 	memcpy(tracks[0].sequence, kickSequence, SEQUENCE_LEN);
+ 121              		.loc 1 129 0
+ 122 003e 191C     		mov	r1, r3
+ 123:.\main.c      **** 	tracks[0].decayLookupTable = modTableDown;
+ 123              		.loc 1 123 0
+ 124 0040 2036     		add	r6, r6, #32
+ 124:.\main.c      **** 	tracks[0].waveFrequency = 60.0f;
+ 125              		.loc 1 124 0
+ 126 0042 2032     		add	r2, r2, #32
+ 128:.\main.c      **** 	tracks[0].toneAmount = 127;
+ 127              		.loc 1 128 0
+ 128 0044 6F37     		add	r7, r7, #111
+ 124:.\main.c      **** 	tracks[0].waveFrequency = 60.0f;
+ 129              		.loc 1 124 0
+ 130 0046 0192     		str	r2, [sp, #4]
+ 123:.\main.c      **** 	tracks[0].decayLookupTable = modTableDown;
+ 131              		.loc 1 123 0
+ 132 0048 0096     		str	r6, [sp]
+ 133 004a 1E60     		str	r6, [r3]
+ 124:.\main.c      **** 	tracks[0].waveFrequency = 60.0f;
+ 134              		.loc 1 124 0
+ 135 004c 5A60     		str	r2, [r3, #4]
+ 128:.\main.c      **** 	tracks[0].toneAmount = 127;
+ 136              		.loc 1 128 0
+ 137 004e 9F74     		strb	r7, [r3, #18]
+ 138              		.loc 1 129 0
+ 139 0050 02A8     		add	r0, sp, #8
+ 140 0052 3431     		add	r1, r1, #52
+ 141 0054 64C8     		ldmia	r0!, {r2, r5, r6}
+ 142 0056 64C1     		stmia	r1!, {r2, r5, r6}
+ 143 0058 0068     		ldr	r0, [r0]
+ 144 005a 0860     		str	r0, [r1]
+ 130:.\main.c      **** 
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 6
+
+
+ 131:.\main.c      **** 	// Snare
+ 132:.\main.c      **** 	tracks[1].waveLookupTable = waveTableSine;
+ 133:.\main.c      **** 	tracks[1].decayLookupTable = modTableDown;
+ 134:.\main.c      **** 	tracks[1].waveFrequency = 120.0f;
+ 145              		.loc 1 134 0
+ 146 005c 0020     		mov	r0, #0
+ 147 005e 2249     		ldr	r1, .L5+16
+ 132:.\main.c      **** 	tracks[1].decayLookupTable = modTableDown;
+ 148              		.loc 1 132 0
+ 149 0060 009A     		ldr	r2, [sp]
+ 150              		.loc 1 134 0
+ 151 0062 1865     		str	r0, [r3, #80]
+ 152 0064 5965     		str	r1, [r3, #84]
+ 135:.\main.c      **** 	tracks[1].decayAmount = 128;
+ 153              		.loc 1 135 0
+ 154 0066 191C     		mov	r1, r3
+ 155 0068 8020     		mov	r0, #128
+ 156 006a 5831     		add	r1, r1, #88
+ 157 006c 0870     		strb	r0, [r1]
+ 136:.\main.c      **** 	tracks[1].ampAmount = 255;
+ 158              		.loc 1 136 0
+ 159 006e 191C     		mov	r1, r3
+ 160 0070 6046     		mov	r0, ip
+ 161 0072 5931     		add	r1, r1, #89
+ 162 0074 0870     		strb	r0, [r1]
+ 137:.\main.c      **** 	tracks[1].toneAmount = 127;
+ 163              		.loc 1 137 0
+ 164 0076 191C     		mov	r1, r3
+ 165 0078 5A31     		add	r1, r1, #90
+ 166 007a 0F70     		strb	r7, [r1]
+ 138:.\main.c      **** 	memcpy(tracks[1].sequence, snareSequence, SEQUENCE_LEN);
+ 167              		.loc 1 138 0
+ 168 007c 0121     		mov	r1, #1
+ 169 007e 2171     		strb	r1, [r4, #4]
+ 170 0080 2173     		strb	r1, [r4, #12]
+ 171 0082 191C     		mov	r1, r3
+ 132:.\main.c      **** 	tracks[1].decayLookupTable = modTableDown;
+ 172              		.loc 1 132 0
+ 173 0084 9A64     		str	r2, [r3, #72]
+ 133:.\main.c      **** 	tracks[1].waveFrequency = 120.0f;
+ 174              		.loc 1 133 0
+ 175 0086 019A     		ldr	r2, [sp, #4]
+ 176              		.loc 1 138 0
+ 177 0088 7C31     		add	r1, r1, #124
+ 133:.\main.c      **** 	tracks[1].waveFrequency = 120.0f;
+ 178              		.loc 1 133 0
+ 179 008a DA64     		str	r2, [r3, #76]
+ 180              		.loc 1 138 0
+ 181 008c 25CC     		ldmia	r4!, {r0, r2, r5}
+ 182 008e 25C1     		stmia	r1!, {r0, r2, r5}
+ 183 0090 2068     		ldr	r0, [r4]
+ 139:.\main.c      **** 
+ 140:.\main.c      **** 	// HiHat
+ 141:.\main.c      **** 	tracks[2].waveLookupTable = waveTableSine;	// unused
+ 142:.\main.c      **** 	tracks[2].decayLookupTable = modTableDown;
+ 143:.\main.c      **** 	tracks[2].waveFrequency = 1000.0f;			// unused
+ 144:.\main.c      **** 	tracks[2].decayAmount = 24;
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 7
+
+
+ 145:.\main.c      **** 	tracks[2].ampAmount = 24;
+ 146:.\main.c      **** 	tracks[2].toneAmount = 127;
+ 147:.\main.c      **** 	memcpy(tracks[2].sequence, hihatSequnce, SEQUENCE_LEN);
+ 184              		.loc 1 147 0
+ 185 0092 0AAD     		add	r5, sp, #40
+ 138:.\main.c      **** 
+ 186              		.loc 1 138 0
+ 187 0094 0860     		str	r0, [r1]
+ 141:.\main.c      **** 	tracks[2].decayLookupTable = modTableDown;
+ 188              		.loc 1 141 0
+ 189 0096 191C     		mov	r1, r3
+ 190 0098 009A     		ldr	r2, [sp]
+ 191 009a 9031     		add	r1, r1, #144
+ 192 009c 0A60     		str	r2, [r1]
+ 142:.\main.c      **** 	tracks[2].waveFrequency = 1000.0f;			// unused
+ 193              		.loc 1 142 0
+ 194 009e 191C     		mov	r1, r3
+ 195 00a0 019A     		ldr	r2, [sp, #4]
+ 196 00a2 9431     		add	r1, r1, #148
+ 197 00a4 0A60     		str	r2, [r1]
+ 143:.\main.c      **** 	tracks[2].decayAmount = 24;
+ 198              		.loc 1 143 0
+ 199 00a6 1A1C     		mov	r2, r3
+ 200 00a8 0020     		mov	r0, #0
+ 201 00aa 1049     		ldr	r1, .L5+20
+ 202 00ac 9832     		add	r2, r2, #152
+ 203 00ae 1060     		str	r0, [r2]
+ 204 00b0 5160     		str	r1, [r2, #4]
+ 144:.\main.c      **** 	tracks[2].ampAmount = 24;
+ 205              		.loc 1 144 0
+ 206 00b2 191C     		mov	r1, r3
+ 207 00b4 1822     		mov	r2, #24
+ 208 00b6 A031     		add	r1, r1, #160
+ 209 00b8 0A70     		strb	r2, [r1]
+ 145:.\main.c      **** 	tracks[2].toneAmount = 127;
+ 210              		.loc 1 145 0
+ 211 00ba 191C     		mov	r1, r3
+ 212 00bc A131     		add	r1, r1, #161
+ 213 00be 0A70     		strb	r2, [r1]
+ 146:.\main.c      **** 	memcpy(tracks[2].sequence, hihatSequnce, SEQUENCE_LEN);
+ 214              		.loc 1 146 0
+ 215 00c0 1A1C     		mov	r2, r3
+ 216 00c2 A232     		add	r2, r2, #162
+ 217 00c4 1770     		strb	r7, [r2]
+ 218              		.loc 1 147 0
+ 219 00c6 C433     		add	r3, r3, #196
+ 220 00c8 07CD     		ldmia	r5!, {r0, r1, r2}
+ 221 00ca 07C3     		stmia	r3!, {r0, r1, r2}
+ 222 00cc 1A1C     		mov	r2, r3
+ 223 00ce 2B68     		ldr	r3, [r5]
+ 224 00d0 1360     		str	r3, [r2]
+ 148:.\main.c      ****    
+ 149:.\main.c      **** }
+ 225              		.loc 1 149 0
+ 226 00d2 0FB0     		add	sp, sp, #60
+ 227              		@ sp needed
+ 228 00d4 F0BD     		pop	{r4, r5, r6, r7, pc}
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 8
+
+
+ 229              	.L6:
+ 230 00d6 C046     		.align	2
+ 231              	.L5:
+ 232 00d8 00000000 		.word	.LANCHOR0
+ 233 00dc 00000000 		.word	tracks
+ 234 00e0 00004E40 		.word	1078853632
+ 235 00e4 00100000 		.word	.LANCHOR1
+ 236 00e8 00005E40 		.word	1079902208
+ 237 00ec 00408F40 		.word	1083129856
+ 238              		.cfi_endproc
+ 239              	.LFE34:
+ 240              		.size	initTracks, .-initTracks
+ 241              		.global	__aeabi_lmul
+ 242              		.global	__aeabi_ddiv
+ 243              		.global	__aeabi_d2uiz
+ 244              		.global	__aeabi_uldivmod
+ 245              		.section	.text.initDDSParameter,"ax",%progbits
+ 246              		.align	1
+ 247              		.global	initDDSParameter
+ 248              		.code	16
+ 249              		.thumb_func
+ 250              		.type	initDDSParameter, %function
+ 251              	initDDSParameter:
+ 252              	.LFB35:
+ 150:.\main.c      **** 
+ 151:.\main.c      **** //*******************************************************************
+ 152:.\main.c      **** // DDSパラメーターの初期化
+ 153:.\main.c      **** //
+ 154:.\main.c      **** void initDDSParameter()
+ 155:.\main.c      **** {
+ 253              		.loc 1 155 0
+ 254              		.cfi_startproc
+ 255              	.LVL8:
+ 256 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 257              		.cfi_def_cfa_offset 20
+ 258              		.cfi_offset 4, -20
+ 259              		.cfi_offset 5, -16
+ 260              		.cfi_offset 6, -12
+ 261              		.cfi_offset 7, -8
+ 262              		.cfi_offset 14, -4
+ 156:.\main.c      ****     uint i;
+ 157:.\main.c      ****     
+ 158:.\main.c      ****     for (i = 0; i < TRACK_N; i++) {
+ 159:.\main.c      **** 		// 波形
+ 160:.\main.c      **** 		tracks[i].waveTuningWord = tracks[i].waveFrequency * POW_2_32 / SAMPLE_CLOCK;
+ 161:.\main.c      **** 		tracks[i].wavePhaseRegister = 0;
+ 162:.\main.c      **** 
+ 163:.\main.c      **** #if _TRACE_
+ 164:.\main.c      **** 		sprintf(lineBuffer, "track:\t%d\r\n waveFrequency:\t%d\r\n waveTunigWord:\t%u\r\n",
+ 165:.\main.c      ****             i, (int)tracks[i].waveFrequency, tracks[i].waveTuningWord);
+ 166:.\main.c      ****         UART_UartPutString(lineBuffer);
+ 167:.\main.c      **** #endif
+ 168:.\main.c      **** 		// Decay
+ 169:.\main.c      **** 		//decayPeriod = (SAMPLE_CLOCK / (((double)bpm / 60) * 4)) * ((double)decayAmount / 256);
+ 170:.\main.c      **** 		tracks[i].decayPeriod = ((uint64_t)SAMPLE_CLOCK * 60 * tracks[i].decayAmount) / ((uint64_t)bpm * 
+ 263              		.loc 1 170 0
+ 264 0002 1F4B     		ldr	r3, .L10
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 9
+
+
+ 155:.\main.c      ****     uint i;
+ 265              		.loc 1 155 0
+ 266 0004 85B0     		sub	sp, sp, #20
+ 267              		.cfi_def_cfa_offset 40
+ 268              		.loc 1 170 0
+ 269 0006 1878     		ldrb	r0, [r3]
+ 171:.\main.c      **** 		//decayTuningWord = ((((double)bpm / 60) * 4) / ((double)decayAmount / 256)) * (double)POW_2_32 /
+ 172:.\main.c      **** 		tracks[i].decayTuningWord = (bpm * ((uint64_t)POW_2_32 / 60) * 4 * 256 / tracks[i].decayAmount) /
+ 270              		.loc 1 172 0
+ 271 0008 0021     		mov	r1, #0
+ 170:.\main.c      **** 		//decayTuningWord = ((((double)bpm / 60) * 4) / ((double)decayAmount / 256)) * (double)POW_2_32 /
+ 272              		.loc 1 170 0
+ 273 000a 830D     		lsr	r3, r0, #22
+ 274 000c 0393     		str	r3, [sp, #12]
+ 275              		.loc 1 172 0
+ 276 000e 1D4A     		ldr	r2, .L10+4
+ 277 0010 1123     		mov	r3, #17
+ 170:.\main.c      **** 		//decayTuningWord = ((((double)bpm / 60) * 4) / ((double)decayAmount / 256)) * (double)POW_2_32 /
+ 278              		.loc 1 170 0
+ 279 0012 8702     		lsl	r7, r0, #10
+ 280              		.loc 1 172 0
+ 281 0014 FFF7FEFF 		bl	__aeabi_lmul
+ 282              	.LVL9:
+ 283 0018 0090     		str	r0, [sp]
+ 284 001a 0191     		str	r1, [sp, #4]
+ 285 001c 1A4C     		ldr	r4, .L10+8
+ 286              	.LVL10:
+ 287              	.L8:
+ 160:.\main.c      **** 		tracks[i].wavePhaseRegister = 0;
+ 288              		.loc 1 160 0 discriminator 3
+ 289 001e 2068     		ldr	r0, [r4]
+ 290 0020 6168     		ldr	r1, [r4, #4]
+ 291 0022 0022     		mov	r2, #0
+ 292 0024 194B     		ldr	r3, .L10+12
+ 293 0026 FFF7FEFF 		bl	__aeabi_dmul
+ 294              	.LVL11:
+ 295 002a 0022     		mov	r2, #0
+ 296 002c 184B     		ldr	r3, .L10+16
+ 297 002e FFF7FEFF 		bl	__aeabi_ddiv
+ 298              	.LVL12:
+ 299 0032 FFF7FEFF 		bl	__aeabi_d2uiz
+ 300              	.LVL13:
+ 161:.\main.c      **** 
+ 301              		.loc 1 161 0 discriminator 3
+ 302 0036 0025     		mov	r5, #0
+ 170:.\main.c      **** 		//decayTuningWord = ((((double)bpm / 60) * 4) / ((double)decayAmount / 256)) * (double)POW_2_32 /
+ 303              		.loc 1 170 0 discriminator 3
+ 304 0038 267A     		ldrb	r6, [r4, #8]
+ 160:.\main.c      **** 		tracks[i].wavePhaseRegister = 0;
+ 305              		.loc 1 160 0 discriminator 3
+ 306 003a 2061     		str	r0, [r4, #16]
+ 161:.\main.c      **** 
+ 307              		.loc 1 161 0 discriminator 3
+ 308 003c E560     		str	r5, [r4, #12]
+ 170:.\main.c      **** 		//decayTuningWord = ((((double)bpm / 60) * 4) / ((double)decayAmount / 256)) * (double)POW_2_32 /
+ 309              		.loc 1 170 0 discriminator 3
+ 310 003e 154A     		ldr	r2, .L10+20
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 10
+
+
+ 311 0040 0023     		mov	r3, #0
+ 312 0042 301C     		mov	r0, r6
+ 313 0044 291C     		mov	r1, r5
+ 314 0046 FFF7FEFF 		bl	__aeabi_lmul
+ 315              	.LVL14:
+ 316 004a 3A1C     		mov	r2, r7
+ 317 004c 039B     		ldr	r3, [sp, #12]
+ 318 004e FFF7FEFF 		bl	__aeabi_uldivmod
+ 319              	.LVL15:
+ 320              		.loc 1 172 0 discriminator 3
+ 321 0052 321C     		mov	r2, r6
+ 170:.\main.c      **** 		//decayTuningWord = ((((double)bpm / 60) * 4) / ((double)decayAmount / 256)) * (double)POW_2_32 /
+ 322              		.loc 1 170 0 discriminator 3
+ 323 0054 2062     		str	r0, [r4, #32]
+ 324              		.loc 1 172 0 discriminator 3
+ 325 0056 2B1C     		mov	r3, r5
+ 326 0058 0098     		ldr	r0, [sp]
+ 327 005a 0199     		ldr	r1, [sp, #4]
+ 328 005c FFF7FEFF 		bl	__aeabi_uldivmod
+ 329              	.LVL16:
+ 330 0060 0023     		mov	r3, #0
+ 331 0062 0D4A     		ldr	r2, .L10+24
+ 332 0064 FFF7FEFF 		bl	__aeabi_uldivmod
+ 333              	.LVL17:
+ 334 0068 231C     		mov	r3, r4
+ 335 006a 2433     		add	r3, r3, #36
+ 336 006c E061     		str	r0, [r4, #28]
+ 173:.\main.c      **** 		tracks[i].decayPhaseRegister = 0;
+ 337              		.loc 1 173 0 discriminator 3
+ 338 006e A561     		str	r5, [r4, #24]
+ 174:.\main.c      **** 		tracks[i].decayStop = 0;
+ 339              		.loc 1 174 0 discriminator 3
+ 340 0070 1D70     		strb	r5, [r3]
+ 158:.\main.c      **** 		// 波形
+ 341              		.loc 1 158 0 discriminator 3
+ 342 0072 0A4B     		ldr	r3, .L10+28
+ 343 0074 4834     		add	r4, r4, #72
+ 344 0076 9C42     		cmp	r4, r3
+ 345 0078 D1D1     		bne	.L8
+ 175:.\main.c      **** 		
+ 176:.\main.c      **** #if _TRACE_        
+ 177:.\main.c      **** 		sprintf(lineBuffer, " decayAmount:\t%u\r\n decayPeriod:\t%u\r\n decayTunigWord:\t%u\r\n",
+ 178:.\main.c      ****             tracks[i].decayAmount, tracks[i].decayPeriod, tracks[i].decayTuningWord);
+ 179:.\main.c      ****         UART_UartPutString(lineBuffer);
+ 180:.\main.c      **** #endif		
+ 181:.\main.c      **** 	}
+ 182:.\main.c      **** }
+ 346              		.loc 1 182 0
+ 347 007a 05B0     		add	sp, sp, #20
+ 348              		@ sp needed
+ 349 007c F0BD     		pop	{r4, r5, r6, r7, pc}
+ 350              	.L11:
+ 351 007e C046     		.align	2
+ 352              	.L10:
+ 353 0080 00000000 		.word	bpm
+ 354 0084 00101111 		.word	286330880
+ 355 0088 08000000 		.word	tracks+8
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 11
+
+
+ 356 008c 0000F041 		.word	1106247680
+ 357 0090 0070E740 		.word	1088909312
+ 358 0094 00F22B00 		.word	2880000
+ 359 0098 80BB0000 		.word	48000
+ 360 009c E0000000 		.word	tracks+224
+ 361              		.cfi_endproc
+ 362              	.LFE35:
+ 363              		.size	initDDSParameter, .-initDDSParameter
+ 364              		.section	.text.generateDDSWave,"ax",%progbits
+ 365              		.align	1
+ 366              		.global	generateDDSWave
+ 367              		.code	16
+ 368              		.thumb_func
+ 369              		.type	generateDDSWave, %function
+ 370              	generateDDSWave:
+ 371              	.LFB36:
+ 183:.\main.c      **** 
+ 184:.\main.c      **** //*******************************************************************
+ 185:.\main.c      **** // 波形の生成
+ 186:.\main.c      **** //
+ 187:.\main.c      **** inline fp32 generateDDSWave(uint32_t *phaseRegister, uint32_t tuningWord, const fp32 *lookupTable)
+ 188:.\main.c      **** {
+ 372              		.loc 1 188 0
+ 373              		.cfi_startproc
+ 374              	.LVL18:
+ 189:.\main.c      **** 	*phaseRegister += tuningWord;
+ 375              		.loc 1 189 0
+ 376 0000 0368     		ldr	r3, [r0]
+ 190:.\main.c      **** 
+ 191:.\main.c      **** 	// lookupTableの要素数に丸める
+ 192:.\main.c      **** 	// 32bit -> 10bit
+ 193:.\main.c      **** 	uint16_t index = (*phaseRegister) >> 22;
+ 194:.\main.c      **** 	fp32 waveValue = *(lookupTable + index);
+ 195:.\main.c      **** 
+ 196:.\main.c      **** #if _TRACE_GENERATE_WAVE_DDS_    
+ 197:.\main.c      ****     sprintf(lineBuffer, "%u\t%d\t%f\t", *phaseRegister, index, fp32_to_double(waveValue));
+ 198:.\main.c      ****     UART_UartPutString(lineBuffer);
+ 199:.\main.c      **** #endif
+ 200:.\main.c      ****     
+ 201:.\main.c      **** 	return waveValue;
+ 202:.\main.c      **** }
+ 377              		.loc 1 202 0
+ 378              		@ sp needed
+ 189:.\main.c      **** 	*phaseRegister += tuningWord;
+ 379              		.loc 1 189 0
+ 380 0002 C918     		add	r1, r1, r3
+ 381              	.LVL19:
+ 382 0004 0160     		str	r1, [r0]
+ 383              	.LVL20:
+ 193:.\main.c      **** 	fp32 waveValue = *(lookupTable + index);
+ 384              		.loc 1 193 0
+ 385 0006 890D     		lsr	r1, r1, #22
+ 386              	.LVL21:
+ 194:.\main.c      **** 
+ 387              		.loc 1 194 0
+ 388 0008 8900     		lsl	r1, r1, #2
+ 201:.\main.c      **** }
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 12
+
+
+ 389              		.loc 1 201 0
+ 390 000a 8858     		ldr	r0, [r1, r2]
+ 391              	.LVL22:
+ 392              		.loc 1 202 0
+ 393 000c 7047     		bx	lr
+ 394              		.cfi_endproc
+ 395              	.LFE36:
+ 396              		.size	generateDDSWave, .-generateDDSWave
+ 397              		.section	.text.generateNoise,"ax",%progbits
+ 398              		.align	1
+ 399              		.global	generateNoise
+ 400              		.code	16
+ 401              		.thumb_func
+ 402              		.type	generateNoise, %function
+ 403              	generateNoise:
+ 404              	.LFB37:
+ 203:.\main.c      **** 
+ 204:.\main.c      **** // -1.0 .. 1.0の乱数
+ 205:.\main.c      **** // PSoC用に変更
+ 206:.\main.c      **** inline fp32 generateNoise()
+ 207:.\main.c      **** {
+ 405              		.loc 1 207 0
+ 406              		.cfi_startproc
+ 407 0000 08B5     		push	{r3, lr}
+ 408              		.cfi_def_cfa_offset 8
+ 409              		.cfi_offset 3, -8
+ 410              		.cfi_offset 14, -4
+ 208:.\main.c      ****     int32 r, v;
+ 209:.\main.c      **** 	fp32 fv;
+ 210:.\main.c      **** 	
+ 211:.\main.c      ****     r = rand() >> 15;
+ 411              		.loc 1 211 0
+ 412 0002 FFF7FEFF 		bl	rand
+ 413              	.LVL23:
+ 414 0006 C313     		asr	r3, r0, #15
+ 415              	.LVL24:
+ 416 0008 5800     		lsl	r0, r3, #1
+ 212:.\main.c      ****     v = (r & 0x8000) ? (0xffff0000 | (r << 1)) : (r << 1);
+ 417              		.loc 1 212 0
+ 418 000a 1B04     		lsl	r3, r3, #16
+ 419 000c 01D5     		bpl	.L15
+ 420              	.LVL25:
+ 421              		.loc 1 212 0 is_stmt 0 discriminator 1
+ 422 000e 014B     		ldr	r3, .L17
+ 423 0010 1843     		orr	r0, r3
+ 424              	.L15:
+ 425              	.LVL26:
+ 213:.\main.c      **** 	fv = (fp32)v;
+ 214:.\main.c      ****     
+ 215:.\main.c      **** #if _TRACE_GENERATE_WAVE_NOISE_    
+ 216:.\main.c      **** 	sprintf(lineBuffer, "%ld\t%ld\t%ld\r\n", r, v, fp32_to_int_1000(fv));
+ 217:.\main.c      ****     UART_UartPutString(lineBuffer);
+ 218:.\main.c      **** #endif   
+ 219:.\main.c      **** 
+ 220:.\main.c      **** 	return fv;
+ 221:.\main.c      **** }
+ 426              		.loc 1 221 0 is_stmt 1 discriminator 4
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 13
+
+
+ 427              		@ sp needed
+ 428 0012 08BD     		pop	{r3, pc}
+ 429              	.L18:
+ 430              		.align	2
+ 431              	.L17:
+ 432 0014 0000FFFF 		.word	-65536
+ 433              		.cfi_endproc
+ 434              	.LFE37:
+ 435              		.size	generateNoise, .-generateNoise
+ 436              		.section	.text.startup.main,"ax",%progbits
+ 437              		.align	1
+ 438              		.global	main
+ 439              		.code	16
+ 440              		.thumb_func
+ 441              		.type	main, %function
+ 442              	main:
+ 443              	.LFB38:
+ 222:.\main.c      ****     
+ 223:.\main.c      **** //*******************************************************************
+ 224:.\main.c      **** // メインルーチン
+ 225:.\main.c      **** //
+ 226:.\main.c      **** int main()
+ 227:.\main.c      **** {
+ 444              		.loc 1 227 0
+ 445              		.cfi_startproc
+ 446 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 447              		.cfi_def_cfa_offset 20
+ 448              		.cfi_offset 4, -20
+ 449              		.cfi_offset 5, -16
+ 450              		.cfi_offset 6, -12
+ 451              		.cfi_offset 7, -8
+ 452              		.cfi_offset 14, -4
+ 453 0002 87B0     		sub	sp, sp, #28
+ 454              		.cfi_def_cfa_offset 48
+ 228:.\main.c      ****     uint32 startTime, endTime;
+ 229:.\main.c      ****     uint32 i, loop;
+ 230:.\main.c      ****     
+ 231:.\main.c      ****     /* Start SCB (UART mode) operation */
+ 232:.\main.c      ****     UART_Start();
+ 455              		.loc 1 232 0
+ 456 0004 FFF7FEFF 		bl	UART_Start
+ 457              	.LVL27:
+ 233:.\main.c      ****     
+ 234:.\main.c      **** #if _UART_OUT_HEADER_
+ 235:.\main.c      ****     UART_UartPutString("\r\n***********************************************************************
+ 236:.\main.c      ****     UART_UartPutString("Fixed Point DDS RhythmMachine Test.\r\n");
+ 237:.\main.c      ****     UART_UartPutString("\r\n");
+ 238:.\main.c      **** 
+ 239:.\main.c      ****     sprintf(lineBuffer, "RAND_MAX: %d\r\n", RAND_MAX);
+ 240:.\main.c      ****     UART_UartPutString(lineBuffer);
+ 241:.\main.c      **** #endif
+ 242:.\main.c      **** 
+ 243:.\main.c      ****     Timer_1_Start();
+ 458              		.loc 1 243 0
+ 459 0008 FFF7FEFF 		bl	Timer_1_Start
+ 460              	.LVL28:
+ 244:.\main.c      ****     
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 14
+
+
+ 245:.\main.c      ****     CyGlobalIntEnable; /* Enable global interrupts. */
+ 461              		.loc 1 245 0
+ 462              	@ 245 ".\main.c" 1
+ 463 000c 62B6     		CPSIE   i
+ 464              	@ 0 "" 2
+ 246:.\main.c      ****     
+ 247:.\main.c      ****     initTracks();
+ 465              		.loc 1 247 0
+ 466              		.code	16
+ 467 000e FFF7FEFF 		bl	initTracks
+ 468              	.LVL29:
+ 248:.\main.c      **** 
+ 249:.\main.c      **** 	// BPMの計算
+ 250:.\main.c      **** 	//
+ 251:.\main.c      **** 	bpm = INITIAL_BPM;
+ 469              		.loc 1 251 0
+ 470 0012 7822     		mov	r2, #120
+ 471 0014 4F4B     		ldr	r3, .L34
+ 472 0016 1A70     		strb	r2, [r3]
+ 252:.\main.c      ****     
+ 253:.\main.c      **** #if _TRACE_    
+ 254:.\main.c      **** 	sprintf(lineBuffer, "bpm:\t%u\r\n", bpm);
+ 255:.\main.c      ****     UART_UartPutString(lineBuffer);
+ 256:.\main.c      **** #endif
+ 257:.\main.c      **** 
+ 258:.\main.c      **** 	ticksPerNote = SAMPLE_CLOCK * 60 / (bpm * 4);
+ 473              		.loc 1 258 0
+ 474 0018 4F4B     		ldr	r3, .L34+4
+ 475 001a 504A     		ldr	r2, .L34+8
+ 476 001c 1A60     		str	r2, [r3]
+ 259:.\main.c      **** 	// ↑整数演算のため丸めているので注意
+ 260:.\main.c      ****     
+ 261:.\main.c      **** #if _TRACE_   
+ 262:.\main.c      **** 	sprintf(lineBuffer, "ticksPerNote:\t%d\r\n", ticksPerNote);
+ 263:.\main.c      ****     UART_UartPutString(lineBuffer);
+ 264:.\main.c      **** #endif
+ 265:.\main.c      **** 
+ 266:.\main.c      ****     initDDSParameter();
+ 477              		.loc 1 266 0
+ 478 001e FFF7FEFF 		bl	initDDSParameter
+ 479              	.LVL30:
+ 267:.\main.c      ****     
+ 268:.\main.c      ****     /**********************************************************
+ 269:.\main.c      ****      * 実行時間計測スタート
+ 270:.\main.c      ****      **********************************************************/
+ 271:.\main.c      ****     startTime = Timer_1_ReadCounter();
+ 480              		.loc 1 271 0
+ 481 0022 FFF7FEFF 		bl	Timer_1_ReadCounter
+ 482              	.LVL31:
+ 483 0026 4E4B     		ldr	r3, .L34+12
+ 484 0028 0590     		str	r0, [sp, #20]
+ 485              	.LVL32:
+ 486 002a 0493     		str	r3, [sp, #16]
+ 487              	.LVL33:
+ 488              	.L31:
+ 489              	.LBB2:
+ 272:.\main.c      **** 
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 15
+
+
+ 273:.\main.c      ****     for (loop = 0; loop < LOOP_N; loop++)
+ 274:.\main.c      ****     {        
+ 275:.\main.c      ****  		tick++;
+ 490              		.loc 1 275 0
+ 491 002c 4D49     		ldr	r1, .L34+16
+ 276:.\main.c      **** 
+ 277:.\main.c      **** 		if (tick >= ticksPerNote) {
+ 492              		.loc 1 277 0
+ 493 002e 4A4A     		ldr	r2, .L34+4
+ 275:.\main.c      **** 
+ 494              		.loc 1 275 0
+ 495 0030 0B68     		ldr	r3, [r1]
+ 496              		.loc 1 277 0
+ 497 0032 1268     		ldr	r2, [r2]
+ 275:.\main.c      **** 
+ 498              		.loc 1 275 0
+ 499 0034 0133     		add	r3, r3, #1
+ 500 0036 0B60     		str	r3, [r1]
+ 501 0038 4B4E     		ldr	r6, .L34+20
+ 502              		.loc 1 277 0
+ 503 003a 9342     		cmp	r3, r2
+ 504 003c 02D2     		bcs	.L20
+ 505              	.L22:
+ 506              	.LVL34:
+ 507 003e 4B4C     		ldr	r4, .L34+24
+ 508              	.LBE2:
+ 271:.\main.c      **** 
+ 509              		.loc 1 271 0
+ 510 0040 0327     		mov	r7, #3
+ 511 0042 4AE0     		b	.L21
+ 512              	.LVL35:
+ 513              	.L20:
+ 514              	.LBB5:
+ 278:.\main.c      **** 			noteCount++;
+ 279:.\main.c      **** 
+ 280:.\main.c      **** 			// noteの先頭でtickをリセット
+ 281:.\main.c      **** 			tick = 0;
+ 515              		.loc 1 281 0
+ 516 0044 0022     		mov	r2, #0
+ 278:.\main.c      **** 			noteCount++;
+ 517              		.loc 1 278 0
+ 518 0046 3368     		ldr	r3, [r6]
+ 519              		.loc 1 281 0
+ 520 0048 0A60     		str	r2, [r1]
+ 521              	.LVL36:
+ 278:.\main.c      **** 			noteCount++;
+ 522              		.loc 1 278 0
+ 523 004a 0133     		add	r3, r3, #1
+ 524 004c 3360     		str	r3, [r6]
+ 282:.\main.c      **** 
+ 283:.\main.c      **** 			// noteの先頭でwavePhaseRegister, decayPhaserRegisterをリセット
+ 284:.\main.c      **** 			for (i = 0; i < TRACK_N; i++) {
+ 285:.\main.c      **** 				tracks[i].wavePhaseRegister = 0;
+ 525              		.loc 1 285 0
+ 526 004e 484B     		ldr	r3, .L34+28
+ 286:.\main.c      **** 				tracks[i].decayPhaseRegister = 0;
+ 287:.\main.c      **** 				tracks[i].decayStop = 0;
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 16
+
+
+ 527              		.loc 1 287 0
+ 528 0050 191C     		mov	r1, r3
+ 529 0052 2C31     		add	r1, r1, #44
+ 530 0054 0A70     		strb	r2, [r1]
+ 531              	.LVL37:
+ 532 0056 191C     		mov	r1, r3
+ 533 0058 7431     		add	r1, r1, #116
+ 534 005a 0A70     		strb	r2, [r1]
+ 535              	.LVL38:
+ 285:.\main.c      **** 				tracks[i].decayPhaseRegister = 0;
+ 536              		.loc 1 285 0
+ 537 005c 191C     		mov	r1, r3
+ 538 005e A431     		add	r1, r1, #164
+ 539 0060 0A60     		str	r2, [r1]
+ 286:.\main.c      **** 				tracks[i].decayPhaseRegister = 0;
+ 540              		.loc 1 286 0
+ 541 0062 191C     		mov	r1, r3
+ 285:.\main.c      **** 				tracks[i].decayPhaseRegister = 0;
+ 542              		.loc 1 285 0
+ 543 0064 5A61     		str	r2, [r3, #20]
+ 286:.\main.c      **** 				tracks[i].decayPhaseRegister = 0;
+ 544              		.loc 1 286 0
+ 545 0066 1A62     		str	r2, [r3, #32]
+ 285:.\main.c      **** 				tracks[i].decayPhaseRegister = 0;
+ 546              		.loc 1 285 0
+ 547 0068 DA65     		str	r2, [r3, #92]
+ 286:.\main.c      **** 				tracks[i].decayPhaseRegister = 0;
+ 548              		.loc 1 286 0
+ 549 006a 9A66     		str	r2, [r3, #104]
+ 550 006c B031     		add	r1, r1, #176
+ 551              		.loc 1 287 0
+ 552 006e BC33     		add	r3, r3, #188
+ 286:.\main.c      **** 				tracks[i].decayPhaseRegister = 0;
+ 553              		.loc 1 286 0
+ 554 0070 0A60     		str	r2, [r1]
+ 555              		.loc 1 287 0
+ 556 0072 1A70     		strb	r2, [r3]
+ 557              	.LVL39:
+ 558 0074 E3E7     		b	.L22
+ 559              	.LVL40:
+ 560              	.L23:
+ 561              	.LBB3:
+ 288:.\main.c      **** 			}
+ 289:.\main.c      **** 		}
+ 290:.\main.c      **** 		// トラックの処理
+ 291:.\main.c      **** 		//
+ 292:.\main.c      **** 		for (i = 0; i < TRACK_N; i++) {
+ 293:.\main.c      ****             
+ 294:.\main.c      ****     		if (tracks[i].sequence[noteCount % SEQUENCE_LEN] == 0) {
+ 295:.\main.c      **** 				tracks[i].waveValue = int_to_fp32(0);
+ 296:.\main.c      **** 				continue;
+ 297:.\main.c      **** 			}
+ 298:.\main.c      ****             
+ 299:.\main.c      ****     		// Decayの処理 ***********************************************************
+ 300:.\main.c      **** 			//
+ 301:.\main.c      **** 			//***********************************************************************
+ 302:.\main.c      **** 			if (!tracks[i].decayStop) {
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 17
+
+
+ 562              		.loc 1 302 0
+ 563 0076 237C     		ldrb	r3, [r4, #16]
+ 564 0078 002B     		cmp	r3, #0
+ 565 007a 03D1     		bne	.L25
+ 303:.\main.c      **** 				tracks[i].decayPhaseRegister += tracks[i].decayTuningWord;
+ 566              		.loc 1 303 0
+ 567 007c 6368     		ldr	r3, [r4, #4]
+ 568 007e A268     		ldr	r2, [r4, #8]
+ 569 0080 9B18     		add	r3, r3, r2
+ 570 0082 6360     		str	r3, [r4, #4]
+ 571              	.L25:
+ 304:.\main.c      **** 			}
+ 305:.\main.c      **** 			if (tick == tracks[i].decayPeriod - 1) {
+ 572              		.loc 1 305 0
+ 573 0084 374A     		ldr	r2, .L34+16
+ 574 0086 E368     		ldr	r3, [r4, #12]
+ 575 0088 1268     		ldr	r2, [r2]
+ 576 008a 013B     		sub	r3, r3, #1
+ 577 008c 9A42     		cmp	r2, r3
+ 578 008e 01D1     		bne	.L26
+ 306:.\main.c      **** 				tracks[i].decayStop = 1;
+ 579              		.loc 1 306 0
+ 580 0090 0123     		mov	r3, #1
+ 581 0092 2374     		strb	r3, [r4, #16]
+ 582              	.L26:
+ 583              	.LVL41:
+ 307:.\main.c      **** 			}
+ 308:.\main.c      **** 
+ 309:.\main.c      **** 			// 32bitのphaseRegisterをテーブルの7bit(128個)に丸める
+ 310:.\main.c      **** 			int decayIndex = tracks[i].decayPhaseRegister >> 25;
+ 311:.\main.c      **** 			tracks[i].decayValue = *(tracks[i].decayLookupTable + decayIndex);
+ 584              		.loc 1 311 0
+ 585 0094 221C     		mov	r2, r4
+ 310:.\main.c      **** 			tracks[i].decayValue = *(tracks[i].decayLookupTable + decayIndex);
+ 586              		.loc 1 310 0
+ 587 0096 6368     		ldr	r3, [r4, #4]
+ 588              		.loc 1 311 0
+ 589 0098 183A     		sub	r2, r2, #24
+ 590 009a 1268     		ldr	r2, [r2]
+ 310:.\main.c      **** 			tracks[i].decayValue = *(tracks[i].decayLookupTable + decayIndex);
+ 591              		.loc 1 310 0
+ 592 009c 5B0E     		lsr	r3, r3, #25
+ 593              	.LVL42:
+ 594              		.loc 1 311 0
+ 595 009e 9B00     		lsl	r3, r3, #2
+ 596              	.LVL43:
+ 597 00a0 9B58     		ldr	r3, [r3, r2]
+ 598 00a2 0393     		str	r3, [sp, #12]
+ 599 00a4 6361     		str	r3, [r4, #20]
+ 600              	.LVL44:
+ 312:.\main.c      **** 
+ 313:.\main.c      **** #if _TRACE_TRACK_            
+ 314:.\main.c      **** 			sprintf(lineBuffer, "%d\t%d\t%d\t%d\t",
+ 315:.\main.c      ****                 tick, tracks[i].decayPhaseRegister, decayIndex, fp32_to_int(tracks[i].decayValue));
+ 316:.\main.c      ****             UART_UartPutString(lineBuffer);
+ 317:.\main.c      **** #endif
+ 318:.\main.c      **** 			
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 18
+
+
+ 319:.\main.c      **** 			// サンプル毎の振幅変調の合算 **********************************************
+ 320:.\main.c      **** 			//
+ 321:.\main.c      **** 			//************************************************************************ 
+ 322:.\main.c      **** 			fp32 amValue = tracks[i].decayValue;
+ 323:.\main.c      **** 
+ 324:.\main.c      **** #if _TRACE_TRACK_            
+ 325:.\main.c      **** 			sprintf(lineBuffer, "%d\t", fp32_to_int(amValue));
+ 326:.\main.c      ****             UART_UartPutString(lineBuffer);
+ 327:.\main.c      **** #endif            
+ 328:.\main.c      **** 
+ 329:.\main.c      **** 			// Wave系の処理 ***********************************************************
+ 330:.\main.c      **** 			//
+ 331:.\main.c      **** 			//************************************************************************
+ 332:.\main.c      **** 			switch (i) {
+ 601              		.loc 1 332 0
+ 602 00a6 0129     		cmp	r1, #1
+ 603 00a8 27D0     		beq	.L28
+ 604 00aa 0229     		cmp	r1, #2
+ 605 00ac 2CD0     		beq	.L29
+ 333:.\main.c      **** 			case 0:	// kick
+ 334:.\main.c      **** 				tracks[i].waveValue = generateDDSWave(
+ 606              		.loc 1 334 0
+ 607 00ae 3148     		ldr	r0, .L34+32
+ 608 00b0 A969     		ldr	r1, [r5, #24]
+ 609              	.LVL45:
+ 610 00b2 2A68     		ldr	r2, [r5]
+ 611 00b4 FFF7FEFF 		bl	generateDDSWave
+ 612              	.LVL46:
+ 613 00b8 E861     		str	r0, [r5, #28]
+ 614              	.L30:
+ 335:.\main.c      **** 					&(tracks[i].wavePhaseRegister),
+ 336:.\main.c      **** 					tracks[i].waveTuningWord,
+ 337:.\main.c      **** 					tracks[i].waveLookupTable);
+ 338:.\main.c      **** 				break;
+ 339:.\main.c      **** 			case 1:	// snare
+ 340:.\main.c      **** 				tracks[i].waveValue = generateDDSWave(
+ 341:.\main.c      **** 					&(tracks[i].wavePhaseRegister),
+ 342:.\main.c      **** 					tracks[i].waveTuningWord,
+ 343:.\main.c      **** 					tracks[i].waveLookupTable);
+ 344:.\main.c      **** 				break;
+ 345:.\main.c      **** 			case 2:	// hihat
+ 346:.\main.c      **** 				//tracks[i].waveValue = generateNoise();
+ 347:.\main.c      ****                 
+ 348:.\main.c      ****                 tracks[i].waveValue = generateDDSWave(
+ 349:.\main.c      **** 					&(tracks[i].wavePhaseRegister),
+ 350:.\main.c      **** 					tracks[i].waveTuningWord,
+ 351:.\main.c      **** 					tracks[i].waveLookupTable);
+ 352:.\main.c      ****                 
+ 353:.\main.c      **** 				break;
+ 354:.\main.c      **** 			default:
+ 355:.\main.c      ****                 ;
+ 356:.\main.c      **** 				//error("Track no. out of range: %d\n", i);
+ 357:.\main.c      **** 			}			
+ 358:.\main.c      **** 
+ 359:.\main.c      **** 			// 振幅変調 ***************************************************************
+ 360:.\main.c      **** 			// waveValue: -1.0 .. 1.0
+ 361:.\main.c      **** 			// amValue:    0.0 .. 1.0
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 19
+
+
+ 362:.\main.c      **** 			//************************************************************************
+ 363:.\main.c      **** 			tracks[i].waveValue = fp32_mul(tracks[i].waveValue, amValue);
+ 615              		.loc 1 363 0
+ 616 00ba 2368     		ldr	r3, [r4]
+ 617 00bc 2068     		ldr	r0, [r4]
+ 618 00be D917     		asr	r1, r3, #31
+ 619 00c0 039B     		ldr	r3, [sp, #12]
+ 620 00c2 039A     		ldr	r2, [sp, #12]
+ 621 00c4 DB17     		asr	r3, r3, #31
+ 622 00c6 FFF7FEFF 		bl	__aeabi_lmul
+ 623              	.LVL47:
+ 624 00ca 0904     		lsl	r1, r1, #16
+ 625 00cc 000C     		lsr	r0, r0, #16
+ 626 00ce 0843     		orr	r0, r1
+ 627 00d0 2060     		str	r0, [r4]
+ 628              	.LVL48:
+ 629              	.L24:
+ 630 00d2 013F     		sub	r7, r7, #1
+ 631              	.LVL49:
+ 632 00d4 4834     		add	r4, r4, #72
+ 633              	.LBE3:
+ 292:.\main.c      ****             
+ 634              		.loc 1 292 0 discriminator 2
+ 635 00d6 002F     		cmp	r7, #0
+ 636 00d8 23D0     		beq	.L33
+ 637              	.LVL50:
+ 638              	.L21:
+ 639              	.LBB4:
+ 294:.\main.c      **** 				tracks[i].waveValue = int_to_fp32(0);
+ 640              		.loc 1 294 0
+ 641 00da 0F23     		mov	r3, #15
+ 642 00dc 0321     		mov	r1, #3
+ 643 00de 3268     		ldr	r2, [r6]
+ 644 00e0 C91B     		sub	r1, r1, r7
+ 645              	.LVL51:
+ 646 00e2 1A40     		and	r2, r3
+ 647 00e4 3933     		add	r3, r3, #57
+ 648 00e6 4B43     		mul	r3, r1
+ 649 00e8 214D     		ldr	r5, .L34+28
+ 650 00ea EB18     		add	r3, r5, r3
+ 651 00ec 9B18     		add	r3, r3, r2
+ 652 00ee 3033     		add	r3, r3, #48
+ 653 00f0 1B79     		ldrb	r3, [r3, #4]
+ 654 00f2 002B     		cmp	r3, #0
+ 655 00f4 BFD1     		bne	.L23
+ 295:.\main.c      **** 				continue;
+ 656              		.loc 1 295 0
+ 657 00f6 2360     		str	r3, [r4]
+ 296:.\main.c      **** 			}
+ 658              		.loc 1 296 0
+ 659 00f8 EBE7     		b	.L24
+ 660              	.LVL52:
+ 661              	.L28:
+ 340:.\main.c      **** 					&(tracks[i].wavePhaseRegister),
+ 662              		.loc 1 340 0
+ 663 00fa 1F48     		ldr	r0, .L34+36
+ 664 00fc 296E     		ldr	r1, [r5, #96]
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 20
+
+
+ 665              	.LVL53:
+ 666 00fe AA6C     		ldr	r2, [r5, #72]
+ 667 0100 FFF7FEFF 		bl	generateDDSWave
+ 668              	.LVL54:
+ 669 0104 6866     		str	r0, [r5, #100]
+ 344:.\main.c      **** 			case 2:	// hihat
+ 670              		.loc 1 344 0
+ 671 0106 D8E7     		b	.L30
+ 672              	.LVL55:
+ 673              	.L29:
+ 348:.\main.c      **** 					&(tracks[i].wavePhaseRegister),
+ 674              		.loc 1 348 0
+ 675 0108 194A     		ldr	r2, .L34+28
+ 676 010a 194B     		ldr	r3, .L34+28
+ 677              	.LVL56:
+ 678 010c A832     		add	r2, r2, #168
+ 679 010e 9033     		add	r3, r3, #144
+ 680 0110 1168     		ldr	r1, [r2]
+ 681              	.LVL57:
+ 682 0112 1A48     		ldr	r0, .L34+40
+ 683 0114 1A68     		ldr	r2, [r3]
+ 684 0116 FFF7FEFF 		bl	generateDDSWave
+ 685              	.LVL58:
+ 686 011a 154B     		ldr	r3, .L34+28
+ 687 011c AC33     		add	r3, r3, #172
+ 688 011e 1860     		str	r0, [r3]
+ 353:.\main.c      **** 			default:
+ 689              		.loc 1 353 0
+ 690 0120 CBE7     		b	.L30
+ 691              	.LVL59:
+ 692              	.L33:
+ 693 0122 049B     		ldr	r3, [sp, #16]
+ 694 0124 013B     		sub	r3, r3, #1
+ 695 0126 0493     		str	r3, [sp, #16]
+ 696              	.LVL60:
+ 697              	.LBE4:
+ 698              	.LBE5:
+ 273:.\main.c      ****     {        
+ 699              		.loc 1 273 0 discriminator 2
+ 700 0128 002B     		cmp	r3, #0
+ 701 012a 00D0     		beq	.LCB593
+ 702 012c 7EE7     		b	.L31	@long jump
+ 703              	.LCB593:
+ 364:.\main.c      **** 
+ 365:.\main.c      **** #if _TRACE_TRACK_            
+ 366:.\main.c      **** 			sprintf(lineBuffer, "%d\t", fp32_to_int(amValue));
+ 367:.\main.c      ****             UART_UartPutString(lineBuffer);
+ 368:.\main.c      **** 
+ 369:.\main.c      ****             UART_UartPutString("\r\n");
+ 370:.\main.c      **** #endif            
+ 371:.\main.c      **** 		}
+ 372:.\main.c      **** 		
+ 373:.\main.c      **** 		// トラックの合成 ***********************************************************
+ 374:.\main.c      **** 		//
+ 375:.\main.c      **** 		// ************************************************************************
+ 376:.\main.c      **** 		fp32 synthWaveValue = int_to_fp32(0);
+ 377:.\main.c      **** 		for (i = 0; i < TRACK_N; i++) {
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 21
+
+
+ 378:.\main.c      **** 			fp32 fv;
+ 379:.\main.c      **** 			// 各トラックの出力値： waveValue * sequence[note](Velocity) * ampAmount
+ 380:.\main.c      **** 			fv = fp32_mul(tracks[i].waveValue, int_to_fp32(tracks[i].sequence[noteCount % SEQUENCE_LEN]));
+ 381:.\main.c      **** 			fv = fp32_mul(fv, int_to_fp32(tracks[i].ampAmount));
+ 382:.\main.c      **** 			fv = fp32_div(fv, int_to_fp32(UINT8_MAX));
+ 383:.\main.c      **** 
+ 384:.\main.c      **** #if _TRACE_            
+ 385:.\main.c      **** 			sprintf(lineBuffer, "%d\r\n", fp32_to_int(fp32_mul(fv, int_to_fp32(1000))));
+ 386:.\main.c      ****             UART_UartPutString(lineBuffer);
+ 387:.\main.c      **** #endif
+ 388:.\main.c      **** 
+ 389:.\main.c      **** 			synthWaveValue = fp32_add(synthWaveValue, fv); 
+ 390:.\main.c      **** 		}
+ 391:.\main.c      **** 
+ 392:.\main.c      **** 		// 出力値の補正 ***********************************************************
+ 393:.\main.c      **** 		//
+ 394:.\main.c      **** 		// ************************************************************************
+ 395:.\main.c      **** 		
+ 396:.\main.c      **** 		// リミッター
+ 397:.\main.c      **** 		//
+ 398:.\main.c      **** 		if (synthWaveValue >= int_to_fp32(1))
+ 399:.\main.c      **** 			synthWaveValue = int_to_fp32(1);
+ 400:.\main.c      **** 		else if (synthWaveValue < int_to_fp32(-1))
+ 401:.\main.c      **** 			synthWaveValue = int_to_fp32(-1);
+ 402:.\main.c      **** 
+ 403:.\main.c      **** 		// for 12bit output (0..4095)
+ 404:.\main.c      **** 		// 2048で乗算すると12bit幅を超えるため2047で乗算
+ 405:.\main.c      **** 		//
+ 406:.\main.c      **** 		fp32 fp32_12bit = fp32_mul(synthWaveValue + int_to_fp32(1), int_to_fp32(2047));
+ 407:.\main.c      **** 		int16_t i12v = fp32_to_int(fp32_12bit);
+ 408:.\main.c      **** 		
+ 409:.\main.c      **** #if _UART_OUT_12BIT_        
+ 410:.\main.c      ****         sprintf(lineBuffer, "%d\r\n", i12v);
+ 411:.\main.c      ****         UART_UartPutString(lineBuffer);
+ 412:.\main.c      **** #endif        
+ 413:.\main.c      **** 
+ 414:.\main.c      **** 		// for 12bit output (0..4095) as 16bit RAW format
+ 415:.\main.c      **** 		//
+ 416:.\main.c      **** 		//printf("%d\t", (int)(i12v - 2048) << 4);
+ 417:.\main.c      **** 
+ 418:.\main.c      **** 		// for 16bit output (-32768 .. 32767)
+ 419:.\main.c      **** 		//
+ 420:.\main.c      **** 		//fp32 fp32_16bit = fp32_mul(synthWaveValue, int_to_fp32(32767));
+ 421:.\main.c      **** 		//int16_t out_16bit = fp32_to_int(fp32_16bit);
+ 422:.\main.c      **** 		//printf("%d\t", out_16bit);
+ 423:.\main.c      **** 		//fwrite(&out_16bit, sizeof(out_16bit), 1, stdout);
+ 424:.\main.c      **** 	}
+ 425:.\main.c      ****     
+ 426:.\main.c      ****     /**********************************************************
+ 427:.\main.c      ****      * 実行時間計測終了
+ 428:.\main.c      ****      **********************************************************/
+ 429:.\main.c      ****     endTime = Timer_1_ReadCounter();
+ 704              		.loc 1 429 0
+ 705 012e FFF7FEFF 		bl	Timer_1_ReadCounter
+ 706              	.LVL61:
+ 430:.\main.c      **** 
+ 431:.\main.c      **** #if _UART_OUT_RUNTIME_    
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 22
+
+
+ 432:.\main.c      ****     sprintf(lineBuffer, "start: %lu, end: %lu, diff: %lu\r\n", startTime, endTime, endTime - startT
+ 707              		.loc 1 432 0
+ 708 0132 059A     		ldr	r2, [sp, #20]
+ 709 0134 0436     		add	r6, r6, #4
+ 710 0136 821A     		sub	r2, r0, r2
+ 429:.\main.c      **** 
+ 711              		.loc 1 429 0
+ 712 0138 031C     		mov	r3, r0
+ 713              	.LVL62:
+ 714              		.loc 1 432 0
+ 715 013a 0092     		str	r2, [sp]
+ 716 013c 1049     		ldr	r1, .L34+44
+ 717 013e 059A     		ldr	r2, [sp, #20]
+ 718 0140 301C     		mov	r0, r6
+ 719              	.LVL63:
+ 720 0142 FFF7FEFF 		bl	sprintf
+ 721              	.LVL64:
+ 433:.\main.c      ****     UART_UartPutString(lineBuffer);
+ 722              		.loc 1 433 0
+ 723 0146 301C     		mov	r0, r6
+ 724 0148 FFF7FEFF 		bl	UART_UartPutString
+ 725              	.LVL65:
+ 434:.\main.c      **** #endif
+ 435:.\main.c      **** 
+ 436:.\main.c      ****     UART_UartPutString("end\r\n");
+ 726              		.loc 1 436 0
+ 727 014c 0D48     		ldr	r0, .L34+48
+ 728 014e FFF7FEFF 		bl	UART_UartPutString
+ 729              	.LVL66:
+ 730              	.L32:
+ 437:.\main.c      ****     
+ 438:.\main.c      ****     for(;;)
+ 439:.\main.c      ****         ;
+ 731              		.loc 1 439 0 discriminator 1
+ 732 0152 FEE7     		b	.L32
+ 733              	.L35:
+ 734              		.align	2
+ 735              	.L34:
+ 736 0154 00000000 		.word	bpm
+ 737 0158 00000000 		.word	ticksPerNote
+ 738 015c 70170000 		.word	6000
+ 739 0160 80BB0000 		.word	48000
+ 740 0164 00000000 		.word	.LANCHOR2
+ 741 0168 00000000 		.word	.LANCHOR3
+ 742 016c 1C000000 		.word	tracks+28
+ 743 0170 00000000 		.word	tracks
+ 744 0174 14000000 		.word	tracks+20
+ 745 0178 5C000000 		.word	tracks+92
+ 746 017c A4000000 		.word	tracks+164
+ 747 0180 00000000 		.word	.LC34
+ 748 0184 22000000 		.word	.LC36
+ 749              		.cfi_endproc
+ 750              	.LFE38:
+ 751              		.size	main, .-main
+ 752              		.comm	tracks,216,8
+ 753              		.comm	ticksPerNote,4,4
+ 754              		.comm	bpm,1,1
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 23
+
+
+ 755              		.global	noteCount
+ 756              		.global	tick
+ 757              		.global	modTableDown
+ 758              		.global	waveTableSine
+ 759              		.section	.rodata
+ 760              		.align	2
+ 761              		.set	.LANCHOR0,. + 0
+ 762              		.set	.LANCHOR1,. + 4096
+ 763              	.LC0:
+ 764 0000 01       		.byte	1
+ 765 0001 00       		.byte	0
+ 766 0002 00       		.byte	0
+ 767 0003 00       		.byte	0
+ 768 0004 01       		.byte	1
+ 769 0005 00       		.byte	0
+ 770 0006 00       		.byte	0
+ 771 0007 00       		.byte	0
+ 772 0008 01       		.byte	1
+ 773 0009 00       		.byte	0
+ 774 000a 00       		.byte	0
+ 775 000b 00       		.byte	0
+ 776 000c 01       		.byte	1
+ 777 000d 00       		.byte	0
+ 778 000e 01       		.byte	1
+ 779 000f 00       		.byte	0
+ 780              	.LC1:
+ 781 0010 01       		.byte	1
+ 782 0011 01       		.byte	1
+ 783 0012 01       		.byte	1
+ 784 0013 01       		.byte	1
+ 785 0014 00       		.byte	0
+ 786 0015 01       		.byte	1
+ 787 0016 01       		.byte	1
+ 788 0017 01       		.byte	1
+ 789 0018 00       		.byte	0
+ 790 0019 01       		.byte	1
+ 791 001a 01       		.byte	1
+ 792 001b 01       		.byte	1
+ 793 001c 00       		.byte	0
+ 794 001d 01       		.byte	1
+ 795 001e 01       		.byte	1
+ 796 001f 01       		.byte	1
+ 797              		.type	waveTableSine, %object
+ 798              		.size	waveTableSine, 4096
+ 799              	waveTableSine:
+ 800 0020 00000000 		.word	0
+ 801 0024 92010000 		.word	402
+ 802 0028 24030000 		.word	804
+ 803 002c B6040000 		.word	1206
+ 804 0030 48060000 		.word	1608
+ 805 0034 DA070000 		.word	2010
+ 806 0038 6C090000 		.word	2412
+ 807 003c FE0A0000 		.word	2814
+ 808 0040 8F0C0000 		.word	3215
+ 809 0044 210E0000 		.word	3617
+ 810 0048 B20F0000 		.word	4018
+ 811 004c 44110000 		.word	4420
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 24
+
+
+ 812 0050 D5120000 		.word	4821
+ 813 0054 66140000 		.word	5222
+ 814 0058 F6150000 		.word	5622
+ 815 005c 87170000 		.word	6023
+ 816 0060 17190000 		.word	6423
+ 817 0064 A71A0000 		.word	6823
+ 818 0068 371C0000 		.word	7223
+ 819 006c C71D0000 		.word	7623
+ 820 0070 561F0000 		.word	8022
+ 821 0074 E5200000 		.word	8421
+ 822 0078 73220000 		.word	8819
+ 823 007c 02240000 		.word	9218
+ 824 0080 90250000 		.word	9616
+ 825 0084 1D270000 		.word	10013
+ 826 0088 AA280000 		.word	10410
+ 827 008c 372A0000 		.word	10807
+ 828 0090 C42B0000 		.word	11204
+ 829 0094 502D0000 		.word	11600
+ 830 0098 DB2E0000 		.word	11995
+ 831 009c 66300000 		.word	12390
+ 832 00a0 F1310000 		.word	12785
+ 833 00a4 7B330000 		.word	13179
+ 834 00a8 05350000 		.word	13573
+ 835 00ac 8E360000 		.word	13966
+ 836 00b0 17380000 		.word	14359
+ 837 00b4 9F390000 		.word	14751
+ 838 00b8 263B0000 		.word	15142
+ 839 00bc AD3C0000 		.word	15533
+ 840 00c0 333E0000 		.word	15923
+ 841 00c4 B93F0000 		.word	16313
+ 842 00c8 3E410000 		.word	16702
+ 843 00cc C3420000 		.word	17091
+ 844 00d0 47440000 		.word	17479
+ 845 00d4 CA450000 		.word	17866
+ 846 00d8 4D470000 		.word	18253
+ 847 00dc CE480000 		.word	18638
+ 848 00e0 504A0000 		.word	19024
+ 849 00e4 D04B0000 		.word	19408
+ 850 00e8 504D0000 		.word	19792
+ 851 00ec CF4E0000 		.word	20175
+ 852 00f0 4D500000 		.word	20557
+ 853 00f4 CA510000 		.word	20938
+ 854 00f8 47530000 		.word	21319
+ 855 00fc C3540000 		.word	21699
+ 856 0100 3E560000 		.word	22078
+ 857 0104 B8570000 		.word	22456
+ 858 0108 31590000 		.word	22833
+ 859 010c AA5A0000 		.word	23210
+ 860 0110 225C0000 		.word	23586
+ 861 0114 985D0000 		.word	23960
+ 862 0118 0E5F0000 		.word	24334
+ 863 011c 83600000 		.word	24707
+ 864 0120 F7610000 		.word	25079
+ 865 0124 6A630000 		.word	25450
+ 866 0128 DC640000 		.word	25820
+ 867 012c 4D660000 		.word	26189
+ 868 0130 BD670000 		.word	26557
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 25
+
+
+ 869 0134 2D690000 		.word	26925
+ 870 0138 9B6A0000 		.word	27291
+ 871 013c 086C0000 		.word	27656
+ 872 0140 746D0000 		.word	28020
+ 873 0144 DF6E0000 		.word	28383
+ 874 0148 49700000 		.word	28745
+ 875 014c B1710000 		.word	29105
+ 876 0150 19730000 		.word	29465
+ 877 0154 80740000 		.word	29824
+ 878 0158 E5750000 		.word	30181
+ 879 015c 4A770000 		.word	30538
+ 880 0160 AD780000 		.word	30893
+ 881 0164 0F7A0000 		.word	31247
+ 882 0168 707B0000 		.word	31600
+ 883 016c D07C0000 		.word	31952
+ 884 0170 2E7E0000 		.word	32302
+ 885 0174 8B7F0000 		.word	32651
+ 886 0178 E7800000 		.word	32999
+ 887 017c 42820000 		.word	33346
+ 888 0180 9C830000 		.word	33692
+ 889 0184 F4840000 		.word	34036
+ 890 0188 4B860000 		.word	34379
+ 891 018c A1870000 		.word	34721
+ 892 0190 F5880000 		.word	35061
+ 893 0194 488A0000 		.word	35400
+ 894 0198 9A8B0000 		.word	35738
+ 895 019c EA8C0000 		.word	36074
+ 896 01a0 398E0000 		.word	36409
+ 897 01a4 878F0000 		.word	36743
+ 898 01a8 D3900000 		.word	37075
+ 899 01ac 1E920000 		.word	37406
+ 900 01b0 68930000 		.word	37736
+ 901 01b4 B0940000 		.word	38064
+ 902 01b8 F6950000 		.word	38390
+ 903 01bc 3C970000 		.word	38716
+ 904 01c0 7F980000 		.word	39039
+ 905 01c4 C2990000 		.word	39362
+ 906 01c8 029B0000 		.word	39682
+ 907 01cc 429C0000 		.word	40002
+ 908 01d0 7F9D0000 		.word	40319
+ 909 01d4 BC9E0000 		.word	40636
+ 910 01d8 F69F0000 		.word	40950
+ 911 01dc 2FA10000 		.word	41263
+ 912 01e0 67A20000 		.word	41575
+ 913 01e4 9DA30000 		.word	41885
+ 914 01e8 D2A40000 		.word	42194
+ 915 01ec 05A60000 		.word	42501
+ 916 01f0 36A70000 		.word	42806
+ 917 01f4 66A80000 		.word	43110
+ 918 01f8 94A90000 		.word	43412
+ 919 01fc C0AA0000 		.word	43712
+ 920 0200 EBAB0000 		.word	44011
+ 921 0204 14AD0000 		.word	44308
+ 922 0208 3BAE0000 		.word	44603
+ 923 020c 61AF0000 		.word	44897
+ 924 0210 85B00000 		.word	45189
+ 925 0214 A8B10000 		.word	45480
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 26
+
+
+ 926 0218 C8B20000 		.word	45768
+ 927 021c E7B30000 		.word	46055
+ 928 0220 04B50000 		.word	46340
+ 929 0224 20B60000 		.word	46624
+ 930 0228 3AB70000 		.word	46906
+ 931 022c 52B80000 		.word	47186
+ 932 0230 68B90000 		.word	47464
+ 933 0234 7CBA0000 		.word	47740
+ 934 0238 8FBB0000 		.word	48015
+ 935 023c A0BC0000 		.word	48288
+ 936 0240 AEBD0000 		.word	48558
+ 937 0244 BCBE0000 		.word	48828
+ 938 0248 C7BF0000 		.word	49095
+ 939 024c D0C00000 		.word	49360
+ 940 0250 D8C10000 		.word	49624
+ 941 0254 DEC20000 		.word	49886
+ 942 0258 E2C30000 		.word	50146
+ 943 025c E3C40000 		.word	50403
+ 944 0260 E4C50000 		.word	50660
+ 945 0264 E2C60000 		.word	50914
+ 946 0268 DEC70000 		.word	51166
+ 947 026c D8C80000 		.word	51416
+ 948 0270 D1C90000 		.word	51665
+ 949 0274 C7CA0000 		.word	51911
+ 950 0278 BBCB0000 		.word	52155
+ 951 027c AECC0000 		.word	52398
+ 952 0280 9FCD0000 		.word	52639
+ 953 0284 8DCE0000 		.word	52877
+ 954 0288 7ACF0000 		.word	53114
+ 955 028c 64D00000 		.word	53348
+ 956 0290 4DD10000 		.word	53581
+ 957 0294 33D20000 		.word	53811
+ 958 0298 18D30000 		.word	54040
+ 959 029c FAD30000 		.word	54266
+ 960 02a0 DBD40000 		.word	54491
+ 961 02a4 B9D50000 		.word	54713
+ 962 02a8 95D60000 		.word	54933
+ 963 02ac 70D70000 		.word	55152
+ 964 02b0 48D80000 		.word	55368
+ 965 02b4 1ED90000 		.word	55582
+ 966 02b8 F2D90000 		.word	55794
+ 967 02bc C4DA0000 		.word	56004
+ 968 02c0 94DB0000 		.word	56212
+ 969 02c4 61DC0000 		.word	56417
+ 970 02c8 2DDD0000 		.word	56621
+ 971 02cc F6DD0000 		.word	56822
+ 972 02d0 BEDE0000 		.word	57022
+ 973 02d4 83DF0000 		.word	57219
+ 974 02d8 46E00000 		.word	57414
+ 975 02dc 06E10000 		.word	57606
+ 976 02e0 C5E10000 		.word	57797
+ 977 02e4 82E20000 		.word	57986
+ 978 02e8 3CE30000 		.word	58172
+ 979 02ec F4E30000 		.word	58356
+ 980 02f0 AAE40000 		.word	58538
+ 981 02f4 5EE50000 		.word	58718
+ 982 02f8 0FE60000 		.word	58895
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 27
+
+
+ 983 02fc BEE60000 		.word	59070
+ 984 0300 6BE70000 		.word	59243
+ 985 0304 16E80000 		.word	59414
+ 986 0308 BFE80000 		.word	59583
+ 987 030c 65E90000 		.word	59749
+ 988 0310 09EA0000 		.word	59913
+ 989 0314 ABEA0000 		.word	60075
+ 990 0318 4BEB0000 		.word	60235
+ 991 031c E8EB0000 		.word	60392
+ 992 0320 83EC0000 		.word	60547
+ 993 0324 1CED0000 		.word	60700
+ 994 0328 B2ED0000 		.word	60850
+ 995 032c 46EE0000 		.word	60998
+ 996 0330 D8EE0000 		.word	61144
+ 997 0334 68EF0000 		.word	61288
+ 998 0338 F5EF0000 		.word	61429
+ 999 033c 80F00000 		.word	61568
+ 1000 0340 09F10000 		.word	61705
+ 1001 0344 8FF10000 		.word	61839
+ 1002 0348 13F20000 		.word	61971
+ 1003 034c 94F20000 		.word	62100
+ 1004 0350 14F30000 		.word	62228
+ 1005 0354 91F30000 		.word	62353
+ 1006 0358 0BF40000 		.word	62475
+ 1007 035c 84F40000 		.word	62596
+ 1008 0360 FAF40000 		.word	62714
+ 1009 0364 6DF50000 		.word	62829
+ 1010 0368 DEF50000 		.word	62942
+ 1011 036c 4DF60000 		.word	63053
+ 1012 0370 BAF60000 		.word	63162
+ 1013 0374 24F70000 		.word	63268
+ 1014 0378 8BF70000 		.word	63371
+ 1015 037c F1F70000 		.word	63473
+ 1016 0380 53F80000 		.word	63571
+ 1017 0384 B4F80000 		.word	63668
+ 1018 0388 12F90000 		.word	63762
+ 1019 038c 6EF90000 		.word	63854
+ 1020 0390 C7F90000 		.word	63943
+ 1021 0394 1EFA0000 		.word	64030
+ 1022 0398 73FA0000 		.word	64115
+ 1023 039c C5FA0000 		.word	64197
+ 1024 03a0 14FB0000 		.word	64276
+ 1025 03a4 61FB0000 		.word	64353
+ 1026 03a8 ACFB0000 		.word	64428
+ 1027 03ac F5FB0000 		.word	64501
+ 1028 03b0 3BFC0000 		.word	64571
+ 1029 03b4 7EFC0000 		.word	64638
+ 1030 03b8 BFFC0000 		.word	64703
+ 1031 03bc FEFC0000 		.word	64766
+ 1032 03c0 3AFD0000 		.word	64826
+ 1033 03c4 74FD0000 		.word	64884
+ 1034 03c8 ABFD0000 		.word	64939
+ 1035 03cc E0FD0000 		.word	64992
+ 1036 03d0 13FE0000 		.word	65043
+ 1037 03d4 43FE0000 		.word	65091
+ 1038 03d8 70FE0000 		.word	65136
+ 1039 03dc 9BFE0000 		.word	65179
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 28
+
+
+ 1040 03e0 C4FE0000 		.word	65220
+ 1041 03e4 EAFE0000 		.word	65258
+ 1042 03e8 0EFF0000 		.word	65294
+ 1043 03ec 2FFF0000 		.word	65327
+ 1044 03f0 4EFF0000 		.word	65358
+ 1045 03f4 6AFF0000 		.word	65386
+ 1046 03f8 84FF0000 		.word	65412
+ 1047 03fc 9CFF0000 		.word	65436
+ 1048 0400 B1FF0000 		.word	65457
+ 1049 0404 C3FF0000 		.word	65475
+ 1050 0408 D3FF0000 		.word	65491
+ 1051 040c E1FF0000 		.word	65505
+ 1052 0410 ECFF0000 		.word	65516
+ 1053 0414 F4FF0000 		.word	65524
+ 1054 0418 FBFF0000 		.word	65531
+ 1055 041c FEFF0000 		.word	65534
+ 1056 0420 00000100 		.word	65536
+ 1057 0424 FEFF0000 		.word	65534
+ 1058 0428 FBFF0000 		.word	65531
+ 1059 042c F4FF0000 		.word	65524
+ 1060 0430 ECFF0000 		.word	65516
+ 1061 0434 E1FF0000 		.word	65505
+ 1062 0438 D3FF0000 		.word	65491
+ 1063 043c C3FF0000 		.word	65475
+ 1064 0440 B1FF0000 		.word	65457
+ 1065 0444 9CFF0000 		.word	65436
+ 1066 0448 84FF0000 		.word	65412
+ 1067 044c 6AFF0000 		.word	65386
+ 1068 0450 4EFF0000 		.word	65358
+ 1069 0454 2FFF0000 		.word	65327
+ 1070 0458 0EFF0000 		.word	65294
+ 1071 045c EAFE0000 		.word	65258
+ 1072 0460 C4FE0000 		.word	65220
+ 1073 0464 9BFE0000 		.word	65179
+ 1074 0468 70FE0000 		.word	65136
+ 1075 046c 43FE0000 		.word	65091
+ 1076 0470 13FE0000 		.word	65043
+ 1077 0474 E0FD0000 		.word	64992
+ 1078 0478 ABFD0000 		.word	64939
+ 1079 047c 74FD0000 		.word	64884
+ 1080 0480 3AFD0000 		.word	64826
+ 1081 0484 FEFC0000 		.word	64766
+ 1082 0488 BFFC0000 		.word	64703
+ 1083 048c 7EFC0000 		.word	64638
+ 1084 0490 3BFC0000 		.word	64571
+ 1085 0494 F5FB0000 		.word	64501
+ 1086 0498 ACFB0000 		.word	64428
+ 1087 049c 61FB0000 		.word	64353
+ 1088 04a0 14FB0000 		.word	64276
+ 1089 04a4 C5FA0000 		.word	64197
+ 1090 04a8 73FA0000 		.word	64115
+ 1091 04ac 1EFA0000 		.word	64030
+ 1092 04b0 C7F90000 		.word	63943
+ 1093 04b4 6EF90000 		.word	63854
+ 1094 04b8 12F90000 		.word	63762
+ 1095 04bc B4F80000 		.word	63668
+ 1096 04c0 53F80000 		.word	63571
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 29
+
+
+ 1097 04c4 F1F70000 		.word	63473
+ 1098 04c8 8BF70000 		.word	63371
+ 1099 04cc 24F70000 		.word	63268
+ 1100 04d0 BAF60000 		.word	63162
+ 1101 04d4 4DF60000 		.word	63053
+ 1102 04d8 DEF50000 		.word	62942
+ 1103 04dc 6DF50000 		.word	62829
+ 1104 04e0 FAF40000 		.word	62714
+ 1105 04e4 84F40000 		.word	62596
+ 1106 04e8 0BF40000 		.word	62475
+ 1107 04ec 91F30000 		.word	62353
+ 1108 04f0 14F30000 		.word	62228
+ 1109 04f4 94F20000 		.word	62100
+ 1110 04f8 13F20000 		.word	61971
+ 1111 04fc 8FF10000 		.word	61839
+ 1112 0500 09F10000 		.word	61705
+ 1113 0504 80F00000 		.word	61568
+ 1114 0508 F5EF0000 		.word	61429
+ 1115 050c 68EF0000 		.word	61288
+ 1116 0510 D8EE0000 		.word	61144
+ 1117 0514 46EE0000 		.word	60998
+ 1118 0518 B2ED0000 		.word	60850
+ 1119 051c 1CED0000 		.word	60700
+ 1120 0520 83EC0000 		.word	60547
+ 1121 0524 E8EB0000 		.word	60392
+ 1122 0528 4BEB0000 		.word	60235
+ 1123 052c ABEA0000 		.word	60075
+ 1124 0530 09EA0000 		.word	59913
+ 1125 0534 65E90000 		.word	59749
+ 1126 0538 BFE80000 		.word	59583
+ 1127 053c 16E80000 		.word	59414
+ 1128 0540 6BE70000 		.word	59243
+ 1129 0544 BEE60000 		.word	59070
+ 1130 0548 0FE60000 		.word	58895
+ 1131 054c 5EE50000 		.word	58718
+ 1132 0550 AAE40000 		.word	58538
+ 1133 0554 F4E30000 		.word	58356
+ 1134 0558 3CE30000 		.word	58172
+ 1135 055c 82E20000 		.word	57986
+ 1136 0560 C5E10000 		.word	57797
+ 1137 0564 06E10000 		.word	57606
+ 1138 0568 46E00000 		.word	57414
+ 1139 056c 83DF0000 		.word	57219
+ 1140 0570 BEDE0000 		.word	57022
+ 1141 0574 F6DD0000 		.word	56822
+ 1142 0578 2DDD0000 		.word	56621
+ 1143 057c 61DC0000 		.word	56417
+ 1144 0580 94DB0000 		.word	56212
+ 1145 0584 C4DA0000 		.word	56004
+ 1146 0588 F2D90000 		.word	55794
+ 1147 058c 1ED90000 		.word	55582
+ 1148 0590 48D80000 		.word	55368
+ 1149 0594 70D70000 		.word	55152
+ 1150 0598 95D60000 		.word	54933
+ 1151 059c B9D50000 		.word	54713
+ 1152 05a0 DBD40000 		.word	54491
+ 1153 05a4 FAD30000 		.word	54266
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 30
+
+
+ 1154 05a8 18D30000 		.word	54040
+ 1155 05ac 33D20000 		.word	53811
+ 1156 05b0 4DD10000 		.word	53581
+ 1157 05b4 64D00000 		.word	53348
+ 1158 05b8 7ACF0000 		.word	53114
+ 1159 05bc 8DCE0000 		.word	52877
+ 1160 05c0 9FCD0000 		.word	52639
+ 1161 05c4 AECC0000 		.word	52398
+ 1162 05c8 BBCB0000 		.word	52155
+ 1163 05cc C7CA0000 		.word	51911
+ 1164 05d0 D1C90000 		.word	51665
+ 1165 05d4 D8C80000 		.word	51416
+ 1166 05d8 DEC70000 		.word	51166
+ 1167 05dc E2C60000 		.word	50914
+ 1168 05e0 E4C50000 		.word	50660
+ 1169 05e4 E3C40000 		.word	50403
+ 1170 05e8 E2C30000 		.word	50146
+ 1171 05ec DEC20000 		.word	49886
+ 1172 05f0 D8C10000 		.word	49624
+ 1173 05f4 D0C00000 		.word	49360
+ 1174 05f8 C7BF0000 		.word	49095
+ 1175 05fc BCBE0000 		.word	48828
+ 1176 0600 AEBD0000 		.word	48558
+ 1177 0604 A0BC0000 		.word	48288
+ 1178 0608 8FBB0000 		.word	48015
+ 1179 060c 7CBA0000 		.word	47740
+ 1180 0610 68B90000 		.word	47464
+ 1181 0614 52B80000 		.word	47186
+ 1182 0618 3AB70000 		.word	46906
+ 1183 061c 20B60000 		.word	46624
+ 1184 0620 04B50000 		.word	46340
+ 1185 0624 E7B30000 		.word	46055
+ 1186 0628 C8B20000 		.word	45768
+ 1187 062c A8B10000 		.word	45480
+ 1188 0630 85B00000 		.word	45189
+ 1189 0634 61AF0000 		.word	44897
+ 1190 0638 3BAE0000 		.word	44603
+ 1191 063c 14AD0000 		.word	44308
+ 1192 0640 EBAB0000 		.word	44011
+ 1193 0644 C0AA0000 		.word	43712
+ 1194 0648 94A90000 		.word	43412
+ 1195 064c 66A80000 		.word	43110
+ 1196 0650 36A70000 		.word	42806
+ 1197 0654 05A60000 		.word	42501
+ 1198 0658 D2A40000 		.word	42194
+ 1199 065c 9DA30000 		.word	41885
+ 1200 0660 67A20000 		.word	41575
+ 1201 0664 2FA10000 		.word	41263
+ 1202 0668 F69F0000 		.word	40950
+ 1203 066c BC9E0000 		.word	40636
+ 1204 0670 7F9D0000 		.word	40319
+ 1205 0674 429C0000 		.word	40002
+ 1206 0678 029B0000 		.word	39682
+ 1207 067c C2990000 		.word	39362
+ 1208 0680 7F980000 		.word	39039
+ 1209 0684 3C970000 		.word	38716
+ 1210 0688 F6950000 		.word	38390
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 31
+
+
+ 1211 068c B0940000 		.word	38064
+ 1212 0690 68930000 		.word	37736
+ 1213 0694 1E920000 		.word	37406
+ 1214 0698 D3900000 		.word	37075
+ 1215 069c 878F0000 		.word	36743
+ 1216 06a0 398E0000 		.word	36409
+ 1217 06a4 EA8C0000 		.word	36074
+ 1218 06a8 9A8B0000 		.word	35738
+ 1219 06ac 488A0000 		.word	35400
+ 1220 06b0 F5880000 		.word	35061
+ 1221 06b4 A1870000 		.word	34721
+ 1222 06b8 4B860000 		.word	34379
+ 1223 06bc F4840000 		.word	34036
+ 1224 06c0 9C830000 		.word	33692
+ 1225 06c4 42820000 		.word	33346
+ 1226 06c8 E7800000 		.word	32999
+ 1227 06cc 8B7F0000 		.word	32651
+ 1228 06d0 2E7E0000 		.word	32302
+ 1229 06d4 D07C0000 		.word	31952
+ 1230 06d8 707B0000 		.word	31600
+ 1231 06dc 0F7A0000 		.word	31247
+ 1232 06e0 AD780000 		.word	30893
+ 1233 06e4 4A770000 		.word	30538
+ 1234 06e8 E5750000 		.word	30181
+ 1235 06ec 80740000 		.word	29824
+ 1236 06f0 19730000 		.word	29465
+ 1237 06f4 B1710000 		.word	29105
+ 1238 06f8 49700000 		.word	28745
+ 1239 06fc DF6E0000 		.word	28383
+ 1240 0700 746D0000 		.word	28020
+ 1241 0704 086C0000 		.word	27656
+ 1242 0708 9B6A0000 		.word	27291
+ 1243 070c 2D690000 		.word	26925
+ 1244 0710 BD670000 		.word	26557
+ 1245 0714 4D660000 		.word	26189
+ 1246 0718 DC640000 		.word	25820
+ 1247 071c 6A630000 		.word	25450
+ 1248 0720 F7610000 		.word	25079
+ 1249 0724 83600000 		.word	24707
+ 1250 0728 0E5F0000 		.word	24334
+ 1251 072c 985D0000 		.word	23960
+ 1252 0730 225C0000 		.word	23586
+ 1253 0734 AA5A0000 		.word	23210
+ 1254 0738 31590000 		.word	22833
+ 1255 073c B8570000 		.word	22456
+ 1256 0740 3E560000 		.word	22078
+ 1257 0744 C3540000 		.word	21699
+ 1258 0748 47530000 		.word	21319
+ 1259 074c CA510000 		.word	20938
+ 1260 0750 4D500000 		.word	20557
+ 1261 0754 CF4E0000 		.word	20175
+ 1262 0758 504D0000 		.word	19792
+ 1263 075c D04B0000 		.word	19408
+ 1264 0760 504A0000 		.word	19024
+ 1265 0764 CE480000 		.word	18638
+ 1266 0768 4D470000 		.word	18253
+ 1267 076c CA450000 		.word	17866
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 32
+
+
+ 1268 0770 47440000 		.word	17479
+ 1269 0774 C3420000 		.word	17091
+ 1270 0778 3E410000 		.word	16702
+ 1271 077c B93F0000 		.word	16313
+ 1272 0780 333E0000 		.word	15923
+ 1273 0784 AD3C0000 		.word	15533
+ 1274 0788 263B0000 		.word	15142
+ 1275 078c 9F390000 		.word	14751
+ 1276 0790 17380000 		.word	14359
+ 1277 0794 8E360000 		.word	13966
+ 1278 0798 05350000 		.word	13573
+ 1279 079c 7B330000 		.word	13179
+ 1280 07a0 F1310000 		.word	12785
+ 1281 07a4 66300000 		.word	12390
+ 1282 07a8 DB2E0000 		.word	11995
+ 1283 07ac 502D0000 		.word	11600
+ 1284 07b0 C42B0000 		.word	11204
+ 1285 07b4 372A0000 		.word	10807
+ 1286 07b8 AA280000 		.word	10410
+ 1287 07bc 1D270000 		.word	10013
+ 1288 07c0 90250000 		.word	9616
+ 1289 07c4 02240000 		.word	9218
+ 1290 07c8 73220000 		.word	8819
+ 1291 07cc E5200000 		.word	8421
+ 1292 07d0 561F0000 		.word	8022
+ 1293 07d4 C71D0000 		.word	7623
+ 1294 07d8 371C0000 		.word	7223
+ 1295 07dc A71A0000 		.word	6823
+ 1296 07e0 17190000 		.word	6423
+ 1297 07e4 87170000 		.word	6023
+ 1298 07e8 F6150000 		.word	5622
+ 1299 07ec 66140000 		.word	5222
+ 1300 07f0 D5120000 		.word	4821
+ 1301 07f4 44110000 		.word	4420
+ 1302 07f8 B20F0000 		.word	4018
+ 1303 07fc 210E0000 		.word	3617
+ 1304 0800 8F0C0000 		.word	3215
+ 1305 0804 FE0A0000 		.word	2814
+ 1306 0808 6C090000 		.word	2412
+ 1307 080c DA070000 		.word	2010
+ 1308 0810 48060000 		.word	1608
+ 1309 0814 B6040000 		.word	1206
+ 1310 0818 24030000 		.word	804
+ 1311 081c 92010000 		.word	402
+ 1312 0820 00000000 		.word	0
+ 1313 0824 6EFEFFFF 		.word	-402
+ 1314 0828 DCFCFFFF 		.word	-804
+ 1315 082c 4AFBFFFF 		.word	-1206
+ 1316 0830 B8F9FFFF 		.word	-1608
+ 1317 0834 26F8FFFF 		.word	-2010
+ 1318 0838 94F6FFFF 		.word	-2412
+ 1319 083c 02F5FFFF 		.word	-2814
+ 1320 0840 71F3FFFF 		.word	-3215
+ 1321 0844 DFF1FFFF 		.word	-3617
+ 1322 0848 4EF0FFFF 		.word	-4018
+ 1323 084c BCEEFFFF 		.word	-4420
+ 1324 0850 2BEDFFFF 		.word	-4821
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 33
+
+
+ 1325 0854 9AEBFFFF 		.word	-5222
+ 1326 0858 0AEAFFFF 		.word	-5622
+ 1327 085c 79E8FFFF 		.word	-6023
+ 1328 0860 E9E6FFFF 		.word	-6423
+ 1329 0864 59E5FFFF 		.word	-6823
+ 1330 0868 C9E3FFFF 		.word	-7223
+ 1331 086c 39E2FFFF 		.word	-7623
+ 1332 0870 AAE0FFFF 		.word	-8022
+ 1333 0874 1BDFFFFF 		.word	-8421
+ 1334 0878 8DDDFFFF 		.word	-8819
+ 1335 087c FEDBFFFF 		.word	-9218
+ 1336 0880 70DAFFFF 		.word	-9616
+ 1337 0884 E3D8FFFF 		.word	-10013
+ 1338 0888 56D7FFFF 		.word	-10410
+ 1339 088c C9D5FFFF 		.word	-10807
+ 1340 0890 3CD4FFFF 		.word	-11204
+ 1341 0894 B0D2FFFF 		.word	-11600
+ 1342 0898 25D1FFFF 		.word	-11995
+ 1343 089c 9ACFFFFF 		.word	-12390
+ 1344 08a0 0FCEFFFF 		.word	-12785
+ 1345 08a4 85CCFFFF 		.word	-13179
+ 1346 08a8 FBCAFFFF 		.word	-13573
+ 1347 08ac 72C9FFFF 		.word	-13966
+ 1348 08b0 E9C7FFFF 		.word	-14359
+ 1349 08b4 61C6FFFF 		.word	-14751
+ 1350 08b8 DAC4FFFF 		.word	-15142
+ 1351 08bc 53C3FFFF 		.word	-15533
+ 1352 08c0 CDC1FFFF 		.word	-15923
+ 1353 08c4 47C0FFFF 		.word	-16313
+ 1354 08c8 C2BEFFFF 		.word	-16702
+ 1355 08cc 3DBDFFFF 		.word	-17091
+ 1356 08d0 B9BBFFFF 		.word	-17479
+ 1357 08d4 36BAFFFF 		.word	-17866
+ 1358 08d8 B3B8FFFF 		.word	-18253
+ 1359 08dc 32B7FFFF 		.word	-18638
+ 1360 08e0 B0B5FFFF 		.word	-19024
+ 1361 08e4 30B4FFFF 		.word	-19408
+ 1362 08e8 B0B2FFFF 		.word	-19792
+ 1363 08ec 31B1FFFF 		.word	-20175
+ 1364 08f0 B3AFFFFF 		.word	-20557
+ 1365 08f4 36AEFFFF 		.word	-20938
+ 1366 08f8 B9ACFFFF 		.word	-21319
+ 1367 08fc 3DABFFFF 		.word	-21699
+ 1368 0900 C2A9FFFF 		.word	-22078
+ 1369 0904 48A8FFFF 		.word	-22456
+ 1370 0908 CFA6FFFF 		.word	-22833
+ 1371 090c 56A5FFFF 		.word	-23210
+ 1372 0910 DEA3FFFF 		.word	-23586
+ 1373 0914 68A2FFFF 		.word	-23960
+ 1374 0918 F2A0FFFF 		.word	-24334
+ 1375 091c 7D9FFFFF 		.word	-24707
+ 1376 0920 099EFFFF 		.word	-25079
+ 1377 0924 969CFFFF 		.word	-25450
+ 1378 0928 249BFFFF 		.word	-25820
+ 1379 092c B399FFFF 		.word	-26189
+ 1380 0930 4398FFFF 		.word	-26557
+ 1381 0934 D396FFFF 		.word	-26925
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 34
+
+
+ 1382 0938 6595FFFF 		.word	-27291
+ 1383 093c F893FFFF 		.word	-27656
+ 1384 0940 8C92FFFF 		.word	-28020
+ 1385 0944 2191FFFF 		.word	-28383
+ 1386 0948 B78FFFFF 		.word	-28745
+ 1387 094c 4F8EFFFF 		.word	-29105
+ 1388 0950 E78CFFFF 		.word	-29465
+ 1389 0954 808BFFFF 		.word	-29824
+ 1390 0958 1B8AFFFF 		.word	-30181
+ 1391 095c B688FFFF 		.word	-30538
+ 1392 0960 5387FFFF 		.word	-30893
+ 1393 0964 F185FFFF 		.word	-31247
+ 1394 0968 9084FFFF 		.word	-31600
+ 1395 096c 3083FFFF 		.word	-31952
+ 1396 0970 D281FFFF 		.word	-32302
+ 1397 0974 7580FFFF 		.word	-32651
+ 1398 0978 197FFFFF 		.word	-32999
+ 1399 097c BE7DFFFF 		.word	-33346
+ 1400 0980 647CFFFF 		.word	-33692
+ 1401 0984 0C7BFFFF 		.word	-34036
+ 1402 0988 B579FFFF 		.word	-34379
+ 1403 098c 5F78FFFF 		.word	-34721
+ 1404 0990 0B77FFFF 		.word	-35061
+ 1405 0994 B875FFFF 		.word	-35400
+ 1406 0998 6674FFFF 		.word	-35738
+ 1407 099c 1673FFFF 		.word	-36074
+ 1408 09a0 C771FFFF 		.word	-36409
+ 1409 09a4 7970FFFF 		.word	-36743
+ 1410 09a8 2D6FFFFF 		.word	-37075
+ 1411 09ac E26DFFFF 		.word	-37406
+ 1412 09b0 986CFFFF 		.word	-37736
+ 1413 09b4 506BFFFF 		.word	-38064
+ 1414 09b8 0A6AFFFF 		.word	-38390
+ 1415 09bc C468FFFF 		.word	-38716
+ 1416 09c0 8167FFFF 		.word	-39039
+ 1417 09c4 3E66FFFF 		.word	-39362
+ 1418 09c8 FE64FFFF 		.word	-39682
+ 1419 09cc BE63FFFF 		.word	-40002
+ 1420 09d0 8162FFFF 		.word	-40319
+ 1421 09d4 4461FFFF 		.word	-40636
+ 1422 09d8 0A60FFFF 		.word	-40950
+ 1423 09dc D15EFFFF 		.word	-41263
+ 1424 09e0 995DFFFF 		.word	-41575
+ 1425 09e4 635CFFFF 		.word	-41885
+ 1426 09e8 2E5BFFFF 		.word	-42194
+ 1427 09ec FB59FFFF 		.word	-42501
+ 1428 09f0 CA58FFFF 		.word	-42806
+ 1429 09f4 9A57FFFF 		.word	-43110
+ 1430 09f8 6C56FFFF 		.word	-43412
+ 1431 09fc 4055FFFF 		.word	-43712
+ 1432 0a00 1554FFFF 		.word	-44011
+ 1433 0a04 EC52FFFF 		.word	-44308
+ 1434 0a08 C551FFFF 		.word	-44603
+ 1435 0a0c 9F50FFFF 		.word	-44897
+ 1436 0a10 7B4FFFFF 		.word	-45189
+ 1437 0a14 584EFFFF 		.word	-45480
+ 1438 0a18 384DFFFF 		.word	-45768
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 35
+
+
+ 1439 0a1c 194CFFFF 		.word	-46055
+ 1440 0a20 FC4AFFFF 		.word	-46340
+ 1441 0a24 E049FFFF 		.word	-46624
+ 1442 0a28 C648FFFF 		.word	-46906
+ 1443 0a2c AE47FFFF 		.word	-47186
+ 1444 0a30 9846FFFF 		.word	-47464
+ 1445 0a34 8445FFFF 		.word	-47740
+ 1446 0a38 7144FFFF 		.word	-48015
+ 1447 0a3c 6043FFFF 		.word	-48288
+ 1448 0a40 5242FFFF 		.word	-48558
+ 1449 0a44 4441FFFF 		.word	-48828
+ 1450 0a48 3940FFFF 		.word	-49095
+ 1451 0a4c 303FFFFF 		.word	-49360
+ 1452 0a50 283EFFFF 		.word	-49624
+ 1453 0a54 223DFFFF 		.word	-49886
+ 1454 0a58 1E3CFFFF 		.word	-50146
+ 1455 0a5c 1D3BFFFF 		.word	-50403
+ 1456 0a60 1C3AFFFF 		.word	-50660
+ 1457 0a64 1E39FFFF 		.word	-50914
+ 1458 0a68 2238FFFF 		.word	-51166
+ 1459 0a6c 2837FFFF 		.word	-51416
+ 1460 0a70 2F36FFFF 		.word	-51665
+ 1461 0a74 3935FFFF 		.word	-51911
+ 1462 0a78 4534FFFF 		.word	-52155
+ 1463 0a7c 5233FFFF 		.word	-52398
+ 1464 0a80 6132FFFF 		.word	-52639
+ 1465 0a84 7331FFFF 		.word	-52877
+ 1466 0a88 8630FFFF 		.word	-53114
+ 1467 0a8c 9C2FFFFF 		.word	-53348
+ 1468 0a90 B32EFFFF 		.word	-53581
+ 1469 0a94 CD2DFFFF 		.word	-53811
+ 1470 0a98 E82CFFFF 		.word	-54040
+ 1471 0a9c 062CFFFF 		.word	-54266
+ 1472 0aa0 252BFFFF 		.word	-54491
+ 1473 0aa4 472AFFFF 		.word	-54713
+ 1474 0aa8 6B29FFFF 		.word	-54933
+ 1475 0aac 9028FFFF 		.word	-55152
+ 1476 0ab0 B827FFFF 		.word	-55368
+ 1477 0ab4 E226FFFF 		.word	-55582
+ 1478 0ab8 0E26FFFF 		.word	-55794
+ 1479 0abc 3C25FFFF 		.word	-56004
+ 1480 0ac0 6C24FFFF 		.word	-56212
+ 1481 0ac4 9F23FFFF 		.word	-56417
+ 1482 0ac8 D322FFFF 		.word	-56621
+ 1483 0acc 0A22FFFF 		.word	-56822
+ 1484 0ad0 4221FFFF 		.word	-57022
+ 1485 0ad4 7D20FFFF 		.word	-57219
+ 1486 0ad8 BA1FFFFF 		.word	-57414
+ 1487 0adc FA1EFFFF 		.word	-57606
+ 1488 0ae0 3B1EFFFF 		.word	-57797
+ 1489 0ae4 7E1DFFFF 		.word	-57986
+ 1490 0ae8 C41CFFFF 		.word	-58172
+ 1491 0aec 0C1CFFFF 		.word	-58356
+ 1492 0af0 561BFFFF 		.word	-58538
+ 1493 0af4 A21AFFFF 		.word	-58718
+ 1494 0af8 F119FFFF 		.word	-58895
+ 1495 0afc 4219FFFF 		.word	-59070
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 36
+
+
+ 1496 0b00 9518FFFF 		.word	-59243
+ 1497 0b04 EA17FFFF 		.word	-59414
+ 1498 0b08 4117FFFF 		.word	-59583
+ 1499 0b0c 9B16FFFF 		.word	-59749
+ 1500 0b10 F715FFFF 		.word	-59913
+ 1501 0b14 5515FFFF 		.word	-60075
+ 1502 0b18 B514FFFF 		.word	-60235
+ 1503 0b1c 1814FFFF 		.word	-60392
+ 1504 0b20 7D13FFFF 		.word	-60547
+ 1505 0b24 E412FFFF 		.word	-60700
+ 1506 0b28 4E12FFFF 		.word	-60850
+ 1507 0b2c BA11FFFF 		.word	-60998
+ 1508 0b30 2811FFFF 		.word	-61144
+ 1509 0b34 9810FFFF 		.word	-61288
+ 1510 0b38 0B10FFFF 		.word	-61429
+ 1511 0b3c 800FFFFF 		.word	-61568
+ 1512 0b40 F70EFFFF 		.word	-61705
+ 1513 0b44 710EFFFF 		.word	-61839
+ 1514 0b48 ED0DFFFF 		.word	-61971
+ 1515 0b4c 6C0DFFFF 		.word	-62100
+ 1516 0b50 EC0CFFFF 		.word	-62228
+ 1517 0b54 6F0CFFFF 		.word	-62353
+ 1518 0b58 F50BFFFF 		.word	-62475
+ 1519 0b5c 7C0BFFFF 		.word	-62596
+ 1520 0b60 060BFFFF 		.word	-62714
+ 1521 0b64 930AFFFF 		.word	-62829
+ 1522 0b68 220AFFFF 		.word	-62942
+ 1523 0b6c B309FFFF 		.word	-63053
+ 1524 0b70 4609FFFF 		.word	-63162
+ 1525 0b74 DC08FFFF 		.word	-63268
+ 1526 0b78 7508FFFF 		.word	-63371
+ 1527 0b7c 0F08FFFF 		.word	-63473
+ 1528 0b80 AD07FFFF 		.word	-63571
+ 1529 0b84 4C07FFFF 		.word	-63668
+ 1530 0b88 EE06FFFF 		.word	-63762
+ 1531 0b8c 9206FFFF 		.word	-63854
+ 1532 0b90 3906FFFF 		.word	-63943
+ 1533 0b94 E205FFFF 		.word	-64030
+ 1534 0b98 8D05FFFF 		.word	-64115
+ 1535 0b9c 3B05FFFF 		.word	-64197
+ 1536 0ba0 EC04FFFF 		.word	-64276
+ 1537 0ba4 9F04FFFF 		.word	-64353
+ 1538 0ba8 5404FFFF 		.word	-64428
+ 1539 0bac 0B04FFFF 		.word	-64501
+ 1540 0bb0 C503FFFF 		.word	-64571
+ 1541 0bb4 8203FFFF 		.word	-64638
+ 1542 0bb8 4103FFFF 		.word	-64703
+ 1543 0bbc 0203FFFF 		.word	-64766
+ 1544 0bc0 C602FFFF 		.word	-64826
+ 1545 0bc4 8C02FFFF 		.word	-64884
+ 1546 0bc8 5502FFFF 		.word	-64939
+ 1547 0bcc 2002FFFF 		.word	-64992
+ 1548 0bd0 ED01FFFF 		.word	-65043
+ 1549 0bd4 BD01FFFF 		.word	-65091
+ 1550 0bd8 9001FFFF 		.word	-65136
+ 1551 0bdc 6501FFFF 		.word	-65179
+ 1552 0be0 3C01FFFF 		.word	-65220
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 37
+
+
+ 1553 0be4 1601FFFF 		.word	-65258
+ 1554 0be8 F200FFFF 		.word	-65294
+ 1555 0bec D100FFFF 		.word	-65327
+ 1556 0bf0 B200FFFF 		.word	-65358
+ 1557 0bf4 9600FFFF 		.word	-65386
+ 1558 0bf8 7C00FFFF 		.word	-65412
+ 1559 0bfc 6400FFFF 		.word	-65436
+ 1560 0c00 4F00FFFF 		.word	-65457
+ 1561 0c04 3D00FFFF 		.word	-65475
+ 1562 0c08 2D00FFFF 		.word	-65491
+ 1563 0c0c 1F00FFFF 		.word	-65505
+ 1564 0c10 1400FFFF 		.word	-65516
+ 1565 0c14 0C00FFFF 		.word	-65524
+ 1566 0c18 0500FFFF 		.word	-65531
+ 1567 0c1c 0200FFFF 		.word	-65534
+ 1568 0c20 0000FFFF 		.word	-65536
+ 1569 0c24 0200FFFF 		.word	-65534
+ 1570 0c28 0500FFFF 		.word	-65531
+ 1571 0c2c 0C00FFFF 		.word	-65524
+ 1572 0c30 1400FFFF 		.word	-65516
+ 1573 0c34 1F00FFFF 		.word	-65505
+ 1574 0c38 2D00FFFF 		.word	-65491
+ 1575 0c3c 3D00FFFF 		.word	-65475
+ 1576 0c40 4F00FFFF 		.word	-65457
+ 1577 0c44 6400FFFF 		.word	-65436
+ 1578 0c48 7C00FFFF 		.word	-65412
+ 1579 0c4c 9600FFFF 		.word	-65386
+ 1580 0c50 B200FFFF 		.word	-65358
+ 1581 0c54 D100FFFF 		.word	-65327
+ 1582 0c58 F200FFFF 		.word	-65294
+ 1583 0c5c 1601FFFF 		.word	-65258
+ 1584 0c60 3C01FFFF 		.word	-65220
+ 1585 0c64 6501FFFF 		.word	-65179
+ 1586 0c68 9001FFFF 		.word	-65136
+ 1587 0c6c BD01FFFF 		.word	-65091
+ 1588 0c70 ED01FFFF 		.word	-65043
+ 1589 0c74 2002FFFF 		.word	-64992
+ 1590 0c78 5502FFFF 		.word	-64939
+ 1591 0c7c 8C02FFFF 		.word	-64884
+ 1592 0c80 C602FFFF 		.word	-64826
+ 1593 0c84 0203FFFF 		.word	-64766
+ 1594 0c88 4103FFFF 		.word	-64703
+ 1595 0c8c 8203FFFF 		.word	-64638
+ 1596 0c90 C503FFFF 		.word	-64571
+ 1597 0c94 0B04FFFF 		.word	-64501
+ 1598 0c98 5404FFFF 		.word	-64428
+ 1599 0c9c 9F04FFFF 		.word	-64353
+ 1600 0ca0 EC04FFFF 		.word	-64276
+ 1601 0ca4 3B05FFFF 		.word	-64197
+ 1602 0ca8 8D05FFFF 		.word	-64115
+ 1603 0cac E205FFFF 		.word	-64030
+ 1604 0cb0 3906FFFF 		.word	-63943
+ 1605 0cb4 9206FFFF 		.word	-63854
+ 1606 0cb8 EE06FFFF 		.word	-63762
+ 1607 0cbc 4C07FFFF 		.word	-63668
+ 1608 0cc0 AD07FFFF 		.word	-63571
+ 1609 0cc4 0F08FFFF 		.word	-63473
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 38
+
+
+ 1610 0cc8 7508FFFF 		.word	-63371
+ 1611 0ccc DC08FFFF 		.word	-63268
+ 1612 0cd0 4609FFFF 		.word	-63162
+ 1613 0cd4 B309FFFF 		.word	-63053
+ 1614 0cd8 220AFFFF 		.word	-62942
+ 1615 0cdc 930AFFFF 		.word	-62829
+ 1616 0ce0 060BFFFF 		.word	-62714
+ 1617 0ce4 7C0BFFFF 		.word	-62596
+ 1618 0ce8 F50BFFFF 		.word	-62475
+ 1619 0cec 6F0CFFFF 		.word	-62353
+ 1620 0cf0 EC0CFFFF 		.word	-62228
+ 1621 0cf4 6C0DFFFF 		.word	-62100
+ 1622 0cf8 ED0DFFFF 		.word	-61971
+ 1623 0cfc 710EFFFF 		.word	-61839
+ 1624 0d00 F70EFFFF 		.word	-61705
+ 1625 0d04 800FFFFF 		.word	-61568
+ 1626 0d08 0B10FFFF 		.word	-61429
+ 1627 0d0c 9810FFFF 		.word	-61288
+ 1628 0d10 2811FFFF 		.word	-61144
+ 1629 0d14 BA11FFFF 		.word	-60998
+ 1630 0d18 4E12FFFF 		.word	-60850
+ 1631 0d1c E412FFFF 		.word	-60700
+ 1632 0d20 7D13FFFF 		.word	-60547
+ 1633 0d24 1814FFFF 		.word	-60392
+ 1634 0d28 B514FFFF 		.word	-60235
+ 1635 0d2c 5515FFFF 		.word	-60075
+ 1636 0d30 F715FFFF 		.word	-59913
+ 1637 0d34 9B16FFFF 		.word	-59749
+ 1638 0d38 4117FFFF 		.word	-59583
+ 1639 0d3c EA17FFFF 		.word	-59414
+ 1640 0d40 9518FFFF 		.word	-59243
+ 1641 0d44 4219FFFF 		.word	-59070
+ 1642 0d48 F119FFFF 		.word	-58895
+ 1643 0d4c A21AFFFF 		.word	-58718
+ 1644 0d50 561BFFFF 		.word	-58538
+ 1645 0d54 0C1CFFFF 		.word	-58356
+ 1646 0d58 C41CFFFF 		.word	-58172
+ 1647 0d5c 7E1DFFFF 		.word	-57986
+ 1648 0d60 3B1EFFFF 		.word	-57797
+ 1649 0d64 FA1EFFFF 		.word	-57606
+ 1650 0d68 BA1FFFFF 		.word	-57414
+ 1651 0d6c 7D20FFFF 		.word	-57219
+ 1652 0d70 4221FFFF 		.word	-57022
+ 1653 0d74 0A22FFFF 		.word	-56822
+ 1654 0d78 D322FFFF 		.word	-56621
+ 1655 0d7c 9F23FFFF 		.word	-56417
+ 1656 0d80 6C24FFFF 		.word	-56212
+ 1657 0d84 3C25FFFF 		.word	-56004
+ 1658 0d88 0E26FFFF 		.word	-55794
+ 1659 0d8c E226FFFF 		.word	-55582
+ 1660 0d90 B827FFFF 		.word	-55368
+ 1661 0d94 9028FFFF 		.word	-55152
+ 1662 0d98 6B29FFFF 		.word	-54933
+ 1663 0d9c 472AFFFF 		.word	-54713
+ 1664 0da0 252BFFFF 		.word	-54491
+ 1665 0da4 062CFFFF 		.word	-54266
+ 1666 0da8 E82CFFFF 		.word	-54040
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 39
+
+
+ 1667 0dac CD2DFFFF 		.word	-53811
+ 1668 0db0 B32EFFFF 		.word	-53581
+ 1669 0db4 9C2FFFFF 		.word	-53348
+ 1670 0db8 8630FFFF 		.word	-53114
+ 1671 0dbc 7331FFFF 		.word	-52877
+ 1672 0dc0 6132FFFF 		.word	-52639
+ 1673 0dc4 5233FFFF 		.word	-52398
+ 1674 0dc8 4534FFFF 		.word	-52155
+ 1675 0dcc 3935FFFF 		.word	-51911
+ 1676 0dd0 2F36FFFF 		.word	-51665
+ 1677 0dd4 2837FFFF 		.word	-51416
+ 1678 0dd8 2238FFFF 		.word	-51166
+ 1679 0ddc 1E39FFFF 		.word	-50914
+ 1680 0de0 1C3AFFFF 		.word	-50660
+ 1681 0de4 1D3BFFFF 		.word	-50403
+ 1682 0de8 1E3CFFFF 		.word	-50146
+ 1683 0dec 223DFFFF 		.word	-49886
+ 1684 0df0 283EFFFF 		.word	-49624
+ 1685 0df4 303FFFFF 		.word	-49360
+ 1686 0df8 3940FFFF 		.word	-49095
+ 1687 0dfc 4441FFFF 		.word	-48828
+ 1688 0e00 5242FFFF 		.word	-48558
+ 1689 0e04 6043FFFF 		.word	-48288
+ 1690 0e08 7144FFFF 		.word	-48015
+ 1691 0e0c 8445FFFF 		.word	-47740
+ 1692 0e10 9846FFFF 		.word	-47464
+ 1693 0e14 AE47FFFF 		.word	-47186
+ 1694 0e18 C648FFFF 		.word	-46906
+ 1695 0e1c E049FFFF 		.word	-46624
+ 1696 0e20 FC4AFFFF 		.word	-46340
+ 1697 0e24 194CFFFF 		.word	-46055
+ 1698 0e28 384DFFFF 		.word	-45768
+ 1699 0e2c 584EFFFF 		.word	-45480
+ 1700 0e30 7B4FFFFF 		.word	-45189
+ 1701 0e34 9F50FFFF 		.word	-44897
+ 1702 0e38 C551FFFF 		.word	-44603
+ 1703 0e3c EC52FFFF 		.word	-44308
+ 1704 0e40 1554FFFF 		.word	-44011
+ 1705 0e44 4055FFFF 		.word	-43712
+ 1706 0e48 6C56FFFF 		.word	-43412
+ 1707 0e4c 9A57FFFF 		.word	-43110
+ 1708 0e50 CA58FFFF 		.word	-42806
+ 1709 0e54 FB59FFFF 		.word	-42501
+ 1710 0e58 2E5BFFFF 		.word	-42194
+ 1711 0e5c 635CFFFF 		.word	-41885
+ 1712 0e60 995DFFFF 		.word	-41575
+ 1713 0e64 D15EFFFF 		.word	-41263
+ 1714 0e68 0A60FFFF 		.word	-40950
+ 1715 0e6c 4461FFFF 		.word	-40636
+ 1716 0e70 8162FFFF 		.word	-40319
+ 1717 0e74 BE63FFFF 		.word	-40002
+ 1718 0e78 FE64FFFF 		.word	-39682
+ 1719 0e7c 3E66FFFF 		.word	-39362
+ 1720 0e80 8167FFFF 		.word	-39039
+ 1721 0e84 C468FFFF 		.word	-38716
+ 1722 0e88 0A6AFFFF 		.word	-38390
+ 1723 0e8c 506BFFFF 		.word	-38064
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 40
+
+
+ 1724 0e90 986CFFFF 		.word	-37736
+ 1725 0e94 E26DFFFF 		.word	-37406
+ 1726 0e98 2D6FFFFF 		.word	-37075
+ 1727 0e9c 7970FFFF 		.word	-36743
+ 1728 0ea0 C771FFFF 		.word	-36409
+ 1729 0ea4 1673FFFF 		.word	-36074
+ 1730 0ea8 6674FFFF 		.word	-35738
+ 1731 0eac B875FFFF 		.word	-35400
+ 1732 0eb0 0B77FFFF 		.word	-35061
+ 1733 0eb4 5F78FFFF 		.word	-34721
+ 1734 0eb8 B579FFFF 		.word	-34379
+ 1735 0ebc 0C7BFFFF 		.word	-34036
+ 1736 0ec0 647CFFFF 		.word	-33692
+ 1737 0ec4 BE7DFFFF 		.word	-33346
+ 1738 0ec8 197FFFFF 		.word	-32999
+ 1739 0ecc 7580FFFF 		.word	-32651
+ 1740 0ed0 D281FFFF 		.word	-32302
+ 1741 0ed4 3083FFFF 		.word	-31952
+ 1742 0ed8 9084FFFF 		.word	-31600
+ 1743 0edc F185FFFF 		.word	-31247
+ 1744 0ee0 5387FFFF 		.word	-30893
+ 1745 0ee4 B688FFFF 		.word	-30538
+ 1746 0ee8 1B8AFFFF 		.word	-30181
+ 1747 0eec 808BFFFF 		.word	-29824
+ 1748 0ef0 E78CFFFF 		.word	-29465
+ 1749 0ef4 4F8EFFFF 		.word	-29105
+ 1750 0ef8 B78FFFFF 		.word	-28745
+ 1751 0efc 2191FFFF 		.word	-28383
+ 1752 0f00 8C92FFFF 		.word	-28020
+ 1753 0f04 F893FFFF 		.word	-27656
+ 1754 0f08 6595FFFF 		.word	-27291
+ 1755 0f0c D396FFFF 		.word	-26925
+ 1756 0f10 4398FFFF 		.word	-26557
+ 1757 0f14 B399FFFF 		.word	-26189
+ 1758 0f18 249BFFFF 		.word	-25820
+ 1759 0f1c 969CFFFF 		.word	-25450
+ 1760 0f20 099EFFFF 		.word	-25079
+ 1761 0f24 7D9FFFFF 		.word	-24707
+ 1762 0f28 F2A0FFFF 		.word	-24334
+ 1763 0f2c 68A2FFFF 		.word	-23960
+ 1764 0f30 DEA3FFFF 		.word	-23586
+ 1765 0f34 56A5FFFF 		.word	-23210
+ 1766 0f38 CFA6FFFF 		.word	-22833
+ 1767 0f3c 48A8FFFF 		.word	-22456
+ 1768 0f40 C2A9FFFF 		.word	-22078
+ 1769 0f44 3DABFFFF 		.word	-21699
+ 1770 0f48 B9ACFFFF 		.word	-21319
+ 1771 0f4c 36AEFFFF 		.word	-20938
+ 1772 0f50 B3AFFFFF 		.word	-20557
+ 1773 0f54 31B1FFFF 		.word	-20175
+ 1774 0f58 B0B2FFFF 		.word	-19792
+ 1775 0f5c 30B4FFFF 		.word	-19408
+ 1776 0f60 B0B5FFFF 		.word	-19024
+ 1777 0f64 32B7FFFF 		.word	-18638
+ 1778 0f68 B3B8FFFF 		.word	-18253
+ 1779 0f6c 36BAFFFF 		.word	-17866
+ 1780 0f70 B9BBFFFF 		.word	-17479
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 41
+
+
+ 1781 0f74 3DBDFFFF 		.word	-17091
+ 1782 0f78 C2BEFFFF 		.word	-16702
+ 1783 0f7c 47C0FFFF 		.word	-16313
+ 1784 0f80 CDC1FFFF 		.word	-15923
+ 1785 0f84 53C3FFFF 		.word	-15533
+ 1786 0f88 DAC4FFFF 		.word	-15142
+ 1787 0f8c 61C6FFFF 		.word	-14751
+ 1788 0f90 E9C7FFFF 		.word	-14359
+ 1789 0f94 72C9FFFF 		.word	-13966
+ 1790 0f98 FBCAFFFF 		.word	-13573
+ 1791 0f9c 85CCFFFF 		.word	-13179
+ 1792 0fa0 0FCEFFFF 		.word	-12785
+ 1793 0fa4 9ACFFFFF 		.word	-12390
+ 1794 0fa8 25D1FFFF 		.word	-11995
+ 1795 0fac B0D2FFFF 		.word	-11600
+ 1796 0fb0 3CD4FFFF 		.word	-11204
+ 1797 0fb4 C9D5FFFF 		.word	-10807
+ 1798 0fb8 56D7FFFF 		.word	-10410
+ 1799 0fbc E3D8FFFF 		.word	-10013
+ 1800 0fc0 70DAFFFF 		.word	-9616
+ 1801 0fc4 FEDBFFFF 		.word	-9218
+ 1802 0fc8 8DDDFFFF 		.word	-8819
+ 1803 0fcc 1BDFFFFF 		.word	-8421
+ 1804 0fd0 AAE0FFFF 		.word	-8022
+ 1805 0fd4 39E2FFFF 		.word	-7623
+ 1806 0fd8 C9E3FFFF 		.word	-7223
+ 1807 0fdc 59E5FFFF 		.word	-6823
+ 1808 0fe0 E9E6FFFF 		.word	-6423
+ 1809 0fe4 79E8FFFF 		.word	-6023
+ 1810 0fe8 0AEAFFFF 		.word	-5622
+ 1811 0fec 9AEBFFFF 		.word	-5222
+ 1812 0ff0 2BEDFFFF 		.word	-4821
+ 1813 0ff4 BCEEFFFF 		.word	-4420
+ 1814 0ff8 4EF0FFFF 		.word	-4018
+ 1815 0ffc DFF1FFFF 		.word	-3617
+ 1816 1000 71F3FFFF 		.word	-3215
+ 1817 1004 02F5FFFF 		.word	-2814
+ 1818 1008 94F6FFFF 		.word	-2412
+ 1819 100c 26F8FFFF 		.word	-2010
+ 1820 1010 B8F9FFFF 		.word	-1608
+ 1821 1014 4AFBFFFF 		.word	-1206
+ 1822 1018 DCFCFFFF 		.word	-804
+ 1823 101c 6EFEFFFF 		.word	-402
+ 1824              		.type	modTableDown, %object
+ 1825              		.size	modTableDown, 512
+ 1826              	modTableDown:
+ 1827 1020 00FE0000 		.word	65024
+ 1828 1024 00FC0000 		.word	64512
+ 1829 1028 00FA0000 		.word	64000
+ 1830 102c 00F80000 		.word	63488
+ 1831 1030 00F60000 		.word	62976
+ 1832 1034 00F40000 		.word	62464
+ 1833 1038 00F20000 		.word	61952
+ 1834 103c 00F00000 		.word	61440
+ 1835 1040 00EE0000 		.word	60928
+ 1836 1044 00EC0000 		.word	60416
+ 1837 1048 00EA0000 		.word	59904
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 42
+
+
+ 1838 104c 00E80000 		.word	59392
+ 1839 1050 00E60000 		.word	58880
+ 1840 1054 00E40000 		.word	58368
+ 1841 1058 00E20000 		.word	57856
+ 1842 105c 00E00000 		.word	57344
+ 1843 1060 00DE0000 		.word	56832
+ 1844 1064 00DC0000 		.word	56320
+ 1845 1068 00DA0000 		.word	55808
+ 1846 106c 00D80000 		.word	55296
+ 1847 1070 00D60000 		.word	54784
+ 1848 1074 00D40000 		.word	54272
+ 1849 1078 00D20000 		.word	53760
+ 1850 107c 00D00000 		.word	53248
+ 1851 1080 00CE0000 		.word	52736
+ 1852 1084 00CC0000 		.word	52224
+ 1853 1088 00CA0000 		.word	51712
+ 1854 108c 00C80000 		.word	51200
+ 1855 1090 00C60000 		.word	50688
+ 1856 1094 00C40000 		.word	50176
+ 1857 1098 00C20000 		.word	49664
+ 1858 109c 00C00000 		.word	49152
+ 1859 10a0 00BE0000 		.word	48640
+ 1860 10a4 00BC0000 		.word	48128
+ 1861 10a8 00BA0000 		.word	47616
+ 1862 10ac 00B80000 		.word	47104
+ 1863 10b0 00B60000 		.word	46592
+ 1864 10b4 00B40000 		.word	46080
+ 1865 10b8 00B20000 		.word	45568
+ 1866 10bc 00B00000 		.word	45056
+ 1867 10c0 00AE0000 		.word	44544
+ 1868 10c4 00AC0000 		.word	44032
+ 1869 10c8 00AA0000 		.word	43520
+ 1870 10cc 00A80000 		.word	43008
+ 1871 10d0 00A60000 		.word	42496
+ 1872 10d4 00A40000 		.word	41984
+ 1873 10d8 00A20000 		.word	41472
+ 1874 10dc 00A00000 		.word	40960
+ 1875 10e0 009E0000 		.word	40448
+ 1876 10e4 009C0000 		.word	39936
+ 1877 10e8 009A0000 		.word	39424
+ 1878 10ec 00980000 		.word	38912
+ 1879 10f0 00960000 		.word	38400
+ 1880 10f4 00940000 		.word	37888
+ 1881 10f8 00920000 		.word	37376
+ 1882 10fc 00900000 		.word	36864
+ 1883 1100 008E0000 		.word	36352
+ 1884 1104 008C0000 		.word	35840
+ 1885 1108 008A0000 		.word	35328
+ 1886 110c 00880000 		.word	34816
+ 1887 1110 00860000 		.word	34304
+ 1888 1114 00840000 		.word	33792
+ 1889 1118 00820000 		.word	33280
+ 1890 111c 00800000 		.word	32768
+ 1891 1120 007E0000 		.word	32256
+ 1892 1124 007C0000 		.word	31744
+ 1893 1128 007A0000 		.word	31232
+ 1894 112c 00780000 		.word	30720
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 43
+
+
+ 1895 1130 00760000 		.word	30208
+ 1896 1134 00740000 		.word	29696
+ 1897 1138 00720000 		.word	29184
+ 1898 113c 00700000 		.word	28672
+ 1899 1140 006E0000 		.word	28160
+ 1900 1144 006C0000 		.word	27648
+ 1901 1148 006A0000 		.word	27136
+ 1902 114c 00680000 		.word	26624
+ 1903 1150 00660000 		.word	26112
+ 1904 1154 00640000 		.word	25600
+ 1905 1158 00620000 		.word	25088
+ 1906 115c 00600000 		.word	24576
+ 1907 1160 005E0000 		.word	24064
+ 1908 1164 005C0000 		.word	23552
+ 1909 1168 005A0000 		.word	23040
+ 1910 116c 00580000 		.word	22528
+ 1911 1170 00560000 		.word	22016
+ 1912 1174 00540000 		.word	21504
+ 1913 1178 00520000 		.word	20992
+ 1914 117c 00500000 		.word	20480
+ 1915 1180 004E0000 		.word	19968
+ 1916 1184 004C0000 		.word	19456
+ 1917 1188 004A0000 		.word	18944
+ 1918 118c 00480000 		.word	18432
+ 1919 1190 00460000 		.word	17920
+ 1920 1194 00440000 		.word	17408
+ 1921 1198 00420000 		.word	16896
+ 1922 119c 00400000 		.word	16384
+ 1923 11a0 003E0000 		.word	15872
+ 1924 11a4 003C0000 		.word	15360
+ 1925 11a8 003A0000 		.word	14848
+ 1926 11ac 00380000 		.word	14336
+ 1927 11b0 00360000 		.word	13824
+ 1928 11b4 00340000 		.word	13312
+ 1929 11b8 00320000 		.word	12800
+ 1930 11bc 00300000 		.word	12288
+ 1931 11c0 002E0000 		.word	11776
+ 1932 11c4 002C0000 		.word	11264
+ 1933 11c8 002A0000 		.word	10752
+ 1934 11cc 00280000 		.word	10240
+ 1935 11d0 00260000 		.word	9728
+ 1936 11d4 00240000 		.word	9216
+ 1937 11d8 00220000 		.word	8704
+ 1938 11dc 00200000 		.word	8192
+ 1939 11e0 001E0000 		.word	7680
+ 1940 11e4 001C0000 		.word	7168
+ 1941 11e8 001A0000 		.word	6656
+ 1942 11ec 00180000 		.word	6144
+ 1943 11f0 00160000 		.word	5632
+ 1944 11f4 00140000 		.word	5120
+ 1945 11f8 00120000 		.word	4608
+ 1946 11fc 00100000 		.word	4096
+ 1947 1200 000E0000 		.word	3584
+ 1948 1204 000C0000 		.word	3072
+ 1949 1208 000A0000 		.word	2560
+ 1950 120c 00080000 		.word	2048
+ 1951 1210 00060000 		.word	1536
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 44
+
+
+ 1952 1214 00040000 		.word	1024
+ 1953 1218 00020000 		.word	512
+ 1954 121c 00000000 		.word	0
+ 1955              		.section	.rodata.str1.1,"aMS",%progbits,1
+ 1956              	.LC34:
+ 1957 0000 73746172 		.ascii	"start: %lu, end: %lu, diff: %lu\015\012\000"
+ 1957      743A2025 
+ 1957      6C752C20 
+ 1957      656E643A 
+ 1957      20256C75 
+ 1958              	.LC36:
+ 1959 0022 656E640D 		.ascii	"end\015\012\000"
+ 1959      0A00
+ 1960              		.data
+ 1961              		.align	2
+ 1962              		.set	.LANCHOR2,. + 0
+ 1963              		.type	tick, %object
+ 1964              		.size	tick, 4
+ 1965              	tick:
+ 1966 0000 FFFFFFFF 		.word	-1
+ 1967              		.bss
+ 1968              		.align	2
+ 1969              		.set	.LANCHOR3,. + 0
+ 1970              		.type	noteCount, %object
+ 1971              		.size	noteCount, 4
+ 1972              	noteCount:
+ 1973 0000 00000000 		.space	4
+ 1974              		.type	lineBuffer, %object
+ 1975              		.size	lineBuffer, 80
+ 1976              	lineBuffer:
+ 1977 0004 00000000 		.space	80
+ 1977      00000000 
+ 1977      00000000 
+ 1977      00000000 
+ 1977      00000000 
+ 1978              		.text
+ 1979              	.Letext0:
+ 1980              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 1981              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 1982              		.file 4 "Generated_Source\\PSoC4/cytypes.h"
+ 1983              		.file 5 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 1984              		.file 6 ".\\fixedpoint.h"
+ 1985              		.file 7 ".\\WaveTableFp32.h"
+ 1986              		.file 8 ".\\ModTableFp32.h"
+ 1987              		.file 9 "Generated_Source\\PSoC4/UART.h"
+ 1988              		.file 10 "Generated_Source\\PSoC4/Timer_1.h"
+ 1989              		.file 11 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9
+ 1990              		.file 12 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9
+ 1991              		.file 13 "Generated_Source\\PSoC4/UART_SPI_UART.h"
+ 1992              		.section	.debug_info,"",%progbits
+ 1993              	.Ldebug_info0:
+ 1994 0000 F2060000 		.4byte	0x6f2
+ 1995 0004 0400     		.2byte	0x4
+ 1996 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1997 000a 04       		.byte	0x4
+ 1998 000b 01       		.uleb128 0x1
+ 1999 000c 3A000000 		.4byte	.LASF84
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 45
+
+
+ 2000 0010 01       		.byte	0x1
+ 2001 0011 5A040000 		.4byte	.LASF85
+ 2002 0015 6E030000 		.4byte	.LASF86
+ 2003 0019 30000000 		.4byte	.Ldebug_ranges0+0x30
+ 2004 001d 00000000 		.4byte	0
+ 2005 0021 00000000 		.4byte	.Ldebug_line0
+ 2006 0025 02       		.uleb128 0x2
+ 2007 0026 01       		.byte	0x1
+ 2008 0027 06       		.byte	0x6
+ 2009 0028 64010000 		.4byte	.LASF0
+ 2010 002c 03       		.uleb128 0x3
+ 2011 002d E7010000 		.4byte	.LASF2
+ 2012 0031 02       		.byte	0x2
+ 2013 0032 1D       		.byte	0x1d
+ 2014 0033 37000000 		.4byte	0x37
+ 2015 0037 02       		.uleb128 0x2
+ 2016 0038 01       		.byte	0x1
+ 2017 0039 08       		.byte	0x8
+ 2018 003a 3D020000 		.4byte	.LASF1
+ 2019 003e 03       		.uleb128 0x3
+ 2020 003f 13000000 		.4byte	.LASF3
+ 2021 0043 02       		.byte	0x2
+ 2022 0044 29       		.byte	0x29
+ 2023 0045 49000000 		.4byte	0x49
+ 2024 0049 02       		.uleb128 0x2
+ 2025 004a 02       		.byte	0x2
+ 2026 004b 05       		.byte	0x5
+ 2027 004c 30000000 		.4byte	.LASF4
+ 2028 0050 03       		.uleb128 0x3
+ 2029 0051 09010000 		.4byte	.LASF5
+ 2030 0055 02       		.byte	0x2
+ 2031 0056 2B       		.byte	0x2b
+ 2032 0057 5B000000 		.4byte	0x5b
+ 2033 005b 02       		.uleb128 0x2
+ 2034 005c 02       		.byte	0x2
+ 2035 005d 07       		.byte	0x7
+ 2036 005e D6020000 		.4byte	.LASF6
+ 2037 0062 03       		.uleb128 0x3
+ 2038 0063 63040000 		.4byte	.LASF7
+ 2039 0067 02       		.byte	0x2
+ 2040 0068 3F       		.byte	0x3f
+ 2041 0069 6D000000 		.4byte	0x6d
+ 2042 006d 02       		.uleb128 0x2
+ 2043 006e 04       		.byte	0x4
+ 2044 006f 05       		.byte	0x5
+ 2045 0070 B4010000 		.4byte	.LASF8
+ 2046 0074 03       		.uleb128 0x3
+ 2047 0075 F1000000 		.4byte	.LASF9
+ 2048 0079 02       		.byte	0x2
+ 2049 007a 41       		.byte	0x41
+ 2050 007b 7F000000 		.4byte	0x7f
+ 2051 007f 02       		.uleb128 0x2
+ 2052 0080 04       		.byte	0x4
+ 2053 0081 07       		.byte	0x7
+ 2054 0082 2E040000 		.4byte	.LASF10
+ 2055 0086 03       		.uleb128 0x3
+ 2056 0087 BD010000 		.4byte	.LASF11
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 46
+
+
+ 2057 008b 02       		.byte	0x2
+ 2058 008c 59       		.byte	0x59
+ 2059 008d 91000000 		.4byte	0x91
+ 2060 0091 02       		.uleb128 0x2
+ 2061 0092 08       		.byte	0x8
+ 2062 0093 05       		.byte	0x5
+ 2063 0094 97010000 		.4byte	.LASF12
+ 2064 0098 03       		.uleb128 0x3
+ 2065 0099 56030000 		.4byte	.LASF13
+ 2066 009d 02       		.byte	0x2
+ 2067 009e 5B       		.byte	0x5b
+ 2068 009f A3000000 		.4byte	0xa3
+ 2069 00a3 02       		.uleb128 0x2
+ 2070 00a4 08       		.byte	0x8
+ 2071 00a5 07       		.byte	0x7
+ 2072 00a6 82020000 		.4byte	.LASF14
+ 2073 00aa 04       		.uleb128 0x4
+ 2074 00ab 04       		.byte	0x4
+ 2075 00ac 05       		.byte	0x5
+ 2076 00ad 696E7400 		.ascii	"int\000"
+ 2077 00b1 02       		.uleb128 0x2
+ 2078 00b2 04       		.byte	0x4
+ 2079 00b3 07       		.byte	0x7
+ 2080 00b4 B5020000 		.4byte	.LASF15
+ 2081 00b8 03       		.uleb128 0x3
+ 2082 00b9 75040000 		.4byte	.LASF16
+ 2083 00bd 03       		.byte	0x3
+ 2084 00be 15       		.byte	0x15
+ 2085 00bf 2C000000 		.4byte	0x2c
+ 2086 00c3 03       		.uleb128 0x3
+ 2087 00c4 33030000 		.4byte	.LASF17
+ 2088 00c8 03       		.byte	0x3
+ 2089 00c9 20       		.byte	0x20
+ 2090 00ca 3E000000 		.4byte	0x3e
+ 2091 00ce 03       		.uleb128 0x3
+ 2092 00cf C2020000 		.4byte	.LASF18
+ 2093 00d3 03       		.byte	0x3
+ 2094 00d4 21       		.byte	0x21
+ 2095 00d5 50000000 		.4byte	0x50
+ 2096 00d9 03       		.uleb128 0x3
+ 2097 00da 21030000 		.4byte	.LASF19
+ 2098 00de 03       		.byte	0x3
+ 2099 00df 2C       		.byte	0x2c
+ 2100 00e0 62000000 		.4byte	0x62
+ 2101 00e4 03       		.uleb128 0x3
+ 2102 00e5 AC020000 		.4byte	.LASF20
+ 2103 00e9 03       		.byte	0x3
+ 2104 00ea 2D       		.byte	0x2d
+ 2105 00eb 74000000 		.4byte	0x74
+ 2106 00ef 03       		.uleb128 0x3
+ 2107 00f0 26010000 		.4byte	.LASF21
+ 2108 00f4 03       		.byte	0x3
+ 2109 00f5 38       		.byte	0x38
+ 2110 00f6 86000000 		.4byte	0x86
+ 2111 00fa 03       		.uleb128 0x3
+ 2112 00fb 27000000 		.4byte	.LASF22
+ 2113 00ff 03       		.byte	0x3
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 47
+
+
+ 2114 0100 39       		.byte	0x39
+ 2115 0101 98000000 		.4byte	0x98
+ 2116 0105 03       		.uleb128 0x3
+ 2117 0106 16040000 		.4byte	.LASF23
+ 2118 010a 04       		.byte	0x4
+ 2119 010b C4       		.byte	0xc4
+ 2120 010c 7F000000 		.4byte	0x7f
+ 2121 0110 03       		.uleb128 0x3
+ 2122 0111 91010000 		.4byte	.LASF24
+ 2123 0115 04       		.byte	0x4
+ 2124 0116 C7       		.byte	0xc7
+ 2125 0117 6D000000 		.4byte	0x6d
+ 2126 011b 02       		.uleb128 0x2
+ 2127 011c 04       		.byte	0x4
+ 2128 011d 04       		.byte	0x4
+ 2129 011e 80010000 		.4byte	.LASF25
+ 2130 0122 02       		.uleb128 0x2
+ 2131 0123 08       		.byte	0x8
+ 2132 0124 04       		.byte	0x4
+ 2133 0125 87040000 		.4byte	.LASF26
+ 2134 0129 03       		.uleb128 0x3
+ 2135 012a DA000000 		.4byte	.LASF27
+ 2136 012e 04       		.byte	0x4
+ 2137 012f D3       		.byte	0xd3
+ 2138 0130 34010000 		.4byte	0x134
+ 2139 0134 02       		.uleb128 0x2
+ 2140 0135 01       		.byte	0x1
+ 2141 0136 08       		.byte	0x8
+ 2142 0137 F9020000 		.4byte	.LASF28
+ 2143 013b 02       		.uleb128 0x2
+ 2144 013c 04       		.byte	0x4
+ 2145 013d 07       		.byte	0x7
+ 2146 013e D1000000 		.4byte	.LASF29
+ 2147 0142 05       		.uleb128 0x5
+ 2148 0143 04       		.byte	0x4
+ 2149 0144 06       		.uleb128 0x6
+ 2150 0145 04       		.byte	0x4
+ 2151 0146 34010000 		.4byte	0x134
+ 2152 014a 06       		.uleb128 0x6
+ 2153 014b 04       		.byte	0x4
+ 2154 014c 50010000 		.4byte	0x150
+ 2155 0150 07       		.uleb128 0x7
+ 2156 0151 34010000 		.4byte	0x134
+ 2157 0155 03       		.uleb128 0x3
+ 2158 0156 4A030000 		.4byte	.LASF30
+ 2159 015a 05       		.byte	0x5
+ 2160 015b 70       		.byte	0x70
+ 2161 015c B1000000 		.4byte	0xb1
+ 2162 0160 06       		.uleb128 0x6
+ 2163 0161 04       		.byte	0x4
+ 2164 0162 66010000 		.4byte	0x166
+ 2165 0166 08       		.uleb128 0x8
+ 2166 0167 02       		.uleb128 0x2
+ 2167 0168 08       		.byte	0x8
+ 2168 0169 04       		.byte	0x4
+ 2169 016a 0A020000 		.4byte	.LASF31
+ 2170 016e 03       		.uleb128 0x3
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 48
+
+
+ 2171 016f AE040000 		.4byte	.LASF32
+ 2172 0173 06       		.byte	0x6
+ 2173 0174 06       		.byte	0x6
+ 2174 0175 D9000000 		.4byte	0xd9
+ 2175 0179 03       		.uleb128 0x3
+ 2176 017a 4A040000 		.4byte	.LASF33
+ 2177 017e 06       		.byte	0x6
+ 2178 017f 07       		.byte	0x7
+ 2179 0180 EF000000 		.4byte	0xef
+ 2180 0184 09       		.uleb128 0x9
+ 2181 0185 E1010000 		.4byte	.LASF87
+ 2182 0189 48       		.byte	0x48
+ 2183 018a 01       		.byte	0x1
+ 2184 018b 53       		.byte	0x53
+ 2185 018c 45020000 		.4byte	0x245
+ 2186 0190 0A       		.uleb128 0xa
+ 2187 0191 E9020000 		.4byte	.LASF34
+ 2188 0195 01       		.byte	0x1
+ 2189 0196 54       		.byte	0x54
+ 2190 0197 45020000 		.4byte	0x245
+ 2191 019b 00       		.byte	0
+ 2192 019c 0A       		.uleb128 0xa
+ 2193 019d 10030000 		.4byte	.LASF35
+ 2194 01a1 01       		.byte	0x1
+ 2195 01a2 55       		.byte	0x55
+ 2196 01a3 45020000 		.4byte	0x245
+ 2197 01a7 04       		.byte	0x4
+ 2198 01a8 0A       		.uleb128 0xa
+ 2199 01a9 2F020000 		.4byte	.LASF36
+ 2200 01ad 01       		.byte	0x1
+ 2201 01ae 56       		.byte	0x56
+ 2202 01af 22010000 		.4byte	0x122
+ 2203 01b3 08       		.byte	0x8
+ 2204 01b4 0A       		.uleb128 0xa
+ 2205 01b5 A2040000 		.4byte	.LASF37
+ 2206 01b9 01       		.byte	0x1
+ 2207 01ba 57       		.byte	0x57
+ 2208 01bb B8000000 		.4byte	0xb8
+ 2209 01bf 10       		.byte	0x10
+ 2210 01c0 0A       		.uleb128 0xa
+ 2211 01c1 29030000 		.4byte	.LASF38
+ 2212 01c5 01       		.byte	0x1
+ 2213 01c6 58       		.byte	0x58
+ 2214 01c7 B8000000 		.4byte	0xb8
+ 2215 01cb 11       		.byte	0x11
+ 2216 01cc 0A       		.uleb128 0xa
+ 2217 01cd 47010000 		.4byte	.LASF39
+ 2218 01d1 01       		.byte	0x1
+ 2219 01d2 59       		.byte	0x59
+ 2220 01d3 B8000000 		.4byte	0xb8
+ 2221 01d7 12       		.byte	0x12
+ 2222 01d8 0A       		.uleb128 0xa
+ 2223 01d9 04040000 		.4byte	.LASF40
+ 2224 01dd 01       		.byte	0x1
+ 2225 01de 5B       		.byte	0x5b
+ 2226 01df E4000000 		.4byte	0xe4
+ 2227 01e3 14       		.byte	0x14
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 49
+
+
+ 2228 01e4 0A       		.uleb128 0xa
+ 2229 01e5 BD040000 		.4byte	.LASF41
+ 2230 01e9 01       		.byte	0x1
+ 2231 01ea 5C       		.byte	0x5c
+ 2232 01eb E4000000 		.4byte	0xe4
+ 2233 01ef 18       		.byte	0x18
+ 2234 01f0 0A       		.uleb128 0xa
+ 2235 01f1 B3040000 		.4byte	.LASF42
+ 2236 01f5 01       		.byte	0x1
+ 2237 01f6 5D       		.byte	0x5d
+ 2238 01f7 6E010000 		.4byte	0x16e
+ 2239 01fb 1C       		.byte	0x1c
+ 2240 01fc 0A       		.uleb128 0xa
+ 2241 01fd 00000000 		.4byte	.LASF43
+ 2242 0201 01       		.byte	0x1
+ 2243 0202 5F       		.byte	0x5f
+ 2244 0203 E4000000 		.4byte	0xe4
+ 2245 0207 20       		.byte	0x20
+ 2246 0208 0A       		.uleb128 0xa
+ 2247 0209 70010000 		.4byte	.LASF44
+ 2248 020d 01       		.byte	0x1
+ 2249 020e 60       		.byte	0x60
+ 2250 020f E4000000 		.4byte	0xe4
+ 2251 0213 24       		.byte	0x24
+ 2252 0214 0A       		.uleb128 0xa
+ 2253 0215 D5010000 		.4byte	.LASF45
+ 2254 0219 01       		.byte	0x1
+ 2255 021a 61       		.byte	0x61
+ 2256 021b E4000000 		.4byte	0xe4
+ 2257 021f 28       		.byte	0x28
+ 2258 0220 0A       		.uleb128 0xa
+ 2259 0221 1D000000 		.4byte	.LASF46
+ 2260 0225 01       		.byte	0x1
+ 2261 0226 62       		.byte	0x62
+ 2262 0227 B8000000 		.4byte	0xb8
+ 2263 022b 2C       		.byte	0x2c
+ 2264 022c 0A       		.uleb128 0xa
+ 2265 022d 4F040000 		.4byte	.LASF47
+ 2266 0231 01       		.byte	0x1
+ 2267 0232 63       		.byte	0x63
+ 2268 0233 6E010000 		.4byte	0x16e
+ 2269 0237 30       		.byte	0x30
+ 2270 0238 0A       		.uleb128 0xa
+ 2271 0239 C8000000 		.4byte	.LASF48
+ 2272 023d 01       		.byte	0x1
+ 2273 023e 65       		.byte	0x65
+ 2274 023f 50020000 		.4byte	0x250
+ 2275 0243 34       		.byte	0x34
+ 2276 0244 00       		.byte	0
+ 2277 0245 06       		.uleb128 0x6
+ 2278 0246 04       		.byte	0x4
+ 2279 0247 4B020000 		.4byte	0x24b
+ 2280 024b 07       		.uleb128 0x7
+ 2281 024c 6E010000 		.4byte	0x16e
+ 2282 0250 0B       		.uleb128 0xb
+ 2283 0251 B8000000 		.4byte	0xb8
+ 2284 0255 60020000 		.4byte	0x260
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 50
+
+
+ 2285 0259 0C       		.uleb128 0xc
+ 2286 025a 3B010000 		.4byte	0x13b
+ 2287 025e 0F       		.byte	0xf
+ 2288 025f 00       		.byte	0
+ 2289 0260 0D       		.uleb128 0xd
+ 2290 0261 1D040000 		.4byte	.LASF54
+ 2291 0265 01       		.byte	0x1
+ 2292 0266 6C       		.byte	0x6c
+ 2293 0267 10010000 		.4byte	0x110
+ 2294 026b 00000000 		.4byte	.LFB33
+ 2295 026f 24000000 		.4byte	.LFE33-.LFB33
+ 2296 0273 01       		.uleb128 0x1
+ 2297 0274 9C       		.byte	0x9c
+ 2298 0275 88020000 		.4byte	0x288
+ 2299 0279 0E       		.uleb128 0xe
+ 2300 027a 667600   		.ascii	"fv\000"
+ 2301 027d 01       		.byte	0x1
+ 2302 027e 6C       		.byte	0x6c
+ 2303 027f 6E010000 		.4byte	0x16e
+ 2304 0283 00000000 		.4byte	.LLST0
+ 2305 0287 00       		.byte	0
+ 2306 0288 0F       		.uleb128 0xf
+ 2307 0289 24020000 		.4byte	.LASF52
+ 2308 028d 01       		.byte	0x1
+ 2309 028e 74       		.byte	0x74
+ 2310 028f 00000000 		.4byte	.LFB34
+ 2311 0293 F0000000 		.4byte	.LFE34-.LFB34
+ 2312 0297 01       		.uleb128 0x1
+ 2313 0298 9C       		.byte	0x9c
+ 2314 0299 34030000 		.4byte	0x334
+ 2315 029d 10       		.uleb128 0x10
+ 2316 029e 57010000 		.4byte	.LASF49
+ 2317 02a2 01       		.byte	0x1
+ 2318 02a3 76       		.byte	0x76
+ 2319 02a4 34030000 		.4byte	0x334
+ 2320 02a8 03       		.uleb128 0x3
+ 2321 02a9 91       		.byte	0x91
+ 2322 02aa B87F     		.sleb128 -72
+ 2323 02ac 10       		.uleb128 0x10
+ 2324 02ad 16020000 		.4byte	.LASF50
+ 2325 02b1 01       		.byte	0x1
+ 2326 02b2 77       		.byte	0x77
+ 2327 02b3 39030000 		.4byte	0x339
+ 2328 02b7 0E       		.uleb128 0xe
+ 2329 02b8 93       		.byte	0x93
+ 2330 02b9 04       		.uleb128 0x4
+ 2331 02ba 31       		.byte	0x31
+ 2332 02bb 9F       		.byte	0x9f
+ 2333 02bc 93       		.byte	0x93
+ 2334 02bd 01       		.uleb128 0x1
+ 2335 02be 93       		.byte	0x93
+ 2336 02bf 07       		.uleb128 0x7
+ 2337 02c0 31       		.byte	0x31
+ 2338 02c1 9F       		.byte	0x9f
+ 2339 02c2 93       		.byte	0x93
+ 2340 02c3 01       		.uleb128 0x1
+ 2341 02c4 93       		.byte	0x93
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 51
+
+
+ 2342 02c5 03       		.uleb128 0x3
+ 2343 02c6 10       		.uleb128 0x10
+ 2344 02c7 61030000 		.4byte	.LASF51
+ 2345 02cb 01       		.byte	0x1
+ 2346 02cc 78       		.byte	0x78
+ 2347 02cd 3E030000 		.4byte	0x33e
+ 2348 02d1 02       		.uleb128 0x2
+ 2349 02d2 91       		.byte	0x91
+ 2350 02d3 58       		.sleb128 -40
+ 2351 02d4 11       		.uleb128 0x11
+ 2352 02d5 14000000 		.4byte	.LVL5
+ 2353 02d9 5D060000 		.4byte	0x65d
+ 2354 02dd F5020000 		.4byte	0x2f5
+ 2355 02e1 12       		.uleb128 0x12
+ 2356 02e2 01       		.uleb128 0x1
+ 2357 02e3 52       		.byte	0x52
+ 2358 02e4 02       		.uleb128 0x2
+ 2359 02e5 77       		.byte	0x77
+ 2360 02e6 00       		.sleb128 0
+ 2361 02e7 12       		.uleb128 0x12
+ 2362 02e8 01       		.uleb128 0x1
+ 2363 02e9 51       		.byte	0x51
+ 2364 02ea 02       		.uleb128 0x2
+ 2365 02eb 76       		.byte	0x76
+ 2366 02ec 00       		.sleb128 0
+ 2367 02ed 12       		.uleb128 0x12
+ 2368 02ee 01       		.uleb128 0x1
+ 2369 02ef 50       		.byte	0x50
+ 2370 02f0 03       		.uleb128 0x3
+ 2371 02f1 91       		.byte	0x91
+ 2372 02f2 B87F     		.sleb128 -72
+ 2373 02f4 00       		.byte	0
+ 2374 02f5 11       		.uleb128 0x11
+ 2375 02f6 1E000000 		.4byte	.LVL6
+ 2376 02fa 7A060000 		.4byte	0x67a
+ 2377 02fe 14030000 		.4byte	0x314
+ 2378 0302 12       		.uleb128 0x12
+ 2379 0303 01       		.uleb128 0x1
+ 2380 0304 52       		.byte	0x52
+ 2381 0305 02       		.uleb128 0x2
+ 2382 0306 77       		.byte	0x77
+ 2383 0307 00       		.sleb128 0
+ 2384 0308 12       		.uleb128 0x12
+ 2385 0309 01       		.uleb128 0x1
+ 2386 030a 51       		.byte	0x51
+ 2387 030b 01       		.uleb128 0x1
+ 2388 030c 30       		.byte	0x30
+ 2389 030d 12       		.uleb128 0x12
+ 2390 030e 01       		.uleb128 0x1
+ 2391 030f 50       		.byte	0x50
+ 2392 0310 02       		.uleb128 0x2
+ 2393 0311 74       		.byte	0x74
+ 2394 0312 00       		.sleb128 0
+ 2395 0313 00       		.byte	0
+ 2396 0314 13       		.uleb128 0x13
+ 2397 0315 28000000 		.4byte	.LVL7
+ 2398 0319 5D060000 		.4byte	0x65d
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 52
+
+
+ 2399 031d 12       		.uleb128 0x12
+ 2400 031e 01       		.uleb128 0x1
+ 2401 031f 52       		.byte	0x52
+ 2402 0320 02       		.uleb128 0x2
+ 2403 0321 77       		.byte	0x77
+ 2404 0322 00       		.sleb128 0
+ 2405 0323 12       		.uleb128 0x12
+ 2406 0324 01       		.uleb128 0x1
+ 2407 0325 51       		.byte	0x51
+ 2408 0326 05       		.uleb128 0x5
+ 2409 0327 76       		.byte	0x76
+ 2410 0328 00       		.sleb128 0
+ 2411 0329 77       		.byte	0x77
+ 2412 032a 00       		.sleb128 0
+ 2413 032b 22       		.byte	0x22
+ 2414 032c 12       		.uleb128 0x12
+ 2415 032d 01       		.uleb128 0x1
+ 2416 032e 50       		.byte	0x50
+ 2417 032f 02       		.uleb128 0x2
+ 2418 0330 91       		.byte	0x91
+ 2419 0331 58       		.sleb128 -40
+ 2420 0332 00       		.byte	0
+ 2421 0333 00       		.byte	0
+ 2422 0334 07       		.uleb128 0x7
+ 2423 0335 50020000 		.4byte	0x250
+ 2424 0339 07       		.uleb128 0x7
+ 2425 033a 50020000 		.4byte	0x250
+ 2426 033e 07       		.uleb128 0x7
+ 2427 033f 50020000 		.4byte	0x250
+ 2428 0343 14       		.uleb128 0x14
+ 2429 0344 E0000000 		.4byte	.LASF53
+ 2430 0348 01       		.byte	0x1
+ 2431 0349 9A       		.byte	0x9a
+ 2432 034a 00000000 		.4byte	.LFB35
+ 2433 034e A0000000 		.4byte	.LFE35-.LFB35
+ 2434 0352 01       		.uleb128 0x1
+ 2435 0353 9C       		.byte	0x9c
+ 2436 0354 66030000 		.4byte	0x366
+ 2437 0358 15       		.uleb128 0x15
+ 2438 0359 6900     		.ascii	"i\000"
+ 2439 035b 01       		.byte	0x1
+ 2440 035c 9C       		.byte	0x9c
+ 2441 035d 55010000 		.4byte	0x155
+ 2442 0361 21000000 		.4byte	.LLST1
+ 2443 0365 00       		.byte	0
+ 2444 0366 16       		.uleb128 0x16
+ 2445 0367 F4030000 		.4byte	.LASF55
+ 2446 036b 01       		.byte	0x1
+ 2447 036c BB       		.byte	0xbb
+ 2448 036d 6E010000 		.4byte	0x16e
+ 2449 0371 00000000 		.4byte	.LFB36
+ 2450 0375 0E000000 		.4byte	.LFE36-.LFB36
+ 2451 0379 01       		.uleb128 0x1
+ 2452 037a 9C       		.byte	0x9c
+ 2453 037b C9030000 		.4byte	0x3c9
+ 2454 037f 17       		.uleb128 0x17
+ 2455 0380 F1010000 		.4byte	.LASF56
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 53
+
+
+ 2456 0384 01       		.byte	0x1
+ 2457 0385 BB       		.byte	0xbb
+ 2458 0386 C9030000 		.4byte	0x3c9
+ 2459 038a 35000000 		.4byte	.LLST2
+ 2460 038e 17       		.uleb128 0x17
+ 2461 038f 1B010000 		.4byte	.LASF57
+ 2462 0393 01       		.byte	0x1
+ 2463 0394 BB       		.byte	0xbb
+ 2464 0395 E4000000 		.4byte	0xe4
+ 2465 0399 56000000 		.4byte	.LLST3
+ 2466 039d 18       		.uleb128 0x18
+ 2467 039e 4B020000 		.4byte	.LASF58
+ 2468 03a2 01       		.byte	0x1
+ 2469 03a3 BB       		.byte	0xbb
+ 2470 03a4 45020000 		.4byte	0x245
+ 2471 03a8 01       		.uleb128 0x1
+ 2472 03a9 52       		.byte	0x52
+ 2473 03aa 19       		.uleb128 0x19
+ 2474 03ab 41010000 		.4byte	.LASF59
+ 2475 03af 01       		.byte	0x1
+ 2476 03b0 C1       		.byte	0xc1
+ 2477 03b1 CE000000 		.4byte	0xce
+ 2478 03b5 77000000 		.4byte	.LLST4
+ 2479 03b9 19       		.uleb128 0x19
+ 2480 03ba B3040000 		.4byte	.LASF42
+ 2481 03be 01       		.byte	0x1
+ 2482 03bf C2       		.byte	0xc2
+ 2483 03c0 6E010000 		.4byte	0x16e
+ 2484 03c4 AF000000 		.4byte	.LLST5
+ 2485 03c8 00       		.byte	0
+ 2486 03c9 06       		.uleb128 0x6
+ 2487 03ca 04       		.byte	0x4
+ 2488 03cb E4000000 		.4byte	0xe4
+ 2489 03cf 1A       		.uleb128 0x1a
+ 2490 03d0 C7010000 		.4byte	.LASF60
+ 2491 03d4 01       		.byte	0x1
+ 2492 03d5 CE       		.byte	0xce
+ 2493 03d6 6E010000 		.4byte	0x16e
+ 2494 03da 00000000 		.4byte	.LFB37
+ 2495 03de 18000000 		.4byte	.LFE37-.LFB37
+ 2496 03e2 01       		.uleb128 0x1
+ 2497 03e3 9C       		.byte	0x9c
+ 2498 03e4 16040000 		.4byte	0x416
+ 2499 03e8 15       		.uleb128 0x15
+ 2500 03e9 7200     		.ascii	"r\000"
+ 2501 03eb 01       		.byte	0x1
+ 2502 03ec D0       		.byte	0xd0
+ 2503 03ed 10010000 		.4byte	0x110
+ 2504 03f1 E9000000 		.4byte	.LLST6
+ 2505 03f5 1B       		.uleb128 0x1b
+ 2506 03f6 7600     		.ascii	"v\000"
+ 2507 03f8 01       		.byte	0x1
+ 2508 03f9 D0       		.byte	0xd0
+ 2509 03fa 10010000 		.4byte	0x110
+ 2510 03fe 01       		.uleb128 0x1
+ 2511 03ff 50       		.byte	0x50
+ 2512 0400 1B       		.uleb128 0x1b
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 54
+
+
+ 2513 0401 667600   		.ascii	"fv\000"
+ 2514 0404 01       		.byte	0x1
+ 2515 0405 D1       		.byte	0xd1
+ 2516 0406 6E010000 		.4byte	0x16e
+ 2517 040a 01       		.uleb128 0x1
+ 2518 040b 50       		.byte	0x50
+ 2519 040c 1C       		.uleb128 0x1c
+ 2520 040d 06000000 		.4byte	.LVL23
+ 2521 0411 97060000 		.4byte	0x697
+ 2522 0415 00       		.byte	0
+ 2523 0416 1D       		.uleb128 0x1d
+ 2524 0417 0B030000 		.4byte	.LASF61
+ 2525 041b 01       		.byte	0x1
+ 2526 041c E2       		.byte	0xe2
+ 2527 041d AA000000 		.4byte	0xaa
+ 2528 0421 00000000 		.4byte	.LFB38
+ 2529 0425 88010000 		.4byte	.LFE38-.LFB38
+ 2530 0429 01       		.uleb128 0x1
+ 2531 042a 9C       		.byte	0x9c
+ 2532 042b 8A050000 		.4byte	0x58a
+ 2533 042f 19       		.uleb128 0x19
+ 2534 0430 40040000 		.4byte	.LASF62
+ 2535 0434 01       		.byte	0x1
+ 2536 0435 E4       		.byte	0xe4
+ 2537 0436 05010000 		.4byte	0x105
+ 2538 043a FC000000 		.4byte	.LLST7
+ 2539 043e 19       		.uleb128 0x19
+ 2540 043f A5010000 		.4byte	.LASF63
+ 2541 0443 01       		.byte	0x1
+ 2542 0444 E4       		.byte	0xe4
+ 2543 0445 05010000 		.4byte	0x105
+ 2544 0449 1B010000 		.4byte	.LLST8
+ 2545 044d 15       		.uleb128 0x15
+ 2546 044e 6900     		.ascii	"i\000"
+ 2547 0450 01       		.byte	0x1
+ 2548 0451 E5       		.byte	0xe5
+ 2549 0452 05010000 		.4byte	0x105
+ 2550 0456 39010000 		.4byte	.LLST9
+ 2551 045a 19       		.uleb128 0x19
+ 2552 045b 82040000 		.4byte	.LASF64
+ 2553 045f 01       		.byte	0x1
+ 2554 0460 E5       		.byte	0xe5
+ 2555 0461 05010000 		.4byte	0x105
+ 2556 0465 E9010000 		.4byte	.LLST10
+ 2557 0469 1E       		.uleb128 0x1e
+ 2558 046a 00000000 		.4byte	.Ldebug_ranges0+0
+ 2559 046e 08050000 		.4byte	0x508
+ 2560 0472 1F       		.uleb128 0x1f
+ 2561 0473 3B030000 		.4byte	.LASF65
+ 2562 0477 01       		.byte	0x1
+ 2563 0478 7801     		.2byte	0x178
+ 2564 047a 6E010000 		.4byte	0x16e
+ 2565 047e 00000100 		.4byte	0x10000
+ 2566 0482 1F       		.uleb128 0x1f
+ 2567 0483 77020000 		.4byte	.LASF66
+ 2568 0487 01       		.byte	0x1
+ 2569 0488 9601     		.2byte	0x196
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 55
+
+
+ 2570 048a 6E010000 		.4byte	0x16e
+ 2571 048e 0000FE0F 		.4byte	0xffe0000
+ 2572 0492 20       		.uleb128 0x20
+ 2573 0493 7D040000 		.4byte	.LASF67
+ 2574 0497 01       		.byte	0x1
+ 2575 0498 9701     		.2byte	0x197
+ 2576 049a C3000000 		.4byte	0xc3
+ 2577 049e FE0F     		.2byte	0xffe
+ 2578 04a0 21       		.uleb128 0x21
+ 2579 04a1 18000000 		.4byte	.Ldebug_ranges0+0x18
+ 2580 04a5 22       		.uleb128 0x22
+ 2581 04a6 86010000 		.4byte	.LASF68
+ 2582 04aa 01       		.byte	0x1
+ 2583 04ab 3601     		.2byte	0x136
+ 2584 04ad AA000000 		.4byte	0xaa
+ 2585 04b1 44020000 		.4byte	.LLST11
+ 2586 04b5 22       		.uleb128 0x22
+ 2587 04b6 6D040000 		.4byte	.LASF69
+ 2588 04ba 01       		.byte	0x1
+ 2589 04bb 4201     		.2byte	0x142
+ 2590 04bd 6E010000 		.4byte	0x16e
+ 2591 04c1 97020000 		.4byte	.LLST12
+ 2592 04c5 11       		.uleb128 0x11
+ 2593 04c6 B8000000 		.4byte	.LVL46
+ 2594 04ca 66030000 		.4byte	0x366
+ 2595 04ce DC040000 		.4byte	0x4dc
+ 2596 04d2 12       		.uleb128 0x12
+ 2597 04d3 01       		.uleb128 0x1
+ 2598 04d4 50       		.byte	0x50
+ 2599 04d5 05       		.uleb128 0x5
+ 2600 04d6 03       		.byte	0x3
+ 2601 04d7 14000000 		.4byte	tracks+20
+ 2602 04db 00       		.byte	0
+ 2603 04dc 11       		.uleb128 0x11
+ 2604 04dd 04010000 		.4byte	.LVL54
+ 2605 04e1 66030000 		.4byte	0x366
+ 2606 04e5 F3040000 		.4byte	0x4f3
+ 2607 04e9 12       		.uleb128 0x12
+ 2608 04ea 01       		.uleb128 0x1
+ 2609 04eb 50       		.byte	0x50
+ 2610 04ec 05       		.uleb128 0x5
+ 2611 04ed 03       		.byte	0x3
+ 2612 04ee 5C000000 		.4byte	tracks+92
+ 2613 04f2 00       		.byte	0
+ 2614 04f3 13       		.uleb128 0x13
+ 2615 04f4 1A010000 		.4byte	.LVL58
+ 2616 04f8 66030000 		.4byte	0x366
+ 2617 04fc 12       		.uleb128 0x12
+ 2618 04fd 01       		.uleb128 0x1
+ 2619 04fe 50       		.byte	0x50
+ 2620 04ff 05       		.uleb128 0x5
+ 2621 0500 03       		.byte	0x3
+ 2622 0501 A4000000 		.4byte	tracks+164
+ 2623 0505 00       		.byte	0
+ 2624 0506 00       		.byte	0
+ 2625 0507 00       		.byte	0
+ 2626 0508 1C       		.uleb128 0x1c
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 56
+
+
+ 2627 0509 08000000 		.4byte	.LVL27
+ 2628 050d A2060000 		.4byte	0x6a2
+ 2629 0511 1C       		.uleb128 0x1c
+ 2630 0512 0C000000 		.4byte	.LVL28
+ 2631 0516 A9060000 		.4byte	0x6a9
+ 2632 051a 1C       		.uleb128 0x1c
+ 2633 051b 12000000 		.4byte	.LVL29
+ 2634 051f 88020000 		.4byte	0x288
+ 2635 0523 1C       		.uleb128 0x1c
+ 2636 0524 22000000 		.4byte	.LVL30
+ 2637 0528 43030000 		.4byte	0x343
+ 2638 052c 1C       		.uleb128 0x1c
+ 2639 052d 26000000 		.4byte	.LVL31
+ 2640 0531 B1060000 		.4byte	0x6b1
+ 2641 0535 1C       		.uleb128 0x1c
+ 2642 0536 32010000 		.4byte	.LVL61
+ 2643 053a B1060000 		.4byte	0x6b1
+ 2644 053e 11       		.uleb128 0x11
+ 2645 053f 46010000 		.4byte	.LVL64
+ 2646 0543 BD060000 		.4byte	0x6bd
+ 2647 0547 62050000 		.4byte	0x562
+ 2648 054b 12       		.uleb128 0x12
+ 2649 054c 01       		.uleb128 0x1
+ 2650 054d 52       		.byte	0x52
+ 2651 054e 03       		.uleb128 0x3
+ 2652 054f 91       		.byte	0x91
+ 2653 0550 64       		.sleb128 -28
+ 2654 0551 06       		.byte	0x6
+ 2655 0552 12       		.uleb128 0x12
+ 2656 0553 01       		.uleb128 0x1
+ 2657 0554 51       		.byte	0x51
+ 2658 0555 05       		.uleb128 0x5
+ 2659 0556 03       		.byte	0x3
+ 2660 0557 00000000 		.4byte	.LC34
+ 2661 055b 12       		.uleb128 0x12
+ 2662 055c 01       		.uleb128 0x1
+ 2663 055d 50       		.byte	0x50
+ 2664 055e 02       		.uleb128 0x2
+ 2665 055f 76       		.byte	0x76
+ 2666 0560 00       		.sleb128 0
+ 2667 0561 00       		.byte	0
+ 2668 0562 11       		.uleb128 0x11
+ 2669 0563 4C010000 		.4byte	.LVL65
+ 2670 0567 D8060000 		.4byte	0x6d8
+ 2671 056b 76050000 		.4byte	0x576
+ 2672 056f 12       		.uleb128 0x12
+ 2673 0570 01       		.uleb128 0x1
+ 2674 0571 50       		.byte	0x50
+ 2675 0572 02       		.uleb128 0x2
+ 2676 0573 76       		.byte	0x76
+ 2677 0574 00       		.sleb128 0
+ 2678 0575 00       		.byte	0
+ 2679 0576 13       		.uleb128 0x13
+ 2680 0577 52010000 		.4byte	.LVL66
+ 2681 057b D8060000 		.4byte	0x6d8
+ 2682 057f 12       		.uleb128 0x12
+ 2683 0580 01       		.uleb128 0x1
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 57
+
+
+ 2684 0581 50       		.byte	0x50
+ 2685 0582 05       		.uleb128 0x5
+ 2686 0583 03       		.byte	0x3
+ 2687 0584 22000000 		.4byte	.LC36
+ 2688 0588 00       		.byte	0
+ 2689 0589 00       		.byte	0
+ 2690 058a 0B       		.uleb128 0xb
+ 2691 058b 34010000 		.4byte	0x134
+ 2692 058f 9A050000 		.4byte	0x59a
+ 2693 0593 0C       		.uleb128 0xc
+ 2694 0594 3B010000 		.4byte	0x13b
+ 2695 0598 4F       		.byte	0x4f
+ 2696 0599 00       		.byte	0
+ 2697 059a 10       		.uleb128 0x10
+ 2698 059b CB020000 		.4byte	.LASF70
+ 2699 059f 01       		.byte	0x1
+ 2700 05a0 51       		.byte	0x51
+ 2701 05a1 8A050000 		.4byte	0x58a
+ 2702 05a5 05       		.uleb128 0x5
+ 2703 05a6 03       		.byte	0x3
+ 2704 05a7 04000000 		.4byte	lineBuffer
+ 2705 05ab 0B       		.uleb128 0xb
+ 2706 05ac 6E010000 		.4byte	0x16e
+ 2707 05b0 BC050000 		.4byte	0x5bc
+ 2708 05b4 23       		.uleb128 0x23
+ 2709 05b5 3B010000 		.4byte	0x13b
+ 2710 05b9 FF03     		.2byte	0x3ff
+ 2711 05bb 00       		.byte	0
+ 2712 05bc 24       		.uleb128 0x24
+ 2713 05bd 33010000 		.4byte	.LASF71
+ 2714 05c1 07       		.byte	0x7
+ 2715 05c2 04       		.byte	0x4
+ 2716 05c3 CD050000 		.4byte	0x5cd
+ 2717 05c7 05       		.uleb128 0x5
+ 2718 05c8 03       		.byte	0x3
+ 2719 05c9 00000000 		.4byte	waveTableSine
+ 2720 05cd 07       		.uleb128 0x7
+ 2721 05ce AB050000 		.4byte	0x5ab
+ 2722 05d2 0B       		.uleb128 0xb
+ 2723 05d3 6E010000 		.4byte	0x16e
+ 2724 05d7 E2050000 		.4byte	0x5e2
+ 2725 05db 0C       		.uleb128 0xc
+ 2726 05dc 3B010000 		.4byte	0x13b
+ 2727 05e0 7F       		.byte	0x7f
+ 2728 05e1 00       		.byte	0
+ 2729 05e2 24       		.uleb128 0x24
+ 2730 05e3 FE020000 		.4byte	.LASF72
+ 2731 05e7 08       		.byte	0x8
+ 2732 05e8 04       		.byte	0x4
+ 2733 05e9 F3050000 		.4byte	0x5f3
+ 2734 05ed 05       		.uleb128 0x5
+ 2735 05ee 03       		.byte	0x3
+ 2736 05ef 00000000 		.4byte	modTableDown
+ 2737 05f3 07       		.uleb128 0x7
+ 2738 05f4 D2050000 		.4byte	0x5d2
+ 2739 05f8 24       		.uleb128 0x24
+ 2740 05f9 2E010000 		.4byte	.LASF73
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 58
+
+
+ 2741 05fd 01       		.byte	0x1
+ 2742 05fe 49       		.byte	0x49
+ 2743 05ff AA000000 		.4byte	0xaa
+ 2744 0603 05       		.uleb128 0x5
+ 2745 0604 03       		.byte	0x3
+ 2746 0605 00000000 		.4byte	tick
+ 2747 0609 24       		.uleb128 0x24
+ 2748 060a 5F020000 		.4byte	.LASF74
+ 2749 060e 01       		.byte	0x1
+ 2750 060f 4A       		.byte	0x4a
+ 2751 0610 AA000000 		.4byte	0xaa
+ 2752 0614 05       		.uleb128 0x5
+ 2753 0615 03       		.byte	0x3
+ 2754 0616 00000000 		.4byte	noteCount
+ 2755 061a 25       		.uleb128 0x25
+ 2756 061b 62706D00 		.ascii	"bpm\000"
+ 2757 061f 01       		.byte	0x1
+ 2758 0620 4D       		.byte	0x4d
+ 2759 0621 B8000000 		.4byte	0xb8
+ 2760 0625 05       		.uleb128 0x5
+ 2761 0626 03       		.byte	0x3
+ 2762 0627 00000000 		.4byte	bpm
+ 2763 062b 24       		.uleb128 0x24
+ 2764 062c FC000000 		.4byte	.LASF75
+ 2765 0630 01       		.byte	0x1
+ 2766 0631 4E       		.byte	0x4e
+ 2767 0632 E4000000 		.4byte	0xe4
+ 2768 0636 05       		.uleb128 0x5
+ 2769 0637 03       		.byte	0x3
+ 2770 0638 00000000 		.4byte	ticksPerNote
+ 2771 063c 0B       		.uleb128 0xb
+ 2772 063d 84010000 		.4byte	0x184
+ 2773 0641 4C060000 		.4byte	0x64c
+ 2774 0645 0C       		.uleb128 0xc
+ 2775 0646 3B010000 		.4byte	0x13b
+ 2776 064a 02       		.byte	0x2
+ 2777 064b 00       		.byte	0
+ 2778 064c 24       		.uleb128 0x24
+ 2779 064d 4F030000 		.4byte	.LASF76
+ 2780 0651 01       		.byte	0x1
+ 2781 0652 66       		.byte	0x66
+ 2782 0653 3C060000 		.4byte	0x63c
+ 2783 0657 05       		.uleb128 0x5
+ 2784 0658 03       		.byte	0x3
+ 2785 0659 00000000 		.4byte	tracks
+ 2786 065d 26       		.uleb128 0x26
+ 2787 065e 14010000 		.4byte	.LASF77
+ 2788 0662 42010000 		.4byte	0x142
+ 2789 0666 7A060000 		.4byte	0x67a
+ 2790 066a 27       		.uleb128 0x27
+ 2791 066b 42010000 		.4byte	0x142
+ 2792 066f 27       		.uleb128 0x27
+ 2793 0670 60010000 		.4byte	0x160
+ 2794 0674 27       		.uleb128 0x27
+ 2795 0675 3B010000 		.4byte	0x13b
+ 2796 0679 00       		.byte	0
+ 2797 067a 26       		.uleb128 0x26
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 59
+
+
+ 2798 067b AD010000 		.4byte	.LASF78
+ 2799 067f 42010000 		.4byte	0x142
+ 2800 0683 97060000 		.4byte	0x697
+ 2801 0687 27       		.uleb128 0x27
+ 2802 0688 42010000 		.4byte	0x142
+ 2803 068c 27       		.uleb128 0x27
+ 2804 068d AA000000 		.4byte	0xaa
+ 2805 0691 27       		.uleb128 0x27
+ 2806 0692 3B010000 		.4byte	0x13b
+ 2807 0696 00       		.byte	0
+ 2808 0697 28       		.uleb128 0x28
+ 2809 0698 52010000 		.4byte	.LASF81
+ 2810 069c 0B       		.byte	0xb
+ 2811 069d 7D       		.byte	0x7d
+ 2812 069e AA000000 		.4byte	0xaa
+ 2813 06a2 29       		.uleb128 0x29
+ 2814 06a3 FF010000 		.4byte	.LASF79
+ 2815 06a7 09       		.byte	0x9
+ 2816 06a8 68       		.byte	0x68
+ 2817 06a9 2A       		.uleb128 0x2a
+ 2818 06aa 69020000 		.4byte	.LASF80
+ 2819 06ae 0A       		.byte	0xa
+ 2820 06af 3101     		.2byte	0x131
+ 2821 06b1 2B       		.uleb128 0x2b
+ 2822 06b2 8E040000 		.4byte	.LASF82
+ 2823 06b6 0A       		.byte	0xa
+ 2824 06b7 4A01     		.2byte	0x14a
+ 2825 06b9 05010000 		.4byte	0x105
+ 2826 06bd 2C       		.uleb128 0x2c
+ 2827 06be 57020000 		.4byte	.LASF88
+ 2828 06c2 0C       		.byte	0xc
+ 2829 06c3 DE       		.byte	0xde
+ 2830 06c4 AA000000 		.4byte	0xaa
+ 2831 06c8 D8060000 		.4byte	0x6d8
+ 2832 06cc 27       		.uleb128 0x27
+ 2833 06cd 44010000 		.4byte	0x144
+ 2834 06d1 27       		.uleb128 0x27
+ 2835 06d2 4A010000 		.4byte	0x14a
+ 2836 06d6 2D       		.uleb128 0x2d
+ 2837 06d7 00       		.byte	0
+ 2838 06d8 2E       		.uleb128 0x2e
+ 2839 06d9 99020000 		.4byte	.LASF83
+ 2840 06dd 0D       		.byte	0xd
+ 2841 06de 7701     		.2byte	0x177
+ 2842 06e0 EA060000 		.4byte	0x6ea
+ 2843 06e4 27       		.uleb128 0x27
+ 2844 06e5 EA060000 		.4byte	0x6ea
+ 2845 06e9 00       		.byte	0
+ 2846 06ea 06       		.uleb128 0x6
+ 2847 06eb 04       		.byte	0x4
+ 2848 06ec F0060000 		.4byte	0x6f0
+ 2849 06f0 07       		.uleb128 0x7
+ 2850 06f1 29010000 		.4byte	0x129
+ 2851 06f5 00       		.byte	0
+ 2852              		.section	.debug_abbrev,"",%progbits
+ 2853              	.Ldebug_abbrev0:
+ 2854 0000 01       		.uleb128 0x1
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 60
+
+
+ 2855 0001 11       		.uleb128 0x11
+ 2856 0002 01       		.byte	0x1
+ 2857 0003 25       		.uleb128 0x25
+ 2858 0004 0E       		.uleb128 0xe
+ 2859 0005 13       		.uleb128 0x13
+ 2860 0006 0B       		.uleb128 0xb
+ 2861 0007 03       		.uleb128 0x3
+ 2862 0008 0E       		.uleb128 0xe
+ 2863 0009 1B       		.uleb128 0x1b
+ 2864 000a 0E       		.uleb128 0xe
+ 2865 000b 55       		.uleb128 0x55
+ 2866 000c 17       		.uleb128 0x17
+ 2867 000d 11       		.uleb128 0x11
+ 2868 000e 01       		.uleb128 0x1
+ 2869 000f 10       		.uleb128 0x10
+ 2870 0010 17       		.uleb128 0x17
+ 2871 0011 00       		.byte	0
+ 2872 0012 00       		.byte	0
+ 2873 0013 02       		.uleb128 0x2
+ 2874 0014 24       		.uleb128 0x24
+ 2875 0015 00       		.byte	0
+ 2876 0016 0B       		.uleb128 0xb
+ 2877 0017 0B       		.uleb128 0xb
+ 2878 0018 3E       		.uleb128 0x3e
+ 2879 0019 0B       		.uleb128 0xb
+ 2880 001a 03       		.uleb128 0x3
+ 2881 001b 0E       		.uleb128 0xe
+ 2882 001c 00       		.byte	0
+ 2883 001d 00       		.byte	0
+ 2884 001e 03       		.uleb128 0x3
+ 2885 001f 16       		.uleb128 0x16
+ 2886 0020 00       		.byte	0
+ 2887 0021 03       		.uleb128 0x3
+ 2888 0022 0E       		.uleb128 0xe
+ 2889 0023 3A       		.uleb128 0x3a
+ 2890 0024 0B       		.uleb128 0xb
+ 2891 0025 3B       		.uleb128 0x3b
+ 2892 0026 0B       		.uleb128 0xb
+ 2893 0027 49       		.uleb128 0x49
+ 2894 0028 13       		.uleb128 0x13
+ 2895 0029 00       		.byte	0
+ 2896 002a 00       		.byte	0
+ 2897 002b 04       		.uleb128 0x4
+ 2898 002c 24       		.uleb128 0x24
+ 2899 002d 00       		.byte	0
+ 2900 002e 0B       		.uleb128 0xb
+ 2901 002f 0B       		.uleb128 0xb
+ 2902 0030 3E       		.uleb128 0x3e
+ 2903 0031 0B       		.uleb128 0xb
+ 2904 0032 03       		.uleb128 0x3
+ 2905 0033 08       		.uleb128 0x8
+ 2906 0034 00       		.byte	0
+ 2907 0035 00       		.byte	0
+ 2908 0036 05       		.uleb128 0x5
+ 2909 0037 0F       		.uleb128 0xf
+ 2910 0038 00       		.byte	0
+ 2911 0039 0B       		.uleb128 0xb
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 61
+
+
+ 2912 003a 0B       		.uleb128 0xb
+ 2913 003b 00       		.byte	0
+ 2914 003c 00       		.byte	0
+ 2915 003d 06       		.uleb128 0x6
+ 2916 003e 0F       		.uleb128 0xf
+ 2917 003f 00       		.byte	0
+ 2918 0040 0B       		.uleb128 0xb
+ 2919 0041 0B       		.uleb128 0xb
+ 2920 0042 49       		.uleb128 0x49
+ 2921 0043 13       		.uleb128 0x13
+ 2922 0044 00       		.byte	0
+ 2923 0045 00       		.byte	0
+ 2924 0046 07       		.uleb128 0x7
+ 2925 0047 26       		.uleb128 0x26
+ 2926 0048 00       		.byte	0
+ 2927 0049 49       		.uleb128 0x49
+ 2928 004a 13       		.uleb128 0x13
+ 2929 004b 00       		.byte	0
+ 2930 004c 00       		.byte	0
+ 2931 004d 08       		.uleb128 0x8
+ 2932 004e 26       		.uleb128 0x26
+ 2933 004f 00       		.byte	0
+ 2934 0050 00       		.byte	0
+ 2935 0051 00       		.byte	0
+ 2936 0052 09       		.uleb128 0x9
+ 2937 0053 13       		.uleb128 0x13
+ 2938 0054 01       		.byte	0x1
+ 2939 0055 03       		.uleb128 0x3
+ 2940 0056 0E       		.uleb128 0xe
+ 2941 0057 0B       		.uleb128 0xb
+ 2942 0058 0B       		.uleb128 0xb
+ 2943 0059 3A       		.uleb128 0x3a
+ 2944 005a 0B       		.uleb128 0xb
+ 2945 005b 3B       		.uleb128 0x3b
+ 2946 005c 0B       		.uleb128 0xb
+ 2947 005d 01       		.uleb128 0x1
+ 2948 005e 13       		.uleb128 0x13
+ 2949 005f 00       		.byte	0
+ 2950 0060 00       		.byte	0
+ 2951 0061 0A       		.uleb128 0xa
+ 2952 0062 0D       		.uleb128 0xd
+ 2953 0063 00       		.byte	0
+ 2954 0064 03       		.uleb128 0x3
+ 2955 0065 0E       		.uleb128 0xe
+ 2956 0066 3A       		.uleb128 0x3a
+ 2957 0067 0B       		.uleb128 0xb
+ 2958 0068 3B       		.uleb128 0x3b
+ 2959 0069 0B       		.uleb128 0xb
+ 2960 006a 49       		.uleb128 0x49
+ 2961 006b 13       		.uleb128 0x13
+ 2962 006c 38       		.uleb128 0x38
+ 2963 006d 0B       		.uleb128 0xb
+ 2964 006e 00       		.byte	0
+ 2965 006f 00       		.byte	0
+ 2966 0070 0B       		.uleb128 0xb
+ 2967 0071 01       		.uleb128 0x1
+ 2968 0072 01       		.byte	0x1
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 62
+
+
+ 2969 0073 49       		.uleb128 0x49
+ 2970 0074 13       		.uleb128 0x13
+ 2971 0075 01       		.uleb128 0x1
+ 2972 0076 13       		.uleb128 0x13
+ 2973 0077 00       		.byte	0
+ 2974 0078 00       		.byte	0
+ 2975 0079 0C       		.uleb128 0xc
+ 2976 007a 21       		.uleb128 0x21
+ 2977 007b 00       		.byte	0
+ 2978 007c 49       		.uleb128 0x49
+ 2979 007d 13       		.uleb128 0x13
+ 2980 007e 2F       		.uleb128 0x2f
+ 2981 007f 0B       		.uleb128 0xb
+ 2982 0080 00       		.byte	0
+ 2983 0081 00       		.byte	0
+ 2984 0082 0D       		.uleb128 0xd
+ 2985 0083 2E       		.uleb128 0x2e
+ 2986 0084 01       		.byte	0x1
+ 2987 0085 3F       		.uleb128 0x3f
+ 2988 0086 19       		.uleb128 0x19
+ 2989 0087 03       		.uleb128 0x3
+ 2990 0088 0E       		.uleb128 0xe
+ 2991 0089 3A       		.uleb128 0x3a
+ 2992 008a 0B       		.uleb128 0xb
+ 2993 008b 3B       		.uleb128 0x3b
+ 2994 008c 0B       		.uleb128 0xb
+ 2995 008d 27       		.uleb128 0x27
+ 2996 008e 19       		.uleb128 0x19
+ 2997 008f 49       		.uleb128 0x49
+ 2998 0090 13       		.uleb128 0x13
+ 2999 0091 11       		.uleb128 0x11
+ 3000 0092 01       		.uleb128 0x1
+ 3001 0093 12       		.uleb128 0x12
+ 3002 0094 06       		.uleb128 0x6
+ 3003 0095 40       		.uleb128 0x40
+ 3004 0096 18       		.uleb128 0x18
+ 3005 0097 9642     		.uleb128 0x2116
+ 3006 0099 19       		.uleb128 0x19
+ 3007 009a 01       		.uleb128 0x1
+ 3008 009b 13       		.uleb128 0x13
+ 3009 009c 00       		.byte	0
+ 3010 009d 00       		.byte	0
+ 3011 009e 0E       		.uleb128 0xe
+ 3012 009f 05       		.uleb128 0x5
+ 3013 00a0 00       		.byte	0
+ 3014 00a1 03       		.uleb128 0x3
+ 3015 00a2 08       		.uleb128 0x8
+ 3016 00a3 3A       		.uleb128 0x3a
+ 3017 00a4 0B       		.uleb128 0xb
+ 3018 00a5 3B       		.uleb128 0x3b
+ 3019 00a6 0B       		.uleb128 0xb
+ 3020 00a7 49       		.uleb128 0x49
+ 3021 00a8 13       		.uleb128 0x13
+ 3022 00a9 02       		.uleb128 0x2
+ 3023 00aa 17       		.uleb128 0x17
+ 3024 00ab 00       		.byte	0
+ 3025 00ac 00       		.byte	0
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 63
+
+
+ 3026 00ad 0F       		.uleb128 0xf
+ 3027 00ae 2E       		.uleb128 0x2e
+ 3028 00af 01       		.byte	0x1
+ 3029 00b0 3F       		.uleb128 0x3f
+ 3030 00b1 19       		.uleb128 0x19
+ 3031 00b2 03       		.uleb128 0x3
+ 3032 00b3 0E       		.uleb128 0xe
+ 3033 00b4 3A       		.uleb128 0x3a
+ 3034 00b5 0B       		.uleb128 0xb
+ 3035 00b6 3B       		.uleb128 0x3b
+ 3036 00b7 0B       		.uleb128 0xb
+ 3037 00b8 11       		.uleb128 0x11
+ 3038 00b9 01       		.uleb128 0x1
+ 3039 00ba 12       		.uleb128 0x12
+ 3040 00bb 06       		.uleb128 0x6
+ 3041 00bc 40       		.uleb128 0x40
+ 3042 00bd 18       		.uleb128 0x18
+ 3043 00be 9742     		.uleb128 0x2117
+ 3044 00c0 19       		.uleb128 0x19
+ 3045 00c1 01       		.uleb128 0x1
+ 3046 00c2 13       		.uleb128 0x13
+ 3047 00c3 00       		.byte	0
+ 3048 00c4 00       		.byte	0
+ 3049 00c5 10       		.uleb128 0x10
+ 3050 00c6 34       		.uleb128 0x34
+ 3051 00c7 00       		.byte	0
+ 3052 00c8 03       		.uleb128 0x3
+ 3053 00c9 0E       		.uleb128 0xe
+ 3054 00ca 3A       		.uleb128 0x3a
+ 3055 00cb 0B       		.uleb128 0xb
+ 3056 00cc 3B       		.uleb128 0x3b
+ 3057 00cd 0B       		.uleb128 0xb
+ 3058 00ce 49       		.uleb128 0x49
+ 3059 00cf 13       		.uleb128 0x13
+ 3060 00d0 02       		.uleb128 0x2
+ 3061 00d1 18       		.uleb128 0x18
+ 3062 00d2 00       		.byte	0
+ 3063 00d3 00       		.byte	0
+ 3064 00d4 11       		.uleb128 0x11
+ 3065 00d5 898201   		.uleb128 0x4109
+ 3066 00d8 01       		.byte	0x1
+ 3067 00d9 11       		.uleb128 0x11
+ 3068 00da 01       		.uleb128 0x1
+ 3069 00db 31       		.uleb128 0x31
+ 3070 00dc 13       		.uleb128 0x13
+ 3071 00dd 01       		.uleb128 0x1
+ 3072 00de 13       		.uleb128 0x13
+ 3073 00df 00       		.byte	0
+ 3074 00e0 00       		.byte	0
+ 3075 00e1 12       		.uleb128 0x12
+ 3076 00e2 8A8201   		.uleb128 0x410a
+ 3077 00e5 00       		.byte	0
+ 3078 00e6 02       		.uleb128 0x2
+ 3079 00e7 18       		.uleb128 0x18
+ 3080 00e8 9142     		.uleb128 0x2111
+ 3081 00ea 18       		.uleb128 0x18
+ 3082 00eb 00       		.byte	0
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 64
+
+
+ 3083 00ec 00       		.byte	0
+ 3084 00ed 13       		.uleb128 0x13
+ 3085 00ee 898201   		.uleb128 0x4109
+ 3086 00f1 01       		.byte	0x1
+ 3087 00f2 11       		.uleb128 0x11
+ 3088 00f3 01       		.uleb128 0x1
+ 3089 00f4 31       		.uleb128 0x31
+ 3090 00f5 13       		.uleb128 0x13
+ 3091 00f6 00       		.byte	0
+ 3092 00f7 00       		.byte	0
+ 3093 00f8 14       		.uleb128 0x14
+ 3094 00f9 2E       		.uleb128 0x2e
+ 3095 00fa 01       		.byte	0x1
+ 3096 00fb 3F       		.uleb128 0x3f
+ 3097 00fc 19       		.uleb128 0x19
+ 3098 00fd 03       		.uleb128 0x3
+ 3099 00fe 0E       		.uleb128 0xe
+ 3100 00ff 3A       		.uleb128 0x3a
+ 3101 0100 0B       		.uleb128 0xb
+ 3102 0101 3B       		.uleb128 0x3b
+ 3103 0102 0B       		.uleb128 0xb
+ 3104 0103 11       		.uleb128 0x11
+ 3105 0104 01       		.uleb128 0x1
+ 3106 0105 12       		.uleb128 0x12
+ 3107 0106 06       		.uleb128 0x6
+ 3108 0107 40       		.uleb128 0x40
+ 3109 0108 18       		.uleb128 0x18
+ 3110 0109 9642     		.uleb128 0x2116
+ 3111 010b 19       		.uleb128 0x19
+ 3112 010c 01       		.uleb128 0x1
+ 3113 010d 13       		.uleb128 0x13
+ 3114 010e 00       		.byte	0
+ 3115 010f 00       		.byte	0
+ 3116 0110 15       		.uleb128 0x15
+ 3117 0111 34       		.uleb128 0x34
+ 3118 0112 00       		.byte	0
+ 3119 0113 03       		.uleb128 0x3
+ 3120 0114 08       		.uleb128 0x8
+ 3121 0115 3A       		.uleb128 0x3a
+ 3122 0116 0B       		.uleb128 0xb
+ 3123 0117 3B       		.uleb128 0x3b
+ 3124 0118 0B       		.uleb128 0xb
+ 3125 0119 49       		.uleb128 0x49
+ 3126 011a 13       		.uleb128 0x13
+ 3127 011b 02       		.uleb128 0x2
+ 3128 011c 17       		.uleb128 0x17
+ 3129 011d 00       		.byte	0
+ 3130 011e 00       		.byte	0
+ 3131 011f 16       		.uleb128 0x16
+ 3132 0120 2E       		.uleb128 0x2e
+ 3133 0121 01       		.byte	0x1
+ 3134 0122 3F       		.uleb128 0x3f
+ 3135 0123 19       		.uleb128 0x19
+ 3136 0124 03       		.uleb128 0x3
+ 3137 0125 0E       		.uleb128 0xe
+ 3138 0126 3A       		.uleb128 0x3a
+ 3139 0127 0B       		.uleb128 0xb
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 65
+
+
+ 3140 0128 3B       		.uleb128 0x3b
+ 3141 0129 0B       		.uleb128 0xb
+ 3142 012a 27       		.uleb128 0x27
+ 3143 012b 19       		.uleb128 0x19
+ 3144 012c 49       		.uleb128 0x49
+ 3145 012d 13       		.uleb128 0x13
+ 3146 012e 11       		.uleb128 0x11
+ 3147 012f 01       		.uleb128 0x1
+ 3148 0130 12       		.uleb128 0x12
+ 3149 0131 06       		.uleb128 0x6
+ 3150 0132 40       		.uleb128 0x40
+ 3151 0133 18       		.uleb128 0x18
+ 3152 0134 9742     		.uleb128 0x2117
+ 3153 0136 19       		.uleb128 0x19
+ 3154 0137 01       		.uleb128 0x1
+ 3155 0138 13       		.uleb128 0x13
+ 3156 0139 00       		.byte	0
+ 3157 013a 00       		.byte	0
+ 3158 013b 17       		.uleb128 0x17
+ 3159 013c 05       		.uleb128 0x5
+ 3160 013d 00       		.byte	0
+ 3161 013e 03       		.uleb128 0x3
+ 3162 013f 0E       		.uleb128 0xe
+ 3163 0140 3A       		.uleb128 0x3a
+ 3164 0141 0B       		.uleb128 0xb
+ 3165 0142 3B       		.uleb128 0x3b
+ 3166 0143 0B       		.uleb128 0xb
+ 3167 0144 49       		.uleb128 0x49
+ 3168 0145 13       		.uleb128 0x13
+ 3169 0146 02       		.uleb128 0x2
+ 3170 0147 17       		.uleb128 0x17
+ 3171 0148 00       		.byte	0
+ 3172 0149 00       		.byte	0
+ 3173 014a 18       		.uleb128 0x18
+ 3174 014b 05       		.uleb128 0x5
+ 3175 014c 00       		.byte	0
+ 3176 014d 03       		.uleb128 0x3
+ 3177 014e 0E       		.uleb128 0xe
+ 3178 014f 3A       		.uleb128 0x3a
+ 3179 0150 0B       		.uleb128 0xb
+ 3180 0151 3B       		.uleb128 0x3b
+ 3181 0152 0B       		.uleb128 0xb
+ 3182 0153 49       		.uleb128 0x49
+ 3183 0154 13       		.uleb128 0x13
+ 3184 0155 02       		.uleb128 0x2
+ 3185 0156 18       		.uleb128 0x18
+ 3186 0157 00       		.byte	0
+ 3187 0158 00       		.byte	0
+ 3188 0159 19       		.uleb128 0x19
+ 3189 015a 34       		.uleb128 0x34
+ 3190 015b 00       		.byte	0
+ 3191 015c 03       		.uleb128 0x3
+ 3192 015d 0E       		.uleb128 0xe
+ 3193 015e 3A       		.uleb128 0x3a
+ 3194 015f 0B       		.uleb128 0xb
+ 3195 0160 3B       		.uleb128 0x3b
+ 3196 0161 0B       		.uleb128 0xb
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 66
+
+
+ 3197 0162 49       		.uleb128 0x49
+ 3198 0163 13       		.uleb128 0x13
+ 3199 0164 02       		.uleb128 0x2
+ 3200 0165 17       		.uleb128 0x17
+ 3201 0166 00       		.byte	0
+ 3202 0167 00       		.byte	0
+ 3203 0168 1A       		.uleb128 0x1a
+ 3204 0169 2E       		.uleb128 0x2e
+ 3205 016a 01       		.byte	0x1
+ 3206 016b 3F       		.uleb128 0x3f
+ 3207 016c 19       		.uleb128 0x19
+ 3208 016d 03       		.uleb128 0x3
+ 3209 016e 0E       		.uleb128 0xe
+ 3210 016f 3A       		.uleb128 0x3a
+ 3211 0170 0B       		.uleb128 0xb
+ 3212 0171 3B       		.uleb128 0x3b
+ 3213 0172 0B       		.uleb128 0xb
+ 3214 0173 49       		.uleb128 0x49
+ 3215 0174 13       		.uleb128 0x13
+ 3216 0175 11       		.uleb128 0x11
+ 3217 0176 01       		.uleb128 0x1
+ 3218 0177 12       		.uleb128 0x12
+ 3219 0178 06       		.uleb128 0x6
+ 3220 0179 40       		.uleb128 0x40
+ 3221 017a 18       		.uleb128 0x18
+ 3222 017b 9742     		.uleb128 0x2117
+ 3223 017d 19       		.uleb128 0x19
+ 3224 017e 01       		.uleb128 0x1
+ 3225 017f 13       		.uleb128 0x13
+ 3226 0180 00       		.byte	0
+ 3227 0181 00       		.byte	0
+ 3228 0182 1B       		.uleb128 0x1b
+ 3229 0183 34       		.uleb128 0x34
+ 3230 0184 00       		.byte	0
+ 3231 0185 03       		.uleb128 0x3
+ 3232 0186 08       		.uleb128 0x8
+ 3233 0187 3A       		.uleb128 0x3a
+ 3234 0188 0B       		.uleb128 0xb
+ 3235 0189 3B       		.uleb128 0x3b
+ 3236 018a 0B       		.uleb128 0xb
+ 3237 018b 49       		.uleb128 0x49
+ 3238 018c 13       		.uleb128 0x13
+ 3239 018d 02       		.uleb128 0x2
+ 3240 018e 18       		.uleb128 0x18
+ 3241 018f 00       		.byte	0
+ 3242 0190 00       		.byte	0
+ 3243 0191 1C       		.uleb128 0x1c
+ 3244 0192 898201   		.uleb128 0x4109
+ 3245 0195 00       		.byte	0
+ 3246 0196 11       		.uleb128 0x11
+ 3247 0197 01       		.uleb128 0x1
+ 3248 0198 31       		.uleb128 0x31
+ 3249 0199 13       		.uleb128 0x13
+ 3250 019a 00       		.byte	0
+ 3251 019b 00       		.byte	0
+ 3252 019c 1D       		.uleb128 0x1d
+ 3253 019d 2E       		.uleb128 0x2e
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 67
+
+
+ 3254 019e 01       		.byte	0x1
+ 3255 019f 3F       		.uleb128 0x3f
+ 3256 01a0 19       		.uleb128 0x19
+ 3257 01a1 03       		.uleb128 0x3
+ 3258 01a2 0E       		.uleb128 0xe
+ 3259 01a3 3A       		.uleb128 0x3a
+ 3260 01a4 0B       		.uleb128 0xb
+ 3261 01a5 3B       		.uleb128 0x3b
+ 3262 01a6 0B       		.uleb128 0xb
+ 3263 01a7 49       		.uleb128 0x49
+ 3264 01a8 13       		.uleb128 0x13
+ 3265 01a9 11       		.uleb128 0x11
+ 3266 01aa 01       		.uleb128 0x1
+ 3267 01ab 12       		.uleb128 0x12
+ 3268 01ac 06       		.uleb128 0x6
+ 3269 01ad 40       		.uleb128 0x40
+ 3270 01ae 18       		.uleb128 0x18
+ 3271 01af 9642     		.uleb128 0x2116
+ 3272 01b1 19       		.uleb128 0x19
+ 3273 01b2 01       		.uleb128 0x1
+ 3274 01b3 13       		.uleb128 0x13
+ 3275 01b4 00       		.byte	0
+ 3276 01b5 00       		.byte	0
+ 3277 01b6 1E       		.uleb128 0x1e
+ 3278 01b7 0B       		.uleb128 0xb
+ 3279 01b8 01       		.byte	0x1
+ 3280 01b9 55       		.uleb128 0x55
+ 3281 01ba 17       		.uleb128 0x17
+ 3282 01bb 01       		.uleb128 0x1
+ 3283 01bc 13       		.uleb128 0x13
+ 3284 01bd 00       		.byte	0
+ 3285 01be 00       		.byte	0
+ 3286 01bf 1F       		.uleb128 0x1f
+ 3287 01c0 34       		.uleb128 0x34
+ 3288 01c1 00       		.byte	0
+ 3289 01c2 03       		.uleb128 0x3
+ 3290 01c3 0E       		.uleb128 0xe
+ 3291 01c4 3A       		.uleb128 0x3a
+ 3292 01c5 0B       		.uleb128 0xb
+ 3293 01c6 3B       		.uleb128 0x3b
+ 3294 01c7 05       		.uleb128 0x5
+ 3295 01c8 49       		.uleb128 0x49
+ 3296 01c9 13       		.uleb128 0x13
+ 3297 01ca 1C       		.uleb128 0x1c
+ 3298 01cb 06       		.uleb128 0x6
+ 3299 01cc 00       		.byte	0
+ 3300 01cd 00       		.byte	0
+ 3301 01ce 20       		.uleb128 0x20
+ 3302 01cf 34       		.uleb128 0x34
+ 3303 01d0 00       		.byte	0
+ 3304 01d1 03       		.uleb128 0x3
+ 3305 01d2 0E       		.uleb128 0xe
+ 3306 01d3 3A       		.uleb128 0x3a
+ 3307 01d4 0B       		.uleb128 0xb
+ 3308 01d5 3B       		.uleb128 0x3b
+ 3309 01d6 05       		.uleb128 0x5
+ 3310 01d7 49       		.uleb128 0x49
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 68
+
+
+ 3311 01d8 13       		.uleb128 0x13
+ 3312 01d9 1C       		.uleb128 0x1c
+ 3313 01da 05       		.uleb128 0x5
+ 3314 01db 00       		.byte	0
+ 3315 01dc 00       		.byte	0
+ 3316 01dd 21       		.uleb128 0x21
+ 3317 01de 0B       		.uleb128 0xb
+ 3318 01df 01       		.byte	0x1
+ 3319 01e0 55       		.uleb128 0x55
+ 3320 01e1 17       		.uleb128 0x17
+ 3321 01e2 00       		.byte	0
+ 3322 01e3 00       		.byte	0
+ 3323 01e4 22       		.uleb128 0x22
+ 3324 01e5 34       		.uleb128 0x34
+ 3325 01e6 00       		.byte	0
+ 3326 01e7 03       		.uleb128 0x3
+ 3327 01e8 0E       		.uleb128 0xe
+ 3328 01e9 3A       		.uleb128 0x3a
+ 3329 01ea 0B       		.uleb128 0xb
+ 3330 01eb 3B       		.uleb128 0x3b
+ 3331 01ec 05       		.uleb128 0x5
+ 3332 01ed 49       		.uleb128 0x49
+ 3333 01ee 13       		.uleb128 0x13
+ 3334 01ef 02       		.uleb128 0x2
+ 3335 01f0 17       		.uleb128 0x17
+ 3336 01f1 00       		.byte	0
+ 3337 01f2 00       		.byte	0
+ 3338 01f3 23       		.uleb128 0x23
+ 3339 01f4 21       		.uleb128 0x21
+ 3340 01f5 00       		.byte	0
+ 3341 01f6 49       		.uleb128 0x49
+ 3342 01f7 13       		.uleb128 0x13
+ 3343 01f8 2F       		.uleb128 0x2f
+ 3344 01f9 05       		.uleb128 0x5
+ 3345 01fa 00       		.byte	0
+ 3346 01fb 00       		.byte	0
+ 3347 01fc 24       		.uleb128 0x24
+ 3348 01fd 34       		.uleb128 0x34
+ 3349 01fe 00       		.byte	0
+ 3350 01ff 03       		.uleb128 0x3
+ 3351 0200 0E       		.uleb128 0xe
+ 3352 0201 3A       		.uleb128 0x3a
+ 3353 0202 0B       		.uleb128 0xb
+ 3354 0203 3B       		.uleb128 0x3b
+ 3355 0204 0B       		.uleb128 0xb
+ 3356 0205 49       		.uleb128 0x49
+ 3357 0206 13       		.uleb128 0x13
+ 3358 0207 3F       		.uleb128 0x3f
+ 3359 0208 19       		.uleb128 0x19
+ 3360 0209 02       		.uleb128 0x2
+ 3361 020a 18       		.uleb128 0x18
+ 3362 020b 00       		.byte	0
+ 3363 020c 00       		.byte	0
+ 3364 020d 25       		.uleb128 0x25
+ 3365 020e 34       		.uleb128 0x34
+ 3366 020f 00       		.byte	0
+ 3367 0210 03       		.uleb128 0x3
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 69
+
+
+ 3368 0211 08       		.uleb128 0x8
+ 3369 0212 3A       		.uleb128 0x3a
+ 3370 0213 0B       		.uleb128 0xb
+ 3371 0214 3B       		.uleb128 0x3b
+ 3372 0215 0B       		.uleb128 0xb
+ 3373 0216 49       		.uleb128 0x49
+ 3374 0217 13       		.uleb128 0x13
+ 3375 0218 3F       		.uleb128 0x3f
+ 3376 0219 19       		.uleb128 0x19
+ 3377 021a 02       		.uleb128 0x2
+ 3378 021b 18       		.uleb128 0x18
+ 3379 021c 00       		.byte	0
+ 3380 021d 00       		.byte	0
+ 3381 021e 26       		.uleb128 0x26
+ 3382 021f 2E       		.uleb128 0x2e
+ 3383 0220 01       		.byte	0x1
+ 3384 0221 3F       		.uleb128 0x3f
+ 3385 0222 19       		.uleb128 0x19
+ 3386 0223 03       		.uleb128 0x3
+ 3387 0224 0E       		.uleb128 0xe
+ 3388 0225 27       		.uleb128 0x27
+ 3389 0226 19       		.uleb128 0x19
+ 3390 0227 49       		.uleb128 0x49
+ 3391 0228 13       		.uleb128 0x13
+ 3392 0229 34       		.uleb128 0x34
+ 3393 022a 19       		.uleb128 0x19
+ 3394 022b 3C       		.uleb128 0x3c
+ 3395 022c 19       		.uleb128 0x19
+ 3396 022d 01       		.uleb128 0x1
+ 3397 022e 13       		.uleb128 0x13
+ 3398 022f 00       		.byte	0
+ 3399 0230 00       		.byte	0
+ 3400 0231 27       		.uleb128 0x27
+ 3401 0232 05       		.uleb128 0x5
+ 3402 0233 00       		.byte	0
+ 3403 0234 49       		.uleb128 0x49
+ 3404 0235 13       		.uleb128 0x13
+ 3405 0236 00       		.byte	0
+ 3406 0237 00       		.byte	0
+ 3407 0238 28       		.uleb128 0x28
+ 3408 0239 2E       		.uleb128 0x2e
+ 3409 023a 00       		.byte	0
+ 3410 023b 3F       		.uleb128 0x3f
+ 3411 023c 19       		.uleb128 0x19
+ 3412 023d 03       		.uleb128 0x3
+ 3413 023e 0E       		.uleb128 0xe
+ 3414 023f 3A       		.uleb128 0x3a
+ 3415 0240 0B       		.uleb128 0xb
+ 3416 0241 3B       		.uleb128 0x3b
+ 3417 0242 0B       		.uleb128 0xb
+ 3418 0243 27       		.uleb128 0x27
+ 3419 0244 19       		.uleb128 0x19
+ 3420 0245 49       		.uleb128 0x49
+ 3421 0246 13       		.uleb128 0x13
+ 3422 0247 3C       		.uleb128 0x3c
+ 3423 0248 19       		.uleb128 0x19
+ 3424 0249 00       		.byte	0
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 70
+
+
+ 3425 024a 00       		.byte	0
+ 3426 024b 29       		.uleb128 0x29
+ 3427 024c 2E       		.uleb128 0x2e
+ 3428 024d 00       		.byte	0
+ 3429 024e 3F       		.uleb128 0x3f
+ 3430 024f 19       		.uleb128 0x19
+ 3431 0250 03       		.uleb128 0x3
+ 3432 0251 0E       		.uleb128 0xe
+ 3433 0252 3A       		.uleb128 0x3a
+ 3434 0253 0B       		.uleb128 0xb
+ 3435 0254 3B       		.uleb128 0x3b
+ 3436 0255 0B       		.uleb128 0xb
+ 3437 0256 27       		.uleb128 0x27
+ 3438 0257 19       		.uleb128 0x19
+ 3439 0258 3C       		.uleb128 0x3c
+ 3440 0259 19       		.uleb128 0x19
+ 3441 025a 00       		.byte	0
+ 3442 025b 00       		.byte	0
+ 3443 025c 2A       		.uleb128 0x2a
+ 3444 025d 2E       		.uleb128 0x2e
+ 3445 025e 00       		.byte	0
+ 3446 025f 3F       		.uleb128 0x3f
+ 3447 0260 19       		.uleb128 0x19
+ 3448 0261 03       		.uleb128 0x3
+ 3449 0262 0E       		.uleb128 0xe
+ 3450 0263 3A       		.uleb128 0x3a
+ 3451 0264 0B       		.uleb128 0xb
+ 3452 0265 3B       		.uleb128 0x3b
+ 3453 0266 05       		.uleb128 0x5
+ 3454 0267 27       		.uleb128 0x27
+ 3455 0268 19       		.uleb128 0x19
+ 3456 0269 3C       		.uleb128 0x3c
+ 3457 026a 19       		.uleb128 0x19
+ 3458 026b 00       		.byte	0
+ 3459 026c 00       		.byte	0
+ 3460 026d 2B       		.uleb128 0x2b
+ 3461 026e 2E       		.uleb128 0x2e
+ 3462 026f 00       		.byte	0
+ 3463 0270 3F       		.uleb128 0x3f
+ 3464 0271 19       		.uleb128 0x19
+ 3465 0272 03       		.uleb128 0x3
+ 3466 0273 0E       		.uleb128 0xe
+ 3467 0274 3A       		.uleb128 0x3a
+ 3468 0275 0B       		.uleb128 0xb
+ 3469 0276 3B       		.uleb128 0x3b
+ 3470 0277 05       		.uleb128 0x5
+ 3471 0278 27       		.uleb128 0x27
+ 3472 0279 19       		.uleb128 0x19
+ 3473 027a 49       		.uleb128 0x49
+ 3474 027b 13       		.uleb128 0x13
+ 3475 027c 3C       		.uleb128 0x3c
+ 3476 027d 19       		.uleb128 0x19
+ 3477 027e 00       		.byte	0
+ 3478 027f 00       		.byte	0
+ 3479 0280 2C       		.uleb128 0x2c
+ 3480 0281 2E       		.uleb128 0x2e
+ 3481 0282 01       		.byte	0x1
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 71
+
+
+ 3482 0283 3F       		.uleb128 0x3f
+ 3483 0284 19       		.uleb128 0x19
+ 3484 0285 03       		.uleb128 0x3
+ 3485 0286 0E       		.uleb128 0xe
+ 3486 0287 3A       		.uleb128 0x3a
+ 3487 0288 0B       		.uleb128 0xb
+ 3488 0289 3B       		.uleb128 0x3b
+ 3489 028a 0B       		.uleb128 0xb
+ 3490 028b 27       		.uleb128 0x27
+ 3491 028c 19       		.uleb128 0x19
+ 3492 028d 49       		.uleb128 0x49
+ 3493 028e 13       		.uleb128 0x13
+ 3494 028f 3C       		.uleb128 0x3c
+ 3495 0290 19       		.uleb128 0x19
+ 3496 0291 01       		.uleb128 0x1
+ 3497 0292 13       		.uleb128 0x13
+ 3498 0293 00       		.byte	0
+ 3499 0294 00       		.byte	0
+ 3500 0295 2D       		.uleb128 0x2d
+ 3501 0296 18       		.uleb128 0x18
+ 3502 0297 00       		.byte	0
+ 3503 0298 00       		.byte	0
+ 3504 0299 00       		.byte	0
+ 3505 029a 2E       		.uleb128 0x2e
+ 3506 029b 2E       		.uleb128 0x2e
+ 3507 029c 01       		.byte	0x1
+ 3508 029d 3F       		.uleb128 0x3f
+ 3509 029e 19       		.uleb128 0x19
+ 3510 029f 03       		.uleb128 0x3
+ 3511 02a0 0E       		.uleb128 0xe
+ 3512 02a1 3A       		.uleb128 0x3a
+ 3513 02a2 0B       		.uleb128 0xb
+ 3514 02a3 3B       		.uleb128 0x3b
+ 3515 02a4 05       		.uleb128 0x5
+ 3516 02a5 27       		.uleb128 0x27
+ 3517 02a6 19       		.uleb128 0x19
+ 3518 02a7 3C       		.uleb128 0x3c
+ 3519 02a8 19       		.uleb128 0x19
+ 3520 02a9 01       		.uleb128 0x1
+ 3521 02aa 13       		.uleb128 0x13
+ 3522 02ab 00       		.byte	0
+ 3523 02ac 00       		.byte	0
+ 3524 02ad 00       		.byte	0
+ 3525              		.section	.debug_loc,"",%progbits
+ 3526              	.Ldebug_loc0:
+ 3527              	.LLST0:
+ 3528 0000 00000000 		.4byte	.LVL0
+ 3529 0004 05000000 		.4byte	.LVL1-1
+ 3530 0008 0100     		.2byte	0x1
+ 3531 000a 50       		.byte	0x50
+ 3532 000b 05000000 		.4byte	.LVL1-1
+ 3533 000f 24000000 		.4byte	.LFE33
+ 3534 0013 0400     		.2byte	0x4
+ 3535 0015 F3       		.byte	0xf3
+ 3536 0016 01       		.uleb128 0x1
+ 3537 0017 50       		.byte	0x50
+ 3538 0018 9F       		.byte	0x9f
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 72
+
+
+ 3539 0019 00000000 		.4byte	0
+ 3540 001d 00000000 		.4byte	0
+ 3541              	.LLST1:
+ 3542 0021 00000000 		.4byte	.LVL8
+ 3543 0025 1E000000 		.4byte	.LVL10
+ 3544 0029 0200     		.2byte	0x2
+ 3545 002b 30       		.byte	0x30
+ 3546 002c 9F       		.byte	0x9f
+ 3547 002d 00000000 		.4byte	0
+ 3548 0031 00000000 		.4byte	0
+ 3549              	.LLST2:
+ 3550 0035 00000000 		.4byte	.LVL18
+ 3551 0039 0C000000 		.4byte	.LVL22
+ 3552 003d 0100     		.2byte	0x1
+ 3553 003f 50       		.byte	0x50
+ 3554 0040 0C000000 		.4byte	.LVL22
+ 3555 0044 0E000000 		.4byte	.LFE36
+ 3556 0048 0400     		.2byte	0x4
+ 3557 004a F3       		.byte	0xf3
+ 3558 004b 01       		.uleb128 0x1
+ 3559 004c 50       		.byte	0x50
+ 3560 004d 9F       		.byte	0x9f
+ 3561 004e 00000000 		.4byte	0
+ 3562 0052 00000000 		.4byte	0
+ 3563              	.LLST3:
+ 3564 0056 00000000 		.4byte	.LVL18
+ 3565 005a 04000000 		.4byte	.LVL19
+ 3566 005e 0100     		.2byte	0x1
+ 3567 0060 51       		.byte	0x51
+ 3568 0061 04000000 		.4byte	.LVL19
+ 3569 0065 0E000000 		.4byte	.LFE36
+ 3570 0069 0400     		.2byte	0x4
+ 3571 006b F3       		.byte	0xf3
+ 3572 006c 01       		.uleb128 0x1
+ 3573 006d 51       		.byte	0x51
+ 3574 006e 9F       		.byte	0x9f
+ 3575 006f 00000000 		.4byte	0
+ 3576 0073 00000000 		.4byte	0
+ 3577              	.LLST4:
+ 3578 0077 06000000 		.4byte	.LVL20
+ 3579 007b 08000000 		.4byte	.LVL21
+ 3580 007f 0500     		.2byte	0x5
+ 3581 0081 71       		.byte	0x71
+ 3582 0082 00       		.sleb128 0
+ 3583 0083 46       		.byte	0x46
+ 3584 0084 25       		.byte	0x25
+ 3585 0085 9F       		.byte	0x9f
+ 3586 0086 08000000 		.4byte	.LVL21
+ 3587 008a 0C000000 		.4byte	.LVL22
+ 3588 008e 0600     		.2byte	0x6
+ 3589 0090 70       		.byte	0x70
+ 3590 0091 00       		.sleb128 0
+ 3591 0092 06       		.byte	0x6
+ 3592 0093 46       		.byte	0x46
+ 3593 0094 25       		.byte	0x25
+ 3594 0095 9F       		.byte	0x9f
+ 3595 0096 0C000000 		.4byte	.LVL22
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 73
+
+
+ 3596 009a 0E000000 		.4byte	.LFE36
+ 3597 009e 0700     		.2byte	0x7
+ 3598 00a0 F3       		.byte	0xf3
+ 3599 00a1 01       		.uleb128 0x1
+ 3600 00a2 50       		.byte	0x50
+ 3601 00a3 06       		.byte	0x6
+ 3602 00a4 46       		.byte	0x46
+ 3603 00a5 25       		.byte	0x25
+ 3604 00a6 9F       		.byte	0x9f
+ 3605 00a7 00000000 		.4byte	0
+ 3606 00ab 00000000 		.4byte	0
+ 3607              	.LLST5:
+ 3608 00af 06000000 		.4byte	.LVL20
+ 3609 00b3 08000000 		.4byte	.LVL21
+ 3610 00b7 0900     		.2byte	0x9
+ 3611 00b9 71       		.byte	0x71
+ 3612 00ba 00       		.sleb128 0
+ 3613 00bb 46       		.byte	0x46
+ 3614 00bc 25       		.byte	0x25
+ 3615 00bd 32       		.byte	0x32
+ 3616 00be 24       		.byte	0x24
+ 3617 00bf 72       		.byte	0x72
+ 3618 00c0 00       		.sleb128 0
+ 3619 00c1 22       		.byte	0x22
+ 3620 00c2 08000000 		.4byte	.LVL21
+ 3621 00c6 0C000000 		.4byte	.LVL22
+ 3622 00ca 0A00     		.2byte	0xa
+ 3623 00cc 70       		.byte	0x70
+ 3624 00cd 00       		.sleb128 0
+ 3625 00ce 06       		.byte	0x6
+ 3626 00cf 46       		.byte	0x46
+ 3627 00d0 25       		.byte	0x25
+ 3628 00d1 32       		.byte	0x32
+ 3629 00d2 24       		.byte	0x24
+ 3630 00d3 72       		.byte	0x72
+ 3631 00d4 00       		.sleb128 0
+ 3632 00d5 22       		.byte	0x22
+ 3633 00d6 0C000000 		.4byte	.LVL22
+ 3634 00da 0E000000 		.4byte	.LFE36
+ 3635 00de 0100     		.2byte	0x1
+ 3636 00e0 50       		.byte	0x50
+ 3637 00e1 00000000 		.4byte	0
+ 3638 00e5 00000000 		.4byte	0
+ 3639              	.LLST6:
+ 3640 00e9 08000000 		.4byte	.LVL24
+ 3641 00ed 0E000000 		.4byte	.LVL25
+ 3642 00f1 0100     		.2byte	0x1
+ 3643 00f3 53       		.byte	0x53
+ 3644 00f4 00000000 		.4byte	0
+ 3645 00f8 00000000 		.4byte	0
+ 3646              	.LLST7:
+ 3647 00fc 2A000000 		.4byte	.LVL32
+ 3648 0100 2C000000 		.4byte	.LVL33
+ 3649 0104 0100     		.2byte	0x1
+ 3650 0106 50       		.byte	0x50
+ 3651 0107 2C000000 		.4byte	.LVL33
+ 3652 010b 88010000 		.4byte	.LFE38
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 74
+
+
+ 3653 010f 0200     		.2byte	0x2
+ 3654 0111 91       		.byte	0x91
+ 3655 0112 64       		.sleb128 -28
+ 3656 0113 00000000 		.4byte	0
+ 3657 0117 00000000 		.4byte	0
+ 3658              	.LLST8:
+ 3659 011b 3A010000 		.4byte	.LVL62
+ 3660 011f 42010000 		.4byte	.LVL63
+ 3661 0123 0100     		.2byte	0x1
+ 3662 0125 50       		.byte	0x50
+ 3663 0126 42010000 		.4byte	.LVL63
+ 3664 012a 45010000 		.4byte	.LVL64-1
+ 3665 012e 0100     		.2byte	0x1
+ 3666 0130 53       		.byte	0x53
+ 3667 0131 00000000 		.4byte	0
+ 3668 0135 00000000 		.4byte	0
+ 3669              	.LLST9:
+ 3670 0139 3E000000 		.4byte	.LVL34
+ 3671 013d 44000000 		.4byte	.LVL35
+ 3672 0141 0200     		.2byte	0x2
+ 3673 0143 30       		.byte	0x30
+ 3674 0144 9F       		.byte	0x9f
+ 3675 0145 4A000000 		.4byte	.LVL36
+ 3676 0149 56000000 		.4byte	.LVL37
+ 3677 014d 0200     		.2byte	0x2
+ 3678 014f 30       		.byte	0x30
+ 3679 0150 9F       		.byte	0x9f
+ 3680 0151 56000000 		.4byte	.LVL37
+ 3681 0155 5C000000 		.4byte	.LVL38
+ 3682 0159 0200     		.2byte	0x2
+ 3683 015b 31       		.byte	0x31
+ 3684 015c 9F       		.byte	0x9f
+ 3685 015d 5C000000 		.4byte	.LVL38
+ 3686 0161 74000000 		.4byte	.LVL39
+ 3687 0165 0200     		.2byte	0x2
+ 3688 0167 32       		.byte	0x32
+ 3689 0168 9F       		.byte	0x9f
+ 3690 0169 74000000 		.4byte	.LVL39
+ 3691 016d 76000000 		.4byte	.LVL40
+ 3692 0171 0200     		.2byte	0x2
+ 3693 0173 33       		.byte	0x33
+ 3694 0174 9F       		.byte	0x9f
+ 3695 0175 76000000 		.4byte	.LVL40
+ 3696 0179 B2000000 		.4byte	.LVL45
+ 3697 017d 0100     		.2byte	0x1
+ 3698 017f 51       		.byte	0x51
+ 3699 0180 B2000000 		.4byte	.LVL45
+ 3700 0184 D2000000 		.4byte	.LVL48
+ 3701 0188 0500     		.2byte	0x5
+ 3702 018a 33       		.byte	0x33
+ 3703 018b 77       		.byte	0x77
+ 3704 018c 00       		.sleb128 0
+ 3705 018d 1C       		.byte	0x1c
+ 3706 018e 9F       		.byte	0x9f
+ 3707 018f D2000000 		.4byte	.LVL48
+ 3708 0193 D4000000 		.4byte	.LVL49
+ 3709 0197 0500     		.2byte	0x5
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 75
+
+
+ 3710 0199 34       		.byte	0x34
+ 3711 019a 77       		.byte	0x77
+ 3712 019b 00       		.sleb128 0
+ 3713 019c 1C       		.byte	0x1c
+ 3714 019d 9F       		.byte	0x9f
+ 3715 019e D4000000 		.4byte	.LVL49
+ 3716 01a2 DA000000 		.4byte	.LVL50
+ 3717 01a6 0500     		.2byte	0x5
+ 3718 01a8 33       		.byte	0x33
+ 3719 01a9 77       		.byte	0x77
+ 3720 01aa 00       		.sleb128 0
+ 3721 01ab 1C       		.byte	0x1c
+ 3722 01ac 9F       		.byte	0x9f
+ 3723 01ad E2000000 		.4byte	.LVL51
+ 3724 01b1 FE000000 		.4byte	.LVL53
+ 3725 01b5 0100     		.2byte	0x1
+ 3726 01b7 51       		.byte	0x51
+ 3727 01b8 FE000000 		.4byte	.LVL53
+ 3728 01bc 08010000 		.4byte	.LVL55
+ 3729 01c0 0500     		.2byte	0x5
+ 3730 01c2 33       		.byte	0x33
+ 3731 01c3 77       		.byte	0x77
+ 3732 01c4 00       		.sleb128 0
+ 3733 01c5 1C       		.byte	0x1c
+ 3734 01c6 9F       		.byte	0x9f
+ 3735 01c7 08010000 		.4byte	.LVL55
+ 3736 01cb 12010000 		.4byte	.LVL57
+ 3737 01cf 0100     		.2byte	0x1
+ 3738 01d1 51       		.byte	0x51
+ 3739 01d2 12010000 		.4byte	.LVL57
+ 3740 01d6 22010000 		.4byte	.LVL59
+ 3741 01da 0500     		.2byte	0x5
+ 3742 01dc 33       		.byte	0x33
+ 3743 01dd 77       		.byte	0x77
+ 3744 01de 00       		.sleb128 0
+ 3745 01df 1C       		.byte	0x1c
+ 3746 01e0 9F       		.byte	0x9f
+ 3747 01e1 00000000 		.4byte	0
+ 3748 01e5 00000000 		.4byte	0
+ 3749              	.LLST10:
+ 3750 01e9 2A000000 		.4byte	.LVL32
+ 3751 01ed 2C000000 		.4byte	.LVL33
+ 3752 01f1 0200     		.2byte	0x2
+ 3753 01f3 30       		.byte	0x30
+ 3754 01f4 9F       		.byte	0x9f
+ 3755 01f5 2C000000 		.4byte	.LVL33
+ 3756 01f9 22010000 		.4byte	.LVL59
+ 3757 01fd 0800     		.2byte	0x8
+ 3758 01ff 0A       		.byte	0xa
+ 3759 0200 80BB     		.2byte	0xbb80
+ 3760 0202 91       		.byte	0x91
+ 3761 0203 60       		.sleb128 -32
+ 3762 0204 06       		.byte	0x6
+ 3763 0205 1C       		.byte	0x1c
+ 3764 0206 9F       		.byte	0x9f
+ 3765 0207 22010000 		.4byte	.LVL59
+ 3766 020b 28010000 		.4byte	.LVL60
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 76
+
+
+ 3767 020f 0800     		.2byte	0x8
+ 3768 0211 0A       		.byte	0xa
+ 3769 0212 81BB     		.2byte	0xbb81
+ 3770 0214 91       		.byte	0x91
+ 3771 0215 60       		.sleb128 -32
+ 3772 0216 06       		.byte	0x6
+ 3773 0217 1C       		.byte	0x1c
+ 3774 0218 9F       		.byte	0x9f
+ 3775 0219 28010000 		.4byte	.LVL60
+ 3776 021d 31010000 		.4byte	.LVL61-1
+ 3777 0221 0700     		.2byte	0x7
+ 3778 0223 0A       		.byte	0xa
+ 3779 0224 80BB     		.2byte	0xbb80
+ 3780 0226 73       		.byte	0x73
+ 3781 0227 00       		.sleb128 0
+ 3782 0228 1C       		.byte	0x1c
+ 3783 0229 9F       		.byte	0x9f
+ 3784 022a 31010000 		.4byte	.LVL61-1
+ 3785 022e 88010000 		.4byte	.LFE38
+ 3786 0232 0800     		.2byte	0x8
+ 3787 0234 0A       		.byte	0xa
+ 3788 0235 80BB     		.2byte	0xbb80
+ 3789 0237 91       		.byte	0x91
+ 3790 0238 60       		.sleb128 -32
+ 3791 0239 06       		.byte	0x6
+ 3792 023a 1C       		.byte	0x1c
+ 3793 023b 9F       		.byte	0x9f
+ 3794 023c 00000000 		.4byte	0
+ 3795 0240 00000000 		.4byte	0
+ 3796              	.LLST11:
+ 3797 0244 94000000 		.4byte	.LVL41
+ 3798 0248 9E000000 		.4byte	.LVL42
+ 3799 024c 0600     		.2byte	0x6
+ 3800 024e 74       		.byte	0x74
+ 3801 024f 04       		.sleb128 4
+ 3802 0250 06       		.byte	0x6
+ 3803 0251 49       		.byte	0x49
+ 3804 0252 25       		.byte	0x25
+ 3805 0253 9F       		.byte	0x9f
+ 3806 0254 9E000000 		.4byte	.LVL42
+ 3807 0258 A0000000 		.4byte	.LVL43
+ 3808 025c 0100     		.2byte	0x1
+ 3809 025e 53       		.byte	0x53
+ 3810 025f A0000000 		.4byte	.LVL43
+ 3811 0263 B7000000 		.4byte	.LVL46-1
+ 3812 0267 0600     		.2byte	0x6
+ 3813 0269 74       		.byte	0x74
+ 3814 026a 04       		.sleb128 4
+ 3815 026b 06       		.byte	0x6
+ 3816 026c 49       		.byte	0x49
+ 3817 026d 25       		.byte	0x25
+ 3818 026e 9F       		.byte	0x9f
+ 3819 026f FA000000 		.4byte	.LVL52
+ 3820 0273 03010000 		.4byte	.LVL54-1
+ 3821 0277 0600     		.2byte	0x6
+ 3822 0279 74       		.byte	0x74
+ 3823 027a 04       		.sleb128 4
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 77
+
+
+ 3824 027b 06       		.byte	0x6
+ 3825 027c 49       		.byte	0x49
+ 3826 027d 25       		.byte	0x25
+ 3827 027e 9F       		.byte	0x9f
+ 3828 027f 08010000 		.4byte	.LVL55
+ 3829 0283 19010000 		.4byte	.LVL58-1
+ 3830 0287 0600     		.2byte	0x6
+ 3831 0289 74       		.byte	0x74
+ 3832 028a 04       		.sleb128 4
+ 3833 028b 06       		.byte	0x6
+ 3834 028c 49       		.byte	0x49
+ 3835 028d 25       		.byte	0x25
+ 3836 028e 9F       		.byte	0x9f
+ 3837 028f 00000000 		.4byte	0
+ 3838 0293 00000000 		.4byte	0
+ 3839              	.LLST12:
+ 3840 0297 A6000000 		.4byte	.LVL44
+ 3841 029b B7000000 		.4byte	.LVL46-1
+ 3842 029f 0100     		.2byte	0x1
+ 3843 02a1 53       		.byte	0x53
+ 3844 02a2 B7000000 		.4byte	.LVL46-1
+ 3845 02a6 D2000000 		.4byte	.LVL48
+ 3846 02aa 0200     		.2byte	0x2
+ 3847 02ac 91       		.byte	0x91
+ 3848 02ad 5C       		.sleb128 -36
+ 3849 02ae FA000000 		.4byte	.LVL52
+ 3850 02b2 03010000 		.4byte	.LVL54-1
+ 3851 02b6 0100     		.2byte	0x1
+ 3852 02b8 53       		.byte	0x53
+ 3853 02b9 03010000 		.4byte	.LVL54-1
+ 3854 02bd 08010000 		.4byte	.LVL55
+ 3855 02c1 0200     		.2byte	0x2
+ 3856 02c3 91       		.byte	0x91
+ 3857 02c4 5C       		.sleb128 -36
+ 3858 02c5 08010000 		.4byte	.LVL55
+ 3859 02c9 0C010000 		.4byte	.LVL56
+ 3860 02cd 0100     		.2byte	0x1
+ 3861 02cf 53       		.byte	0x53
+ 3862 02d0 0C010000 		.4byte	.LVL56
+ 3863 02d4 22010000 		.4byte	.LVL59
+ 3864 02d8 0200     		.2byte	0x2
+ 3865 02da 91       		.byte	0x91
+ 3866 02db 5C       		.sleb128 -36
+ 3867 02dc 00000000 		.4byte	0
+ 3868 02e0 00000000 		.4byte	0
+ 3869              		.section	.debug_aranges,"",%progbits
+ 3870 0000 44000000 		.4byte	0x44
+ 3871 0004 0200     		.2byte	0x2
+ 3872 0006 00000000 		.4byte	.Ldebug_info0
+ 3873 000a 04       		.byte	0x4
+ 3874 000b 00       		.byte	0
+ 3875 000c 0000     		.2byte	0
+ 3876 000e 0000     		.2byte	0
+ 3877 0010 00000000 		.4byte	.LFB33
+ 3878 0014 24000000 		.4byte	.LFE33-.LFB33
+ 3879 0018 00000000 		.4byte	.LFB34
+ 3880 001c F0000000 		.4byte	.LFE34-.LFB34
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 78
+
+
+ 3881 0020 00000000 		.4byte	.LFB35
+ 3882 0024 A0000000 		.4byte	.LFE35-.LFB35
+ 3883 0028 00000000 		.4byte	.LFB36
+ 3884 002c 0E000000 		.4byte	.LFE36-.LFB36
+ 3885 0030 00000000 		.4byte	.LFB37
+ 3886 0034 18000000 		.4byte	.LFE37-.LFB37
+ 3887 0038 00000000 		.4byte	.LFB38
+ 3888 003c 88010000 		.4byte	.LFE38-.LFB38
+ 3889 0040 00000000 		.4byte	0
+ 3890 0044 00000000 		.4byte	0
+ 3891              		.section	.debug_ranges,"",%progbits
+ 3892              	.Ldebug_ranges0:
+ 3893 0000 2C000000 		.4byte	.LBB2
+ 3894 0004 40000000 		.4byte	.LBE2
+ 3895 0008 44000000 		.4byte	.LBB5
+ 3896 000c 28010000 		.4byte	.LBE5
+ 3897 0010 00000000 		.4byte	0
+ 3898 0014 00000000 		.4byte	0
+ 3899 0018 76000000 		.4byte	.LBB3
+ 3900 001c D6000000 		.4byte	.LBE3
+ 3901 0020 DA000000 		.4byte	.LBB4
+ 3902 0024 28010000 		.4byte	.LBE4
+ 3903 0028 00000000 		.4byte	0
+ 3904 002c 00000000 		.4byte	0
+ 3905 0030 00000000 		.4byte	.LFB33
+ 3906 0034 24000000 		.4byte	.LFE33
+ 3907 0038 00000000 		.4byte	.LFB34
+ 3908 003c F0000000 		.4byte	.LFE34
+ 3909 0040 00000000 		.4byte	.LFB35
+ 3910 0044 A0000000 		.4byte	.LFE35
+ 3911 0048 00000000 		.4byte	.LFB36
+ 3912 004c 0E000000 		.4byte	.LFE36
+ 3913 0050 00000000 		.4byte	.LFB37
+ 3914 0054 18000000 		.4byte	.LFE37
+ 3915 0058 00000000 		.4byte	.LFB38
+ 3916 005c 88010000 		.4byte	.LFE38
+ 3917 0060 00000000 		.4byte	0
+ 3918 0064 00000000 		.4byte	0
+ 3919              		.section	.debug_line,"",%progbits
+ 3920              	.Ldebug_line0:
+ 3921 0000 99030000 		.section	.debug_str,"MS",%progbits,1
+ 3921      02002E02 
+ 3921      00000201 
+ 3921      FB0E0D00 
+ 3921      01010101 
+ 3922              	.LASF43:
+ 3923 0000 64656361 		.ascii	"decayPhaseRegister\000"
+ 3923      79506861 
+ 3923      73655265 
+ 3923      67697374 
+ 3923      657200
+ 3924              	.LASF3:
+ 3925 0013 5F5F696E 		.ascii	"__int16_t\000"
+ 3925      7431365F 
+ 3925      7400
+ 3926              	.LASF46:
+ 3927 001d 64656361 		.ascii	"decayStop\000"
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 79
+
+
+ 3927      7953746F 
+ 3927      7000
+ 3928              	.LASF22:
+ 3929 0027 75696E74 		.ascii	"uint64_t\000"
+ 3929      36345F74 
+ 3929      00
+ 3930              	.LASF4:
+ 3931 0030 73686F72 		.ascii	"short int\000"
+ 3931      7420696E 
+ 3931      7400
+ 3932              	.LASF84:
+ 3933 003a 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 3933      4320342E 
+ 3933      392E3320 
+ 3933      32303135 
+ 3933      30333033 
+ 3934 006d 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 3934      20726576 
+ 3934      6973696F 
+ 3934      6E203232 
+ 3934      31323230 
+ 3935 00a0 73202D66 		.ascii	"s -ffunction-sections -ffat-lto-objects\000"
+ 3935      66756E63 
+ 3935      74696F6E 
+ 3935      2D736563 
+ 3935      74696F6E 
+ 3936              	.LASF48:
+ 3937 00c8 73657175 		.ascii	"sequence\000"
+ 3937      656E6365 
+ 3937      00
+ 3938              	.LASF29:
+ 3939 00d1 73697A65 		.ascii	"sizetype\000"
+ 3939      74797065 
+ 3939      00
+ 3940              	.LASF27:
+ 3941 00da 63686172 		.ascii	"char8\000"
+ 3941      3800
+ 3942              	.LASF53:
+ 3943 00e0 696E6974 		.ascii	"initDDSParameter\000"
+ 3943      44445350 
+ 3943      6172616D 
+ 3943      65746572 
+ 3943      00
+ 3944              	.LASF9:
+ 3945 00f1 5F5F7569 		.ascii	"__uint32_t\000"
+ 3945      6E743332 
+ 3945      5F7400
+ 3946              	.LASF75:
+ 3947 00fc 7469636B 		.ascii	"ticksPerNote\000"
+ 3947      73506572 
+ 3947      4E6F7465 
+ 3947      00
+ 3948              	.LASF5:
+ 3949 0109 5F5F7569 		.ascii	"__uint16_t\000"
+ 3949      6E743136 
+ 3949      5F7400
+ 3950              	.LASF77:
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 80
+
+
+ 3951 0114 6D656D63 		.ascii	"memcpy\000"
+ 3951      707900
+ 3952              	.LASF57:
+ 3953 011b 74756E69 		.ascii	"tuningWord\000"
+ 3953      6E67576F 
+ 3953      726400
+ 3954              	.LASF21:
+ 3955 0126 696E7436 		.ascii	"int64_t\000"
+ 3955      345F7400 
+ 3956              	.LASF73:
+ 3957 012e 7469636B 		.ascii	"tick\000"
+ 3957      00
+ 3958              	.LASF71:
+ 3959 0133 77617665 		.ascii	"waveTableSine\000"
+ 3959      5461626C 
+ 3959      6553696E 
+ 3959      6500
+ 3960              	.LASF59:
+ 3961 0141 696E6465 		.ascii	"index\000"
+ 3961      7800
+ 3962              	.LASF39:
+ 3963 0147 746F6E65 		.ascii	"toneAmount\000"
+ 3963      416D6F75 
+ 3963      6E7400
+ 3964              	.LASF81:
+ 3965 0152 72616E64 		.ascii	"rand\000"
+ 3965      00
+ 3966              	.LASF49:
+ 3967 0157 6B69636B 		.ascii	"kickSequence\000"
+ 3967      53657175 
+ 3967      656E6365 
+ 3967      00
+ 3968              	.LASF0:
+ 3969 0164 7369676E 		.ascii	"signed char\000"
+ 3969      65642063 
+ 3969      68617200 
+ 3970              	.LASF44:
+ 3971 0170 64656361 		.ascii	"decayTuningWord\000"
+ 3971      7954756E 
+ 3971      696E6757 
+ 3971      6F726400 
+ 3972              	.LASF25:
+ 3973 0180 666C6F61 		.ascii	"float\000"
+ 3973      7400
+ 3974              	.LASF68:
+ 3975 0186 64656361 		.ascii	"decayIndex\000"
+ 3975      79496E64 
+ 3975      657800
+ 3976              	.LASF24:
+ 3977 0191 696E7433 		.ascii	"int32\000"
+ 3977      3200
+ 3978              	.LASF12:
+ 3979 0197 6C6F6E67 		.ascii	"long long int\000"
+ 3979      206C6F6E 
+ 3979      6720696E 
+ 3979      7400
+ 3980              	.LASF63:
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 81
+
+
+ 3981 01a5 656E6454 		.ascii	"endTime\000"
+ 3981      696D6500 
+ 3982              	.LASF78:
+ 3983 01ad 6D656D73 		.ascii	"memset\000"
+ 3983      657400
+ 3984              	.LASF8:
+ 3985 01b4 6C6F6E67 		.ascii	"long int\000"
+ 3985      20696E74 
+ 3985      00
+ 3986              	.LASF11:
+ 3987 01bd 5F5F696E 		.ascii	"__int64_t\000"
+ 3987      7436345F 
+ 3987      7400
+ 3988              	.LASF60:
+ 3989 01c7 67656E65 		.ascii	"generateNoise\000"
+ 3989      72617465 
+ 3989      4E6F6973 
+ 3989      6500
+ 3990              	.LASF45:
+ 3991 01d5 64656361 		.ascii	"decayPeriod\000"
+ 3991      79506572 
+ 3991      696F6400 
+ 3992              	.LASF87:
+ 3993 01e1 74726163 		.ascii	"track\000"
+ 3993      6B00
+ 3994              	.LASF2:
+ 3995 01e7 5F5F7569 		.ascii	"__uint8_t\000"
+ 3995      6E74385F 
+ 3995      7400
+ 3996              	.LASF56:
+ 3997 01f1 70686173 		.ascii	"phaseRegister\000"
+ 3997      65526567 
+ 3997      69737465 
+ 3997      7200
+ 3998              	.LASF79:
+ 3999 01ff 55415254 		.ascii	"UART_Start\000"
+ 3999      5F537461 
+ 3999      727400
+ 4000              	.LASF31:
+ 4001 020a 6C6F6E67 		.ascii	"long double\000"
+ 4001      20646F75 
+ 4001      626C6500 
+ 4002              	.LASF50:
+ 4003 0216 736E6172 		.ascii	"snareSequence\000"
+ 4003      65536571 
+ 4003      75656E63 
+ 4003      6500
+ 4004              	.LASF52:
+ 4005 0224 696E6974 		.ascii	"initTracks\000"
+ 4005      54726163 
+ 4005      6B7300
+ 4006              	.LASF36:
+ 4007 022f 77617665 		.ascii	"waveFrequency\000"
+ 4007      46726571 
+ 4007      75656E63 
+ 4007      7900
+ 4008              	.LASF1:
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 82
+
+
+ 4009 023d 756E7369 		.ascii	"unsigned char\000"
+ 4009      676E6564 
+ 4009      20636861 
+ 4009      7200
+ 4010              	.LASF58:
+ 4011 024b 6C6F6F6B 		.ascii	"lookupTable\000"
+ 4011      75705461 
+ 4011      626C6500 
+ 4012              	.LASF88:
+ 4013 0257 73707269 		.ascii	"sprintf\000"
+ 4013      6E746600 
+ 4014              	.LASF74:
+ 4015 025f 6E6F7465 		.ascii	"noteCount\000"
+ 4015      436F756E 
+ 4015      7400
+ 4016              	.LASF80:
+ 4017 0269 54696D65 		.ascii	"Timer_1_Start\000"
+ 4017      725F315F 
+ 4017      53746172 
+ 4017      7400
+ 4018              	.LASF66:
+ 4019 0277 66703332 		.ascii	"fp32_12bit\000"
+ 4019      5F313262 
+ 4019      697400
+ 4020              	.LASF14:
+ 4021 0282 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 4021      206C6F6E 
+ 4021      6720756E 
+ 4021      7369676E 
+ 4021      65642069 
+ 4022              	.LASF83:
+ 4023 0299 55415254 		.ascii	"UART_UartPutString\000"
+ 4023      5F556172 
+ 4023      74507574 
+ 4023      53747269 
+ 4023      6E6700
+ 4024              	.LASF20:
+ 4025 02ac 75696E74 		.ascii	"uint32_t\000"
+ 4025      33325F74 
+ 4025      00
+ 4026              	.LASF15:
+ 4027 02b5 756E7369 		.ascii	"unsigned int\000"
+ 4027      676E6564 
+ 4027      20696E74 
+ 4027      00
+ 4028              	.LASF18:
+ 4029 02c2 75696E74 		.ascii	"uint16_t\000"
+ 4029      31365F74 
+ 4029      00
+ 4030              	.LASF70:
+ 4031 02cb 6C696E65 		.ascii	"lineBuffer\000"
+ 4031      42756666 
+ 4031      657200
+ 4032              	.LASF6:
+ 4033 02d6 73686F72 		.ascii	"short unsigned int\000"
+ 4033      7420756E 
+ 4033      7369676E 
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 83
+
+
+ 4033      65642069 
+ 4033      6E7400
+ 4034              	.LASF34:
+ 4035 02e9 77617665 		.ascii	"waveLookupTable\000"
+ 4035      4C6F6F6B 
+ 4035      75705461 
+ 4035      626C6500 
+ 4036              	.LASF28:
+ 4037 02f9 63686172 		.ascii	"char\000"
+ 4037      00
+ 4038              	.LASF72:
+ 4039 02fe 6D6F6454 		.ascii	"modTableDown\000"
+ 4039      61626C65 
+ 4039      446F776E 
+ 4039      00
+ 4040              	.LASF61:
+ 4041 030b 6D61696E 		.ascii	"main\000"
+ 4041      00
+ 4042              	.LASF35:
+ 4043 0310 64656361 		.ascii	"decayLookupTable\000"
+ 4043      794C6F6F 
+ 4043      6B757054 
+ 4043      61626C65 
+ 4043      00
+ 4044              	.LASF19:
+ 4045 0321 696E7433 		.ascii	"int32_t\000"
+ 4045      325F7400 
+ 4046              	.LASF38:
+ 4047 0329 616D7041 		.ascii	"ampAmount\000"
+ 4047      6D6F756E 
+ 4047      7400
+ 4048              	.LASF17:
+ 4049 0333 696E7431 		.ascii	"int16_t\000"
+ 4049      365F7400 
+ 4050              	.LASF65:
+ 4051 033b 73796E74 		.ascii	"synthWaveValue\000"
+ 4051      68576176 
+ 4051      6556616C 
+ 4051      756500
+ 4052              	.LASF30:
+ 4053 034a 75696E74 		.ascii	"uint\000"
+ 4053      00
+ 4054              	.LASF76:
+ 4055 034f 74726163 		.ascii	"tracks\000"
+ 4055      6B7300
+ 4056              	.LASF13:
+ 4057 0356 5F5F7569 		.ascii	"__uint64_t\000"
+ 4057      6E743634 
+ 4057      5F7400
+ 4058              	.LASF51:
+ 4059 0361 68696861 		.ascii	"hihatSequnce\000"
+ 4059      74536571 
+ 4059      756E6365 
+ 4059      00
+ 4060              	.LASF86:
+ 4061 036e 443A5C55 		.ascii	"D:\\Users\\gizmo\\Documents\\Develop\\Rhythm Machin"
+ 4061      73657273 
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 84
+
+
+ 4061      5C67697A 
+ 4061      6D6F5C44 
+ 4061      6F63756D 
+ 4062 039c 655C5053 		.ascii	"e\\PSoC\\PSoC_Fixedpoint_DDS_RhythmMachine\\PSoC_Fi"
+ 4062      6F435C50 
+ 4062      536F435F 
+ 4062      46697865 
+ 4062      64706F69 
+ 4063 03cc 78656470 		.ascii	"xedpoint_DDS_RhythmMachine_Test01.cydsn\000"
+ 4063      6F696E74 
+ 4063      5F444453 
+ 4063      5F526879 
+ 4063      74686D4D 
+ 4064              	.LASF55:
+ 4065 03f4 67656E65 		.ascii	"generateDDSWave\000"
+ 4065      72617465 
+ 4065      44445357 
+ 4065      61766500 
+ 4066              	.LASF40:
+ 4067 0404 77617665 		.ascii	"wavePhaseRegister\000"
+ 4067      50686173 
+ 4067      65526567 
+ 4067      69737465 
+ 4067      7200
+ 4068              	.LASF23:
+ 4069 0416 75696E74 		.ascii	"uint32\000"
+ 4069      333200
+ 4070              	.LASF54:
+ 4071 041d 66703332 		.ascii	"fp32_to_int_1000\000"
+ 4071      5F746F5F 
+ 4071      696E745F 
+ 4071      31303030 
+ 4071      00
+ 4072              	.LASF10:
+ 4073 042e 6C6F6E67 		.ascii	"long unsigned int\000"
+ 4073      20756E73 
+ 4073      69676E65 
+ 4073      6420696E 
+ 4073      7400
+ 4074              	.LASF62:
+ 4075 0440 73746172 		.ascii	"startTime\000"
+ 4075      7454696D 
+ 4075      6500
+ 4076              	.LASF33:
+ 4077 044a 66703634 		.ascii	"fp64\000"
+ 4077      00
+ 4078              	.LASF47:
+ 4079 044f 64656361 		.ascii	"decayValue\000"
+ 4079      7956616C 
+ 4079      756500
+ 4080              	.LASF85:
+ 4081 045a 2E5C6D61 		.ascii	".\\main.c\000"
+ 4081      696E2E63 
+ 4081      00
+ 4082              	.LASF7:
+ 4083 0463 5F5F696E 		.ascii	"__int32_t\000"
+ 4083      7433325F 
+ARM GAS  C:\Users\gizmo\AppData\Local\Temp\ccLxWJ1F.s 			page 85
+
+
+ 4083      7400
+ 4084              	.LASF69:
+ 4085 046d 616D5661 		.ascii	"amValue\000"
+ 4085      6C756500 
+ 4086              	.LASF16:
+ 4087 0475 75696E74 		.ascii	"uint8_t\000"
+ 4087      385F7400 
+ 4088              	.LASF67:
+ 4089 047d 69313276 		.ascii	"i12v\000"
+ 4089      00
+ 4090              	.LASF64:
+ 4091 0482 6C6F6F70 		.ascii	"loop\000"
+ 4091      00
+ 4092              	.LASF26:
+ 4093 0487 646F7562 		.ascii	"double\000"
+ 4093      6C6500
+ 4094              	.LASF82:
+ 4095 048e 54696D65 		.ascii	"Timer_1_ReadCounter\000"
+ 4095      725F315F 
+ 4095      52656164 
+ 4095      436F756E 
+ 4095      74657200 
+ 4096              	.LASF37:
+ 4097 04a2 64656361 		.ascii	"decayAmount\000"
+ 4097      79416D6F 
+ 4097      756E7400 
+ 4098              	.LASF32:
+ 4099 04ae 66703332 		.ascii	"fp32\000"
+ 4099      00
+ 4100              	.LASF42:
+ 4101 04b3 77617665 		.ascii	"waveValue\000"
+ 4101      56616C75 
+ 4101      6500
+ 4102              	.LASF41:
+ 4103 04bd 77617665 		.ascii	"waveTuningWord\000"
+ 4103      54756E69 
+ 4103      6E67576F 
+ 4103      726400
+ 4104              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

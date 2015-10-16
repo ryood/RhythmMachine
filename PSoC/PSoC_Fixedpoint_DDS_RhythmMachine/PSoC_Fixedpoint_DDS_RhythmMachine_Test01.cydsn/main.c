@@ -26,8 +26,8 @@
 #include "ModTableFp32.h"
 
 #define _UART_OUT_HEADER_ 0
-#define _UART_OUT_12BIT_ 1
-#define _UART_OUT_RUNTIME_ 0
+#define _UART_OUT_12BIT_ 0
+#define _UART_OUT_RUNTIME_ 1
 
 #define _TRACE_ 0
 #define _TRACE_TRACK_ 0

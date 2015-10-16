@@ -162,6 +162,34 @@
 <v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Debug\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.elf</v>
 <v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Debug\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.hex</v>
 <v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Debug\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.map</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\Clock_1.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\Cm0Start.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\CyBootAsmGnu.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\cyfitter_cfg.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\CyFlash.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\CyLFClk.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\CyLib.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\cymetadata.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\cyPm.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\cyutils.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\main.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\Timer_1.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\Timer_1_PM.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\UART.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\UART_BOOT.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\UART_PM.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\UART_rx.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\UART_SCBCLK.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\UART_SPI_UART.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\UART_SPI_UART_INT.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\UART_tx.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\UART_UART.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\UART_UART_BOOT.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.elf</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.hex</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.map</v>
 <v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.gpdsc</v>
 <v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.rpt</v>
 <v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\PSoC_Fixedpoint_DDS_RhythmMachine_Test01_timing.html</v>
@@ -199,9 +227,22 @@
 <v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Debug\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.elf</v>
 <v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Debug\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.hex</v>
 <v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Debug\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.map</v>
-<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.gpdsc</v>
-<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.rpt</v>
-<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\PSoC_Fixedpoint_DDS_RhythmMachine_Test01_timing.html</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\Clock_1.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\Cm0Start.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\CyBootAsmGnu.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\cyfitter_cfg.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\CyFlash.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\CyLFClk.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\CyLib.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\cymetadata.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\cyPm.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\cyutils.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\main.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\Timer_1.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\Timer_1_PM.lst</v>
+<v>PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01\CortexM0\ARM_GCC_493\Release\Listing Files\UART.lst</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStates>
@@ -245,9 +286,8 @@
 <name v=".\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.cydsn\main.c" />
 <name v=".\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.cydsn\TopDesign\TopDesign.cysch" />
 <name v=".\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.cydsn\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.cydwr" />
-<name v="${CyRoot}\import\gnu\arm\4.9.3\arm-none-eabi\include\stdlib.h" />
 </OpenDocs>
-<config v="" />
+<config v="Release" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
 </CyXmlSerializer>
