@@ -1,4 +1,4 @@
-D:\Users\gizmo\Documents\PSoC\PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.cydsn\TopDesign\TopDesign.cysch
+D:\Users\gizmo\Documents\Develop\Rhythm Machine\PSoC\PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.cydsn\TopDesign\TopDesign.cysch
 C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\SCB_P4_v3_0\SCB_P4_v3_0.cysym
 C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\SCB_P4_v3_0\SCB_P4_v3_0.pdf
 C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\SCB_P4_v3_0\SCB_P4_v3_0.cycdx
@@ -307,7 +307,7 @@ C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprim
 C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\cy_clock_v2_20\PSoC4\API\clk.c
 C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\cy_clock_v2_20\PSoC4\API\clk.h
 C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\cy_clock_v2_20\Custom\custom.cs
-D:\Users\gizmo\Documents\PSoC\PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.cydsn\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.cydwr
+D:\Users\gizmo\Documents\Develop\Rhythm Machine\PSoC\PSoC_Fixedpoint_DDS_RhythmMachine\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.cydsn\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.cydwr
 C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\cy_boot_v5_20\PSoC4\API\cm0gcc.ld
 C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\cy_boot_v5_20\PSoC4\API\Cm0RealView.scat
 C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\cy_boot_v5_20\PSoC4\API\Cm0Start.c

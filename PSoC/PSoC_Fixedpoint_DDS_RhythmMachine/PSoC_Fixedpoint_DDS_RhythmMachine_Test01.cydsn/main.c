@@ -25,10 +25,14 @@
 #include "WaveTableFp32.h"
 #include "ModTableFp32.h"
 
-#define _UART_OUT_12bit_ 0
+#define _UART_OUT_HEADER_ 0
+#define _UART_OUT_12BIT_ 1
+#define _UART_OUT_RUNTIME_ 0
+
 #define _TRACE_ 0
 #define _TRACE_TRACK_ 0
-#define _TRACE_GENERATE_WAVE_ 0
+#define _TRACE_GENERATE_WAVE_DDS_ 0
+#define _TRACE_GENERATE_WAVE_NOISE_ 0
 
 #define LOOP_N 48000
 
@@ -98,6 +102,15 @@ struct track {
 } tracks[TRACK_N];
 
 //*******************************************************************
+// PSoC用
+// 固定小数点数を1000倍してintに変換
+//
+int32 fp32_to_int_1000(fp32 fv)
+{
+    return (int32)(fp32_to_double(fv) * 1000);    
+}   
+
+//*******************************************************************
 // トラックの初期化
 //
 void initTracks()
@@ -125,9 +138,9 @@ void initTracks()
 	memcpy(tracks[1].sequence, snareSequence, SEQUENCE_LEN);
 
 	// HiHat
-	tracks[2].waveLookupTable = 0;				// unused
+	tracks[2].waveLookupTable = waveTableSine;	// unused
 	tracks[2].decayLookupTable = modTableDown;
-	tracks[2].waveFrequency = 0.0f;				// unused
+	tracks[2].waveFrequency = 1000.0f;			// unused
 	tracks[2].decayAmount = 24;
 	tracks[2].ampAmount = 24;
 	tracks[2].toneAmount = 127;
@@ -180,7 +193,7 @@ inline fp32 generateDDSWave(uint32_t *phaseRegister, uint32_t tuningWord, const 
 	uint16_t index = (*phaseRegister) >> 22;
 	fp32 waveValue = *(lookupTable + index);
 
-#if _TRACE_GENERATE_WAVE_    
+#if _TRACE_GENERATE_WAVE_DDS_    
     sprintf(lineBuffer, "%u\t%d\t%f\t", *phaseRegister, index, fp32_to_double(waveValue));
     UART_UartPutString(lineBuffer);
 #endif
@@ -188,23 +201,25 @@ inline fp32 generateDDSWave(uint32_t *phaseRegister, uint32_t tuningWord, const 
 	return waveValue;
 }
 
+// -1.0 .. 1.0の乱数
+// PSoC用に変更
 inline fp32 generateNoise()
 {
-	uint32_t r, v;
+    int32 r, v;
 	fp32 fv;
 	
-	r = (uint32_t)rand() << 1;
-	v = (r & 0x8000) ? (0xffff0000 | (r << 1)) : (r << 1);
+    r = rand() >> 15;
+    v = (r & 0x8000) ? (0xffff0000 | (r << 1)) : (r << 1);
 	fv = (fp32)v;
     
-#if _TRACE_GENERATE_WAVE_    
-	sprintf(lineBuffer, "%u\t%u\t%f\t", r, v, fp32_to_double(fv));
+#if _TRACE_GENERATE_WAVE_NOISE_    
+	sprintf(lineBuffer, "%ld\t%ld\t%ld\r\n", r, v, fp32_to_int_1000(fv));
     UART_UartPutString(lineBuffer);
 #endif   
 
 	return fv;
 }
-
+    
 //*******************************************************************
 // メインルーチン
 //
@@ -215,12 +230,16 @@ int main()
     
     /* Start SCB (UART mode) operation */
     UART_Start();
-/*
+    
+#if _UART_OUT_HEADER_
     UART_UartPutString("\r\n***********************************************************************************\r\n");
     UART_UartPutString("Fixed Point DDS RhythmMachine Test.\r\n");
     UART_UartPutString("\r\n");
-*/
-    
+
+    sprintf(lineBuffer, "RAND_MAX: %d\r\n", RAND_MAX);
+    UART_UartPutString(lineBuffer);
+#endif
+
     Timer_1_Start();
     
     CyGlobalIntEnable; /* Enable global interrupts. */
@@ -271,14 +290,13 @@ int main()
 		// トラックの処理
 		//
 		for (i = 0; i < TRACK_N; i++) {
-    		/*	
-			if (tracks[i].sequence[noteCount % SEQUENCE_LEN] == 0) {
+            
+    		if (tracks[i].sequence[noteCount % SEQUENCE_LEN] == 0) {
 				tracks[i].waveValue = int_to_fp32(0);
-				UART_UartPutString("\r\n");
 				continue;
 			}
-            */			
-			// Decayの処理 ***********************************************************
+            
+    		// Decayの処理 ***********************************************************
 			//
 			//***********************************************************************
 			if (!tracks[i].decayStop) {
@@ -325,7 +343,13 @@ int main()
 					tracks[i].waveLookupTable);
 				break;
 			case 2:	// hihat
-				tracks[i].waveValue = generateNoise();
+				//tracks[i].waveValue = generateNoise();
+                
+                tracks[i].waveValue = generateDDSWave(
+					&(tracks[i].wavePhaseRegister),
+					tracks[i].waveTuningWord,
+					tracks[i].waveLookupTable);
+                
 				break;
 			default:
                 ;
@@ -382,7 +406,7 @@ int main()
 		fp32 fp32_12bit = fp32_mul(synthWaveValue + int_to_fp32(1), int_to_fp32(2047));
 		int16_t i12v = fp32_to_int(fp32_12bit);
 		
-#if _UART_OUT_12bit_        
+#if _UART_OUT_12BIT_        
         sprintf(lineBuffer, "%d\r\n", i12v);
         UART_UartPutString(lineBuffer);
 #endif        
@@ -403,12 +427,14 @@ int main()
      * 実行時間計測終了
      **********************************************************/
     endTime = Timer_1_ReadCounter();
-    
-    sprintf(lineBuffer, "start: %u, end: %u, diff: %u\r\n", startTime, endTime, endTime - startTime);
+
+#if _UART_OUT_RUNTIME_    
+    sprintf(lineBuffer, "start: %lu, end: %lu, diff: %lu\r\n", startTime, endTime, endTime - startTime);
     UART_UartPutString(lineBuffer);
-    
+#endif
+
     UART_UartPutString("end\r\n");
-       
+    
     for(;;)
         ;
 }

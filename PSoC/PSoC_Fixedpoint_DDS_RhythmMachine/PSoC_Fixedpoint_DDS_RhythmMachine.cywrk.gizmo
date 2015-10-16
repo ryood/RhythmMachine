@@ -245,6 +245,7 @@
 <name v=".\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.cydsn\main.c" />
 <name v=".\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.cydsn\TopDesign\TopDesign.cysch" />
 <name v=".\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.cydsn\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.cydwr" />
+<name v="${CyRoot}\import\gnu\arm\4.9.3\arm-none-eabi\include\stdlib.h" />
 </OpenDocs>
 <config v="" />
 <AutoUpdate v="true" />

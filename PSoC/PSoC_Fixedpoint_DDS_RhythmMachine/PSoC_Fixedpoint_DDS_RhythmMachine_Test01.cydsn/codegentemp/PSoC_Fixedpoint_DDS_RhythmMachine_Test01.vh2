@@ -2,7 +2,7 @@
 --	Conversion of PSoC_Fixedpoint_DDS_RhythmMachine_Test01.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Fri Oct 16 07:01:43 2015
+--	Fri Oct 16 07:30:01 2015
 --
 
 USE cypress.cypress.all;
