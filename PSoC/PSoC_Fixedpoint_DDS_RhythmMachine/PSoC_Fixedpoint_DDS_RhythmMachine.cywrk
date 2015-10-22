@@ -9,6 +9,7 @@
 <projects>
 <v>.\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.cydsn\PSoC_Fixedpoint_DDS_RhythmMachine_Test01.cyprj</v>
 <v>.\PSoC_Fixedpoint_DDS_ThythmMachine_MCP4922.cydsn\PSoC_Fixedpoint_DDS_ThythmMachine_MCP4922.cyprj</v>
+<v>.\PSoC_Fixedpoint_DDS_RhythmMachine_IDAC.cydsn\PSoC_Fixedpoint_DDS_RhythmMachine_IDAC.cyprj</v>
 </projects>
 <workspace_id v="e456890d-95ec-4371-83dd-6bd73727b8ea" />
 <WriteAppVersionLastSavedWith v="3.3.0.410" />

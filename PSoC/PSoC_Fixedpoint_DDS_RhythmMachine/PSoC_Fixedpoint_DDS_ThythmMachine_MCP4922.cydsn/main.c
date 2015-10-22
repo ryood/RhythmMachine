@@ -7,6 +7,8 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 内蔵IDACで音声出力
+ *
  * 2015.10.22 Created
  *
  * ========================================
@@ -22,6 +24,8 @@
 #include "fixedpoint.h"
 #include "WaveTableFp32.h"
 #include "ModTableFp32.h"
+
+#define _DAC_OUT_ 0
 
 /*********************************************************************
 waveLookupTable   : fp32 Q16 : -1.0 .. +1.0
@@ -154,13 +158,15 @@ inline void DACSetVoltage16bit(uint16 value)
     value = (value & ~0xF000) | 0x3000;  
     
     Pin_LDAC_Write(1u);
-    
+
+#if _DAC_OUT_    
     SPIM_DAC_WriteTxData(value);
-    
+
     while(0u == (SPIM_DAC_ReadTxStatus() & SPIM_DAC_STS_SPI_DONE))  {
          // Wait while Master completes transfer
     }
-        
+#endif
+
     Pin_LDAC_Write(0u);
 }
 
@@ -198,6 +204,8 @@ inline fp32 generateNoise()
 CY_ISR(Timer_Sampling_interrupt_handler)
 {
     int i;
+    
+    Timer_Sampling_ClearInterrupt(Timer_Sampling_INTR_MASK_TC);
     
     // デバッグ用
     Pin_ISR_Check_Write(Pin_ISR_Check_Read() ? 0u : 1u);
@@ -261,13 +269,13 @@ CY_ISR(Timer_Sampling_interrupt_handler)
 				tracks[i].waveLookupTable);
             break;
 		case 2:	// hihat
-			tracks[i].waveValue = generateNoise();
-            /*
+			//tracks[i].waveValue = generateNoise();
+            
             tracks[i].waveValue = generateDDSWave(
 				&(tracks[i].wavePhaseRegister),
 				tracks[i].waveTuningWord,
 				tracks[i].waveLookupTable);
-            */
+            
             break;
 		default:
                 ;
