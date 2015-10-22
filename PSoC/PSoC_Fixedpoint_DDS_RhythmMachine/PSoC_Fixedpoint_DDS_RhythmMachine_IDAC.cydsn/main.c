@@ -7,7 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
- * 2015.10.22 内蔵IDACで出力
+ * 2015.10.22 内蔵IDACで出力 (Sampling Rate: 16kHz)
  * 2015.10.22 Created
  *
  * ========================================
@@ -24,7 +24,7 @@
 #include "WaveTableFp32.h"
 #include "ModTableFp32.h"
 
-#define _DAC_OUT_ 0
+#define _DAC_OUT_ 1
 
 /*********************************************************************
 waveLookupTable   : fp32 Q16 : -1.0 .. +1.0
@@ -48,7 +48,7 @@ volumeAmount      : 8bit    // 未実装
 //*******************************************************************
 // Macros
 //
-#define SAMPLE_CLOCK			(48000u)	// 48kHz
+#define SAMPLE_CLOCK			(16000u)	// 16kHz
 
 #define TRACK_N					(3u)		// トラックの個数
 #define WAVE_LOOKUP_TABLE_SIZE	(1024u)		// Lookup Table の要素数
@@ -151,8 +151,9 @@ void initDDSParameter()
 //*******************************************************************
 // DAC出力: IDAC8
 // 
-inline void DACSetVoltage16bit(uint16 value)
+inline void DACSetVoltage(uint8 value)
 {
+    IDAC8_SetValue(value);
 }
 
 //*******************************************************************
@@ -190,10 +191,10 @@ CY_ISR(Timer_Sampling_interrupt_handler)
 {
     int i;
     
+    Timer_Sampling_ClearInterrupt(Timer_Sampling_INTR_MASK_TC);
+    
     // デバッグ用
-    //Pin_ISR_Check_Write(Pin_ISR_Check_Read() ? 0u : 1u);
-    Pin_ISR_Check_Write(1u);
-    Pin_ISR_Check_Write(0u);
+    Pin_ISR_Check_Write(Pin_ISR_Check_Read() ? 0u : 1u);
     
     tick++;
 
@@ -254,13 +255,13 @@ CY_ISR(Timer_Sampling_interrupt_handler)
 				tracks[i].waveLookupTable);
             break;
 		case 2:	// hihat
-			//tracks[i].waveValue = generateNoise();
-            
+			tracks[i].waveValue = generateNoise();
+            /*
             tracks[i].waveValue = generateDDSWave(
 				&(tracks[i].wavePhaseRegister),
 				tracks[i].waveTuningWord,
 				tracks[i].waveLookupTable);
-            
+            */
             break;
 		default:
                 ;
@@ -296,19 +297,29 @@ CY_ISR(Timer_Sampling_interrupt_handler)
 		synthWaveValue = int_to_fp32(1);
 	else if (synthWaveValue < int_to_fp32(-1))
 		synthWaveValue = int_to_fp32(-1);
-
+    
+    // ↓三項演算子で演算
     //synthWaveValue = synthWaveValue >= int_to_fp32(1) ? int_to_fp32(1)
     //    : synthWaveValue < int_to_fp32(-1) ? int_to_fp32(-1) : synthWaveValue;
         
 	// for 12bit output (0..4095)
 	// 2048で乗算すると12bit幅を超えるため2047で乗算
 	//
-	fp32 fp32_12bit = fp32_mul(synthWaveValue + int_to_fp32(1), int_to_fp32(2047));
-	int16_t i12v = fp32_to_int(fp32_12bit);
+	//fp32 fp32_12bit = fp32_mul(synthWaveValue + int_to_fp32(1), int_to_fp32(2047));
+	//int16_t i12v = fp32_to_int(fp32_12bit);
 
+    // for 8bit output (0..255)
+	// 2048で乗算すると12bit幅を超えるため255で乗算
+    fp32 fp32_8bit = fp32_mul(synthWaveValue + int_to_fp32(1), int_to_fp32(127));
+	int8_t i8v = fp32_to_int(fp32_8bit);
+	
+    Pin_IDAC8_Check_Write(1u);
+    
 #if _DAC_OUT_
-    DACSetVoltage16bit(i12v);
+    DACSetVoltage(i8v);
 #endif
+    
+    Pin_IDAC8_Check_Write(0u);
 }
 
 //*******************************************************************
@@ -323,11 +334,11 @@ int main()
     initTracks();
     initDDSParameter();
     
-    CyGlobalIntEnable; /* Enable global interrupts. */
+    CyGlobalIntEnable;
 
-    /* Place your initialization/startup code here (e.g. MyInst_Start()) */
     Timer_Sampling_Start();
     ISR_Timer_Sampling_StartEx(Timer_Sampling_interrupt_handler);
+    IDAC8_Start();
 
     for(;;)
     {

@@ -7,8 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
- * 内蔵IDACで音声出力
- *
+ * 2015.10.22 Sampling Rate 16kHz
  * 2015.10.22 Created
  *
  * ========================================
@@ -25,7 +24,7 @@
 #include "WaveTableFp32.h"
 #include "ModTableFp32.h"
 
-#define _DAC_OUT_ 0
+#define _DAC_OUT_ 1
 
 /*********************************************************************
 waveLookupTable   : fp32 Q16 : -1.0 .. +1.0
@@ -49,7 +48,7 @@ volumeAmount      : 8bit    // 未実装
 //*******************************************************************
 // Macros
 //
-#define SAMPLE_CLOCK			(48000u)	// 48kHz
+#define SAMPLE_CLOCK			(16000u)	// 16kHz
 
 #define TRACK_N					(3u)		// トラックの個数
 #define WAVE_LOOKUP_TABLE_SIZE	(1024u)		// Lookup Table の要素数
@@ -269,13 +268,13 @@ CY_ISR(Timer_Sampling_interrupt_handler)
 				tracks[i].waveLookupTable);
             break;
 		case 2:	// hihat
-			//tracks[i].waveValue = generateNoise();
-            
+			tracks[i].waveValue = generateNoise();
+            /*
             tracks[i].waveValue = generateDDSWave(
 				&(tracks[i].wavePhaseRegister),
 				tracks[i].waveTuningWord,
 				tracks[i].waveLookupTable);
-            
+            */
             break;
 		default:
                 ;
