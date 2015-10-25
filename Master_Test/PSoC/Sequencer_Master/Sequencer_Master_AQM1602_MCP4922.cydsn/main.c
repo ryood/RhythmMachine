@@ -36,15 +36,15 @@
 /* Set LED RED color */
 #define RGB_LED_ON_RED  \
                 do{     \
-                    LED_RED_Write  (0u); \
-                    LED_GREEN_Write(1u); \
+                    Pin_LED_RED_Write  (0u); \
+                    Pin_LED_GREEN_Write(1u); \
                 }while(0)
 
 /* Set LED GREEN color */
 #define RGB_LED_ON_GREEN \
                 do{      \
-                    LED_RED_Write  (1u); \
-                    LED_GREEN_Write(0u); \
+                    Pin_LED_RED_Write  (1u); \
+                    Pin_LED_GREEN_Write(0u); \
                 }while(0) 
 
 /***************************************
@@ -244,7 +244,7 @@ void sequenceString(char *buffer, uint8 sequence1, uint8 sequence2)
 
 void displaySequencerParameter()
 {
-    const char *strPlayStop[] = { "PLAY", "STOP" }; 
+    const char *strPlayStop[] = { "Play", "Stop" }; 
     char lcdBuffer[17];
 
     LCD_Clear();
@@ -261,6 +261,18 @@ void displaySequencerParameter()
     LCD_Puts(lcdBuffer);
 }
 
+void displayError(char8* line1, char8* line2)
+{
+    LCD_Clear();
+    LCD_Puts(line1);
+    LCD_SetPos(0,1);
+    LCD_Puts(line2);
+    
+    // 処理停止
+    for (;;)
+        ;
+}
+
 /*======================================================
  * Main Routine 
  *
@@ -275,11 +287,6 @@ uint8 inc_within_uint8(uint8 x, uint8 h, uint8 l)
 
 int main()
 {
-    char uartBuffer[80];
-    
-    UART_1_Start();    
-    UART_1_UartPutString("Sequencer Board Test\r\n");
-    
     // Sequence Boardをリセット
     Pin_I2C_Reset_Write(0u);
     CyDelay(1);
@@ -299,27 +306,12 @@ int main()
         
     for(;;)
     {  
-        if (readSequencerBoard() == I2C_TRANSFER_CMPLT) {
-            sprintf(uartBuffer, "%d %d %d %d %d %d ",
-                sequencerRdBuffer[0],
-                sequencerRdBuffer[1],
-                sequencerRdBuffer[2],
-                sequencerRdBuffer[3],
-                sequencerRdBuffer[4],
-                sequencerRdBuffer[5]
-            );
-            UART_1_UartPutString(uartBuffer);
-        }
-        else {
-            UART_1_UartPutString("I2C Master Sequencer Read Error.\r\n");
+        if (readSequencerBoard() != I2C_TRANSFER_CMPLT) {
+            displayError("I2C Master", "Read Error");
         }
         
-        if (writeSequencerBoard() == I2C_TRANSFER_CMPLT) {
-            sprintf(uartBuffer, "%d\r\n", sequencerWrBuffer[0]);
-            UART_1_UartPutString(uartBuffer);
-        }
-        else {
-            UART_1_UartPutString("I2C Master Sequencer Write Error.\r\n");
+        if (writeSequencerBoard() != I2C_TRANSFER_CMPLT) {
+            displayError("I2C Master", "Write Error");
         }
         
         displaySequencerParameter();
