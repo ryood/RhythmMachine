@@ -341,7 +341,7 @@ int main()
         
         sequencerWrBuffer[0] = inc_within_uint8(sequencerWrBuffer[0], 16, 0);
         
-        DACSetVoltage16bit(4095);
+        DACSetVoltage16bit(sequencerWrBuffer[0] << 8);
         
         CyDelay(125);
     }

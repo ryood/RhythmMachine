@@ -782,6 +782,7 @@
 <OpenDocs>
 <name v=".\Sequencer_Master_AQM1602_MCP4922.cydsn\main.c" />
 <name v=".\Sequencer_Master_AQM1602_MCP4922.cydsn\TopDesign\TopDesign.cysch" />
+<name v=".\Sequencer_Master_AQM1602_MCP4922.cydsn\Sequencer_Master_AQM1602_MCP4922.cydwr" />
 </OpenDocs>
 <config v="" />
 <AutoUpdate v="true" />
