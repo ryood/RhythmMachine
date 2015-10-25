@@ -274,6 +274,26 @@ void displayError(char8* line1, char8* line2)
 }
 
 /*======================================================
+ * DAC MCP4922(12bit)
+ *
+ *======================================================*/
+void DACSetVoltage16bit(uint16 value)
+{
+    // Highバイト(0x30=OUTA/BUFなし/1x/シャットダウンなし)
+    value = (value & ~0xF000) | 0x3000;  
+    
+    Pin_LDAC_Write(1u);
+    
+    SPIM_WriteTxData(value);
+    
+    while(0u == (SPIM_ReadTxStatus() & SPIM_STS_SPI_DONE))  {
+         // Wait while Master completes transfer
+    }
+        
+    Pin_LDAC_Write(0u);
+}
+
+/*======================================================
  * Main Routine 
  *
  *======================================================*/
@@ -296,6 +316,9 @@ int main()
     I2CM_Start();
     CyDelay(1500);
     
+    /* Init SPI */
+    SPIM_Start();
+    
     CyGlobalIntEnable;
     
     LCD_Init();
@@ -317,6 +340,8 @@ int main()
         displaySequencerParameter();
         
         sequencerWrBuffer[0] = inc_within_uint8(sequencerWrBuffer[0], 16, 0);
+        
+        DACSetVoltage16bit(4095);
         
         CyDelay(125);
     }

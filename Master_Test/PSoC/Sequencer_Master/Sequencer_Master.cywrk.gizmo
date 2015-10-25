@@ -13,7 +13,7 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\TopDesign">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Source Files\main.c">
 <ExpandedNodeIds>
 <v>Sequencer_Master</v>
 <v>Sequencer_Master\Sequencer_Master</v>
@@ -237,6 +237,9 @@
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Source Files\main.c</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Clock_SPIM</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Clock_SPIM\Clock_SPIM.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Clock_SPIM\Clock_SPIM.h</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\cy_boot</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\cy_boot\cm0gcc.ld</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\cy_boot\Cm0Iar.icf</v>
@@ -290,6 +293,10 @@
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_I2C_Reset\Pin_I2C_Reset.c</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_I2C_Reset\Pin_I2C_Reset.h</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_I2C_Reset\Pin_I2C_Reset_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_LDAC</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_LDAC\Pin_LDAC.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_LDAC\Pin_LDAC.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_LDAC\Pin_LDAC_aliases.h</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_LED_GREEN</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_LED_GREEN\Pin_LED_GREEN.c</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_LED_GREEN\Pin_LED_GREEN.h</v>
@@ -298,6 +305,28 @@
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_LED_RED\Pin_LED_RED.c</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_LED_RED\Pin_LED_RED.h</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_LED_RED\Pin_LED_RED_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_MISO</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_MISO\Pin_MISO.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_MISO\Pin_MISO.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_MISO\Pin_MISO_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_MOSI</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_MOSI\Pin_MOSI.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_MOSI\Pin_MOSI.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_MOSI\Pin_MOSI_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_SCLK</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_SCLK\Pin_SCLK.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_SCLK\Pin_SCLK.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_SCLK\Pin_SCLK_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_SS</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_SS\Pin_SS.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_SS\Pin_SS.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Pin_SS\Pin_SS_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\SPIM</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\SPIM\SPIM.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\SPIM\SPIM.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\SPIM\SPIM_INT.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\SPIM\SPIM_PM.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\SPIM\SPIM_PVT.h</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\cycodeshareimport.ld</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\cycodeshareimport.scat</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\cydevice_trm.h</v>
@@ -443,6 +472,9 @@
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Source Files\main.c</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Clock_SPIM</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Clock_SPIM\Clock_SPIM.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\Clock_SPIM\Clock_SPIM.h</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\cy_boot</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\cy_boot\cm0gcc.ld</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\cy_boot\Cm0Iar.icf</v>
@@ -465,9 +497,6 @@
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\cy_boot\cytypes.h</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\cy_boot\cyutils.c</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\I2CM</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\I2CM\I2CM.c</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\I2CM\I2CM.h</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\I2CM\I2CM_BOOT.c</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Sequencer_Master">
@@ -558,6 +587,7 @@
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493\Debug</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493\Debug\Listing Files</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493\Debug\Listing Files\Clock_SPIM.lst</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493\Debug\Listing Files\Cm0Start.lst</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493\Debug\Listing Files\CyBootAsmGnu.lst</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493\Debug\Listing Files\cyfitter_cfg.lst</v>
@@ -579,8 +609,16 @@
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_sda.lst</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493\Debug\Listing Files\main.lst</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493\Debug\Listing Files\Pin_I2C_Reset.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493\Debug\Listing Files\Pin_LDAC.lst</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493\Debug\Listing Files\Pin_LED_GREEN.lst</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493\Debug\Listing Files\Pin_LED_RED.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493\Debug\Listing Files\Pin_MISO.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493\Debug\Listing Files\Pin_MOSI.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493\Debug\Listing Files\Pin_SCLK.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493\Debug\Listing Files\Pin_SS.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493\Debug\Listing Files\SPIM.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493\Debug\Listing Files\SPIM_INT.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493\Debug\Listing Files\SPIM_PM.lst</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493\Debug\Sequencer_Master_AQM1602_MCP4922.elf</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493\Debug\Sequencer_Master_AQM1602_MCP4922.hex</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\CortexM0\ARM_GCC_493\Debug\Sequencer_Master_AQM1602_MCP4922.map</v>
@@ -674,9 +712,11 @@
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\PSoC 4200 Family Datasheet</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\System Reference Guides</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\System Reference Guides\cy_boot_v4_20</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\cy_clock_v2_20.pdf</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\cy_pins_v2_10</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\cy_pins_v2_10\cy_pins_v2_10.pdf</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\SCB_P4_v2_0.pdf</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\SPI_Master_v2_50.pdf</v>
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield</v>
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield\PSoC 4 Architecture TRM</v>
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield\PSoC 4200 Family Datasheet</v>
@@ -712,9 +752,11 @@
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\PSoC 4200 Family Datasheet</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\System Reference Guides</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\System Reference Guides\cy_boot_v4_20</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\cy_clock_v2_20.pdf</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\cy_pins_v2_10</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\cy_pins_v2_10\cy_pins_v2_10.pdf</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\SCB_P4_v2_0.pdf</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\SPI_Master_v2_50.pdf</v>
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield</v>
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield\PSoC 4 Architecture TRM</v>
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield\PSoC 4200 Family Datasheet</v>
