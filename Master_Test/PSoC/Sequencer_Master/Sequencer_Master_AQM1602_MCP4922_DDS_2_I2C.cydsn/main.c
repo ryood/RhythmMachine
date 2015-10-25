@@ -339,6 +339,12 @@ void displaySequencerParameter()
     LCD_Puts(lcdBuffer);
 }
 
+void displayStr(char8* line)
+{
+    LCD_Clear();
+    LCD_Puts(line);
+}
+
 void displayError(char8* line1, char8* line2)
 {
     LCD_Clear();
@@ -600,6 +606,8 @@ uint8 inc_within_uint8(uint8 x, uint8 h, uint8 l)
 
 int main()
 {
+    char lcdLine[17];
+    
     // 波形の初期化
     //
     bpm = INITIAL_BPM;
@@ -636,7 +644,9 @@ int main()
     CyDelay(500);
         
     for(;;)
-    {  
+    {
+        sequencerWrBuffer[0] = noteCount % 16;
+        
         if (readSequencerBoard() != I2C_TRANSFER_CMPLT) {
             displayError("I2C Master", "Read Error");
         }
@@ -645,7 +655,10 @@ int main()
             displayError("I2C Master", "Write Error");
         }
         
-        displaySequencerParameter();
+        //displaySequencerParameter();
+        sprintf(lcdLine, "%d", sequencerWrBuffer[0]);            
+        displayStr(lcdLine);
+        CyDelay(10);
         
         sequencerWrBuffer[0] = inc_within_uint8(sequencerWrBuffer[0], 16, 0);
         
