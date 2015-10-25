@@ -7,6 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.10.25 DDSで波形出力（作成）
  * 2015.10.25 SPI Master ComponentでMCP4922へ出力
  *
  * ========================================
