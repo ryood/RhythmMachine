@@ -13,10 +13,9 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.cydwr">
 <ExpandedNodeIds>
 <v>Sequencer_Master</v>
-<v>Sequencer_Master\Sequencer_Master</v>
 <v>Sequencer_Master\Sequencer_Master\TopDesign</v>
 <v>Sequencer_Master\Sequencer_Master\Sequencer_Master.cydwr</v>
 <v>Sequencer_Master\Sequencer_Master\Header Files</v>
@@ -121,7 +120,6 @@
 <v>Sequencer_Master\Sequencer_Master\Generated_Source\PSoC4\cyfitterrv.inc</v>
 <v>Sequencer_Master\Sequencer_Master\Generated_Source\PSoC4\cymetadata.c</v>
 <v>Sequencer_Master\Sequencer_Master\Generated_Source\PSoC4\project.h</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602\TopDesign</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602\Sequencer_Master_AQM1602.cydwr</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602\Header Files</v>
@@ -229,7 +227,6 @@
 <v>Sequencer_Master\Sequencer_Master_AQM1602\Generated_Source\PSoC4\cyfitterrv.inc</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602\Generated_Source\PSoC4\cymetadata.c</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602\Generated_Source\PSoC4\project.h</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\TopDesign</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Sequencer_Master_AQM1602_MCP4922.cydwr</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Header Files</v>
@@ -341,7 +338,6 @@
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\cyfitterrv.inc</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\cymetadata.c</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source\PSoC4\project.h</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\TopDesign</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\Sequencer_Master_AQM1602_MCP4922_DDS.cydwr</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\Header Files</v>
@@ -474,6 +470,167 @@
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\Generated_Source\PSoC4\cyfitterrv.inc</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\Generated_Source\PSoC4\cymetadata.c</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\Generated_Source\PSoC4\project.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\TopDesign</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.cydwr</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Header Files\fixedpoint.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Header Files\ModTableFp32.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Header Files\WaveTableFp32.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Source Files</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Source Files\main.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Clock_SPIM</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Clock_SPIM\Clock_SPIM.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Clock_SPIM\Clock_SPIM.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Clock_Timer</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Clock_Timer\Clock_Timer.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Clock_Timer\Clock_Timer.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\cm0gcc.ld</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\Cm0Iar.icf</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\Cm0RealView.scat</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\Cm0Start.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\core_cm0.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\core_cm0_psoc4.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\core_cmFunc.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\core_cmInstr.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\CyBootAsmGnu.s</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\CyBootAsmIar.s</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\CyBootAsmRv.s</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\CyFlash.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\CyFlash.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\CyLib.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\CyLib.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\cypins.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\cyPm.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\cyPm.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\cytypes.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\cyutils.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD_BOOT.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD_BOOT.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD_I2C.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD_I2C.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD_I2C_BOOT.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD_I2C_INT.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD_I2C_MASTER.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD_I2C_PVT.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD_PINS.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD_PM.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD_PVT.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD_SCB_IRQ</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD_SCB_IRQ\I2CM_LCD_SCB_IRQ.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD_SCB_IRQ\I2CM_LCD_SCB_IRQ.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD_SCBCLK</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD_SCBCLK\I2CM_LCD_SCBCLK.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD_SCBCLK\I2CM_LCD_SCBCLK.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD_scl</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD_scl\I2CM_LCD_scl.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD_scl\I2CM_LCD_scl.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD_scl\I2CM_LCD_scl_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD_sda</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD_sda\I2CM_LCD_sda.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD_sda\I2CM_LCD_sda.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD_sda\I2CM_LCD_sda_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board\I2CM_Sequencer_Board.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board\I2CM_Sequencer_Board.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board\I2CM_Sequencer_Board_BOOT.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board\I2CM_Sequencer_Board_BOOT.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board\I2CM_Sequencer_Board_I2C.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board\I2CM_Sequencer_Board_I2C.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board\I2CM_Sequencer_Board_I2C_BOOT.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board\I2CM_Sequencer_Board_I2C_INT.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board\I2CM_Sequencer_Board_I2C_MASTER.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board\I2CM_Sequencer_Board_I2C_PVT.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board\I2CM_Sequencer_Board_PINS.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board\I2CM_Sequencer_Board_PM.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board\I2CM_Sequencer_Board_PVT.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board_SCB_IRQ</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board_SCB_IRQ\I2CM_Sequencer_Board_SCB_IRQ.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board_SCB_IRQ\I2CM_Sequencer_Board_SCB_IRQ.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board_SCBCLK</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board_SCBCLK\I2CM_Sequencer_Board_SCBCLK.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board_SCBCLK\I2CM_Sequencer_Board_SCBCLK.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board_scl</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board_scl\I2CM_Sequencer_Board_scl.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board_scl\I2CM_Sequencer_Board_scl.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board_scl\I2CM_Sequencer_Board_scl_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board_sda</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board_sda\I2CM_Sequencer_Board_sda.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board_sda\I2CM_Sequencer_Board_sda.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_Sequencer_Board_sda\I2CM_Sequencer_Board_sda_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\ISR_Timer_Sampling</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\ISR_Timer_Sampling\ISR_Timer_Sampling.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\ISR_Timer_Sampling\ISR_Timer_Sampling.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_I2C_Sequencer_Reset</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_I2C_Sequencer_Reset\Pin_I2C_Sequencer_Reset.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_I2C_Sequencer_Reset\Pin_I2C_Sequencer_Reset.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_I2C_Sequencer_Reset\Pin_I2C_Sequencer_Reset_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_ISR_Check</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_ISR_Check\Pin_ISR_Check.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_ISR_Check\Pin_ISR_Check.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_ISR_Check\Pin_ISR_Check_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_LDAC</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_LDAC\Pin_LDAC.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_LDAC\Pin_LDAC.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_LDAC\Pin_LDAC_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_LED_GREEN</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_LED_GREEN\Pin_LED_GREEN.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_LED_GREEN\Pin_LED_GREEN.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_LED_GREEN\Pin_LED_GREEN_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_LED_RED</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_LED_RED\Pin_LED_RED.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_LED_RED\Pin_LED_RED.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_LED_RED\Pin_LED_RED_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_MISO</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_MISO\Pin_MISO.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_MISO\Pin_MISO.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_MISO\Pin_MISO_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_MOSI</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_MOSI\Pin_MOSI.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_MOSI\Pin_MOSI.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_MOSI\Pin_MOSI_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_SCLK</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_SCLK\Pin_SCLK.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_SCLK\Pin_SCLK.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_SCLK\Pin_SCLK_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_SS</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_SS\Pin_SS.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_SS\Pin_SS.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_SS\Pin_SS_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_Timer_Sampling_OV</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_Timer_Sampling_OV\Pin_Timer_Sampling_OV.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_Timer_Sampling_OV\Pin_Timer_Sampling_OV.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Pin_Timer_Sampling_OV\Pin_Timer_Sampling_OV_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\SPIM</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\SPIM\SPIM.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\SPIM\SPIM.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\SPIM\SPIM_INT.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\SPIM\SPIM_PM.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\SPIM\SPIM_PVT.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Timer_Sampling</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Timer_Sampling\Timer_Sampling.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Timer_Sampling\Timer_Sampling.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Timer_Sampling\Timer_Sampling_PM.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cycodeshareimport.ld</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cycodeshareimport.scat</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cydevice_trm.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cydevicegnu_trm.inc</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cydeviceiar_trm.inc</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cydevicerv_trm.inc</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cydisabledsheets.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cyfitter.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cyfitter_cfg.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cyfitter_cfg.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cyfittergnu.inc</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cyfitteriar.inc</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cyfitterrv.inc</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cymetadata.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\project.h</v>
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield\TopDesign</v>
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield\Sequencer_Master_PyunPyun3_Shield.cydwr</v>
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield\Header Files</v>
@@ -583,37 +740,52 @@
 <VisibleNodeIds>
 <v>Sequencer_Master</v>
 <v>Sequencer_Master\Sequencer_Master</v>
-<v>Sequencer_Master\Sequencer_Master\TopDesign</v>
-<v>Sequencer_Master\Sequencer_Master\Sequencer_Master.cydwr</v>
-<v>Sequencer_Master\Sequencer_Master\Header Files</v>
-<v>Sequencer_Master\Sequencer_Master\Source Files</v>
-<v>Sequencer_Master\Sequencer_Master\Source Files\main.c</v>
-<v>Sequencer_Master\Sequencer_Master\Generated_Source</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602\TopDesign</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602\Sequencer_Master_AQM1602.cydwr</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602\Header Files</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602\Source Files</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602\Source Files\main.c</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602\Generated_Source</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\TopDesign</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Sequencer_Master_AQM1602_MCP4922.cydwr</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Header Files</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Source Files</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Source Files\main.c</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922\Generated_Source</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\TopDesign</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\Sequencer_Master_AQM1602_MCP4922_DDS.cydwr</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\Header Files</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\Header Files\fixedpoint.h</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\Header Files\ModTableFp32.h</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\Header Files\WaveTableFp32.h</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\Source Files</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\Source Files\main.c</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\Generated_Source</v>
-<v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\TopDesign</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.cydwr</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Header Files</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Source Files</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Source Files\main.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Clock_SPIM</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Clock_SPIM\Clock_SPIM.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Clock_SPIM\Clock_SPIM.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Clock_Timer</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Clock_Timer\Clock_Timer.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Clock_Timer\Clock_Timer.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\cm0gcc.ld</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\Cm0Iar.icf</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\Cm0RealView.scat</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\Cm0Start.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\core_cm0.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\core_cm0_psoc4.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\core_cmFunc.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\core_cmInstr.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\CyBootAsmGnu.s</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\CyBootAsmIar.s</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\CyBootAsmRv.s</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\CyFlash.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\CyFlash.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\CyLib.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\CyLib.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\cypins.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\cyPm.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\cyPm.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\cytypes.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\cy_boot\cyutils.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD_BOOT.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD_BOOT.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD_I2C.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD_I2C.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD_I2C_BOOT.c</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Sequencer_Master">
@@ -631,6 +803,9 @@
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\TopDesign</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\TopDesign\TopDesign.cysch</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\TopDesign</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\TopDesign\TopDesign.cysch</v>
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield</v>
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield\TopDesign</v>
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield\TopDesign\TopDesign.cysch</v>
@@ -649,6 +824,9 @@
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\TopDesign</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\TopDesign\TopDesign.cysch</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\TopDesign</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\TopDesign\TopDesign.cysch</v>
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield</v>
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield\TopDesign</v>
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield\TopDesign\TopDesign.cysch</v>
@@ -797,6 +975,66 @@
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\Sequencer_Master_AQM1602_MCP4922_DDS.gpdsc</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\Sequencer_Master_AQM1602_MCP4922_DDS.rpt</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\Sequencer_Master_AQM1602_MCP4922_DDS_timing.html</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\Clock_SPIM.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\Clock_Timer.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\Cm0Start.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\CyFlash.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\CyLib.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\cymetadata.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\cyPm.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\cyutils.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_LCD.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_BOOT.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_I2C.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_I2C_BOOT.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_I2C_INT.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_I2C_MASTER.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_PM.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_SCB_IRQ.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_SCBCLK.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_scl.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_sda.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_Board.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_Board_BOOT.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_Board_I2C.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_Board_I2C_BOOT.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_Board_I2C_INT.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_Board_I2C_MASTER.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_Board_PM.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_Board_SCB_IRQ.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_Board_SCBCLK.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_Board_scl.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_Board_sda.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\ISR_Timer_Sampling.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\main.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\Pin_I2C_Sequencer_Reset.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\Pin_ISR_Check.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\Pin_LDAC.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\Pin_LED_GREEN.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\Pin_LED_RED.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\Pin_MISO.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\Pin_MOSI.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\Pin_SCLK.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\Pin_SS.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\Pin_Timer_Sampling_OV.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\SPIM.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\SPIM_INT.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\SPIM_PM.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\Timer_Sampling.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Listing Files\Timer_Sampling_PM.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.elf</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.hex</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\CortexM0\ARM_GCC_493\Debug\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.map</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.gpdsc</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.rpt</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C_timing.html</v>
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield</v>
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield\Sequencer_Master_PyunPyun3_Shield.gpdsc</v>
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield\Sequencer_Master_PyunPyun3_Shield.rpt</v>
@@ -902,6 +1140,20 @@
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\SCB_P4_v2_0.pdf</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\SPI_Master_v2_50.pdf</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\TCPWM_P4_v2_0.pdf</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\PSoC 4 Architecture TRM</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\PSoC 4200 Family Datasheet</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\System Reference Guides</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\System Reference Guides\cy_boot_v4_20</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\cy_clock_v2_20</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\cy_isr_v1_70.pdf</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\cy_pins_v2_10</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\cy_pins_v2_10\cy_pins_v2_10.pdf</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\SCB_P4_v2_0.pdf</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\SCB_P4_v3_0.pdf</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\SPI_Master_v2_50.pdf</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\TCPWM_P4_v2_0.pdf</v>
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield</v>
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield\PSoC 4 Architecture TRM</v>
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield\PSoC 4200 Family Datasheet</v>
@@ -955,12 +1207,12 @@
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\SCB_P4_v2_0.pdf</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\SPI_Master_v2_50.pdf</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\TCPWM_P4_v2_0.pdf</v>
-<v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield</v>
-<v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield\PSoC 4 Architecture TRM</v>
-<v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield\PSoC 4200 Family Datasheet</v>
-<v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield\System Reference Guides</v>
-<v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield\System Reference Guides\cy_boot_v4_20</v>
-<v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield\cy_pins_v2_10</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\PSoC 4 Architecture TRM</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\PSoC 4200 Family Datasheet</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\System Reference Guides</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\System Reference Guides\cy_boot_v4_20</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\cy_clock_v2_20</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStatesV2>
@@ -975,11 +1227,9 @@
 </CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
 <Unloaded />
 <OpenDocs>
-<name v=".\Sequencer_Master_AQM1602_MCP4922.cydsn\main.c" />
-<name v=".\Sequencer_Master_AQM1602_MCP4922.cydsn\TopDesign\TopDesign.cysch" />
-<name v=".\Sequencer_Master_AQM1602_MCP4922.cydsn\Sequencer_Master_AQM1602_MCP4922.cydwr" />
-<name v=".\Sequencer_Master_AQM1602_MCP4922_DDS.cydsn\TopDesign\TopDesign.cysch" />
-<name v=".\Sequencer_Master_AQM1602_MCP4922_DDS.cydsn\main.c" />
+<name v=".\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.cydsn\TopDesign\TopDesign.cysch" />
+<name v=".\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.cydsn\main.c" />
+<name v=".\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.cydsn\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.cydwr" />
 </OpenDocs>
 <config v="" />
 <AutoUpdate v="true" />
