@@ -29,6 +29,7 @@
  *
  * AtmelStudio 6.2
  *
+ * 2015.10.27 送信データの変更
  * 2015.09.28 再生中のノートを受信
  * 2015.09.08 POTの処理を追加
  * 2015.09.08 Rotary Encoderの処理を追加
@@ -68,21 +69,37 @@
 #define SHIFT_PORT_SCK PORTC
 #define SHIFT_SCK PC0
 
+// Track Data
+#define TRACK_N	3
+
 // 大域変数
+//
+// 変更の有無フラグ
+volatile uint8_t isDataDirty;
+
 // シーケンス・スイッチ
 volatile uint8_t sequence_data[2];		// シーケンス・スイッチのトグル状態
 volatile uint8_t sequence_n;			// シーケンスの表裏 
 volatile uint8_t sequence_rd;			// シーケンス・スイッチの読み取り値
 volatile uint8_t sequence_n_rd;
 
+volatile uint8_t prev_sequence_data[2];	// 変更の有無判定用に値を保存
+volatile uint8_t prev_sequence_n;
+
 // Potentiometer
 volatile uint8_t pot_data[2];
 volatile uint8_t pot_n;
+
+volatile uint8_t prev_pot_data[2];
+volatile uint8_t prev_pot_n;
 
 // Rotary Encoder
 volatile uint8_t re_data;
 volatile uint8_t re_sw;
 volatile uint8_t re_sw_rd;
+
+volatile uint8_t prev_re_data;
+volatile uint8_t prev_re_sw;
 
 // 再生中のnoteナンバー
 volatile uint8_t playing_note_n;
@@ -137,25 +154,35 @@ ISR (TWI_vect)
 		// Slave TX
 		//
 		case 0:
+			// 変更の有無を送信
+			TWDR = isDataDirty;
+			// isDataDirtyをクリア
+			isDataDirty = 0;
+			break;
 		case 1:
-			// シーケンスのトグル状態を送信
-			TWDR = sequence_data[twi_data_n];
+			// Rotary Encoderの値を送信(トラック番号)
+			TWDR = re_data;
 			break;
 		case 2:
+			// Rotary EncoderのSWのトグル状態を送信(再生フラグ)
+			// 1:再生 0:停止
+			TWDR = (re_sw ? 0 : 1);
+			break;
+		case 3:
+			// シーケンスのトグル状態を送信(表:0..7)
+			TWDR = sequence_data[0];
+			break;
+		case 4:
+			// シーケンスのトグル状態を送信(裏:8..15)
+			TWDR = sequence_data[1];
+			break;
+		case 5:
 			// POT1のADCの読み取り値を送信
 			TWDR = pot_data[0];
 			break;
-		case 3:
+		case 6:
 			// POT2のADCの読み取り値を送信
 			TWDR = pot_data[1];
-			break;
-		case 4:
-			// Rotary Encoderの値を送信
-			TWDR = re_data;
-			break;
-		case 5:
-			// Rotary EncoderのSWのトグル状態を送信
-			TWDR = (re_sw ? 1 : 0);
 			break;
 		default:
 			twi_error();
@@ -259,22 +286,32 @@ ISR (TIMER0_OVF_vect)
 	// PINxレジスタの値はいったん変数に代入しないと比較がうまくいかない
 	tmp = (~PINB & (1 << PB0));
 	if (sequence_n_rd == tmp) {
+		prev_sequence_n = sequence_n;
 		sequence_n ^= sequence_n_rd;
 		
-		// トグル状態をLEDに表示
-		if (sequence_n) {
-			PORTD &= ~(1 << PD6);
-			PORTD |= (1 << PD7);
-		} else {
-			PORTD &= ~(1 << PD7);
-			PORTD |= (1 << PD6);
-		}		
+		if (sequence_n != prev_sequence_n) {
+			//isDataDirty = (1 << 1);
+			
+			// トグル状態をLEDに表示
+			if (sequence_n) {
+				PORTD &= ~(1 << PD6);
+				PORTD |= (1 << PD7);
+				} else {
+				PORTD &= ~(1 << PD7);
+				PORTD |= (1 << PD6);
+			}
+		}
 	}
 	
 	// シーケンス・スイッチ列の読み取り
 	tmp = read_sequence_switches();
 	if (sequence_rd == tmp) {
+		prev_sequence_data[sequence_n] = sequence_data[sequence_n];
 		sequence_data[sequence_n] ^= sequence_rd;
+		
+		if (sequence_data[sequence_n] != prev_sequence_data[sequence_n]) {
+			isDataDirty = 1 << (sequence_n + 3);
+		}
 		
 		// トグル状態をLEDに表示
 		//shift_out(sequence_data[sequence_n]);
@@ -282,7 +319,12 @@ ISR (TIMER0_OVF_vect)
 	
 	// Rotary Encoderのスイッチの読み取り
 	if (re_sw_rd == (~PINB & (1 << PB1))) {
+		prev_re_sw = re_sw;
 		re_sw ^= re_sw_rd;
+		
+		if (re_sw != prev_re_sw) {
+			isDataDirty = (1 << 2);
+		}
 		
 		// トグル状態をLEDに表示
 		if (re_sw) {
@@ -332,7 +374,13 @@ ISR(ADC_vect)
 {
 	switch (pot_n) {
 	case 0:
-		pot_data[0] = ADCH;
+		prev_pot_data[0] = pot_data[0];
+		pot_data[0] = ADCH >> 2;
+		
+		if (pot_data[0] != prev_pot_data[0]) {
+			isDataDirty = (1 << 5);
+		}
+		
 		pot_n = 1;
 		
 		// リファレンス電圧: AVCC, 変換結果は左詰め, ADC2シングルエンド入力
@@ -340,7 +388,13 @@ ISR(ADC_vect)
 		ADCSRA |= (1 << ADSC);		// Start Conversion
 		break;
 	case 1:
-		pot_data[1] = ADCH;
+		prev_pot_data[1] = pot_data[1];
+		pot_data[1] = ADCH >> 2;
+		
+		if (pot_data[1] != prev_pot_data[1]) {
+			isDataDirty = (1 << 6);
+		}
+		
 		pot_n = 0;
 		
 		// リファレンス電圧: AVCC, 変換結果は左詰め, ADC1シングルエンド入力
@@ -395,6 +449,7 @@ int8_t read_re(void)
 // Main routine
 //
 //------------------------------------------------//
+
 int main()
 {
 	DDRB = 0x00;
@@ -449,7 +504,15 @@ int main()
 	ADCSRA |= (1 << ADSC);		// Start Conversion
 	
 	for(;;) {
+		prev_re_data = re_data;
 		re_data += read_re();
+		// TRACK数の範囲に切り詰め
+		if (re_data >= TRACK_N)
+			re_data = 0;
+		
+		if (re_data != prev_re_data) {
+			isDataDirty = (1 << 1);
+		}
 		
 		uint16_t led_pos = 0; 
 		if (re_sw == 0) {

@@ -1,4 +1,7 @@
 // Sequencer Board Control
+// A4: SDA
+// A5: SCL
+// D2: RST
 
 #include <Wire.h>
 #include <stdio.h>
@@ -25,7 +28,7 @@ void loop()
 {
   // Reciever
   //
-  Wire.requestFrom(TWI_SLAVE_ADDRESS, 6);    // request 6 bytes from slave device 0x7f
+  Wire.requestFrom(TWI_SLAVE_ADDRESS, 7);    // request 7 bytes from slave device 0x7f
 
   while (Wire.available())                   // slave may send less than requested
   {
