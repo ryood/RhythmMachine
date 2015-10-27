@@ -74,7 +74,7 @@
 #define TRACK_N	3
 
 // ADC
-#define ADC_BUFFER_N	32
+#define ADC_BUFFER_LEN	8
 
 // 大域変数
 //
@@ -97,7 +97,7 @@ volatile uint8_t pot_n;
 volatile uint8_t prev_pot_data[2];
 volatile uint8_t prev_pot_n;
 
-volatile uint8_t adc_buffer[2][ADC_BUFFER_N];
+volatile uint8_t adc_buffer[2][ADC_BUFFER_LEN];
 volatile uint8_t adc_buffer_n[2];
 
 // Rotary Encoder
@@ -156,6 +156,14 @@ ISR (TWI_vect)
 	switch (TWSR & 0xF8) {
 	case TWI_SLA_R_ACK:
 		twi_data_n = 0;
+		// ADCの読み取り値の変更のチェック
+		for (int i = 0; i < 2; i++) {
+			if (pot_data[i] != prev_pot_data[i]) {
+				prev_pot_data[i] = pot_data[i];
+				isDataDirty |= (1 << (i + 5));
+			}
+		}
+		// through down to TWI_TX_DATA_ACK
 	case TWI_TX_DATA_ACK:
 		switch (twi_data_n) {
 		// Slave TX
@@ -381,23 +389,24 @@ ISR(ADC_vect)
 {
 	int16_t data_sum;
 	
-	adc_buffer[pot_n][adc_buffer_n[pot_n]] = ADCH >> 1;
+	adc_buffer[pot_n][adc_buffer_n[pot_n]] = ADCH;
 	
 	adc_buffer_n[pot_n]++;
-	if (adc_buffer_n[pot_n] == ADC_BUFFER_N) {
+	if (adc_buffer_n[pot_n] == ADC_BUFFER_LEN) {
 		adc_buffer_n[pot_n] = 0;
-		prev_pot_data[pot_n] = pot_data[pot_n];
+		//prev_pot_data[pot_n] = pot_data[pot_n];
 		
 		// ADCの読み取り値を平均化
 		data_sum = 0;
-		for (int i = 0; i < ADC_BUFFER_N; i++) {
+		for (int i = 0; i < ADC_BUFFER_LEN; i++) {
 			data_sum += adc_buffer[pot_n][i];
 		}
-		pot_data[pot_n] = data_sum / ADC_BUFFER_N;
-		
+		pot_data[pot_n] = data_sum / ADC_BUFFER_LEN;
+		/*
 		if (pot_data[pot_n] != prev_pot_data[pot_n]) {
 			isDataDirty |= (1 << (pot_n + 5));
 		}
+		*/
 	}
 	
 	// 次のADCを起動

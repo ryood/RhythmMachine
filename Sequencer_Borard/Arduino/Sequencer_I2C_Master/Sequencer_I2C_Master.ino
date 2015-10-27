@@ -8,6 +8,7 @@
 
 #define TWI_SLAVE_ADDRESS	0x7f
 
+unsigned long lastUpdate = 0;
 byte note_n = 0;
 
 void setup()
@@ -45,14 +46,14 @@ void loop()
   Wire.endTransmission();                    // stop transmitting
   Serial.println(note_n);
   
-  note_n++;
-  if (note_n == 16)
-    note_n = 0;
-
-  digitalWrite(13, HIGH);
-  delay(100);
-  digitalWrite(13, LOW);
-  delay(100);
+  int now = millis();
+  if (now - lastUpdate > 125) {
+    lastUpdate = now;
+    note_n++;
+    if (note_n == 16)
+      note_n = 0;
+    digitalWrite(13, !digitalRead(13));
+  }
 }
 
 
