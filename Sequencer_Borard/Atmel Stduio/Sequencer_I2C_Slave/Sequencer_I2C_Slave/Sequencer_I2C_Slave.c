@@ -310,7 +310,7 @@ ISR (TIMER0_OVF_vect)
 		sequence_data[sequence_n] ^= sequence_rd;
 		
 		if (sequence_data[sequence_n] != prev_sequence_data[sequence_n]) {
-			isDataDirty = 1 << (sequence_n + 3);
+			isDataDirty |= 1 << (sequence_n + 3);
 		}
 		
 		// トグル状態をLEDに表示
@@ -323,7 +323,7 @@ ISR (TIMER0_OVF_vect)
 		re_sw ^= re_sw_rd;
 		
 		if (re_sw != prev_re_sw) {
-			isDataDirty = (1 << 2);
+			isDataDirty |= (1 << 2);
 		}
 		
 		// トグル状態をLEDに表示
@@ -378,7 +378,7 @@ ISR(ADC_vect)
 		pot_data[0] = ADCH >> 2;
 		
 		if (pot_data[0] != prev_pot_data[0]) {
-			isDataDirty = (1 << 5);
+			isDataDirty |= (1 << 5);
 		}
 		
 		pot_n = 1;
@@ -392,7 +392,7 @@ ISR(ADC_vect)
 		pot_data[1] = ADCH >> 2;
 		
 		if (pot_data[1] != prev_pot_data[1]) {
-			isDataDirty = (1 << 6);
+			isDataDirty |= (1 << 6);
 		}
 		
 		pot_n = 0;
@@ -506,12 +506,15 @@ int main()
 	for(;;) {
 		prev_re_data = re_data;
 		re_data += read_re();
+		
 		// TRACK数の範囲に切り詰め
-		if (re_data >= TRACK_N)
+		if (re_data >= 128)
 			re_data = 0;
+		if (re_data >= TRACK_N)
+			re_data = TRACK_N - 1;
 		
 		if (re_data != prev_re_data) {
-			isDataDirty = (1 << 1);
+			isDataDirty |= (1 << 1);
 		}
 		
 		uint16_t led_pos = 0; 
