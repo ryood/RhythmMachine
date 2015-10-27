@@ -29,6 +29,7 @@
  *
  * AtmelStudio 6.2
  *
+ * 2015.10.27 ADCの読み取り値を平均化
  * 2015.10.27 送信データの変更
  * 2015.09.28 再生中のノートを受信
  * 2015.09.08 POTの処理を追加
@@ -72,6 +73,9 @@
 // Track Data
 #define TRACK_N	3
 
+// ADC
+#define ADC_BUFFER_N	32
+
 // 大域変数
 //
 // 変更の有無フラグ
@@ -92,6 +96,9 @@ volatile uint8_t pot_n;
 
 volatile uint8_t prev_pot_data[2];
 volatile uint8_t prev_pot_n;
+
+volatile uint8_t adc_buffer[2][ADC_BUFFER_N];
+volatile uint8_t adc_buffer_n[2];
 
 // Rotary Encoder
 volatile uint8_t re_data;
@@ -372,15 +379,30 @@ ISR (PCINT2_vect)
 //------------------------------------------------//
 ISR(ADC_vect)
 {
+	int16_t data_sum;
+	
+	adc_buffer[pot_n][adc_buffer_n[pot_n]] = ADCH >> 1;
+	
+	adc_buffer_n[pot_n]++;
+	if (adc_buffer_n[pot_n] == ADC_BUFFER_N) {
+		adc_buffer_n[pot_n] = 0;
+		prev_pot_data[pot_n] = pot_data[pot_n];
+		
+		// ADCの読み取り値を平均化
+		data_sum = 0;
+		for (int i = 0; i < ADC_BUFFER_N; i++) {
+			data_sum += adc_buffer[pot_n][i];
+		}
+		pot_data[pot_n] = data_sum / ADC_BUFFER_N;
+		
+		if (pot_data[pot_n] != prev_pot_data[pot_n]) {
+			isDataDirty |= (1 << (pot_n + 5));
+		}
+	}
+	
+	// 次のADCを起動
 	switch (pot_n) {
 	case 0:
-		prev_pot_data[0] = pot_data[0];
-		pot_data[0] = ADCH >> 2;
-		
-		if (pot_data[0] != prev_pot_data[0]) {
-			isDataDirty |= (1 << 5);
-		}
-		
 		pot_n = 1;
 		
 		// リファレンス電圧: AVCC, 変換結果は左詰め, ADC2シングルエンド入力
@@ -388,13 +410,14 @@ ISR(ADC_vect)
 		ADCSRA |= (1 << ADSC);		// Start Conversion
 		break;
 	case 1:
+		/*
 		prev_pot_data[1] = pot_data[1];
 		pot_data[1] = ADCH >> 2;
 		
 		if (pot_data[1] != prev_pot_data[1]) {
 			isDataDirty |= (1 << 6);
 		}
-		
+		*/		
 		pot_n = 0;
 		
 		// リファレンス電圧: AVCC, 変換結果は左詰め, ADC1シングルエンド入力
