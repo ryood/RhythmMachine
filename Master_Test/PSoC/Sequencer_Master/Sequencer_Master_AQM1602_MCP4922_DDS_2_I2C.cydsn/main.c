@@ -381,18 +381,18 @@ void DACSetVoltage16bit(uint16 value)
 
 /*======================================================
  * シーケンサー基板からのパラメーターの設定
- * (途中)
- * Kickのみテスト
+ * parameter: track_n: 設定するtrack番号
  *
  *======================================================*/
-void setTracks()
+void setTracks(uint8 track_n)
 {
     int i;
+      
     for (i = 0; i < 8; i++) {
-        tracks[0].sequence[i] = (sequencerRdBuffer[0] & (1 << i)) >> i;
+        tracks[track_n].sequence[i] = (sequencerRdBuffer[0] & (1 << i)) >> i;
     }
     for (i = 0; i < 8; i++) {
-        tracks[0].sequence[i + 8] = (sequencerRdBuffer[1] & (1 << i)) >> i;
+        tracks[track_n].sequence[i + 8] = (sequencerRdBuffer[1] & (1 << i)) >> i;
     }
 }
 
@@ -626,7 +626,7 @@ uint8 inc_within_uint8(uint8 x, uint8 h, uint8 l)
 
 int main()
 {
-    char lcdLine[17];
+    //char lcdLine[17];
     
     // 波形の初期化
     //
@@ -676,7 +676,7 @@ int main()
             displayError("I2C Master", "Write Error");
         }
         
-        setTracks();
+        setTracks(sequencerRdBuffer[4] % TRACK_N);
         
         if (lcdCount++ == 500) {
             lcdCount = 0;
