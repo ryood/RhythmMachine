@@ -7,6 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.10.27 シーケンサー基板からのデータを反映（kickのみ）
  * 2015.10.25 I2C Masterを2系統に分割 (動作OK)
  * 2015.10.25 I2C Masterを2系統に分割
  * 2015.10.25 DDSで波形出力（作成）
@@ -66,7 +67,7 @@ volumeAmount      : 8bit    // 未実装
 
 // 波形生成
 //
-#define SAMPLE_CLOCK			(8000u)	// 16kHz
+#define SAMPLE_CLOCK			(8000u)	// 8kHz
 
 #define TRACK_N					(3u)		// トラックの個数
 #define WAVE_LOOKUP_TABLE_SIZE	(1024u)		// Lookup Table の要素数
@@ -379,6 +380,23 @@ void DACSetVoltage16bit(uint16 value)
 }
 
 /*======================================================
+ * シーケンサー基板からのパラメーターの設定
+ * (途中)
+ * Kickのみテスト
+ *
+ *======================================================*/
+void setTracks()
+{
+    int i;
+    for (i = 0; i < 8; i++) {
+        tracks[0].sequence[i] = (sequencerRdBuffer[0] & (1 << i)) >> i;
+    }
+    for (i = 0; i < 8; i++) {
+        tracks[0].sequence[i + 8] = (sequencerRdBuffer[1] & (1 << i)) >> i;
+    }
+}
+
+/*======================================================
  * 波形初期化
  *
  *======================================================*/
@@ -596,6 +614,7 @@ CY_ISR(Timer_Sampling_interrupt_handler)
  * Main Routine 
  *
  *======================================================*/
+/*
 uint8 inc_within_uint8(uint8 x, uint8 h, uint8 l)
 {
     x++;
@@ -603,6 +622,7 @@ uint8 inc_within_uint8(uint8 x, uint8 h, uint8 l)
         x = l;
     return x;
 }
+*/
 
 int main()
 {
@@ -642,7 +662,8 @@ int main()
 	LCD_Puts("Sequencer Board");
     
     CyDelay(500);
-        
+    
+    int lcdCount = 0;
     for(;;)
     {
         sequencerWrBuffer[0] = noteCount % 16;
@@ -655,12 +676,18 @@ int main()
             displayError("I2C Master", "Write Error");
         }
         
-        //displaySequencerParameter();
+        setTracks();
+        
+        if (lcdCount++ == 500) {
+            lcdCount = 0;
+            displaySequencerParameter();
+        }
+        /*
         sprintf(lcdLine, "%d", sequencerWrBuffer[0]);            
         displayStr(lcdLine);
-        CyDelay(10);
+        */
         
-        sequencerWrBuffer[0] = inc_within_uint8(sequencerWrBuffer[0], 16, 0);
+        //sequencerWrBuffer[0] = inc_within_uint8(sequencerWrBuffer[0], 16, 0);
         
         //DACSetVoltage16bit(sequencerWrBuffer[0] << 8);
         
