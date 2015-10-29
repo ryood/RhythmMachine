@@ -43,7 +43,7 @@
  *
  */ 
 
-#define 	F_CPU 8000000UL  // 8MHz
+#define F_CPU 8000000UL  // 8MHz
 
 #include 	<avr/io.h>
 #include	<avr/interrupt.h>
@@ -305,13 +305,11 @@ ISR (TIMER0_OVF_vect)
 		sequence_n ^= sequence_n_rd;
 		
 		if (sequence_n != prev_sequence_n) {
-			//isDataDirty = (1 << 1);
-			
 			// トグル状態をLEDに表示
 			if (sequence_n) {
 				PORTD &= ~(1 << PD6);
 				PORTD |= (1 << PD7);
-				} else {
+			} else {
 				PORTD &= ~(1 << PD7);
 				PORTD |= (1 << PD6);
 			}
@@ -327,9 +325,6 @@ ISR (TIMER0_OVF_vect)
 		if (sequence_data[sequence_n] != prev_sequence_data[sequence_n]) {
 			isDataDirty |= 1 << (sequence_n + 3);
 		}
-		
-		// トグル状態をLEDに表示
-		//shift_out(sequence_data[sequence_n]);
 	}
 	
 	// Rotary Encoderのスイッチの読み取り
@@ -347,7 +342,6 @@ ISR (TIMER0_OVF_vect)
 		} else {
 			PORTC &= ~(1 << PC3);
 		}
-		//shift_out(re_sw);
 	}
 		
 	// Pin Change Interruptの有効化
@@ -394,7 +388,6 @@ ISR(ADC_vect)
 	adc_buffer_n[pot_n]++;
 	if (adc_buffer_n[pot_n] == ADC_BUFFER_LEN) {
 		adc_buffer_n[pot_n] = 0;
-		//prev_pot_data[pot_n] = pot_data[pot_n];
 		
 		// ADCの読み取り値を平均化
 		data_sum = 0;
@@ -402,39 +395,23 @@ ISR(ADC_vect)
 			data_sum += adc_buffer[pot_n][i];
 		}
 		pot_data[pot_n] = data_sum / ADC_BUFFER_LEN;
-		/*
-		if (pot_data[pot_n] != prev_pot_data[pot_n]) {
-			isDataDirty |= (1 << (pot_n + 5));
-		}
-		*/
 	}
 	
 	// 次のADCを起動
 	switch (pot_n) {
 	case 0:
 		pot_n = 1;
-		
 		// リファレンス電圧: AVCC, 変換結果は左詰め, ADC2シングルエンド入力
 		ADMUX = (1 << REFS0) | (1 << ADLAR) | (1 << MUX1);
 		ADCSRA |= (1 << ADSC);		// Start Conversion
 		break;
 	case 1:
-		/*
-		prev_pot_data[1] = pot_data[1];
-		pot_data[1] = ADCH >> 2;
-		
-		if (pot_data[1] != prev_pot_data[1]) {
-			isDataDirty |= (1 << 6);
-		}
-		*/		
 		pot_n = 0;
-		
 		// リファレンス電圧: AVCC, 変換結果は左詰め, ADC1シングルエンド入力
 		ADMUX = (1 << REFS0) | (1 << ADLAR) | (1 << MUX0);
 		ADCSRA |= (1 << ADSC);		// Start Conversion
 		break;
 	}
-	//shift_out(pot_data[(re_sw ? 1 : 0)]);
 }
 
 //------------------------------------------------//
@@ -536,6 +513,8 @@ int main()
 	ADCSRA |= (1 << ADSC);		// Start Conversion
 	
 	for(;;) {
+		// Rotary Encoderの読み取り
+		//
 		prev_re_data = re_data;
 		re_data += read_re();
 		
@@ -549,6 +528,8 @@ int main()
 			isDataDirty |= (1 << 1);
 		}
 		
+		// シーケンスLEDの表示
+		//
 		uint16_t led_pos = 0; 
 		if (re_sw == 0) {
 			// 再生中
