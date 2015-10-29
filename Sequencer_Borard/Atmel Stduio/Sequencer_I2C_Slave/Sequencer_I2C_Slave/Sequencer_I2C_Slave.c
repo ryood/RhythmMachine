@@ -29,6 +29,7 @@
  *
  * AtmelStudio 6.2
  *
+ * 2015.10.29 I2C送信前にパラメータをストア
  * 2015.10.29 トラックの管理
  * 2015.10.27 ADCの読み取り値を平均化
  * 2015.10.27 送信データの変更
@@ -79,6 +80,17 @@
 
 // 大域変数
 //
+// パラメータストア用バッファ
+volatile struct sequence_parameter {
+	uint8_t update;
+	uint8_t track;
+	uint8_t play;
+	uint8_t sequence1;
+	uint8_t sequence2;
+	uint8_t pot1;
+	uint8_t pot2;	
+} sequence_parameter_buffer;
+
 // 変更の有無フラグ
 volatile uint8_t isDataDirty;
 
@@ -116,6 +128,21 @@ volatile uint8_t playing_note_n;
 volatile uint8_t twi_data_n;
 
 void shift_out(uint8_t data);
+
+//------------------------------------------------//
+// パラメータのストア
+//
+//------------------------------------------------//
+void store_pamaeter()
+{
+	sequence_parameter_buffer.update = isDataDirty;
+	sequence_parameter_buffer.track = re_data;
+	sequence_parameter_buffer.play = re_sw ? 0 : 1;		// 1:再生 0:停止
+	sequence_parameter_buffer.sequence1 = sequence_data[re_data][0];
+	sequence_parameter_buffer.sequence2 = sequence_data[re_data][1];
+	sequence_parameter_buffer.pot1 = pot_data[0];
+	sequence_parameter_buffer.pot2 = pot_data[1];
+}
 
 //------------------------------------------------//
 // TWI
@@ -164,41 +191,43 @@ ISR (TWI_vect)
 				isDataDirty |= (1 << (i + 5));
 			}
 		}
+		// パラメータのストア
+		store_pamaeter();
+		// isDataDirtyをクリア
+		isDataDirty = 0;
 		// through down to TWI_TX_DATA_ACK
+		
+	// Slave TX
+	//
 	case TWI_TX_DATA_ACK:
 		switch (twi_data_n) {
-		// Slave TX
-		//
 		case 0:
-			// 変更の有無を送信
-			TWDR = isDataDirty;
-			// isDataDirtyをクリア
-			isDataDirty = 0;
+			// No.1 変更の有無
+			TWDR = sequence_parameter_buffer.update;
 			break;
 		case 1:
-			// Rotary Encoderの値を送信(トラック番号)
-			TWDR = re_data;
+			// No.2 トラック番号
+			TWDR = sequence_parameter_buffer.track;
 			break;
 		case 2:
-			// Rotary EncoderのSWのトグル状態を送信(再生フラグ)
-			// 1:再生 0:停止
-			TWDR = (re_sw ? 0 : 1);
+			// No.3 再生フラグ
+			TWDR = sequence_parameter_buffer.play;
 			break;
 		case 3:
-			// シーケンスのトグル状態を送信(表:0..7)
-			TWDR = sequence_data[re_data][0];
+			// No.4 シーケンスのトグル状態(表:1..8)
+			TWDR = sequence_parameter_buffer.sequence1;
 			break;
 		case 4:
-			// シーケンスのトグル状態を送信(裏:8..15)
-			TWDR = sequence_data[re_data][1];
+			// No.5 シーケンスのトグル状態(裏:9..16)
+			TWDR = sequence_parameter_buffer.sequence2;
 			break;
 		case 5:
-			// POT1のADCの読み取り値を送信
-			TWDR = pot_data[0];
+			// No.6 POT1のADCの読み取り値
+			TWDR = sequence_parameter_buffer.pot1;
 			break;
 		case 6:
-			// POT2のADCの読み取り値を送信
-			TWDR = pot_data[1];
+			// No.7 POT2のADCの読み取り値
+			TWDR = sequence_parameter_buffer.pot2;
 			break;
 		default:
 			twi_error();
@@ -207,6 +236,7 @@ ISR (TWI_vect)
 		break;
 	case TWI_TX_DATA_NACK:
 		break;
+		
 	// Slave RX
 	//
 	case TWI_SLA_W_ACK:
@@ -384,7 +414,8 @@ ISR(ADC_vect)
 {
 	int16_t data_sum;
 	
-	adc_buffer[pot_n][adc_buffer_n[pot_n]] = ADCH;
+	adc_buffer[pot_n][adc_buffer_n[pot_n]] = ADCH;			// 8bit Resolution
+	//adc_buffer[pot_n][adc_buffer_n[pot_n]] = ADCH >> 1;	// 7bit Resolution
 	
 	adc_buffer_n[pot_n]++;
 	if (adc_buffer_n[pot_n] == ADC_BUFFER_LEN) {
