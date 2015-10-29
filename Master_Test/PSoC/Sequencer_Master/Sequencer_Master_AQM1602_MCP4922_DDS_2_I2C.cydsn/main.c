@@ -7,6 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.10.29 シーケンサー基板からのデータを反映（2015.10.27版データフォーマット)
  * 2015.10.27 シーケンサー基板からのデータを反映（kickのみ）
  * 2015.10.25 I2C Masterを2系統に分割 (動作OK)
  * 2015.10.25 I2C Masterを2系統に分割
@@ -49,7 +50,7 @@ volumeAmount      : 8bit    // 未実装
 // Sequencer
 //
 #define SEQUENCER_I2C_SLAVE_ADDRESS   (0x7f)
-#define SEQUENCER_I2C_RD_BUFFER_SIZE  (6u)
+#define SEQUENCER_I2C_RD_BUFFER_SIZE  (7u)
 #define SEQUENCER_I2C_WR_BUFFER_SIZE  (1u)
 
 // I2C LCD
@@ -328,14 +329,14 @@ void displaySequencerParameter()
 
     LCD_Clear();
     sprintf(lcdBuffer, "%s %3d %3d %3d",
-        strPlayStop[sequencerRdBuffer[5]],
-        sequencerRdBuffer[3],
-        sequencerRdBuffer[2],
-        sequencerRdBuffer[4]    
+        strPlayStop[sequencerRdBuffer[2]],
+        sequencerRdBuffer[6],
+        sequencerRdBuffer[5],
+        sequencerRdBuffer[1]    
     );
     LCD_Puts(lcdBuffer);
 
-    sequenceString(lcdBuffer, sequencerRdBuffer[0], sequencerRdBuffer[1]);
+    sequenceString(lcdBuffer, sequencerRdBuffer[3], sequencerRdBuffer[4]);
     LCD_SetPos(0, 1);
     LCD_Puts(lcdBuffer);
 }
@@ -389,10 +390,10 @@ void setTracks(uint8 track_n)
     int i;
       
     for (i = 0; i < 8; i++) {
-        tracks[track_n].sequence[i] = (sequencerRdBuffer[0] & (1 << i)) >> i;
+        tracks[track_n].sequence[i] = (sequencerRdBuffer[3] & (1 << i)) >> i;
     }
     for (i = 0; i < 8; i++) {
-        tracks[track_n].sequence[i + 8] = (sequencerRdBuffer[1] & (1 << i)) >> i;
+        tracks[track_n].sequence[i + 8] = (sequencerRdBuffer[4] & (1 << i)) >> i;
     }
 }
 
@@ -676,12 +677,27 @@ int main()
             displayError("I2C Master", "Write Error");
         }
         
-        setTracks(sequencerRdBuffer[4] % TRACK_N);
+        // SEQUNENCE0/SEQUENCE1に変更があった場合、シーケンスを更新
+        //if (sequencerRdBuffer[0] & 0x18) {
+            if (sequencerRdBuffer[1] >= TRACK_N)
+                displayError("Sequencer Param", "TRACK NO OB");
+            
+            //　sequencerRdBuffer[1]: トラック番号  
+            setTracks(sequencerRdBuffer[1]);
+        //}
         
+        /*
+        // パラメータに変更があった場合、LCD表示を更新
+        if (sequencerRdBuffer[0]) {
+            displaySequencerParameter();
+        }
+        */
+
         if (lcdCount++ == 500) {
             lcdCount = 0;
             displaySequencerParameter();
         }
+        
         /*
         sprintf(lcdLine, "%d", sequencerWrBuffer[0]);            
         displayStr(lcdLine);
