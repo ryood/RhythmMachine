@@ -746,9 +746,6 @@
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield\Generated_Source\PSoC4\project.h</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
-<v>Sequencer_Master</v>
-<v>Sequencer_Master\Sequencer_Master</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C</v>
@@ -794,6 +791,9 @@
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD_I2C.c</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD_I2C.h</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD_I2C_BOOT.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD_I2C_INT.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD_I2C_MASTER.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C\Generated_Source\PSoC4\I2CM_LCD\I2CM_LCD_I2C_PVT.h</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Sequencer_Master">
@@ -1054,9 +1054,51 @@
 <VisibleNodeIds>
 <v>Sequencer_Master</v>
 <v>Sequencer_Master\Sequencer_Master</v>
+<v>Sequencer_Master\Sequencer_Master\Sequencer_Master.gpdsc</v>
 <v>Sequencer_Master\Sequencer_Master\Sequencer_Master.rpt</v>
 <v>Sequencer_Master\Sequencer_Master\Sequencer_Master_timing.html</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\Cm0Start.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\CyFlash.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\CyLib.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\cymetadata.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\cyPm.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\cyutils.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_BOOT.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_I2C.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_I2C_BOOT.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_I2C_INT.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_I2C_MASTER.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_PM.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_SCB_IRQ.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_SCBCLK.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_scl.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_sda.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\LED_GREEN.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\LED_RED.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\main.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\Pin_I2C_Reset.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\UART_1.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\UART_1_BOOT.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\UART_1_PM.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\UART_1_rx.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\UART_1_SCBCLK.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\UART_1_SPI_UART.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\UART_1_SPI_UART_INT.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\UART_1_tx.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\UART_1_UART.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Listing Files\UART_1_UART_BOOT.lst</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Sequencer_Master_AQM1602.elf</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Sequencer_Master_AQM1602.hex</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug\Sequencer_Master_AQM1602.map</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\Sequencer_Master_AQM1602.gpdsc</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602\Sequencer_Master_AQM1602.rpt</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
@@ -1198,8 +1240,8 @@
 <Unloaded />
 <OpenDocs>
 <name v=".\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.cydsn\TopDesign\TopDesign.cysch" />
-<name v=".\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.cydsn\main.c" />
 <name v=".\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.cydsn\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.cydwr" />
+<name v=".\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.cydsn\main.c" />
 </OpenDocs>
 <config v="" />
 <AutoUpdate v="true" />

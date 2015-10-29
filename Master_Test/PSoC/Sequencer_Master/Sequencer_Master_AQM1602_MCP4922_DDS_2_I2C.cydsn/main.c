@@ -350,8 +350,8 @@ void displaySequencerParameter()
     LCD_SetPos(0, 0);
     sprintf(lcdBuffer, "%s %3d %3d %s",
         strPlayStop[sequencerRdBuffer.play],
-        sequencerRdBuffer.pot1,
         sequencerRdBuffer.pot2,
+        sequencerRdBuffer.pot1,
         strTracks[sequencerRdBuffer.track]    
     );
     LCD_Puts(lcdBuffer);
@@ -417,7 +417,7 @@ void initTracks()
 	tracks[0].decayAmount = 200;
 	tracks[0].ampAmount = 255;
 	tracks[0].toneAmount = 127;
-	memcpy(tracks[0].sequence, kickSequence, SEQUENCE_LEN);
+	//memcpy(tracks[0].sequence, kickSequence, SEQUENCE_LEN);
 
 	// Snare
 	tracks[1].waveLookupTable = waveTableSine;
@@ -426,7 +426,7 @@ void initTracks()
 	tracks[1].decayAmount = 128;
 	tracks[1].ampAmount = 255;
 	tracks[1].toneAmount = 127;
-	memcpy(tracks[1].sequence, snareSequence, SEQUENCE_LEN);
+	//memcpy(tracks[1].sequence, snareSequence, SEQUENCE_LEN);
 
 	// HiHat
 	tracks[2].waveLookupTable = waveTableSine;	// unused
@@ -435,7 +435,7 @@ void initTracks()
 	tracks[2].decayAmount = 24;
 	tracks[2].ampAmount = 24;
 	tracks[2].toneAmount = 127;
-	memcpy(tracks[2].sequence, hihatSequnce, SEQUENCE_LEN);
+	//memcpy(tracks[2].sequence, hihatSequnce, SEQUENCE_LEN);
 }
 
 void initDDSParameter()
@@ -665,10 +665,8 @@ int main()
     // 波形の初期化
     //
     bpm = INITIAL_BPM;
-    /*
     ticksPerNote = SAMPLE_CLOCK * 60 / (bpm * 4);
 	// ↑整数演算のため丸めているので注意
-    */
 
     initTracks();
     initDDSParameter();
