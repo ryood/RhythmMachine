@@ -7,6 +7,8 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.10.29 BPMの変更の反映(ムリ？)
+ * 2015.10.29 sequencerRdBufferを構造体に変更
  * 2015.10.29 シーケンサー基板からのデータを反映（2015.10.27版データフォーマット)
  * 2015.10.27 シーケンサー基板からのデータを反映（kickのみ）
  * 2015.10.25 I2C Masterを2系統に分割 (動作OK)
@@ -50,8 +52,15 @@ volumeAmount      : 8bit    // 未実装
 // Sequencer
 //
 #define SEQUENCER_I2C_SLAVE_ADDRESS   (0x7f)
-#define SEQUENCER_I2C_RD_BUFFER_SIZE  (7u)
+//#define SEQUENCER_I2C_RD_BUFFER_SIZE  (7u)
 #define SEQUENCER_I2C_WR_BUFFER_SIZE  (1u)
+
+#define UPDATE_TRACK        (0x02)
+#define UPDATE_PLAY         (0x04)
+#define UPDATE_SEQUENCE1    (0x08)
+#define UPDATE_SEQUENCE2    (0x10)
+#define UPDATE_POT1         (0x20)
+#define UPDATE_POT2         (0x40)
 
 // I2C LCD
 //
@@ -103,7 +112,16 @@ volumeAmount      : 8bit    // 未実装
 ****************************************/
 // Sequencer                
 //
-uint8 sequencerRdBuffer[SEQUENCER_I2C_RD_BUFFER_SIZE];
+struct sequencer_parameter {
+    uint8_t update;
+	uint8_t track;
+	uint8_t play;
+	uint8_t sequence1;
+	uint8_t sequence2;
+	uint8_t pot1;
+	uint8_t pot2;
+} sequencerRdBuffer;
+//uint8 sequencerRdBuffer[SEQUENCER_I2C_RD_BUFFER_SIZE];
 uint8 sequencerWrBuffer[SEQUENCER_I2C_WR_BUFFER_SIZE] = {0};
 
 // カウンター
@@ -146,8 +164,8 @@ uint32 readSequencerBoard(void)
     // Read from sequencer board
     //
     I2CM_Sequencer_Board_I2CMasterReadBuf(SEQUENCER_I2C_SLAVE_ADDRESS, 
-        sequencerRdBuffer,
-        SEQUENCER_I2C_RD_BUFFER_SIZE,
+        (uint8 *)&sequencerRdBuffer,
+        sizeof(sequencerRdBuffer),
         I2CM_Sequencer_Board_I2C_MODE_COMPLETE_XFER
     );
     while (0u == (I2CM_Sequencer_Board_I2CMasterStatus() & I2CM_Sequencer_Board_I2C_MSTAT_RD_CMPLT))
@@ -161,7 +179,7 @@ uint32 readSequencerBoard(void)
         RGB_LED_ON_GREEN;
 
         /* Check if all bytes was written */
-        if (I2CM_Sequencer_Board_I2CMasterGetReadBufSize() == SEQUENCER_I2C_RD_BUFFER_SIZE)
+        if (I2CM_Sequencer_Board_I2CMasterGetReadBufSize() == sizeof(sequencerRdBuffer))
         {
             status = I2C_TRANSFER_CMPLT;
         }
@@ -324,19 +342,21 @@ void sequenceString(char *buffer, uint8 sequence1, uint8 sequence2)
 
 void displaySequencerParameter()
 {
-    const char *strPlayStop[] = { "Play", "Stop" }; 
+    const char *strPlayStop[] = { "STOP", "PLAY" };
+    const char *strTracks[] = { "KIK", "SNR ", "HHT" };
     char lcdBuffer[17];
 
-    LCD_Clear();
-    sprintf(lcdBuffer, "%s %3d %3d %3d",
-        strPlayStop[sequencerRdBuffer[2]],
-        sequencerRdBuffer[6],
-        sequencerRdBuffer[5],
-        sequencerRdBuffer[1]    
+    //LCD_Clear();
+    LCD_SetPos(0, 0);
+    sprintf(lcdBuffer, "%s %3d %3d %s",
+        strPlayStop[sequencerRdBuffer.play],
+        sequencerRdBuffer.pot1,
+        sequencerRdBuffer.pot2,
+        strTracks[sequencerRdBuffer.track]    
     );
     LCD_Puts(lcdBuffer);
 
-    sequenceString(lcdBuffer, sequencerRdBuffer[3], sequencerRdBuffer[4]);
+    sequenceString(lcdBuffer, sequencerRdBuffer.sequence1, sequencerRdBuffer.sequence2);
     LCD_SetPos(0, 1);
     LCD_Puts(lcdBuffer);
 }
@@ -381,23 +401,6 @@ void DACSetVoltage16bit(uint16 value)
 }
 
 /*======================================================
- * シーケンサー基板からのパラメーターの設定
- * parameter: track_n: 設定するtrack番号
- *
- *======================================================*/
-void setTracks(uint8 track_n)
-{
-    int i;
-      
-    for (i = 0; i < 8; i++) {
-        tracks[track_n].sequence[i] = (sequencerRdBuffer[3] & (1 << i)) >> i;
-    }
-    for (i = 0; i < 8; i++) {
-        tracks[track_n].sequence[i + 8] = (sequencerRdBuffer[4] & (1 << i)) >> i;
-    }
-}
-
-/*======================================================
  * 波形初期化
  *
  *======================================================*/
@@ -439,6 +442,9 @@ void initDDSParameter()
 {
     uint i;
     
+    ticksPerNote = SAMPLE_CLOCK * 60 / (bpm * 4);
+    // ↑整数演算のため丸めているので注意
+    
     for (i = 0; i < TRACK_N; i++) {
 		// 波形
 		tracks[i].waveTuningWord = tracks[i].waveFrequency * POW_2_32 / SAMPLE_CLOCK;
@@ -452,6 +458,33 @@ void initDDSParameter()
 		tracks[i].decayPhaseRegister = 0;
 		tracks[i].decayStop = 0;
 	}
+}
+
+/*======================================================
+ * シーケンサー基板からのパラメーターの設定
+ * parameter: track_n: 設定するtrack番号
+ *
+ *======================================================*/
+void setTracks(uint8 track_n)
+{
+    int i;
+    /*
+    if (bpm != sequencerRdBuffer.pot1) {
+        bpm = sequencerRdBuffer.pot1;
+        initDDSParameter();
+    }
+    */
+        
+    if (sequencerRdBuffer.update & UPDATE_SEQUENCE1) {
+        for (i = 0; i < 8; i++) {
+            tracks[track_n].sequence[i] = (sequencerRdBuffer.sequence1 & (1 << i)) >> i;
+        }
+    }
+    if (sequencerRdBuffer.update & UPDATE_SEQUENCE2) {
+        for (i = 0; i < 8; i++) {
+            tracks[track_n].sequence[i + 8] = (sequencerRdBuffer.sequence2 & (1 << i)) >> i;
+        }
+    }
 }
 
 /*======================================================
@@ -627,13 +660,15 @@ uint8 inc_within_uint8(uint8 x, uint8 h, uint8 l)
 
 int main()
 {
-    //char lcdLine[17];
+    char lcdLine[17];
     
     // 波形の初期化
     //
     bpm = INITIAL_BPM;
+    /*
     ticksPerNote = SAMPLE_CLOCK * 60 / (bpm * 4);
 	// ↑整数演算のため丸めているので注意
+    */
 
     initTracks();
     initDDSParameter();
@@ -677,18 +712,22 @@ int main()
             displayError("I2C Master", "Write Error");
         }
         
-        if (sequencerRdBuffer[1] >= TRACK_N)
+        if (sequencerRdBuffer.track >= TRACK_N)
             displayError("Sequencer Param", "TRACK NO OB");
             
-        //　sequencerRdBuffer[1]: トラック番号  
-        setTracks(sequencerRdBuffer[1]);
+        setTracks(sequencerRdBuffer.track);
         
         // パラメータに変更があった場合、LCD表示を更新
         lcdWaitCount++;
-        if (sequencerRdBuffer[0] && lcdWaitCount > 2) {
+        if (sequencerRdBuffer.update && lcdWaitCount > 5) {
             lcdWaitCount = 0;
             displaySequencerParameter();
         }
+        
+        /*
+        sprintf(lcdLine, "%d", sizeof(sequencerRdBuffer));
+        displayStr(lcdLine);
+        */
         
         /*
         sprintf(lcdLine, "%d", sequencerWrBuffer[0]);            
@@ -699,7 +738,7 @@ int main()
         
         //DACSetVoltage16bit(sequencerWrBuffer[0] << 8);
         
-        CyDelay(5);
+        CyDelay(1);
     }
 }
 

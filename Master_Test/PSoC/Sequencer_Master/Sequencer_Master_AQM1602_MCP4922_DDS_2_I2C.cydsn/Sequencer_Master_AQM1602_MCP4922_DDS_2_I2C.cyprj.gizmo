@@ -40,9 +40,12 @@
 <dep name=".\Generated_Source\PSoC4\I2CM_Sequencer_Board_scl_aliases.h" />
 <dep name=".\Generated_Source\PSoC4\I2CM_Sequencer_Board_sda.h" />
 <dep name=".\Generated_Source\PSoC4\I2CM_Sequencer_Board_sda_aliases.h" />
+<dep name=".\Generated_Source\PSoC4\IDAC_8.h" />
 <dep name=".\Generated_Source\PSoC4\ISR_Timer_Sampling.h" />
 <dep name=".\Generated_Source\PSoC4\Pin_I2C_Sequencer_Reset.h" />
 <dep name=".\Generated_Source\PSoC4\Pin_I2C_Sequencer_Reset_aliases.h" />
+<dep name=".\Generated_Source\PSoC4\Pin_IDAC8_Out.h" />
+<dep name=".\Generated_Source\PSoC4\Pin_IDAC8_Out_aliases.h" />
 <dep name=".\Generated_Source\PSoC4\Pin_ISR_Check.h" />
 <dep name=".\Generated_Source\PSoC4\Pin_ISR_Check_aliases.h" />
 <dep name=".\Generated_Source\PSoC4\Pin_LDAC.h" />
@@ -109,9 +112,12 @@
 <file name=".\Generated_Source\PSoC4\I2CM_Sequencer_Board_scl_aliases.h" />
 <file name=".\Generated_Source\PSoC4\I2CM_Sequencer_Board_sda.h" />
 <file name=".\Generated_Source\PSoC4\I2CM_Sequencer_Board_sda_aliases.h" />
+<file name=".\Generated_Source\PSoC4\IDAC_8.h" />
 <file name=".\Generated_Source\PSoC4\ISR_Timer_Sampling.h" />
 <file name=".\Generated_Source\PSoC4\Pin_I2C_Sequencer_Reset.h" />
 <file name=".\Generated_Source\PSoC4\Pin_I2C_Sequencer_Reset_aliases.h" />
+<file name=".\Generated_Source\PSoC4\Pin_IDAC8_Out.h" />
+<file name=".\Generated_Source\PSoC4\Pin_IDAC8_Out_aliases.h" />
 <file name=".\Generated_Source\PSoC4\Pin_ISR_Check.h" />
 <file name=".\Generated_Source\PSoC4\Pin_ISR_Check_aliases.h" />
 <file name=".\Generated_Source\PSoC4\Pin_LDAC.h" />
@@ -149,6 +155,24 @@
 <file name=".\WaveTableFp32.h" />
 <file name=".\fixedpoint.h" />
 <file name=".\main.c" />
+<file name=".\CortexM0\ARM_GCC_493\Debug\Timer_Sampling.o">
+<dep name=".\Generated_Source\PSoC4\CyLib.h" />
+<dep name=".\Generated_Source\PSoC4\Timer_Sampling.c" />
+<dep name=".\Generated_Source\PSoC4\Timer_Sampling.h" />
+<dep name=".\Generated_Source\PSoC4\cydevice_trm.h" />
+<dep name=".\Generated_Source\PSoC4\cyfitter.h" />
+<dep name=".\Generated_Source\PSoC4\cytypes.h" />
+</file>
+<file name=".\Generated_Source\PSoC4\Timer_Sampling.c" />
+<file name=".\CortexM0\ARM_GCC_493\Debug\Timer_Sampling_PM.o">
+<dep name=".\Generated_Source\PSoC4\CyLib.h" />
+<dep name=".\Generated_Source\PSoC4\Timer_Sampling.h" />
+<dep name=".\Generated_Source\PSoC4\Timer_Sampling_PM.c" />
+<dep name=".\Generated_Source\PSoC4\cydevice_trm.h" />
+<dep name=".\Generated_Source\PSoC4\cyfitter.h" />
+<dep name=".\Generated_Source\PSoC4\cytypes.h" />
+</file>
+<file name=".\Generated_Source\PSoC4\Timer_Sampling_PM.c" />
 <file name=".\CortexM0\ARM_GCC_493\Debug\Clock_SPIM.o">
 <dep name=".\Generated_Source\PSoC4\Clock_SPIM.c" />
 <dep name=".\Generated_Source\PSoC4\Clock_SPIM.h" />
@@ -533,6 +557,24 @@
 <dep name=".\Generated_Source\PSoC4\cytypes.h" />
 </file>
 <file name=".\Generated_Source\PSoC4\I2CM_Sequencer_Board_sda.c" />
+<file name=".\CortexM0\ARM_GCC_493\Debug\IDAC_8.o">
+<dep name=".\Generated_Source\PSoC4\CyLib.h" />
+<dep name=".\Generated_Source\PSoC4\IDAC_8.c" />
+<dep name=".\Generated_Source\PSoC4\IDAC_8.h" />
+<dep name=".\Generated_Source\PSoC4\cydevice_trm.h" />
+<dep name=".\Generated_Source\PSoC4\cyfitter.h" />
+<dep name=".\Generated_Source\PSoC4\cytypes.h" />
+</file>
+<file name=".\Generated_Source\PSoC4\IDAC_8.c" />
+<file name=".\CortexM0\ARM_GCC_493\Debug\IDAC_8_PM.o">
+<dep name=".\Generated_Source\PSoC4\CyLib.h" />
+<dep name=".\Generated_Source\PSoC4\IDAC_8.h" />
+<dep name=".\Generated_Source\PSoC4\IDAC_8_PM.c" />
+<dep name=".\Generated_Source\PSoC4\cydevice_trm.h" />
+<dep name=".\Generated_Source\PSoC4\cyfitter.h" />
+<dep name=".\Generated_Source\PSoC4\cytypes.h" />
+</file>
+<file name=".\Generated_Source\PSoC4\IDAC_8_PM.c" />
 <file name=".\CortexM0\ARM_GCC_493\Debug\ISR_Timer_Sampling.o">
 <dep name=".\Generated_Source\PSoC4\CyLib.h" />
 <dep name=".\Generated_Source\PSoC4\ISR_Timer_Sampling.c" />
@@ -552,6 +594,16 @@
 <dep name=".\Generated_Source\PSoC4\cytypes.h" />
 </file>
 <file name=".\Generated_Source\PSoC4\Pin_I2C_Sequencer_Reset.c" />
+<file name=".\CortexM0\ARM_GCC_493\Debug\Pin_IDAC8_Out.o">
+<dep name=".\Generated_Source\PSoC4\Pin_IDAC8_Out.c" />
+<dep name=".\Generated_Source\PSoC4\Pin_IDAC8_Out.h" />
+<dep name=".\Generated_Source\PSoC4\Pin_IDAC8_Out_aliases.h" />
+<dep name=".\Generated_Source\PSoC4\cydevice_trm.h" />
+<dep name=".\Generated_Source\PSoC4\cyfitter.h" />
+<dep name=".\Generated_Source\PSoC4\cypins.h" />
+<dep name=".\Generated_Source\PSoC4\cytypes.h" />
+</file>
+<file name=".\Generated_Source\PSoC4\Pin_IDAC8_Out.c" />
 <file name=".\CortexM0\ARM_GCC_493\Debug\Pin_ISR_Check.o">
 <dep name=".\Generated_Source\PSoC4\Pin_ISR_Check.c" />
 <dep name=".\Generated_Source\PSoC4\Pin_ISR_Check.h" />
@@ -672,24 +724,6 @@
 <dep name=".\Generated_Source\PSoC4\cytypes.h" />
 </file>
 <file name=".\Generated_Source\PSoC4\SPIM_PM.c" />
-<file name=".\CortexM0\ARM_GCC_493\Debug\Timer_Sampling.o">
-<dep name=".\Generated_Source\PSoC4\CyLib.h" />
-<dep name=".\Generated_Source\PSoC4\Timer_Sampling.c" />
-<dep name=".\Generated_Source\PSoC4\Timer_Sampling.h" />
-<dep name=".\Generated_Source\PSoC4\cydevice_trm.h" />
-<dep name=".\Generated_Source\PSoC4\cyfitter.h" />
-<dep name=".\Generated_Source\PSoC4\cytypes.h" />
-</file>
-<file name=".\Generated_Source\PSoC4\Timer_Sampling.c" />
-<file name=".\CortexM0\ARM_GCC_493\Debug\Timer_Sampling_PM.o">
-<dep name=".\Generated_Source\PSoC4\CyLib.h" />
-<dep name=".\Generated_Source\PSoC4\Timer_Sampling.h" />
-<dep name=".\Generated_Source\PSoC4\Timer_Sampling_PM.c" />
-<dep name=".\Generated_Source\PSoC4\cydevice_trm.h" />
-<dep name=".\Generated_Source\PSoC4\cyfitter.h" />
-<dep name=".\Generated_Source\PSoC4\cytypes.h" />
-</file>
-<file name=".\Generated_Source\PSoC4\Timer_Sampling_PM.c" />
 <file name=".\CortexM0\ARM_GCC_493\Debug\cyPm.o">
 <dep name=".\Generated_Source\PSoC4\CyLib.h" />
 <dep name=".\Generated_Source\PSoC4\cyPm.c" />
@@ -730,6 +764,25 @@
 <file name=".\Generated_Source\PSoC4\CyBootAsmGnu.s" />
 <file name=".\Generated_Source\PSoC4\cydevicegnu_trm.inc" />
 <file name=".\Generated_Source\PSoC4\cyfittergnu.inc" />
+<file name=".\Generated_Source\PSoC4\IDAC_1.h" />
+<file name=".\CortexM0\ARM_GCC_493\Debug\IDAC_1.o">
+<dep name=".\Generated_Source\PSoC4\CyLib.h" />
+<dep name=".\Generated_Source\PSoC4\IDAC_1.c" />
+<dep name=".\Generated_Source\PSoC4\IDAC_1.h" />
+<dep name=".\Generated_Source\PSoC4\cydevice_trm.h" />
+<dep name=".\Generated_Source\PSoC4\cyfitter.h" />
+<dep name=".\Generated_Source\PSoC4\cytypes.h" />
+</file>
+<file name=".\Generated_Source\PSoC4\IDAC_1.c" />
+<file name=".\CortexM0\ARM_GCC_493\Debug\IDAC_1_PM.o">
+<dep name=".\Generated_Source\PSoC4\CyLib.h" />
+<dep name=".\Generated_Source\PSoC4\IDAC_1.h" />
+<dep name=".\Generated_Source\PSoC4\IDAC_1_PM.c" />
+<dep name=".\Generated_Source\PSoC4\cydevice_trm.h" />
+<dep name=".\Generated_Source\PSoC4\cyfitter.h" />
+<dep name=".\Generated_Source\PSoC4\cytypes.h" />
+</file>
+<file name=".\Generated_Source\PSoC4\IDAC_1_PM.c" />
 <file name=".\Generated_Source\PSoC4\Pin_I2C_Sequncer_Reset.h" />
 <file name=".\Generated_Source\PSoC4\Pin_I2C_Sequncer_Reset_aliases.h" />
 <file name=".\CortexM0\ARM_GCC_493\Debug\Pin_I2C_Sequncer_Reset.o">
@@ -812,6 +865,9 @@
 <dep name=".\CortexM0\ARM_GCC_493\Debug\I2CM_Sequencer_Board_scl.o" />
 <dep name=".\CortexM0\ARM_GCC_493\Debug\I2CM_Sequencer_Board_SCB_IRQ.o" />
 <dep name=".\CortexM0\ARM_GCC_493\Debug\Pin_I2C_Sequencer_Reset.o" />
+<dep name=".\CortexM0\ARM_GCC_493\Debug\IDAC_8.o" />
+<dep name=".\CortexM0\ARM_GCC_493\Debug\IDAC_8_PM.o" />
+<dep name=".\CortexM0\ARM_GCC_493\Debug\Pin_IDAC8_Out.o" />
 <dep name=".\CortexM0\ARM_GCC_493\Debug\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.a" />
 <dep name="${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CortexM0\ARM_GCC_493\Debug\CyComponentLibrary.a" />
 </file>
@@ -877,6 +933,11 @@
 <name_val_pair name="D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_Test\PSoC\Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.cydsn\CortexM0\ARM_GCC_493\Debug\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.hex" v="-mcpu=cortex-m0 -mthumb -g -ffunction-sections -O0 -L Generated_Source\PSoC4 -Wl,-Map,${OutputDir}/${ProjectShortName}.map -T Generated_Source\PSoC4\cm0gcc.ld -specs=nano.specs -Wl,--gc-sections" />
 <name_val_pair name=".\Generated_Source\PSoC4\Pin_I2C_Sequncer_Reset.c" v="-mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -Wall -ffunction-sections -O0 -ffat-lto-objects" />
 <name_val_pair name=".\Generated_Source\PSoC4\Pin_I2C_Sequencer_Reset.c" v="-mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -Wall -ffunction-sections -O0 -ffat-lto-objects" />
+<name_val_pair name=".\Generated_Source\PSoC4\IDAC_1.c" v="-mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -Wall -ffunction-sections -O0 -ffat-lto-objects" />
+<name_val_pair name=".\Generated_Source\PSoC4\IDAC_1_PM.c" v="-mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -Wall -ffunction-sections -O0 -ffat-lto-objects" />
+<name_val_pair name=".\Generated_Source\PSoC4\IDAC_8.c" v="-mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -Wall -ffunction-sections -O0 -ffat-lto-objects" />
+<name_val_pair name=".\Generated_Source\PSoC4\IDAC_8_PM.c" v="-mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -Wall -ffunction-sections -O0 -ffat-lto-objects" />
+<name_val_pair name=".\Generated_Source\PSoC4\Pin_IDAC8_Out.c" v="-mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -Wall -ffunction-sections -O0 -ffat-lto-objects" />
 </name>
 </genericCmdLineData>
 <codeGenCmdLineTag v="-.appdatapath &quot;C:\Users\gizmo\AppData\Local\Cypress Semiconductor\PSoC Creator\3.3&quot; -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -p &quot;D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_Test\PSoC\Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.cydsn\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.cyprj&quot; -d CY8C4245AXI-483 -s &quot;D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_Test\PSoC\Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.cydsn\Generated_Source\PSoC4&quot; -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE" />
@@ -1893,6 +1954,65 @@
 <v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_virtualmux_v1_0\cy_virtualmux_v1_0.pdf</v>
 <v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_virtualmux_v1_0\cy_virtualmux_v1_0.v</v>
 <v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_virtualmux_v1_0\Custom\custom.cs</v>
+<v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\IDAC_P4_v1_10\IDAC_P4_v1_10.cysym</v>
+<v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\IDAC_P4_v1_10\IDAC_P4_v1_10.pdf</v>
+<v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\IDAC_P4_v1_10\IDAC_P4_v1_10.cycdx</v>
+<v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\IDAC_P4_v1_10\IDAC_P4_v1_10.cystate</v>
+<v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\IDAC_P4_v1_10\Custom\configuretab.cs</v>
+<v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\IDAC_P4_v1_10\Custom\configuretab.Designer.cs</v>
+<v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\IDAC_P4_v1_10\Custom\customizer.cs</v>
+<v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\IDAC_P4_v1_10\Custom\parameters.cs</v>
+<v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\IDAC_P4_v1_10\Custom\Resources.Designer.cs</v>
+<v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\IDAC_P4_v1_10\Custom\configuretab.resx</v>
+<v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\IDAC_P4_v1_10\Custom\Resources.resx</v>
+<v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\IDAC_P4_v1_10\PSoC4\IDAC_P4_v1_10.cysch</v>
+<v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\IDAC_P4_v1_10\PSoC4\API\IDAC.c</v>
+<v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\IDAC_P4_v1_10\PSoC4\API\IDAC.h</v>
+<v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\IDAC_P4_v1_10\PSoC4\API\IDAC_PM.c</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_psoc4_csidac_v1_0\cy_psoc4_csidac_v1_0.cysym</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_psoc4_csidac_v1_0\PSoC4\cy_psoc4_csidac_v1_0.cyprimitive</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\OneTerminal\OneTerminal.cysym</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\OneTerminal\OneTerminal.pdf</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\OneTerminal\OneTerminal.v</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\cy_pins_v2_10.cysym</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\cy_pins_v2_10.pdf</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\cy_pins_v2_10.cystate</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\cy_pins_v2_10.cyprimitive</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\custom.cs</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyenums.cs</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinsdata.cs</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinpicture.cs</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinutils.cs</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cygeneralcontrol.cs</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cygeneralcontrol.Designer.cs</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyinputcontrol.cs</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyinputcontrol.Designer.cs</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cymappingcontrol.cs</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cymappingcontrol.Designer.cs</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyoutputcontrol.cs</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyoutputcontrol.Designer.cs</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinaliasdialog.cs</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinaliasdialog.Designer.cs</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinscontrol.cs</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinscontrol.Designer.cs</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyporcontrol.cs</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyporcontrol.Designer.cs</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\Resource1.Designer.cs</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyclockingcontrol.cs</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyclockingcontrol.Designer.cs</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cygeneralcontrol.resx</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyinputcontrol.resx</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cymappingcontrol.resx</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyoutputcontrol.resx</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinaliasdialog.resx</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinscontrol.resx</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyporcontrol.resx</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\Resource1.resx</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyclockingcontrol.resx</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\PSoC4\API\pins.c</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\PSoC4\API\pins.h</v>
+<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\PSoC4\API\aliases.h</v>
 <v>.\Sequencer_Master_AQM1602_MCP4922_DDS_2_I2C.cydwr</v>
 <v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\cy_boot_v4_20\PSoC4\API\cm0gcc.ld</v>
 <v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\cy_boot_v4_20\PSoC4\API\Cm0RealView.scat</v>
@@ -2098,6 +2218,15 @@
 <v>.\Generated_Source\PSoC4\Pin_I2C_Sequencer_Reset.c</v>
 <v>.\Generated_Source\PSoC4\Pin_I2C_Sequencer_Reset.h</v>
 <v>.\Generated_Source\PSoC4\Pin_I2C_Sequencer_Reset_aliases.h</v>
+<v>.\Generated_Source\PSoC4\IDAC_1.c</v>
+<v>.\Generated_Source\PSoC4\IDAC_1.h</v>
+<v>.\Generated_Source\PSoC4\IDAC_1_PM.c</v>
+<v>.\Generated_Source\PSoC4\IDAC_8.c</v>
+<v>.\Generated_Source\PSoC4\IDAC_8.h</v>
+<v>.\Generated_Source\PSoC4\IDAC_8_PM.c</v>
+<v>.\Generated_Source\PSoC4\Pin_IDAC8_Out.c</v>
+<v>.\Generated_Source\PSoC4\Pin_IDAC8_Out.h</v>
+<v>.\Generated_Source\PSoC4\Pin_IDAC8_Out_aliases.h</v>
 </gen_list>
 <warp_dep>
 <v>C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\ieee\work\stdlogic.vif</v>
@@ -2107,14 +2236,14 @@
 <v>C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\stdlogic\rtlpkg.vif</v>
 <v>C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\stdlogic\cy_psoc3.vif</v>
 </warp_dep>
-<deps_time v="130902359540795816" />
+<deps_time v="130905962852344024" />
 <top_block v="TopDesign" />
 <last_generation v="11" />
 </CyGuid_925cc1e1-309e-4e08-b0a1-09a83c35b157>
 </dataGuid>
 <dataGuid v="769d31ea-68b1-4f0c-b90a-7c10a43ee563">
 <CyGuid_769d31ea-68b1-4f0c-b90a-7c10a43ee563 type_name="CyDesigner.Common.ProjMgmt.Model.CyLinkCustomData" version="1">
-<deps_time v="130905852273797701" />
+<deps_time v="130905965328465502" />
 </CyGuid_769d31ea-68b1-4f0c-b90a-7c10a43ee563>
 </dataGuid>
 <dataGuid v="718b6b01-68ba-4a17-b632-d38dc61ebb3b">
@@ -2127,12 +2256,22 @@
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Cypress Component Catalog">
 <ExpandedNodeIds>
 <v>Cypress Component Catalog</v>
+<v>Cypress Component Catalog\Analog</v>
+<v>Cypress Component Catalog\Analog\DAC</v>
 <v>Cypress Component Catalog\Communications</v>
 <v>Cypress Component Catalog\Communications\I2C</v>
+<v>Cypress Component Catalog\Ports and Pins</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
 <v>Cypress Component Catalog</v>
 <v>Cypress Component Catalog\Analog</v>
+<v>Cypress Component Catalog\Analog\ADC</v>
+<v>Cypress Component Catalog\Analog\Amplifiers</v>
+<v>Cypress Component Catalog\Analog\Analog MUX</v>
+<v>Cypress Component Catalog\Analog\Comparators</v>
+<v>Cypress Component Catalog\Analog\DAC</v>
+<v>Cypress Component Catalog\Analog\DAC\Current DAC (7 or 8-bit) [v1.10]</v>
+<v>Cypress Component Catalog\Analog\Manual Routing</v>
 <v>Cypress Component Catalog\CapSense</v>
 <v>Cypress Component Catalog\Communications</v>
 <v>Cypress Component Catalog\Communications\I2C</v>
@@ -2149,6 +2288,10 @@
 <v>Cypress Component Catalog\Digital</v>
 <v>Cypress Component Catalog\Display</v>
 <v>Cypress Component Catalog\Ports and Pins</v>
+<v>Cypress Component Catalog\Ports and Pins\Analog Pin [v2.10]</v>
+<v>Cypress Component Catalog\Ports and Pins\Digital Bidirectional Pin [v2.10]</v>
+<v>Cypress Component Catalog\Ports and Pins\Digital Input Pin [v2.10]</v>
+<v>Cypress Component Catalog\Ports and Pins\Digital Output Pin [v2.10]</v>
 <v>Cypress Component Catalog\System</v>
 <v>Cypress Component Catalog\Thermal Management</v>
 </VisibleNodeIds>
@@ -2170,6 +2313,11 @@
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </tree_states>
 </CyGuid_718b6b01-68ba-4a17-b632-d38dc61ebb3b>
+</dataGuid>
+<dataGuid v="237c8ed1-e161-4c9d-af97-582eda6d6952">
+<CyGuid_d442b0b8-dd66-4eee-b5be-1cb213792b31 type_name="CyDesigner.PSoC.P3Fit.Common.DesignWideResources.DeviceEditor.CyCustomAnalogDevData" version="1" ZoomToPage="True" ZoomScale="0.9545812" ScrollX="877" ScrollY="231">
+<ComponentStates />
+</CyGuid_d442b0b8-dd66-4eee-b5be-1cb213792b31>
 </dataGuid>
 </userData>
 </CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
