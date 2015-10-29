@@ -664,7 +664,7 @@ int main()
     
     CyDelay(500);
     
-    int lcdCount = 0;
+    int lcdWaitCount = 0;
     for(;;)
     {
         sequencerWrBuffer[0] = noteCount % 16;
@@ -677,24 +677,16 @@ int main()
             displayError("I2C Master", "Write Error");
         }
         
-        // SEQUNENCE0/SEQUENCE1に変更があった場合、シーケンスを更新
-        //if (sequencerRdBuffer[0] & 0x18) {
-            if (sequencerRdBuffer[1] >= TRACK_N)
-                displayError("Sequencer Param", "TRACK NO OB");
+        if (sequencerRdBuffer[1] >= TRACK_N)
+            displayError("Sequencer Param", "TRACK NO OB");
             
-            //　sequencerRdBuffer[1]: トラック番号  
-            setTracks(sequencerRdBuffer[1]);
-        //}
+        //　sequencerRdBuffer[1]: トラック番号  
+        setTracks(sequencerRdBuffer[1]);
         
-        /*
         // パラメータに変更があった場合、LCD表示を更新
-        if (sequencerRdBuffer[0]) {
-            displaySequencerParameter();
-        }
-        */
-
-        if (lcdCount++ == 500) {
-            lcdCount = 0;
+        lcdWaitCount++;
+        if (sequencerRdBuffer[0] && lcdWaitCount > 2) {
+            lcdWaitCount = 0;
             displaySequencerParameter();
         }
         
@@ -707,7 +699,7 @@ int main()
         
         //DACSetVoltage16bit(sequencerWrBuffer[0] << 8);
         
-        //CyDelay(125);
+        CyDelay(5);
     }
 }
 
