@@ -29,6 +29,7 @@
  *
  * AtmelStudio 6.2
  *
+ * 2015.10.29 トラックの管理
  * 2015.10.27 ADCの読み取り値を平均化
  * 2015.10.27 送信データの変更
  * 2015.09.28 再生中のノートを受信
@@ -82,12 +83,12 @@
 volatile uint8_t isDataDirty;
 
 // シーケンス・スイッチ
-volatile uint8_t sequence_data[2];		// シーケンス・スイッチのトグル状態
-volatile uint8_t sequence_n;			// シーケンスの表裏 
-volatile uint8_t sequence_rd;			// シーケンス・スイッチの読み取り値
+volatile uint8_t sequence_data[TRACK_N][2];			// シーケンス・スイッチのトグル状態
+volatile uint8_t sequence_n;						// シーケンスの表裏 
+volatile uint8_t sequence_rd;						// シーケンス・スイッチの読み取り値
 volatile uint8_t sequence_n_rd;
 
-volatile uint8_t prev_sequence_data[2];	// 変更の有無判定用に値を保存
+volatile uint8_t prev_sequence_data[TRACK_N][2];	// 変更の有無判定用に値を保存
 volatile uint8_t prev_sequence_n;
 
 // Potentiometer
@@ -101,7 +102,7 @@ volatile uint8_t adc_buffer[2][ADC_BUFFER_LEN];
 volatile uint8_t adc_buffer_n[2];
 
 // Rotary Encoder
-volatile uint8_t re_data;
+volatile uint8_t re_data;		// track番号
 volatile uint8_t re_sw;
 volatile uint8_t re_sw_rd;
 
@@ -185,11 +186,11 @@ ISR (TWI_vect)
 			break;
 		case 3:
 			// シーケンスのトグル状態を送信(表:0..7)
-			TWDR = sequence_data[0];
+			TWDR = sequence_data[re_data][0];
 			break;
 		case 4:
 			// シーケンスのトグル状態を送信(裏:8..15)
-			TWDR = sequence_data[1];
+			TWDR = sequence_data[re_data][1];
 			break;
 		case 5:
 			// POT1のADCの読み取り値を送信
@@ -319,10 +320,10 @@ ISR (TIMER0_OVF_vect)
 	// シーケンス・スイッチ列の読み取り
 	tmp = read_sequence_switches();
 	if (sequence_rd == tmp) {
-		prev_sequence_data[sequence_n] = sequence_data[sequence_n];
-		sequence_data[sequence_n] ^= sequence_rd;
+		prev_sequence_data[re_data][sequence_n] = sequence_data[re_data][sequence_n];
+		sequence_data[re_data][sequence_n] ^= sequence_rd;
 		
-		if (sequence_data[sequence_n] != prev_sequence_data[sequence_n]) {
+		if (sequence_data[re_data][sequence_n] != prev_sequence_data[re_data][sequence_n]) {
 			isDataDirty |= 1 << (sequence_n + 3);
 		}
 	}
@@ -540,6 +541,6 @@ int main()
 		}
 		
 		// シーケンスのトグル状態をNoteの表示位置とORしてLEDを点灯
-		shift_out(sequence_data[sequence_n] | led_pos);
+		shift_out(sequence_data[re_data][sequence_n] | led_pos);
 	}
 }
