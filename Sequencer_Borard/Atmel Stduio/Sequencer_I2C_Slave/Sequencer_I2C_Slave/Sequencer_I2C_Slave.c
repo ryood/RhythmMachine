@@ -414,8 +414,8 @@ ISR(ADC_vect)
 {
 	int16_t data_sum;
 	
-	adc_buffer[pot_n][adc_buffer_n[pot_n]] = ADCH;			// 8bit Resolution
-	//adc_buffer[pot_n][adc_buffer_n[pot_n]] = ADCH >> 1;	// 7bit Resolution
+	//adc_buffer[pot_n][adc_buffer_n[pot_n]] = ADCH;			// 8bit Resolution
+	adc_buffer[pot_n][adc_buffer_n[pot_n]] = ADCH >> 1;	// 7bit Resolution
 	
 	adc_buffer_n[pot_n]++;
 	if (adc_buffer_n[pot_n] == ADC_BUFFER_LEN) {
