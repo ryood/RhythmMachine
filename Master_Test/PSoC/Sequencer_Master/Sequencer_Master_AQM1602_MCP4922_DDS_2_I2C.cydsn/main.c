@@ -7,7 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
- * 2015.10.29 BPMの変更の反映(ムリ？)
+ * 2015.10.31 BPMの変更の反映(ノイズあり)
  * 2015.10.29 sequencerRdBufferを構造体に変更
  * 2015.10.29 シーケンサー基板からのデータを反映（2015.10.27版データフォーマット)
  * 2015.10.27 シーケンサー基板からのデータを反映（kickのみ）
@@ -350,7 +350,7 @@ void displaySequencerParameter()
     LCD_SetPos(0, 0);
     sprintf(lcdBuffer, "%s %3d %3d %s",
         strPlayStop[sequencerRdBuffer.play],
-        sequencerRdBuffer.pot2,
+        (sequencerRdBuffer.pot2 << 4) | sequencerRdBuffer.pot1,
         sequencerRdBuffer.pot1,
         strTracks[sequencerRdBuffer.track]    
     );
@@ -401,15 +401,17 @@ void DACSetVoltage16bit(uint16 value)
 }
 
 /*======================================================
- * 波形初期化
+ * 波形初期化3
  *
  *======================================================*/
 void initTracks()
 {
+    /*
 	const uint8_t kickSequence[]  = { 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 };
 	const uint8_t snareSequence[] = { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 };
 	const uint8_t hihatSequnce[]  = { 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1 };
-
+    */
+    
 	// Kick
 	tracks[0].waveLookupTable = waveTableSine;
 	tracks[0].decayLookupTable = modTableDown;
@@ -468,13 +470,11 @@ void initDDSParameter()
 void setTracks(uint8 track_n)
 {
     int i;
-    /*
-    if (bpm != sequencerRdBuffer.pot1) {
-        bpm = sequencerRdBuffer.pot1;
+    
+    if (sequencerRdBuffer.update & (UPDATE_POT1 | UPDATE_POT2)) {
+        bpm = (sequencerRdBuffer.pot2 << 4) | sequencerRdBuffer.pot1;
         initDDSParameter();
     }
-    */
-        
     if (sequencerRdBuffer.update & UPDATE_SEQUENCE1) {
         for (i = 0; i < 8; i++) {
             tracks[track_n].sequence[i] = (sequencerRdBuffer.sequence1 & (1 << i)) >> i;
@@ -717,7 +717,7 @@ int main()
         
         // パラメータに変更があった場合、LCD表示を更新
         lcdWaitCount++;
-        if (sequencerRdBuffer.update && lcdWaitCount > 5) {
+        if (sequencerRdBuffer.update && lcdWaitCount > 20) {
             lcdWaitCount = 0;
             displaySequencerParameter();
         }
