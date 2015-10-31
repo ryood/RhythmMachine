@@ -29,6 +29,7 @@
  *
  * AtmelStudio 6.2
  *
+ * 2015.10.31 POT1/POT2を4bit精度に
  * 2015.10.29 I2C送信前にパラメータをストア
  * 2015.10.29 トラックの管理
  * 2015.10.27 ADCの読み取り値を平均化
@@ -138,7 +139,7 @@ void store_pamaeter()
 	sequence_parameter_buffer.update = isDataDirty;
 	sequence_parameter_buffer.track = re_data;
 	sequence_parameter_buffer.play = re_sw ? 0 : 1;		// 1:再生 0:停止
-	sequence_parameter_buffer.sequence1 = sequence_data[re_data][0];
+	sequence_parameter_buffer.sequence1 = sequence_data[re_data][0]; 
 	sequence_parameter_buffer.sequence2 = sequence_data[re_data][1];
 	sequence_parameter_buffer.pot1 = pot_data[0];
 	sequence_parameter_buffer.pot2 = pot_data[1];
@@ -415,7 +416,7 @@ ISR(ADC_vect)
 	int16_t data_sum;
 	
 	//adc_buffer[pot_n][adc_buffer_n[pot_n]] = ADCH;			// 8bit Resolution
-	adc_buffer[pot_n][adc_buffer_n[pot_n]] = ADCH >> 1;	// 7bit Resolution
+	adc_buffer[pot_n][adc_buffer_n[pot_n]] = ADCH >> 4;	// 4bit Resolution
 	
 	adc_buffer_n[pot_n]++;
 	if (adc_buffer_n[pot_n] == ADC_BUFFER_LEN) {
