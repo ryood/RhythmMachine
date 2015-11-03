@@ -7,6 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.11.03 ロータリーエンコーダの読み取り
  * 2015.10.31 BPMの変更の反映(ノイズあり)
  * 2015.10.29 sequencerRdBufferを構造体に変更
  * 2015.10.29 シーケンサー基板からのデータを反映（2015.10.27版データフォーマット)
@@ -68,7 +69,7 @@ volumeAmount      : 8bit    // 未実装
 #define LCD_I2C_BUFFER_SIZE     (2u)
 #define LCD_I2C_PACKET_SIZE     (LCD_I2C_BUFFER_SIZE)
 
-#define LCD_CONTRAST            (0b100000)
+#define LCD_CONTRAST            (0b110000)
 
 // I2C Command valid status
 //
@@ -152,6 +153,11 @@ struct track {
 	
 	uint8_t sequence[SEQUENCE_LEN];	// Velocity
 } tracks[TRACK_N];
+
+char8 lcdLine[17];
+
+// デバッグ用
+int RECount1, RECount2;
 
 /*======================================================
  * Sequencer Board 
@@ -401,6 +407,51 @@ void DACSetVoltage16bit(uint16 value)
 }
 
 /*======================================================
+ * Rotary Encoder
+ *
+ *======================================================*/
+// 戻り値: ロータリーエンコーダーの回転方向
+//        0:変化なし 1:時計回り -1:反時計回り
+//
+int readRE(int RE_n)
+{
+    static uint8_t index[2];
+    uint8_t rd;
+    int retval = 0;
+    
+    switch (RE_n) {
+    case 0:
+        rd = Pin_RE1_Read();
+        break;
+    case 1:
+        rd = Pin_RE2_in_Read();
+        break;
+    default:
+        displayError("RE_n OB", "");
+    }
+    /*
+    sprintf(lcdLine, "%d", rd);
+    displayStr(lcdLine);
+    */
+    index[RE_n] = (index[RE_n] << 2) | rd;
+	index[RE_n] &= 0b1111;
+
+	switch (index[RE_n]) {
+	// 時計回り
+	case 0b0001:	// 00 -> 01
+	case 0b1110:	// 11 -> 10
+	    retval = 1;
+	    break;
+	// 反時計回り
+	case 0b0010:	// 00 -> 10
+	case 0b1101:	// 11 -> 01
+	    retval = -1;
+	    break;
+    }
+    return retval;
+}
+
+/*======================================================
  * 波形初期化3
  *
  *======================================================*/
@@ -414,28 +465,28 @@ void initTracks()
     
 	// Kick
 	tracks[0].waveLookupTable = waveTableSine;
-	tracks[0].decayLookupTable = modTableDown;
-	tracks[0].waveFrequency = 60.0f;
+	tracks[0].decayLookupTable = modTableLinerDown01;
+	tracks[0].waveFrequency = 50.0f;
 	tracks[0].decayAmount = 200;
-	tracks[0].ampAmount = 255;
+	tracks[0].ampAmount = 160;
 	tracks[0].toneAmount = 127;
 	//memcpy(tracks[0].sequence, kickSequence, SEQUENCE_LEN);
 
 	// Snare
 	tracks[1].waveLookupTable = waveTableSine;
-	tracks[1].decayLookupTable = modTableDown;
+	tracks[1].decayLookupTable = modTableRampDown01;
 	tracks[1].waveFrequency = 120.0f;
-	tracks[1].decayAmount = 128;
-	tracks[1].ampAmount = 255;
+	tracks[1].decayAmount = 200;
+	tracks[1].ampAmount = 128;
 	tracks[1].toneAmount = 127;
 	//memcpy(tracks[1].sequence, snareSequence, SEQUENCE_LEN);
 
 	// HiHat
 	tracks[2].waveLookupTable = waveTableSine;	// unused
-	tracks[2].decayLookupTable = modTableDown;
-	tracks[2].waveFrequency = 2000.0f;			// unused
-	tracks[2].decayAmount = 24;
-	tracks[2].ampAmount = 24;
+	tracks[2].decayLookupTable = modTableLinerDown01;
+	tracks[2].waveFrequency = 2500.0f;			// unused
+	tracks[2].decayAmount = 8;
+	tracks[2].ampAmount = 12;
 	tracks[2].toneAmount = 127;
 	//memcpy(tracks[2].sequence, hihatSequnce, SEQUENCE_LEN);
 }
@@ -660,8 +711,6 @@ uint8 inc_within_uint8(uint8 x, uint8 h, uint8 l)
 
 int main()
 {
-    char lcdLine[17];
-    
     // 波形の初期化
     //
     bpm = INITIAL_BPM;
@@ -717,10 +766,19 @@ int main()
         
         // パラメータに変更があった場合、LCD表示を更新
         lcdWaitCount++;
-        if (sequencerRdBuffer.update && lcdWaitCount > 20) {
+        if (sequencerRdBuffer.update && lcdWaitCount > 5) {
             lcdWaitCount = 0;
-            displaySequencerParameter();
+        //    displaySequencerParameter();
         }
+        
+        // ロータリーエンコーダ
+        // デバッグ用
+        int rv = readRE(0);
+        RECount1 += rv;
+        rv = readRE(1);
+        RECount2 += rv;
+        sprintf(lcdLine, "%d %d", RECount1, RECount2);
+        displayStr(lcdLine);
         
         /*
         sprintf(lcdLine, "%d", sizeof(sequencerRdBuffer));
@@ -736,7 +794,7 @@ int main()
         
         //DACSetVoltage16bit(sequencerWrBuffer[0] << 8);
         
-        CyDelay(1);
+        CyDelay(2);
     }
 }
 
