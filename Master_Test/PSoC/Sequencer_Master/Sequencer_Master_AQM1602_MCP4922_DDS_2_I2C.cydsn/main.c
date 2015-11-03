@@ -7,6 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.11.03 LCD制御をファイル分割
  * 2015.11.03 ロータリーエンコーダの読み取り
  * 2015.10.31 BPMの変更の反映(ノイズあり)
  * 2015.10.29 sequencerRdBufferを構造体に変更
@@ -54,7 +55,7 @@ volumeAmount      : 8bit    // 未実装
 // Sequencer
 //
 #define SEQUENCER_I2C_SLAVE_ADDRESS   (0x7f)
-//#define SEQUENCER_I2C_RD_BUFFER_SIZE  (7u)
+
 #define SEQUENCER_I2C_WR_BUFFER_SIZE  (1u)
 
 #define UPDATE_TRACK        (0x02)
@@ -112,7 +113,7 @@ volumeAmount      : 8bit    // 未実装
                 }while(0) 
 
 /***************************************
-*               大域変数
+* 大域変数
 ****************************************/
 // Sequencer                
 //
@@ -125,7 +126,6 @@ struct sequencer_parameter {
 	uint8_t pot1;
 	uint8_t pot2;
 } sequencerRdBuffer;
-//uint8 sequencerRdBuffer[SEQUENCER_I2C_RD_BUFFER_SIZE];
 uint8 sequencerWrBuffer[SEQUENCER_I2C_WR_BUFFER_SIZE] = {0};
 
 // カウンター
@@ -358,7 +358,6 @@ void displaySequencerParameter()
     const char *strTracks[] = { "BD", "SN", "HC" };
     char lcdBuffer[17];
 
-    //LCD_Clear();
     LCD_SetPos(0, 0);
     sprintf(lcdBuffer, "%s %3d %s %3u %3u",
         strPlayStop[sequencerRdBuffer.play],
@@ -436,10 +435,7 @@ int readRE(int RE_n)
     default:
         displayError("RE_n OB", "");
     }
-    /*
-    sprintf(lcdLine, "%d", rd);
-    displayStr(lcdLine);
-    */
+
     index[RE_n] = (index[RE_n] << 2) | rd;
 	index[RE_n] &= 0b1111;
 
@@ -706,16 +702,6 @@ CY_ISR(Timer_Sampling_interrupt_handler)
  * Main Routine 
  *
  *======================================================*/
-/*
-uint8 inc_within_uint8(uint8 x, uint8 h, uint8 l)
-{
-    x++;
-    if (x == h)
-        x = l;
-    return x;
-}
-*/
-
 int main()
 {
     // 波形の初期化
@@ -736,7 +722,6 @@ int main()
     /* Init I2C */
     I2CM_Sequencer_Board_Start();
     I2CM_LCD_Start();
-    //CyDelay(100);
     
     /* Init SPI */
     SPIM_Start();
@@ -787,25 +772,7 @@ int main()
         rv = readRE(1);
         if (rv != 0) isREDirty = 1;
         RECount2 += rv;
-        /*
-        sprintf(lcdLine, "%d %d", RECount1, RECount2);
-        displayStr(lcdLine);
-        */
-        
-        /*
-        sprintf(lcdLine, "%d", sizeof(sequencerRdBuffer));
-        displayStr(lcdLine);
-        */
-        
-        /*
-        sprintf(lcdLine, "%d", sequencerWrBuffer[0]);            
-        displayStr(lcdLine);
-        */
-        
-        //sequencerWrBuffer[0] = inc_within_uint8(sequencerWrBuffer[0], 16, 0);
-        
-        //DACSetVoltage16bit(sequencerWrBuffer[0] << 8);
-        
+
         CyDelay(2);
     }
 }
