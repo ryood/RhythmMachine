@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "SPLC792-I2C.h"
 #include "fixedpoint.h"
 #include "WaveTableFp32.h"
 #include "ModTableFp32.h"
@@ -65,16 +66,18 @@ volumeAmount      : 8bit    // 未実装
 
 // I2C LCD
 //
-#define LCD_I2C_SLAVE_ADDRESS   (0x3e)
+#define LCD_I2C_SLAVE_ADDRESS   (0x3E)
+#define LCD_CONTRAST            (0b111000)
+#if 0
 #define LCD_I2C_BUFFER_SIZE     (2u)
 #define LCD_I2C_PACKET_SIZE     (LCD_I2C_BUFFER_SIZE)
+#endif
 
-#define LCD_CONTRAST            (0b111000)
-
-// I2C Command valid status
+// Sequencer Board I2C Command valid status
 //
-#define I2C_TRANSFER_CMPLT    (0x00u)
-#define I2C_TRANSFER_ERROR    (0xFFu)
+#define SEQUENCER_I2C_TRANSFER_CMPLT    (0x00u)
+#define SEQUENCER_I2C_RX_ERROR          (0xFEu)    
+#define SEQUENCER_I2C_TX_ERROR          (0xFFu)
 
 // 波形生成
 //
@@ -166,7 +169,7 @@ uint8 isREDirty;
  *======================================================*/
 uint32 readSequencerBoard(void)
 {
-    uint32 status = I2C_TRANSFER_ERROR; 
+    uint32 status = SEQUENCER_I2C_RX_ERROR; 
     
     // Read from sequencer board
     //
@@ -188,7 +191,7 @@ uint32 readSequencerBoard(void)
         /* Check if all bytes was written */
         if (I2CM_Sequencer_Board_I2CMasterGetReadBufSize() == sizeof(sequencerRdBuffer))
         {
-            status = I2C_TRANSFER_CMPLT;
+            status = SEQUENCER_I2C_TRANSFER_CMPLT;
         }
     }
     else
@@ -203,7 +206,7 @@ uint32 readSequencerBoard(void)
 
 uint32 writeSequencerBoard(void)
 {
-    uint32 status = I2C_TRANSFER_ERROR; 
+    uint32 status = SEQUENCER_I2C_TX_ERROR; 
     
     I2CM_Sequencer_Board_I2CMasterWriteBuf(SEQUENCER_I2C_SLAVE_ADDRESS,
         sequencerWrBuffer,
@@ -223,7 +226,7 @@ uint32 writeSequencerBoard(void)
         /* Check if all bytes was written */
         if (I2CM_Sequencer_Board_I2CMasterGetWriteBufSize() == SEQUENCER_I2C_WR_BUFFER_SIZE)
         {
-            status = I2C_TRANSFER_CMPLT;
+            status = SEQUENCER_I2C_TRANSFER_CMPLT;
         }
     }
     else
@@ -236,6 +239,7 @@ uint32 writeSequencerBoard(void)
     return status;   
 }
 
+#if 0
 /*======================================================
  * LCD制御
  *              
@@ -329,6 +333,7 @@ void LCD_Puts(char8 *s)
 		LCD_Data((uint8)*s++);
 	}
 }
+#endif
 
 /*======================================================
  * Display Parameter on Char LCD
@@ -742,7 +747,7 @@ int main()
     
     CyGlobalIntEnable;
     
-    LCD_Init();
+    LCD_Init(LCD_I2C_SLAVE_ADDRESS, LCD_CONTRAST);
     LCD_Clear();
 	LCD_Puts("Sequencer Board");
     
@@ -753,11 +758,11 @@ int main()
     {
         sequencerWrBuffer[0] = noteCount % 16;
         
-        if (readSequencerBoard() != I2C_TRANSFER_CMPLT) {
+        if (readSequencerBoard() != SEQUENCER_I2C_TRANSFER_CMPLT) {
             displayError("I2C Master", "Read Error");
         }
         
-        if (writeSequencerBoard() != I2C_TRANSFER_CMPLT) {
+        if (writeSequencerBoard() != SEQUENCER_I2C_TRANSFER_CMPLT) {
             displayError("I2C Master", "Write Error");
         }
         
