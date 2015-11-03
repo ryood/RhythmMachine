@@ -69,7 +69,7 @@ volumeAmount      : 8bit    // 未実装
 #define LCD_I2C_BUFFER_SIZE     (2u)
 #define LCD_I2C_PACKET_SIZE     (LCD_I2C_BUFFER_SIZE)
 
-#define LCD_CONTRAST            (0b110000)
+#define LCD_CONTRAST            (0b111000)
 
 // I2C Command valid status
 //
@@ -78,7 +78,7 @@ volumeAmount      : 8bit    // 未実装
 
 // 波形生成
 //
-#define SAMPLE_CLOCK			(8000u)	// 8kHz
+#define SAMPLE_CLOCK			(8000u)	    // 8kHz
 
 #define TRACK_N					(3u)		// トラックの個数
 #define WAVE_LOOKUP_TABLE_SIZE	(1024u)		// Lookup Table の要素数
@@ -157,7 +157,8 @@ struct track {
 char8 lcdLine[17];
 
 // デバッグ用
-int RECount1, RECount2;
+uint8 RECount1, RECount2;
+uint8 isREDirty;
 
 /*======================================================
  * Sequencer Board 
@@ -348,17 +349,18 @@ void sequenceString(char *buffer, uint8 sequence1, uint8 sequence2)
 
 void displaySequencerParameter()
 {
-    const char *strPlayStop[] = { "STOP", "PLAY" };
-    const char *strTracks[] = { "KIK", "SNR ", "HHT" };
+    const char *strPlayStop[] = { "S", "P" };
+    const char *strTracks[] = { "BD", "SN", "HC" };
     char lcdBuffer[17];
 
     //LCD_Clear();
     LCD_SetPos(0, 0);
-    sprintf(lcdBuffer, "%s %3d %3d %s",
+    sprintf(lcdBuffer, "%s %3d %s %3u %3u",
         strPlayStop[sequencerRdBuffer.play],
         (sequencerRdBuffer.pot2 << 4) | sequencerRdBuffer.pot1,
-        sequencerRdBuffer.pot1,
-        strTracks[sequencerRdBuffer.track]    
+        strTracks[sequencerRdBuffer.track],
+        RECount1,
+        RECount2
     );
     LCD_Puts(lcdBuffer);
 
@@ -766,19 +768,24 @@ int main()
         
         // パラメータに変更があった場合、LCD表示を更新
         lcdWaitCount++;
-        if (sequencerRdBuffer.update && lcdWaitCount > 5) {
+        if ((isREDirty || sequencerRdBuffer.update) && lcdWaitCount > 5) {
             lcdWaitCount = 0;
-        //    displaySequencerParameter();
+            displaySequencerParameter();
+            isREDirty = 0;
         }
         
         // ロータリーエンコーダ
         // デバッグ用
         int rv = readRE(0);
+        if (rv != 0) isREDirty = 1;        
         RECount1 += rv;
         rv = readRE(1);
+        if (rv != 0) isREDirty = 1;
         RECount2 += rv;
+        /*
         sprintf(lcdLine, "%d %d", RECount1, RECount2);
         displayStr(lcdLine);
+        */
         
         /*
         sprintf(lcdLine, "%d", sizeof(sequencerRdBuffer));
