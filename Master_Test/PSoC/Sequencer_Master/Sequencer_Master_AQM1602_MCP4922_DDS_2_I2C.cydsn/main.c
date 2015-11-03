@@ -394,27 +394,58 @@ void initTracks()
 	//memcpy(tracks[2].sequence, hihatSequnce, SEQUENCE_LEN);
 }
 
-void initDDSParameter()
+/*======================================================
+ * DDSパラメータ
+ *
+ *======================================================*/
+// BPMの設定
+//
+// parameter: bpm 設定するbpm
+//
+inline void setBPM()
 {
-    uint i;
-    
     ticksPerNote = SAMPLE_CLOCK * 60 / (bpm * 4);
     // ↑整数演算のため丸めているので注意
+}
+
+// モジュレーション波形のDDSパラメータの計算
+// 
+// parameter: n: 計算するトラック番号
+//
+inline void setModDDSParameter(uint8 n)
+{
+    // Decay
+	//decayPeriod = (SAMPLE_CLOCK / (((double)bpm / 60) * 4)) * ((double)decayAmount / 256);
+	tracks[n].decayPeriod = ((uint64_t)SAMPLE_CLOCK * 60 * tracks[n].decayAmount) / ((uint64_t)bpm * 4 * 256);
+	//decayTuningWord = ((((double)bpm / 60) * 4) / ((double)decayAmount / 256)) * (double)POW_2_32 / SAMPLE_CLOCK;
+	tracks[n].decayTuningWord = (bpm * ((uint64_t)POW_2_32 / 60) * 4 * 256 / tracks[n].decayAmount) / SAMPLE_CLOCK;
+}
+
+void initDDSParameter()
+{
+    uint8 i;
+    
+    setBPM(); 
     
     for (i = 0; i < TRACK_N; i++) {
-		// 波形
+        // 波形
 		tracks[i].waveTuningWord = tracks[i].waveFrequency * POW_2_32 / SAMPLE_CLOCK;
 		tracks[i].wavePhaseRegister = 0;
-
+#if 0
 		// Decay
 		//decayPeriod = (SAMPLE_CLOCK / (((double)bpm / 60) * 4)) * ((double)decayAmount / 256);
 		tracks[i].decayPeriod = ((uint64_t)SAMPLE_CLOCK * 60 * tracks[i].decayAmount) / ((uint64_t)bpm * 4 * 256);
 		//decayTuningWord = ((((double)bpm / 60) * 4) / ((double)decayAmount / 256)) * (double)POW_2_32 / SAMPLE_CLOCK;
 		tracks[i].decayTuningWord = (bpm * ((uint64_t)POW_2_32 / 60) * 4 * 256 / tracks[i].decayAmount) / SAMPLE_CLOCK;
-		tracks[i].decayPhaseRegister = 0;
+#endif
+        
+        // モジュレーション
+        setModDDSParameter(i);
+    
+        tracks[i].decayPhaseRegister = 0;
 		tracks[i].decayStop = 0;
 	}
-}
+}    
 
 /*======================================================
  * シーケンサー基板からのパラメーターの設定
@@ -427,7 +458,12 @@ void setTracks(uint8 track_n)
     
     if (sequencerRdBuffer.update & (UPDATE_POT1 | UPDATE_POT2)) {
         bpm = (sequencerRdBuffer.pot2 << 4) | sequencerRdBuffer.pot1;
-        initDDSParameter();
+        setBPM();
+        
+        for (i = 0; i < TRACK_N; i++) {
+            setModDDSParameter(i);
+        } 
+        
     }
     if (sequencerRdBuffer.update & UPDATE_SEQUENCE1) {
         for (i = 0; i < 8; i++) {
