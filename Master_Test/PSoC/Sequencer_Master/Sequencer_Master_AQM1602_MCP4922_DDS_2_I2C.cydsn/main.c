@@ -69,10 +69,6 @@ volumeAmount      : 8bit    // 未実装
 //
 #define LCD_I2C_SLAVE_ADDRESS   (0x3E)
 #define LCD_CONTRAST            (0b111000)
-#if 0
-#define LCD_I2C_BUFFER_SIZE     (2u)
-#define LCD_I2C_PACKET_SIZE     (LCD_I2C_BUFFER_SIZE)
-#endif
 
 // Sequencer Board I2C Command valid status
 //
@@ -239,102 +235,6 @@ uint32 writeSequencerBoard(void)
     return status;   
 }
 
-#if 0
-/*======================================================
- * LCD制御
- *              
- *======================================================*/
-uint32 LCD_Write(uint8 *buffer)
-{
-	uint32 status = I2C_TRANSFER_ERROR;
-	
-    I2CM_LCD_I2CMasterWriteBuf(LCD_I2C_SLAVE_ADDRESS,
-        buffer,
-        LCD_I2C_PACKET_SIZE,
-        I2CM_LCD_I2C_MODE_COMPLETE_XFER
-    );
-    while (0u == (I2CM_LCD_I2CMasterStatus() & I2CM_LCD_I2C_MSTAT_WR_CMPLT))
-    {
-        /* Waits until master completes write transfer */
-    }
-
-    /* Displays transfer status */
-    if (0u == (I2CM_LCD_I2C_MSTAT_ERR_XFER & I2CM_LCD_I2CMasterStatus()))
-    {
-        RGB_LED_ON_GREEN;
-
-        /* Check if all bytes was written */
-        if(I2CM_LCD_I2CMasterGetWriteBufSize() == LCD_I2C_BUFFER_SIZE)
-        {
-            status = I2C_TRANSFER_CMPLT;
-			
-			// １命令ごとに余裕を見て50usウェイトします。
-			CyDelayUs(50);	
-        }
-    }
-    else
-    {
-        RGB_LED_ON_RED;
-    }
-
-    (void) I2CM_LCD_I2CMasterClearStatus();
-	   
-	return (status);
-}
-
-// コマンドを送信します。HD44780でいうRS=0に相当
-void LCD_Cmd(uint8 cmd)
-{
-	uint8 buffer[LCD_I2C_BUFFER_SIZE];
-	buffer[0] = 0b00000000;
-	buffer[1] = cmd;
-	(void) LCD_Write(buffer);
-}
-
-// データを送信します。HD44780でいうRS=1に相当
-void LCD_Data(uint8 data)
-{
-	uint8 buffer[LCD_I2C_BUFFER_SIZE];
-	buffer[0] = 0b01000000;
-	buffer[1] = data;
-	(void) LCD_Write(buffer);
-}
-
-void LCD_Init()
-{
-	CyDelay(40);
-	LCD_Cmd(0b00111000);	// function set
-	LCD_Cmd(0b00111001);	// function set
-	LCD_Cmd(0b00010100);	// interval osc
-	LCD_Cmd(0b01110000 | (LCD_CONTRAST & 0xF));	// contrast Low
-	LCD_Cmd(0b01011100 | ((LCD_CONTRAST >> 4) & 0x3)); // contast High/icon/power
-	LCD_Cmd(0b01101100); // follower control
-	CyDelay(300);
-	
-	LCD_Cmd(0b00111000); // function set
-	LCD_Cmd(0b00001100); // Display On
-}
-
-void LCD_Clear()
-{
-	LCD_Cmd(0b00000001); // Clear Display
-	CyDelay(2);	// Clear Displayは追加ウェイトが必要
-}
-
-void LCD_SetPos(uint32 x, uint32 y)
-{
-	LCD_Cmd(0b10000000 | (x + y * 0x40));
-}
-
-// （主に）文字列を連続送信します。
-void LCD_Puts(char8 *s)
-{
-	while(*s) {
-		LCD_Data((uint8)*s++);
-	}
-}
-#endif
-
 /*======================================================
  * Display Parameter on Char LCD
  *
@@ -455,7 +355,7 @@ int readRE(int RE_n)
 }
 
 /*======================================================
- * 波形初期化3
+ * 波形初期化
  *
  *======================================================*/
 void initTracks()
