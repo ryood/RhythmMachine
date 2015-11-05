@@ -7,6 +7,8 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.11.04 my_rand()関数を自作(遅い？ので保留)
+ * 2015.11.03 モジュレーション波形のDDSパラメータの計算の仕方を分離（ノイズあり）
  * 2015.11.03 LCD制御をファイル分割
  * 2015.11.03 ロータリーエンコーダの読み取り
  * 2015.10.31 BPMの変更の反映(ノイズあり)
@@ -388,7 +390,7 @@ void initTracks()
 	tracks[2].waveLookupTable = waveTableSine;	// unused
 	tracks[2].decayLookupTable = modTableLinerDown01;
 	tracks[2].waveFrequency = 2500.0f;			// unused
-	tracks[2].decayAmount = 8;
+	tracks[2].decayAmount = 16;
 	tracks[2].ampAmount = 12;
 	tracks[2].toneAmount = 127;
 	//memcpy(tracks[2].sequence, hihatSequnce, SEQUENCE_LEN);
@@ -459,11 +461,9 @@ void setTracks(uint8 track_n)
     if (sequencerRdBuffer.update & (UPDATE_POT1 | UPDATE_POT2)) {
         bpm = (sequencerRdBuffer.pot2 << 4) | sequencerRdBuffer.pot1;
         setBPM();
-        
         for (i = 0; i < TRACK_N; i++) {
             setModDDSParameter(i);
         } 
-        
     }
     if (sequencerRdBuffer.update & UPDATE_SEQUENCE1) {
         for (i = 0; i < 8; i++) {
@@ -493,12 +493,28 @@ inline fp32 generateDDSWave(uint32_t *phaseRegister, uint32_t tuningWord, const 
 	return waveValue;
 }
 
-// -1.0 .. 1.0の乱数(PSoC用)
+#if 0
+// 乱数生成
+// Return: uint32_t: 0..0xFFFFの乱数
+//
+#define MY_RAND_MAX (0xFFFF)
+static uint32_t next = 1;
+inline uint32_t my_rand(void)
+{
+	next = next * 1103515245 + 12345;
+	return (uint32_t)(next >> 16) & MY_RAND_MAX;
+}
+#endif
+
+// 乱数生成
+// Return: fp32: -1.0 .. 1.0の乱数
+//
 inline fp32 generateNoise()
 {
     int32 r, v;
 	fp32 fv;
 	
+    //r = my_rand();
     r = rand() >> 15;
     v = (r & 0x8000) ? (0xffff0000 | (r << 1)) : (r << 1);
 	fv = (fp32)v;
