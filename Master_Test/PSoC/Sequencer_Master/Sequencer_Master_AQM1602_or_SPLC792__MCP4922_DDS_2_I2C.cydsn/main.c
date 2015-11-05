@@ -7,6 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.11.05 Toneをロータリーエンコーダで変更
  * 2015.11.05 Decay、Levelをロータリーエンコーダで変更
  * 2015.11.04 my_rand()関数を自作(遅い？ので保留)
  * 2015.11.03 モジュレーション波形のDDSパラメータの計算の仕方を分離（ノイズあり）
@@ -42,12 +43,12 @@ decayPhaseRegister: 32bit
 decayTuningWord   : 32bit
 
 waveFrequency     : double
-ampAmount         : 8bit    // 未実装
+ampAmount         : 8bit
 toneAmount        : 8bit    // 未実装
 decayAmount       : 8bit
 
 bpmAmount         : 8bit
-volumeAmount      : 8bit    // 未実装
+volumeAmount      : 8bit
 
 *********************************************************************/
 
@@ -234,6 +235,14 @@ inline void setModDDSParameter(uint8 n)
 	tracks[n].decayTuningWord = (bpm * ((uint64_t)POW_2_32 / 60) * 4 * 256 / tracks[n].decayAmount) / SAMPLE_CLOCK;
 }
 
+inline void setWaveDDSParameter(uint8 n)
+{
+    //tracks[n].waveTuningWord = tracks[n].waveFrequency * POW_2_32 / SAMPLE_CLOCK;
+    tracks[n].waveTuningWord = (tracks[n].waveFrequency
+        + (tracks[n].waveFrequency * (((double)tracks[n].toneAmount - 128.0f) / 128.0f)))
+        * POW_2_32 / SAMPLE_CLOCK;
+}
+
 void initDDSParameter()
 {
     uint8 i;
@@ -242,10 +251,12 @@ void initDDSParameter()
     
     for (i = 0; i < TRACK_N; i++) {
         // 波形
-		tracks[i].waveTuningWord = tracks[i].waveFrequency * POW_2_32 / SAMPLE_CLOCK;
+		//tracks[i].waveTuningWord = tracks[i].waveFrequency * POW_2_32 / SAMPLE_CLOCK;
+        setWaveDDSParameter(i);
 		tracks[i].wavePhaseRegister = 0;
 #if 0
 		// Decay
+        // setModDDSParameter()に分離
 		//decayPeriod = (SAMPLE_CLOCK / (((double)bpm / 60) * 4)) * ((double)decayAmount / 256);
 		tracks[i].decayPeriod = ((uint64_t)SAMPLE_CLOCK * 60 * tracks[i].decayAmount) / ((uint64_t)bpm * 4 * 256);
 		//decayTuningWord = ((((double)bpm / 60) * 4) / ((double)decayAmount / 256)) * (double)POW_2_32 / SAMPLE_CLOCK;
@@ -356,17 +367,18 @@ void sequenceString(char *buffer, uint8 sequence1, uint8 sequence2)
 
 void displaySequencerParameter()
 {
-    const char *strPlayStop[] = { "S", "P" };
-    const char *strTracks[] = { "BD", "SN", "HC" };
+    //const char *strPlayStop[] = { "S", "P" };
+    const char *strTracks[] = { "KIK", "SNR", "HHC" };
     char lcdBuffer[17];
 
     LCD_SetPos(0, 0);
-    sprintf(lcdBuffer, "%s %3d %s %3u %3u",
-        strPlayStop[sequencerRdBuffer.play],
+    sprintf(lcdBuffer, "%3d %s %2u %2u %2u",
+        //strPlayStop[sequencerRdBuffer.play],
         (sequencerRdBuffer.pot2 << 4) | sequencerRdBuffer.pot1,
         strTracks[sequencerRdBuffer.track],
-        tracks[sequencerRdBuffer.track].decayAmount,
-        tracks[sequencerRdBuffer.track].ampAmount
+        tracks[sequencerRdBuffer.track].ampAmount >> 2,
+        tracks[sequencerRdBuffer.track].toneAmount >> 2,
+        tracks[sequencerRdBuffer.track].decayAmount >> 2        
     );
     LCD_Puts(lcdBuffer);
 
@@ -423,7 +435,7 @@ void DACSetVoltage16bit(uint16 value)
 //
 int readRE(int RE_n)
 {
-    static uint8_t index[2];
+    static uint8_t index[3];
     uint8_t rd;
     int retval = 0;
     
@@ -433,6 +445,9 @@ int readRE(int RE_n)
         break;
     case 1:
         rd = Pin_RE2_in_Read();
+        break;
+    case 2:
+        rd = Pin_RE3_in_Read();
         break;
     default:
         displayError("RE_n OB", "");
@@ -480,6 +495,16 @@ void readDecayAndLevel()
             tracks[sequencerRdBuffer.track].ampAmount = amt;
         }
     }
+    rv = readRE(2);
+    if (rv != 0) {
+        amt = tracks[sequencerRdBuffer.track].toneAmount;
+        amt += rv << 2;
+        if (amt >= 0 && amt <= UINT8_MAX) { 
+            isREDirty |= (1 << 2);
+            tracks[sequencerRdBuffer.track].toneAmount = amt;
+            setWaveDDSParameter(sequencerRdBuffer.track);
+        }
+    }
 }
 
 /*======================================================
@@ -499,8 +524,8 @@ void initTracks()
 	tracks[0].decayLookupTable = modTableLinerDown01;
 	tracks[0].waveFrequency = 50.0f;
 	tracks[0].decayAmount = 200;
-	tracks[0].ampAmount = 160;
-	tracks[0].toneAmount = 127;
+	tracks[0].ampAmount = 200;
+	tracks[0].toneAmount = 128;
 	//memcpy(tracks[0].sequence, kickSequence, SEQUENCE_LEN);
 
 	// Snare
@@ -508,8 +533,8 @@ void initTracks()
 	tracks[1].decayLookupTable = modTableRampDown01;
 	tracks[1].waveFrequency = 120.0f;
 	tracks[1].decayAmount = 200;
-	tracks[1].ampAmount = 128;
-	tracks[1].toneAmount = 127;
+	tracks[1].ampAmount = 200;
+	tracks[1].toneAmount = 128;
 	//memcpy(tracks[1].sequence, snareSequence, SEQUENCE_LEN);
 
 	// HiHat
@@ -517,8 +542,8 @@ void initTracks()
 	tracks[2].decayLookupTable = modTableLinerDown01;
 	tracks[2].waveFrequency = 2500.0f;			// unused
 	tracks[2].decayAmount = 16;
-	tracks[2].ampAmount = 12;
-	tracks[2].toneAmount = 127;
+	tracks[2].ampAmount = 8;
+	tracks[2].toneAmount = 128;
 	//memcpy(tracks[2].sequence, hihatSequnce, SEQUENCE_LEN);
 }
 
