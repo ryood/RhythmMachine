@@ -7,6 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.11.05 Decay、Levelをロータリーエンコーダで変更
  * 2015.11.04 my_rand()関数を自作(遅い？ので保留)
  * 2015.11.03 モジュレーション波形のDDSパラメータの計算の仕方を分離（ノイズあり）
  * 2015.11.03 LCD制御をファイル分割
@@ -70,7 +71,7 @@ volumeAmount      : 8bit    // 未実装
 // I2C LCD
 //
 #define LCD_I2C_SLAVE_ADDRESS   (0x3E)
-#define LCD_CONTRAST            (0b111000)
+#define LCD_CONTRAST            (0b110000)
 
 // Sequencer Board I2C Command valid status
 //
@@ -158,8 +159,107 @@ struct track {
 char8 lcdLine[17];
 
 // デバッグ用
-uint8 RECount1, RECount2;
+//uint8 RECount1, RECount2;
 uint8 isREDirty;
+
+/*======================================================
+ * 波形の生成
+ *
+ *======================================================*/
+inline fp32 generateDDSWave(uint32_t *phaseRegister, uint32_t tuningWord, const fp32 *lookupTable)
+{
+	*phaseRegister += tuningWord;
+
+	// lookupTableの要素数に丸める
+	// 32bit -> 10bit
+	uint16_t index = (*phaseRegister) >> 22;
+	fp32 waveValue = *(lookupTable + index);
+
+	return waveValue;
+}
+
+#if 0
+// 乱数生成
+// Return: uint32_t: 0..0xFFFFの乱数
+//
+#define MY_RAND_MAX (0xFFFF)
+static uint32_t next = 1;
+inline uint32_t my_rand(void)
+{
+	next = next * 1103515245 + 12345;
+	return (uint32_t)(next >> 16) & MY_RAND_MAX;
+}
+#endif
+
+// 乱数生成
+// Return: fp32: -1.0 .. 1.0の乱数
+//
+inline fp32 generateNoise()
+{
+    int32 r, v;
+	fp32 fv;
+	
+    //r = my_rand();
+    r = rand() >> 15;
+    v = (r & 0x8000) ? (0xffff0000 | (r << 1)) : (r << 1);
+	fv = (fp32)v;
+
+    return fv;
+}
+
+/*======================================================
+ * DDSパラメータ
+ *
+ *======================================================*/
+// BPMの設定
+//
+// parameter: bpm 設定するbpm
+//
+inline void setBPM()
+{
+    ticksPerNote = SAMPLE_CLOCK * 60 / (bpm * 4);
+    // ↑整数演算のため丸めているので注意
+}
+
+// モジュレーション波形のDDSパラメータの計算
+// 
+// parameter: n: 計算するトラック番号
+//
+inline void setModDDSParameter(uint8 n)
+{
+    // Decay
+	//decayPeriod = (SAMPLE_CLOCK / (((double)bpm / 60) * 4)) * ((double)decayAmount / 256);
+	tracks[n].decayPeriod = ((uint64_t)SAMPLE_CLOCK * 60 * tracks[n].decayAmount) / ((uint64_t)bpm * 4 * 256);
+	//decayTuningWord = ((((double)bpm / 60) * 4) / ((double)decayAmount / 256)) * (double)POW_2_32 / SAMPLE_CLOCK;
+	tracks[n].decayTuningWord = (bpm * ((uint64_t)POW_2_32 / 60) * 4 * 256 / tracks[n].decayAmount) / SAMPLE_CLOCK;
+}
+
+void initDDSParameter()
+{
+    uint8 i;
+    
+    setBPM(); 
+    
+    for (i = 0; i < TRACK_N; i++) {
+        // 波形
+		tracks[i].waveTuningWord = tracks[i].waveFrequency * POW_2_32 / SAMPLE_CLOCK;
+		tracks[i].wavePhaseRegister = 0;
+#if 0
+		// Decay
+		//decayPeriod = (SAMPLE_CLOCK / (((double)bpm / 60) * 4)) * ((double)decayAmount / 256);
+		tracks[i].decayPeriod = ((uint64_t)SAMPLE_CLOCK * 60 * tracks[i].decayAmount) / ((uint64_t)bpm * 4 * 256);
+		//decayTuningWord = ((((double)bpm / 60) * 4) / ((double)decayAmount / 256)) * (double)POW_2_32 / SAMPLE_CLOCK;
+		tracks[i].decayTuningWord = (bpm * ((uint64_t)POW_2_32 / 60) * 4 * 256 / tracks[i].decayAmount) / SAMPLE_CLOCK;
+#endif
+        
+        // モジュレーション
+        setModDDSParameter(i);
+    
+        tracks[i].decayPhaseRegister = 0;
+		tracks[i].decayStop = 0;
+	}
+}    
+
 
 /*======================================================
  * Sequencer Board 
@@ -265,8 +365,8 @@ void displaySequencerParameter()
         strPlayStop[sequencerRdBuffer.play],
         (sequencerRdBuffer.pot2 << 4) | sequencerRdBuffer.pot1,
         strTracks[sequencerRdBuffer.track],
-        RECount1,
-        RECount2
+        tracks[sequencerRdBuffer.track].decayAmount,
+        tracks[sequencerRdBuffer.track].ampAmount
     );
     LCD_Puts(lcdBuffer);
 
@@ -356,6 +456,32 @@ int readRE(int RE_n)
     return retval;
 }
 
+void readDecayAndLevel()
+{   
+    int rv;
+    int16 amt;
+    
+    rv = readRE(0);
+    if (rv != 0) {
+        amt = tracks[sequencerRdBuffer.track].decayAmount;
+        amt += rv << 2;
+        if (amt > 0 && amt <= UINT8_MAX) {
+            isREDirty |= (1 << 0);
+            tracks[sequencerRdBuffer.track].decayAmount = amt;
+            setModDDSParameter(sequencerRdBuffer.track);
+        }
+    }
+    rv = readRE(1);
+    if (rv != 0) {
+        amt = tracks[sequencerRdBuffer.track].ampAmount;
+        amt += rv << 2;
+        if (amt >= 0 && amt <= UINT8_MAX) { 
+            isREDirty |= (1 << 1);
+            tracks[sequencerRdBuffer.track].ampAmount = amt;
+        }
+    }
+}
+
 /*======================================================
  * 波形初期化
  *
@@ -397,59 +523,6 @@ void initTracks()
 }
 
 /*======================================================
- * DDSパラメータ
- *
- *======================================================*/
-// BPMの設定
-//
-// parameter: bpm 設定するbpm
-//
-inline void setBPM()
-{
-    ticksPerNote = SAMPLE_CLOCK * 60 / (bpm * 4);
-    // ↑整数演算のため丸めているので注意
-}
-
-// モジュレーション波形のDDSパラメータの計算
-// 
-// parameter: n: 計算するトラック番号
-//
-inline void setModDDSParameter(uint8 n)
-{
-    // Decay
-	//decayPeriod = (SAMPLE_CLOCK / (((double)bpm / 60) * 4)) * ((double)decayAmount / 256);
-	tracks[n].decayPeriod = ((uint64_t)SAMPLE_CLOCK * 60 * tracks[n].decayAmount) / ((uint64_t)bpm * 4 * 256);
-	//decayTuningWord = ((((double)bpm / 60) * 4) / ((double)decayAmount / 256)) * (double)POW_2_32 / SAMPLE_CLOCK;
-	tracks[n].decayTuningWord = (bpm * ((uint64_t)POW_2_32 / 60) * 4 * 256 / tracks[n].decayAmount) / SAMPLE_CLOCK;
-}
-
-void initDDSParameter()
-{
-    uint8 i;
-    
-    setBPM(); 
-    
-    for (i = 0; i < TRACK_N; i++) {
-        // 波形
-		tracks[i].waveTuningWord = tracks[i].waveFrequency * POW_2_32 / SAMPLE_CLOCK;
-		tracks[i].wavePhaseRegister = 0;
-#if 0
-		// Decay
-		//decayPeriod = (SAMPLE_CLOCK / (((double)bpm / 60) * 4)) * ((double)decayAmount / 256);
-		tracks[i].decayPeriod = ((uint64_t)SAMPLE_CLOCK * 60 * tracks[i].decayAmount) / ((uint64_t)bpm * 4 * 256);
-		//decayTuningWord = ((((double)bpm / 60) * 4) / ((double)decayAmount / 256)) * (double)POW_2_32 / SAMPLE_CLOCK;
-		tracks[i].decayTuningWord = (bpm * ((uint64_t)POW_2_32 / 60) * 4 * 256 / tracks[i].decayAmount) / SAMPLE_CLOCK;
-#endif
-        
-        // モジュレーション
-        setModDDSParameter(i);
-    
-        tracks[i].decayPhaseRegister = 0;
-		tracks[i].decayStop = 0;
-	}
-}    
-
-/*======================================================
  * シーケンサー基板からのパラメーターの設定
  * parameter: track_n: 設定するtrack番号
  *
@@ -475,51 +548,6 @@ void setTracks(uint8 track_n)
             tracks[track_n].sequence[i + 8] = (sequencerRdBuffer.sequence2 & (1 << i)) >> i;
         }
     }
-}
-
-/*======================================================
- * 波形の生成
- *
- *======================================================*/
-inline fp32 generateDDSWave(uint32_t *phaseRegister, uint32_t tuningWord, const fp32 *lookupTable)
-{
-	*phaseRegister += tuningWord;
-
-	// lookupTableの要素数に丸める
-	// 32bit -> 10bit
-	uint16_t index = (*phaseRegister) >> 22;
-	fp32 waveValue = *(lookupTable + index);
-
-	return waveValue;
-}
-
-#if 0
-// 乱数生成
-// Return: uint32_t: 0..0xFFFFの乱数
-//
-#define MY_RAND_MAX (0xFFFF)
-static uint32_t next = 1;
-inline uint32_t my_rand(void)
-{
-	next = next * 1103515245 + 12345;
-	return (uint32_t)(next >> 16) & MY_RAND_MAX;
-}
-#endif
-
-// 乱数生成
-// Return: fp32: -1.0 .. 1.0の乱数
-//
-inline fp32 generateNoise()
-{
-    int32 r, v;
-	fp32 fv;
-	
-    //r = my_rand();
-    r = rand() >> 15;
-    v = (r & 0x8000) ? (0xffff0000 | (r << 1)) : (r << 1);
-	fv = (fp32)v;
-
-    return fv;
 }
 
 /*======================================================
@@ -707,6 +735,7 @@ int main()
             displayError("Sequencer Param", "TRACK NO OB");
             
         setTracks(sequencerRdBuffer.track);
+        readDecayAndLevel();
         
         // パラメータに変更があった場合、LCD表示を更新
         lcdWaitCount++;
@@ -718,13 +747,15 @@ int main()
         
         // ロータリーエンコーダ
         // デバッグ用
+        /*
         int rv = readRE(0);
         if (rv != 0) isREDirty = 1;        
         RECount1 += rv;
         rv = readRE(1);
         if (rv != 0) isREDirty = 1;
         RECount2 += rv;
-
+        */
+        
         CyDelay(2);
     }
 }
