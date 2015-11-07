@@ -25,6 +25,7 @@
  *
  * ========================================
 */
+
 #include <project.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,6 +34,9 @@
 #include "fixedpoint.h"
 #include "WaveTableFp32.h"
 #include "ModTableFp32.h"
+
+#define TITLE_STR   ("Rhythm Machine")
+#define VERSION_STR ("2015.11.07")
 
 /*********************************************************************
 waveLookupTable   : fp32 Q16 : -1.0 .. +1.0
@@ -283,23 +287,23 @@ uint32 readSequencerBoard(void)
     
     // Read from sequencer board
     //
-    I2CM_Sequencer_Board_I2CMasterReadBuf(SEQUENCER_I2C_SLAVE_ADDRESS, 
+    I2CM_Sequencer_MasterReadBuf(SEQUENCER_I2C_SLAVE_ADDRESS, 
         (uint8 *)&sequencerRdBuffer,
         sizeof(sequencerRdBuffer),
-        I2CM_Sequencer_Board_I2C_MODE_COMPLETE_XFER
+        I2CM_Sequencer_MODE_COMPLETE_XFER
     );
-    while (0u == (I2CM_Sequencer_Board_I2CMasterStatus() & I2CM_Sequencer_Board_I2C_MSTAT_RD_CMPLT))
+    while (0u == (I2CM_Sequencer_MasterStatus() & I2CM_Sequencer_MSTAT_RD_CMPLT))
     {
         /* Waits until master completes read transfer */
     }
     
     /* Displays transfer status */
-    if (0u == (I2CM_Sequencer_Board_I2C_MSTAT_ERR_XFER & I2CM_Sequencer_Board_I2CMasterStatus()))
+    if (0u == (I2CM_Sequencer_MSTAT_ERR_XFER & I2CM_Sequencer_MasterStatus()))
     {
         RGB_LED_ON_GREEN;
 
         /* Check if all bytes was written */
-        if (I2CM_Sequencer_Board_I2CMasterGetReadBufSize() == sizeof(sequencerRdBuffer))
+        if (I2CM_Sequencer_MasterGetReadBufSize() == sizeof(sequencerRdBuffer))
         {
             status = SEQUENCER_I2C_TRANSFER_CMPLT;
         }
@@ -309,7 +313,7 @@ uint32 readSequencerBoard(void)
         RGB_LED_ON_RED;
     }
 
-    (void) I2CM_Sequencer_Board_I2CMasterClearStatus();
+    (void) I2CM_Sequencer_MasterClearStatus();
     
     return status;
 }
@@ -318,23 +322,23 @@ uint32 writeSequencerBoard(void)
 {
     uint32 status = SEQUENCER_I2C_TX_ERROR; 
     
-    I2CM_Sequencer_Board_I2CMasterWriteBuf(SEQUENCER_I2C_SLAVE_ADDRESS,
+    I2CM_Sequencer_MasterWriteBuf(SEQUENCER_I2C_SLAVE_ADDRESS,
         sequencerWrBuffer,
         SEQUENCER_I2C_WR_BUFFER_SIZE,
-        I2CM_Sequencer_Board_I2C_MODE_COMPLETE_XFER
+        I2CM_Sequencer_MODE_COMPLETE_XFER
     );
-    while (0u == (I2CM_Sequencer_Board_I2CMasterStatus() & I2CM_Sequencer_Board_I2C_MSTAT_WR_CMPLT))
+    while (0u == (I2CM_Sequencer_MasterStatus() & I2CM_Sequencer_MSTAT_WR_CMPLT))
     {
         /* Waits until master completes read transfer */
     }
     
     /* Displays transfer status */
-    if (0u == (I2CM_Sequencer_Board_I2C_MSTAT_ERR_XFER & I2CM_Sequencer_Board_I2CMasterStatus()))
+    if (0u == (I2CM_Sequencer_MSTAT_ERR_XFER & I2CM_Sequencer_MasterStatus()))
     {
         RGB_LED_ON_GREEN;
 
         /* Check if all bytes was written */
-        if (I2CM_Sequencer_Board_I2CMasterGetWriteBufSize() == SEQUENCER_I2C_WR_BUFFER_SIZE)
+        if (I2CM_Sequencer_MasterGetWriteBufSize() == SEQUENCER_I2C_WR_BUFFER_SIZE)
         {
             status = SEQUENCER_I2C_TRANSFER_CMPLT;
         }
@@ -344,7 +348,7 @@ uint32 writeSequencerBoard(void)
         RGB_LED_ON_RED;
     }
 
-    (void) I2CM_Sequencer_Board_I2CMasterClearStatus();
+    (void) I2CM_Sequencer_MasterClearStatus();
     
     return status;   
 }
@@ -584,7 +588,7 @@ CY_ISR(Timer_Sampling_interrupt_handler)
 {
     int i;
     
-    Timer_Sampling_ClearInterrupt(Timer_Sampling_INTR_MASK_TC);
+    //Timer_Sampling_ClearInterrupt(Timer_Sampling_INTR_MASK_TC);
     
     // デバッグ用
     Pin_ISR_Check_Write(1u);
@@ -721,12 +725,13 @@ int main()
     
     // Sequence Boardをリセット
     //
-    Pin_I2C_Sequencer_Reset_Write(0u);
+    Pin_Sequencer_Reset_Write(0u);
     CyDelay(1);
-    Pin_I2C_Sequencer_Reset_Write(1u);
+    Pin_Sequencer_Reset_Write(1u);
+    CyDelay(10);
     
     /* Init I2C */
-    I2CM_Sequencer_Board_Start();
+    I2CM_Sequencer_Start();
     I2CM_LCD_Start();
     
     /* Init SPI */
@@ -738,9 +743,18 @@ int main()
     
     CyGlobalIntEnable;
     
+    // LCDをリセット
+    //
+    Pin_LCD_Reset_Write(0u);
+    CyDelay(1);
+    Pin_LCD_Reset_Write(1u);
+    CyDelay(10);
+    
     LCD_Init(LCD_I2C_SLAVE_ADDRESS, LCD_CONTRAST);
     LCD_Clear();
-	LCD_Puts("Sequencer Board");
+	LCD_Puts(TITLE_STR);
+    LCD_SetPos(0, 1);
+    LCD_Puts(VERSION_STR);
     
     CyDelay(500);
     

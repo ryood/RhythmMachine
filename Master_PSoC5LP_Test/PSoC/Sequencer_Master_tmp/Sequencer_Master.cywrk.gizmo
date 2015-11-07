@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CyXmlSerializer>
+<!--This file is machine generated and read. It is not intended to be edited by hand.-->
+<!--Due to this, there is no schema for this file.-->
+<CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWrkspcCustomData" version="4">
+<CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997 type_name="CyDesigner.Common.Base.CyCustomData" version="2">
+<userData>
+<dataGuid v="1b906a0f-a7b6-4e4d-a428-82f98b53cb35">
+<CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35 type_name="CyDesigner.Common.ProjMgmt.GUI.CyExplorerWindow+CyExplorerWindowState" version="3" SelectedTab="Source">
+<TreeKeys>
+<v>Source</v>
+<v>Components</v>
+<v>Output</v>
+</TreeKeys>
+<TreeStates>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Sequencer_Master\Project  'Sequencer_Master\Header Files">
+<ExpandedNodeIds>
+<v>Sequencer_Master</v>
+<v>Sequencer_Master\Project  'Sequencer_Master</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\TopDesign</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Header Files</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Source Files</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\ISR_Timer_Sampling</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\ISR_Timer_Sampling\ISR_Timer_Sampling.c</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\ISR_Timer_Sampling\ISR_Timer_Sampling.h</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_I2CM_LCD_Reset</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_I2CM_LCD_Reset\Pin_I2CM_LCD_Reset.c</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_I2CM_LCD_Reset\Pin_I2CM_LCD_Reset.h</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_I2CM_LCD_Reset\Pin_I2CM_LCD_Reset_aliases.h</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_I2CM_Sequencer_Reset</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_I2CM_Sequencer_Reset\Pin_I2CM_Sequencer_Reset.c</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_I2CM_Sequencer_Reset\Pin_I2CM_Sequencer_Reset.h</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_I2CM_Sequencer_Reset\Pin_I2CM_Sequencer_Reset_aliases.h</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_Timer_Sampling_TC</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_Timer_Sampling_TC\Pin_Timer_Sampling_TC.c</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_Timer_Sampling_TC\Pin_Timer_Sampling_TC.h</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_Timer_Sampling_TC\Pin_Timer_Sampling_TC_aliases.h</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>Sequencer_Master</v>
+<v>Sequencer_Master\Project  'Sequencer_Master</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\TopDesign</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Project  'Sequencer_Master.cydwr</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Header Files</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Header Files\fixedpoint.h</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Header Files\ModTableFp32.h</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Header Files\SPLC792-I2C.h</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Header Files\WaveTableFp32.h</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Source Files</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Source Files\main.c</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Source Files\SPLC792-I2C.c</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Clock_1</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Clock_2</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Clock_Debouncer1</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Clock_SPIM</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\cy_boot</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\CyScBoostClk</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\I2CM_LCD</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\I2CM_Sequencer</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\ISR_Timer_Sampling</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\ISR_Timer_Sampling\ISR_Timer_Sampling.c</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\ISR_Timer_Sampling\ISR_Timer_Sampling.h</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_I2CM_LCD_Reset</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_I2CM_LCD_Reset\Pin_I2CM_LCD_Reset.c</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_I2CM_LCD_Reset\Pin_I2CM_LCD_Reset.h</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_I2CM_LCD_Reset\Pin_I2CM_LCD_Reset_aliases.h</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_I2CM_Sequencer_Reset</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_I2CM_Sequencer_Reset\Pin_I2CM_Sequencer_Reset.c</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_I2CM_Sequencer_Reset\Pin_I2CM_Sequencer_Reset.h</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_I2CM_Sequencer_Reset\Pin_I2CM_Sequencer_Reset_aliases.h</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_ISR_Check</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_LCD_SCL</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_LCD_SDA</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_LDAC</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_LED_BLUE</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_LED_GREEN</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_LED_RED</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_MISO</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_MOSI</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_RE1</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_RE1_in</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_RE2</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_RE2_in</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_RE3</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Generated_Source\PSoC5\Pin_RE3_in</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Sequencer_Master">
+<ExpandedNodeIds>
+<v>Sequencer_Master</v>
+<v>Sequencer_Master\Project  'Sequencer_Master</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\TopDesign</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\TopDesign\TopDesign.cysch</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>Sequencer_Master</v>
+<v>Sequencer_Master\Project  'Sequencer_Master</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\TopDesign</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\TopDesign\TopDesign.cysch</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>Sequencer_Master</v>
+<v>Sequencer_Master\Project  'Sequencer_Master</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Clock_1.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Clock_2.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Clock_Debouncer1.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Clock_SPIM.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Cm3Start.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\CyDmac.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\CyFlash.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\CyLib.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\cymetadata.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\cyPm.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\CyScBoostClk.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\CySpc.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\cyutils.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_BOOT.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_INT.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_MASTER.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_PM.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_SLAVE.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_BOOT.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_INT.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_MASTER.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_PM.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_SLAVE.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\ISR_Timer_Sampling.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\main.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_I2CM_LCD_Reset.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_I2CM_Sequencer_Reset.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_ISR_Check.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LCD_SCL.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LCD_SDA.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LDAC.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LED_BLUE.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LED_GREEN.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LED_RED.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_MISO.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_MOSI.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_RE1.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_RE1_in.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_RE2.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_RE2_in.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_RE3.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_RE3_in.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_SCLK.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_Sequencer_Reset.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_Sequencer_SCL.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_Sequencer_SDA.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_SS.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_Timer_Sampling_TC.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\SPIM.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\SPIM_INT.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\SPIM_PM.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\SPLC792-I2C.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Timer_Sampling.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Timer_Sampling_PM.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Project  'Sequencer_Master.elf</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Project  'Sequencer_Master.hex</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Project  'Sequencer_Master.map</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Project  'Sequencer_Master.gpdsc</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Project  'Sequencer_Master.rpt</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Project  'Sequencer_Master_timing.html</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>Sequencer_Master</v>
+<v>Sequencer_Master\Project  'Sequencer_Master</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Clock_1.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Clock_2.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Clock_Debouncer1.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Clock_SPIM.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Cm3Start.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\CyDmac.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\CyFlash.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\CyLib.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\cymetadata.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\cyPm.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\CyScBoostClk.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\CySpc.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\cyutils.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_BOOT.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_INT.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_MASTER.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_PM.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_SLAVE.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_BOOT.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_INT.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_MASTER.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_PM.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_SLAVE.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\ISR_Timer_Sampling.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\main.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_I2CM_LCD_Reset.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_I2CM_Sequencer_Reset.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_ISR_Check.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LCD_SCL.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LCD_SDA.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LDAC.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LED_BLUE.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LED_GREEN.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LED_RED.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_MISO.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_MOSI.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_RE1.lst</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_RE1_in.lst</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStates>
+<TreeKeysV2>
+<v>Datasheet</v>
+</TreeKeysV2>
+<TreeStatesV2>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Sequencer_Master">
+<ExpandedNodeIds>
+<v>Sequencer_Master</v>
+<v>Sequencer_Master\Project  'Sequencer_Master</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\PSoC 5 Architecture TRM</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CY8C58LP Family Datasheet</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\System Reference Guides</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\System Reference Guides\cy_boot_v4_20</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\cy_clock_v2_20</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\cy_isr_v1_70.pdf</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\cy_pins_v2_10</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\cy_pins_v2_10\cy_pins_v2_10.pdf</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Debouncer_v1_0</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Debouncer_v1_0\Debouncer_v1_0.pdf</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\I2C_v3_50</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\I2C_v3_50\I2C_v3_50.pdf</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\SPI_Master_v2_50.pdf</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Timer_v2_70.pdf</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\ZeroTerminal.pdf</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>Sequencer_Master</v>
+<v>Sequencer_Master\Project  'Sequencer_Master</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\PSoC 5 Architecture TRM</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\CY8C58LP Family Datasheet</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\System Reference Guides</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\System Reference Guides\cy_boot_v4_20</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\cy_clock_v2_20</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\cy_isr_v1_70.pdf</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\cy_pins_v2_10</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\cy_pins_v2_10\cy_pins_v2_10.pdf</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Debouncer_v1_0</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Debouncer_v1_0\Debouncer_v1_0.pdf</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\I2C_v3_50</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\I2C_v3_50\I2C_v3_50.pdf</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\SPI_Master_v2_50.pdf</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\Timer_v2_70.pdf</v>
+<v>Sequencer_Master\Project  'Sequencer_Master\ZeroTerminal.pdf</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStatesV2>
+</CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35>
+</dataGuid>
+<dataGuid v="5f2be1a5-0687-4501-bb8c-cf21cb8211bf">
+<CyGuid_5f2be1a5-0687-4501-bb8c-cf21cb8211bf type_name="CyDesigner.Common.ProjMgmt.GUI.CyBookmarkData" version="1">
+<indicators />
+</CyGuid_5f2be1a5-0687-4501-bb8c-cf21cb8211bf>
+</dataGuid>
+</userData>
+</CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
+<Unloaded />
+<OpenDocs>
+<name v=".\Project  'Sequencer_Master.cydsn\TopDesign\TopDesign.cysch" />
+<name v=".\Project  'Sequencer_Master.cydsn\Project  'Sequencer_Master.cydwr" />
+<name v=".\Project  'Sequencer_Master.cydsn\main.c" />
+<name v=".\Project  'Sequencer_Master.cydsn\ModTableFp32.h" />
+<name v=".\Project  'Sequencer_Master.cydsn\SPLC792-I2C.h" />
+</OpenDocs>
+<config v="" />
+<AutoUpdate v="true" />
+</CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
+</CyXmlSerializer>
