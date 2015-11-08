@@ -232,19 +232,6 @@
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\PSoC 5 Architecture TRM</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CY8C58LP Family Datasheet</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\System Reference Guides</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\System Reference Guides\cy_boot_v5_20</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\cy_clock_v2_20</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\cy_isr_v1_70.pdf</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\cy_pins_v2_10</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\cy_pins_v2_10\cy_pins_v2_10.pdf</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\Debouncer_v1_0</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\Debouncer_v1_0\Debouncer_v1_0.pdf</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\I2C_v3_50</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\I2C_v3_50\I2C_v3_50.pdf</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\SPI_Master_v2_50.pdf</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\Timer_v2_70.pdf</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\ZeroTerminal.pdf</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
 <v>Sequencer_Master</v>
@@ -252,19 +239,6 @@
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\PSoC 5 Architecture TRM</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CY8C58LP Family Datasheet</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\System Reference Guides</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\System Reference Guides\cy_boot_v5_20</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\cy_clock_v2_20</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\cy_isr_v1_70.pdf</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\cy_pins_v2_10</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\cy_pins_v2_10\cy_pins_v2_10.pdf</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\Debouncer_v1_0</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\Debouncer_v1_0\Debouncer_v1_0.pdf</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\I2C_v3_50</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\I2C_v3_50\I2C_v3_50.pdf</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\SPI_Master_v2_50.pdf</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\Timer_v2_70.pdf</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\ZeroTerminal.pdf</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStatesV2>
