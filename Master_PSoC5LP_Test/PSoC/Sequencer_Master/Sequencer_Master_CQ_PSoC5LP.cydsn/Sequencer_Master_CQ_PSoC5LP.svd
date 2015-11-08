@@ -311,7 +311,7 @@
         <register>
           <name>I2CM_LCD_DATA</name>
           <description>I2C Data Register</description>
-          <addressOffset>0x4000640B</addressOffset>
+          <addressOffset>0x40006404</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -329,7 +329,7 @@
         <register>
           <name>I2CM_LCD_CSR</name>
           <description>I2C Status Register</description>
-          <addressOffset>0x40006460</addressOffset>
+          <addressOffset>0x40006464</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -389,7 +389,7 @@
         <register>
           <name>I2CM_LCD_CFG</name>
           <description>I2C Configuration Register</description>
-          <addressOffset>0x40006470</addressOffset>
+          <addressOffset>0x40006474</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -442,7 +442,7 @@
         <register>
           <name>I2CM_LCD_INT_MASK</name>
           <description>I2C Interrupt Enable Mask</description>
-          <addressOffset>0x40006480</addressOffset>
+          <addressOffset>0x40006484</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -514,7 +514,7 @@
         <register>
           <name>I2CM_Sequencer_DATA</name>
           <description>I2C Data Register</description>
-          <addressOffset>0x40006408</addressOffset>
+          <addressOffset>0x4000650A</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -532,7 +532,7 @@
         <register>
           <name>I2CM_Sequencer_CSR</name>
           <description>I2C Status Register</description>
-          <addressOffset>0x40006462</addressOffset>
+          <addressOffset>0x40006569</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -592,7 +592,7 @@
         <register>
           <name>I2CM_Sequencer_CFG</name>
           <description>I2C Configuration Register</description>
-          <addressOffset>0x40006473</addressOffset>
+          <addressOffset>0x4000657B</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -645,7 +645,7 @@
         <register>
           <name>I2CM_Sequencer_INT_MASK</name>
           <description>I2C Interrupt Enable Mask</description>
-          <addressOffset>0x40006482</addressOffset>
+          <addressOffset>0x40006589</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>

@@ -7,6 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.11.09 PSoC 5LPに移植（readSequencerBoardでエラーあり）
  * 2015.11.05 Open hihat(Modulation: Sustain+RampDecay)
  * 2015.11.05 Toneをロータリーエンコーダで変更
  * 2015.11.05 Decay、Levelをロータリーエンコーダで変更
@@ -36,7 +37,7 @@
 #include "ModTableFp32.h"
 
 #define TITLE_STR   ("Rhythm Machine")
-#define VERSION_STR ("2015.11.07")
+#define VERSION_STR ("2015.11.09")
 
 /*********************************************************************
 waveLookupTable   : fp32 Q16 : -1.0 .. +1.0
@@ -106,16 +107,32 @@ volumeAmount      : 8bit
 /* Set LED RED color */
 #define RGB_LED_ON_RED  \
                 do{     \
-                    Pin_LED_RED_Write  (0u); \
-                    Pin_LED_GREEN_Write(1u); \
+                    Pin_LED_RED_Write  (1u); \
+                    Pin_LED_GREEN_Write(0u); \
+                    Pin_LED_BLUE_Write (0u); \
                 }while(0)
 
 /* Set LED GREEN color */
 #define RGB_LED_ON_GREEN \
                 do{      \
-                    Pin_LED_RED_Write  (1u); \
-                    Pin_LED_GREEN_Write(0u); \
+                    Pin_LED_RED_Write  (0u); \
+                    Pin_LED_GREEN_Write(1u); \
+                    Pin_LED_BLUE_Write (0u); \
                 }while(0) 
+/* Set LED BLUE color */
+#define RGB_LED_ON_BLUE \
+                do{      \
+                    Pin_LED_RED_Write  (0u); \
+                    Pin_LED_GREEN_Write(0u); \
+                    Pin_LED_BLUE_Write (1u); \
+                }while(0)                     
+/* Set LED off */
+#define RGB_LED_OFF \
+                do{      \
+                    Pin_LED_RED_Write  (0u); \
+                    Pin_LED_GREEN_Write(0u); \
+                    Pin_LED_BLUE_Write (0u); \
+                }while(0)                     
 
 /***************************************
 * 大域変数
@@ -167,6 +184,12 @@ char8 lcdLine[17];
 // デバッグ用
 //uint8 RECount1, RECount2;
 uint8 isREDirty;
+
+uint8 sequencerReadStatus;
+uint8 sequencerWriteStatus;
+
+void displayStr(char8* line);
+void displayError(char8* line1, char8* line2);
 
 /*======================================================
  * 波形の生成
@@ -281,6 +304,9 @@ void initDDSParameter()
  * Sequencer Board 
  *
  *======================================================*/
+//
+// return: Error code
+//
 uint32 readSequencerBoard(void)
 {
     uint32 status = SEQUENCER_I2C_RX_ERROR; 
@@ -292,11 +318,18 @@ uint32 readSequencerBoard(void)
         sizeof(sequencerRdBuffer),
         I2CM_Sequencer_MODE_COMPLETE_XFER
     );
+// Debug
+        sprintf(lcdLine, "I2CM_Status:%x", I2CM_Sequencer_MasterStatus());
+        displayStr(lcdLine);    
     while (0u == (I2CM_Sequencer_MasterStatus() & I2CM_Sequencer_MSTAT_RD_CMPLT))
     {
         /* Waits until master completes read transfer */
     }
-    
+// Debug    
+        sprintf(lcdLine, "I2CM_Status2:%x", I2CM_Sequencer_MasterStatus());
+        displayStr(lcdLine);
+        //for (;;);
+        
     /* Displays transfer status */
     if (0u == (I2CM_Sequencer_MSTAT_ERR_XFER & I2CM_Sequencer_MasterStatus()))
     {
@@ -313,6 +346,7 @@ uint32 readSequencerBoard(void)
         RGB_LED_ON_RED;
     }
 
+    sequencerReadStatus = I2CM_Sequencer_MasterStatus();
     (void) I2CM_Sequencer_MasterClearStatus();
     
     return status;
@@ -435,8 +469,8 @@ void DACSetVoltage16bit(uint16 value)
  * Rotary Encoder
  *
  *======================================================*/
-// 戻り値: ロータリーエンコーダーの回転方向
-//        0:変化なし 1:時計回り -1:反時計回り
+// return: ロータリーエンコーダーの回転方向
+//         0:変化なし 1:時計回り -1:反時計回り
 //
 int readRE(int RE_n)
 {
@@ -714,6 +748,17 @@ CY_ISR(Timer_Sampling_interrupt_handler)
  *======================================================*/
 int main()
 {
+    // LED Check
+    /*
+    RGB_LED_ON_RED;
+    CyDelay(500);
+    RGB_LED_ON_GREEN;
+    CyDelay(500);
+    RGB_LED_ON_BLUE;
+    CyDelay(500);
+    RGB_LED_OFF;
+    */
+    
     // 波形の初期化
     //
     bpm = INITIAL_BPM;
@@ -757,22 +802,27 @@ int main()
     LCD_Puts(VERSION_STR);
     
     CyDelay(500);
+// Debug    
+    //sprintf(lcdLine, "%d", sizeof(sequencerRdBuffer));
+    //displayError(lcdLine, ""); // -> 7
     
     int lcdWaitCount = 0;
     for(;;)
     {
         sequencerWrBuffer[0] = noteCount % 16;
-        
+// Debug        
+        displayStr("readSequencerBoard()");
         if (readSequencerBoard() != SEQUENCER_I2C_TRANSFER_CMPLT) {
-            displayError("I2C Master", "Read Error");
+            sprintf(lcdLine, "%x", sequencerReadStatus);
+            displayError("Sqncr Rd Err", lcdLine);
         }
-        
+// Debug        
+        displayStr("writeSequencerBoard()");
         if (writeSequencerBoard() != SEQUENCER_I2C_TRANSFER_CMPLT) {
             displayError("I2C Master", "Write Error");
         }
-        
         if (sequencerRdBuffer.track >= TRACK_N)
-            displayError("Sequencer Param", "TRACK NO OB");
+            displayError("Squencer Param", "TRACK NO OB");
             
         setTracks(sequencerRdBuffer.track);
         readDecayAndLevel();

@@ -3,7 +3,7 @@
 <!--This file is machine generated and read. It is not intended to be edited by hand.-->
 <!--Due to this, there is no schema for this file.-->
 <CyGuid_2867d519-54d2-4c01-9830-c51cb08bc3dd type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWrkspc" version="5" xml_contents_version="3" name="Sequencer_Master" persistent="" platform="NOT_USED">
-<current_project name=".\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C.cydsn\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C.cyprj" />
+<current_project name=".\Sequencer_Master.cydsn\Sequencer_Master.cyprj" />
 <wrkspc_folders />
 <files />
 <projects>
