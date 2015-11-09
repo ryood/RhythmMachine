@@ -44,9 +44,9 @@
 //==============
 // Prototypes
 //==============
-//void  Init_COM(void);
+void  Init_COM(void);
 void  COM_printf(const char *format, ...);
-//void  COM_Wait_PC_Term(void);
+void  COM_Wait_PC_Term(void);
 
 #endif // __COM_H__
 

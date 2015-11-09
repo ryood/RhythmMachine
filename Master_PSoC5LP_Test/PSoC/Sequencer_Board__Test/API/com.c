@@ -41,7 +41,6 @@
 #include "com.h"
 #include "utility.h"
 
-#if 0
 //----------------
 // Defines
 //----------------
@@ -50,7 +49,7 @@
 //----------------
 // Globals
 //----------------
-volatile uint32 gUSBUART_Ready = 1;
+volatile uint32 gUSBUART_Ready;
 
 //=====================
 // Initialize COM
@@ -59,8 +58,7 @@ void Init_COM(void)
 {
     uint32 i;
 
-    //USBUART_1_Start(0, USBUART_1_3V_OPERATION);
-    USBUART_1_Start();
+    USBUART_1_Start(0, USBUART_1_3V_OPERATION);
 
     //while(!USBUART_1_bGetConfiguration());
     for (i = 0; i < USBUART_TIMEOUT; i++)
@@ -68,6 +66,7 @@ void Init_COM(void)
         gUSBUART_Ready = USBUART_1_bGetConfiguration();
         if (gUSBUART_Ready) break;
     }
+    
     // Initiaize UABUART
     if (gUSBUART_Ready)
         USBUART_1_CDC_Init();
@@ -77,7 +76,7 @@ void Init_COM(void)
     // Dummy Tx to establish Terminal on PC
     COM_printf("This is a Dummy Tx.\r\n");
 }
-#endif
+
 //=====================
 // COM printf
 //=====================
@@ -87,7 +86,7 @@ void COM_printf(const char *format, ...)
     uint8 buf[256];
     uint8 *pStr;
     
-    //if (gUSBUART_Ready == 0) return;
+    if (gUSBUART_Ready == 0) return;
 
     va_start(ap, format);
     xvsnprintf(buf, 256, format, ap);
@@ -96,12 +95,11 @@ void COM_printf(const char *format, ...)
     pStr = buf;
     while(*pStr != '\0')
     {
-        //while (USBUART_1_CDCIsReady() == 0);
-        //USBUART_1_PutChar(*pStr++);
-        UART_1_PutChar(*pStr++);
+        while (USBUART_1_CDCIsReady() == 0);
+        USBUART_1_PutChar(*pStr++);
     }
 }
-#if 0
+
 //===========================
 // Wait for setup PC Terminal
 //===========================
@@ -122,7 +120,7 @@ void COM_Wait_PC_Term(void)
     for (i = 0; i < len; i++) USBUART_1_GetData(&dummy, 1);
     COM_printf("\r\nOK!\r\n");
 }
-#endif
+
 //=========================================================
 // End of Program
 //=========================================================

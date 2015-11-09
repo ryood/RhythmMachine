@@ -3,11 +3,12 @@
 <!--This file is machine generated and read. It is not intended to be edited by hand.-->
 <!--Due to this, there is no schema for this file.-->
 <CyGuid_2867d519-54d2-4c01-9830-c51cb08bc3dd type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWrkspc" version="5" xml_contents_version="3" name="Sequencer_Master-000" persistent="" platform="NOT_USED">
-<current_project name=".\Sequencer_Master.cyprj" />
+<current_project name="..\Sequencer_Master_CQ_PSoC5LP.cydsn\Sequencer_Master_CQ_PSoC5LP.cyprj" />
 <wrkspc_folders />
 <files />
 <projects>
 <v>.\Sequencer_Master.cyprj</v>
+<v>..\Sequencer_Master_CQ_PSoC5LP.cydsn\Sequencer_Master_CQ_PSoC5LP.cyprj</v>
 </projects>
 <workspace_id v="c29e48e2-2ee8-436e-b683-b7613ec82613" />
 <WriteAppVersionLastSavedWith v="3.3.0.410" />
