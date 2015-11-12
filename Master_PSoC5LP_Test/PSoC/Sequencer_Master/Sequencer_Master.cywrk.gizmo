@@ -6,23 +6,30 @@
 <CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997 type_name="CyDesigner.Common.Base.CyCustomData" version="2">
 <userData>
 <dataGuid v="1b906a0f-a7b6-4e4d-a428-82f98b53cb35">
-<CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35 type_name="CyDesigner.Common.ProjMgmt.GUI.CyExplorerWindow+CyExplorerWindowState" version="3" SelectedTab="Source">
+<CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35 type_name="CyDesigner.Common.ProjMgmt.GUI.CyExplorerWindow+CyExplorerWindowState" version="3" SelectedTab="Datasheet">
 <TreeKeys>
 <v>Source</v>
 <v>Components</v>
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Header Files">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\Source Files\main.c">
 <ExpandedNodeIds>
 <v>Sequencer_Master</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\TopDesign</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\Source Files</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\TopDesign</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Sequencer_Master_CQ_PSoC5LP_HD44780.cydwr</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Header Files</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Header Files\dds.h</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Header Files\fixedpoint.h</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Header Files\ModTableFp32.h</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Header Files\utility.h</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Header Files\WaveTableFp32.h</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Source Files</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Source Files\dds.c</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Source Files\main.c</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Source Files\utility.c</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5</v>
@@ -63,6 +70,9 @@
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\I2CM_Sequencer\I2CM_Sequencer_PM.c</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\I2CM_Sequencer\I2CM_Sequencer_PVT.h</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\I2CM_Sequencer\I2CM_Sequencer_SLAVE.c</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\ISR_Timer_Sampling</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\ISR_Timer_Sampling\ISR_Timer_Sampling.c</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\ISR_Timer_Sampling\ISR_Timer_Sampling.h</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\LCD_Char</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\LCD_Char\LCD_Char.c</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\LCD_Char\LCD_Char.h</v>
@@ -83,6 +93,10 @@
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\LED_RED\LED_RED.c</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\LED_RED\LED_RED.h</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\LED_RED\LED_RED_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\Pin_ISR_Check</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\Pin_ISR_Check\Pin_ISR_Check.c</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\Pin_ISR_Check\Pin_ISR_Check.h</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\Pin_ISR_Check\Pin_ISR_Check_aliases.h</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\Pin_Sequencer_Reset</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\Pin_Sequencer_Reset\Pin_Sequencer_Reset.c</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\Pin_Sequencer_Reset\Pin_Sequencer_Reset.h</v>
@@ -95,6 +109,17 @@
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\Pin_Sequencer_SDA\Pin_Sequencer_SDA.c</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\Pin_Sequencer_SDA\Pin_Sequencer_SDA.h</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\Pin_Sequencer_SDA\Pin_Sequencer_SDA_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\Pin_Timer_Sampling_TC</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\Pin_Timer_Sampling_TC\Pin_Timer_Sampling_TC.c</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\Pin_Timer_Sampling_TC\Pin_Timer_Sampling_TC.h</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\Pin_Timer_Sampling_TC\Pin_Timer_Sampling_TC_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\timer_clock</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\timer_clock\timer_clock.c</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\timer_clock\timer_clock.h</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\Timer_Sampling</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\Timer_Sampling\Timer_Sampling.c</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\Timer_Sampling\Timer_Sampling.h</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\Timer_Sampling\Timer_Sampling_PM.c</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\cycodeshareimport.ld</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\cycodeshareimport.scat</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source\PSoC5\cydevice.h</v>
@@ -118,12 +143,24 @@
 <VisibleNodeIds>
 <v>Sequencer_Master</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\TopDesign</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\Sequencer_Master_CQ_PSoC5LP.cydwr</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\Header Files</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\Source Files</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\Source Files\main.c</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\Source Files\SPLC792-I2C.c</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\Generated_Source</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\TopDesign</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Sequencer_Master_CQ_PSoC5LP_HD44780.cydwr</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Header Files</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Header Files\dds.h</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Header Files\fixedpoint.h</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Header Files\ModTableFp32.h</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Header Files\utility.h</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Header Files\WaveTableFp32.h</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Source Files</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Source Files\dds.c</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Source Files\main.c</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Source Files\utility.c</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Generated_Source</v>
@@ -237,12 +274,14 @@
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\CyScBoostClk.lst</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\CySpc.lst</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\cyutils.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\dds.lst</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer.lst</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_BOOT.lst</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_INT.lst</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_MASTER.lst</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_PM.lst</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_SLAVE.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\ISR_Timer_Sampling.lst</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\LCD_Char.lst</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\LCD_Char_LCDPort.lst</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\LCD_Char_PM.lst</v>
@@ -250,9 +289,14 @@
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\LED_GREEN.lst</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\LED_RED.lst</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\main.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_ISR_Check.lst</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_Sequencer_Reset.lst</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_Sequencer_SCL.lst</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_Sequencer_SDA.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_Timer_Sampling_TC.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\timer_clock.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\Timer_Sampling.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\Timer_Sampling_PM.lst</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\utility.lst</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Sequencer_Master_CQ_PSoC5LP_HD44780.elf</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CortexM3\ARM_GCC_493\Debug\Sequencer_Master_CQ_PSoC5LP_HD44780.hex</v>
@@ -264,53 +308,6 @@
 <VisibleNodeIds>
 <v>Sequencer_Master</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Clock_1.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Clock_2.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Clock_Debouncer1.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Clock_SPIM.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Cm3Start.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\CyBootAsmGnu.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\CyDmac.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\cyfitter_cfg.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\CyFlash.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\CyLib.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\cymetadata.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\cyPm.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\CySpc.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\cyutils.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_BOOT.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_INT.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_MASTER.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_PM.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_SLAVE.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_BOOT.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_INT.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_MASTER.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_PM.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_SLAVE.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\ISR_Timer_Sampling.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\main.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_I2CM_LCD_Reset.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_I2CM_Sequencer_Reset.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_ISR_Check.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LCD_Reset.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LCD_SCL.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LCD_SDA.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LDAC.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LED_BLUE.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LED_GREEN.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LED_RED.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_MISO.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_MOSI.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_RE1.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_RE1_in.lst</v>
-<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_RE2.lst</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStates>
@@ -344,9 +341,13 @@
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\System Reference Guides</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\System Reference Guides\cy_boot_v4_20</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CharLCD_v2_10.pdf</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\cy_clock_v2_20.pdf</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\cy_isr_v1_70.pdf</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\cy_pins_v2_10</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\cy_pins_v2_10\cy_pins_v2_10.pdf</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\I2C_v3_50.pdf</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Timer_v2_70.pdf</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\ZeroTerminal.pdf</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
 <v>Sequencer_Master</v>
@@ -373,9 +374,13 @@
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\System Reference Guides</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\System Reference Guides\cy_boot_v4_20</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\CharLCD_v2_10.pdf</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\cy_clock_v2_20.pdf</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\cy_isr_v1_70.pdf</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\cy_pins_v2_10</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\cy_pins_v2_10\cy_pins_v2_10.pdf</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\I2C_v3_50.pdf</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\Timer_v2_70.pdf</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780\ZeroTerminal.pdf</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStatesV2>
@@ -389,7 +394,11 @@
 </userData>
 </CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
 <Unloaded />
-<OpenDocs />
+<OpenDocs>
+<name v=".\Sequencer_Master_CQ_PSoC5LP_HD44780.cydsn\TopDesign\TopDesign.cysch" />
+<name v=".\Sequencer_Master_CQ_PSoC5LP_HD44780.cydsn\Sequencer_Master_CQ_PSoC5LP_HD44780.cydwr" />
+<name v=".\Sequencer_Master_CQ_PSoC5LP_HD44780.cydsn\main.c" />
+</OpenDocs>
 <config v="" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>

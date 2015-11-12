@@ -13,7 +13,7 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Sequencer_Master\Sequencer_Master\Source Files\main.c">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C\TopDesign">
 <ExpandedNodeIds>
 <v>Sequencer_Master</v>
 <v>Sequencer_Master\Sequencer_Master\TopDesign</v>
@@ -473,6 +473,7 @@
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\Generated_Source\PSoC4\cyfitterrv.inc</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\Generated_Source\PSoC4\cymetadata.c</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS\Generated_Source\PSoC4\project.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C\TopDesign</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C.cydwr</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C\Header Files</v>
@@ -483,7 +484,6 @@
 <v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C\Source Files</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C\Source Files\main.c</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C\Source Files\SPLC792-I2C.c</v>
-<v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C\Generated_Source</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C\Generated_Source\PSoC4</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Clock_Debouncer1</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C\Generated_Source\PSoC4\Clock_Debouncer1\Clock_Debouncer1.c</v>
@@ -784,6 +784,17 @@
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_MCP4922_DDS</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C\TopDesign</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C.cydwr</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C\Header Files</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C\Header Files\fixedpoint.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C\Header Files\ModTableFp32.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C\Header Files\SPLC792-I2C.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C\Header Files\WaveTableFp32.h</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C\Source Files</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C\Source Files\main.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C\Source Files\SPLC792-I2C.c</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C\Generated_Source</v>
 <v>Sequencer_Master\Sequencer_Master_PyunPyun3_Shield</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
@@ -1139,6 +1150,7 @@
 <v>Sequencer_Master\Sequencer_Master_AQM1602</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0</v>
 <v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493</v>
+<v>Sequencer_Master\Sequencer_Master_AQM1602\CortexM0\ARM_GCC_493\Debug</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStates>
@@ -1262,6 +1274,7 @@
 <name v=".\Sequencer_Master.cydsn\TopDesign\TopDesign.cysch" />
 <name v=".\Sequencer_Master.cydsn\Sequencer_Master.cydwr" />
 <name v=".\Sequencer_Master.cydsn\main.c" />
+<name v=".\Sequencer_Master_AQM1602_or_SPLC792__MCP4922_DDS_2_I2C.cydsn\TopDesign\TopDesign.cysch" />
 </OpenDocs>
 <config v="" />
 <AutoUpdate v="true" />

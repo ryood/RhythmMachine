@@ -2806,6 +2806,7 @@
 <v>Cypress Component Catalog\Ports and Pins\Digital Input Pin [v2.10]</v>
 <v>Cypress Component Catalog\Ports and Pins\Digital Output Pin [v2.10]</v>
 <v>Cypress Component Catalog\System</v>
+<v>Cypress Component Catalog\System\Bootloadable [v1.40]</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">

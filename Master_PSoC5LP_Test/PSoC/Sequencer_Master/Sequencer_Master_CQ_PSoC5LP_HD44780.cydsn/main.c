@@ -7,6 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.11.13 Sampling Timerをインプリメント
  * 2015.11.13 Sequencer Board, Char LCDをインプリメント
  * 2015.11.12 新規作成
  *
@@ -16,9 +17,10 @@
 #include <stdio.h>
 
 #include "utility.h"
+#include "dds.h"
 
 #define TITLE_STR   ("Rhythm Machine")
-#define VERSION_STR ("2015.11.12")
+#define VERSION_STR ("2015.11.13")
 
 // Sequencer
 //
@@ -28,6 +30,8 @@
 #define SEQUENCER_TRANSFER_CMPLT    (0x00u)
 #define SEQUENCER_RX_TRANSFER_ERROR (0xFEu)
 #define SEQUENCER_TX_TRANSFER_ERROR (0xFFu)
+
+#define TRACK_N (3)
 
 // Error
 //
@@ -93,19 +97,13 @@ volumeAmount      : 8bit
 //-------------------------------------------------
 // Sequencer                
 //
-struct sequencer_parameter {
-    uint8_t update;
-	uint8_t track;
-	uint8_t play;
-	uint8_t sequence1;
-	uint8_t sequence2;
-	uint8_t pot1;
-	uint8_t pot2;
-} sequencerRdBuffer;
+struct sequencer_parameter sequencerRdBuffer;
 uint8 sequencerWrBuffer[SEQUENCER_I2C_WR_BUFFER_SIZE] = {0};
 
 uint8 sequencerRdStatus;
 uint8 sequencerWrStatus;
+
+//struct track tracks[TRACK_N];
 
 //=================================================
 // LCD
@@ -145,7 +143,7 @@ void error(uint32 code, uint32 ext)
     LCD_printf(0, "%s", error_str[code]);
     LCD_printf(1, "%ld", ext);
     
-    // stop
+    // loop for ever
     for (;;);
 }
 
@@ -312,6 +310,26 @@ uint32 writeSequencerBoard(void)
 }
 
 //=================================================
+// Sampling Timer
+//
+//=================================================
+//-------------------------------------------------
+// 割り込み処理ルーチン
+//
+CY_ISR(Timer_Sampling_interrupt_handler)
+{
+    // デバッグ用
+    Pin_ISR_Check_Write(1u);
+    Pin_ISR_Check_Write(0u);
+    
+    /* Read Status register in order to clear the sticky Terminal Count (TC) bit 
+	 * in the status register. Note that the function is not called, but rather 
+	 * the status is read directly.
+	 */
+   	Timer_Sampling_STATUS;
+}
+
+//=================================================
 // メインルーチン
 //
 //=================================================
@@ -341,7 +359,11 @@ int main()
     Pin_Sequencer_Reset_Write(1u);
     
     // Sequencerを初期化
-    I2CM_Sequencer_Start();   
+    I2CM_Sequencer_Start();
+    
+    // Sampling Timerを初期化
+    Timer_Sampling_Start();
+    ISR_Timer_Sampling_StartEx(Timer_Sampling_interrupt_handler);
     
     CyGlobalIntEnable;
     
