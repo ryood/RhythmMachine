@@ -539,7 +539,7 @@ function getElementsByClass(rootNode, elemName, className)
 <tr> <td class="prop"> Project :</td>
 <td class="proptext"> Sequencer_Master_CQ_PSoC5LP</td></tr>
 <tr> <td class="prop"> Build Time :</td>
-<td class="proptext"> 11/09/15 13:51:48</td></tr>
+<td class="proptext"> 11/12/15 19:19:20</td></tr>
 <tr> <td class="prop"> Device :</td>
 <td class="proptext"> CY8C5868AXI-LP035</td></tr>
 <tr> <td class="prop"> Temperature :</td>
@@ -686,78 +686,9 @@ CyBUS_CLK(fixed-function)</span>
 </thead> 
 <tbody>
 <tr> 
- <td class = "text_info">\I2CM:I2C_FF\/sda_out</td>
- <td class = "text_info">Pin_I2CM_SDA(0)_PAD:out</td>
- <td class = "number">26.250</td>
-</tr>
-<tr class="sta_path">
-<td class="sta_path"  colspan="3">
-<table class="sta_path">
- <thead> 
-<tr> 
-<th>Type</th>
-<th>Location</th>
-<th>Fanout</th>
-<th>Instance/Net</th>
-<th>Source</th>
-<th>Dest</th>
-<th>Delay (ns)</th>
-</tr>
-</thead> 
-<tbody>
-<tr> 
- <td class = "text_info">i2ccell</td>
- <td class = "text_info">F(I2C,0)</td>
- <td class = "number">1</td>
- <td class = "text_info">\I2CM:I2C_FF\</td>
- <td class = "text_info">\I2CM:I2C_FF\/clock</td>
- <td class = "text_info">\I2CM:I2C_FF\/sda_out</td>
- <td class = "number">1.000</td>
-</tr>
-<tr> 
- <td class = "text_info">Route</td>
- <td class = "text_info"></td>
- <td class = "number">1</td>
- <td class = "text_info">\I2CM:sda_x_wire\</td>
- <td class = "text_info">\I2CM:I2C_FF\/sda_out</td>
- <td class = "text_info">Pin_I2CM_SDA(0)/pin_input</td>
- <td class = "number">9.448</td>
-</tr>
-<tr> 
- <td class = "text_info">iocell6</td>
- <td class = "text_info">P0[1]</td>
- <td class = "number">1</td>
- <td class = "text_info">Pin_I2CM_SDA(0)</td>
- <td class = "text_info">Pin_I2CM_SDA(0)/pin_input</td>
- <td class = "text_info">Pin_I2CM_SDA(0)/pad_out</td>
- <td class = "number">15.802</td>
-</tr>
-<tr> 
- <td class = "text_info">Route</td>
- <td class = "text_info"></td>
- <td class = "number">1</td>
- <td class = "text_info">Pin_I2CM_SDA(0)_PAD</td>
- <td class = "text_info">Pin_I2CM_SDA(0)/pad_out</td>
- <td class = "text_info">Pin_I2CM_SDA(0)_PAD:out</td>
- <td class = "number">0.000</td>
-</tr>
-<tr> 
- <td class = "text_info">Clock</td>
- <td class = "text_info"> </td>
- <td class = "text_info"></td>
- <td class = "text_info"></td>
- <td class = "text_info"></td>
- <td class = "text_info">Clock path delay</td>
- <td class = "number">0.000</td>
-</tr>
-</tbody>
- </table> 
-</td>
-</tr>
-<tr> 
  <td class = "text_info">\I2CM:I2C_FF\/scl_out</td>
  <td class = "text_info">Pin_I2CM_SCL(0)_PAD:out</td>
- <td class = "number">25.329</td>
+ <td class = "number">21.157</td>
 </tr>
 <tr class="sta_path">
 <td class="sta_path"  colspan="3">
@@ -790,16 +721,16 @@ CyBUS_CLK(fixed-function)</span>
  <td class = "text_info">\I2CM:Net_643_0\</td>
  <td class = "text_info">\I2CM:I2C_FF\/scl_out</td>
  <td class = "text_info">Pin_I2CM_SCL(0)/pin_input</td>
- <td class = "number">9.078</td>
+ <td class = "number">5.243</td>
 </tr>
 <tr> 
  <td class = "text_info">iocell5</td>
- <td class = "text_info">P0[0]</td>
+ <td class = "text_info">P6[0]</td>
  <td class = "number">1</td>
  <td class = "text_info">Pin_I2CM_SCL(0)</td>
  <td class = "text_info">Pin_I2CM_SCL(0)/pin_input</td>
  <td class = "text_info">Pin_I2CM_SCL(0)/pad_out</td>
- <td class = "number">15.251</td>
+ <td class = "number">14.914</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
@@ -808,6 +739,75 @@ CyBUS_CLK(fixed-function)</span>
  <td class = "text_info">Pin_I2CM_SCL(0)_PAD</td>
  <td class = "text_info">Pin_I2CM_SCL(0)/pad_out</td>
  <td class = "text_info">Pin_I2CM_SCL(0)_PAD:out</td>
+ <td class = "number">0.000</td>
+</tr>
+<tr> 
+ <td class = "text_info">Clock</td>
+ <td class = "text_info"> </td>
+ <td class = "text_info"></td>
+ <td class = "text_info"></td>
+ <td class = "text_info"></td>
+ <td class = "text_info">Clock path delay</td>
+ <td class = "number">0.000</td>
+</tr>
+</tbody>
+ </table> 
+</td>
+</tr>
+<tr> 
+ <td class = "text_info">\I2CM:I2C_FF\/sda_out</td>
+ <td class = "text_info">Pin_I2CM_SDA(0)_PAD:out</td>
+ <td class = "number">21.131</td>
+</tr>
+<tr class="sta_path">
+<td class="sta_path"  colspan="3">
+<table class="sta_path">
+ <thead> 
+<tr> 
+<th>Type</th>
+<th>Location</th>
+<th>Fanout</th>
+<th>Instance/Net</th>
+<th>Source</th>
+<th>Dest</th>
+<th>Delay (ns)</th>
+</tr>
+</thead> 
+<tbody>
+<tr> 
+ <td class = "text_info">i2ccell</td>
+ <td class = "text_info">F(I2C,0)</td>
+ <td class = "number">1</td>
+ <td class = "text_info">\I2CM:I2C_FF\</td>
+ <td class = "text_info">\I2CM:I2C_FF\/clock</td>
+ <td class = "text_info">\I2CM:I2C_FF\/sda_out</td>
+ <td class = "number">1.000</td>
+</tr>
+<tr> 
+ <td class = "text_info">Route</td>
+ <td class = "text_info"></td>
+ <td class = "number">1</td>
+ <td class = "text_info">\I2CM:sda_x_wire\</td>
+ <td class = "text_info">\I2CM:I2C_FF\/sda_out</td>
+ <td class = "text_info">Pin_I2CM_SDA(0)/pin_input</td>
+ <td class = "number">5.251</td>
+</tr>
+<tr> 
+ <td class = "text_info">iocell6</td>
+ <td class = "text_info">P6[1]</td>
+ <td class = "number">1</td>
+ <td class = "text_info">Pin_I2CM_SDA(0)</td>
+ <td class = "text_info">Pin_I2CM_SDA(0)/pin_input</td>
+ <td class = "text_info">Pin_I2CM_SDA(0)/pad_out</td>
+ <td class = "number">14.880</td>
+</tr>
+<tr> 
+ <td class = "text_info">Route</td>
+ <td class = "text_info"></td>
+ <td class = "number">1</td>
+ <td class = "text_info">Pin_I2CM_SDA(0)_PAD</td>
+ <td class = "text_info">Pin_I2CM_SDA(0)/pad_out</td>
+ <td class = "text_info">Pin_I2CM_SDA(0)_PAD:out</td>
  <td class = "number">0.000</td>
 </tr>
 <tr> 

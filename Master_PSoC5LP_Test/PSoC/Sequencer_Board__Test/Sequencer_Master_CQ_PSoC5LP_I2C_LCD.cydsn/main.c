@@ -16,6 +16,7 @@
 #include <project.h>
 #include <stdio.h>
 
+#include "SPLC792-I2C.h"
 #include "utility.h"
 
 #define I2C_SLAVE_ADDRESS   (0x7f)
@@ -75,8 +76,8 @@ void LCD_printf(int line, const char *format, ...)
     va_end(ap);
 
     //LCD_Char_ClearDisplay();
-    LCD_Char_Position(line, 0);
-    LCD_Char_PrintString(buf);
+    LCD_SetPos(0, line);
+    LCD_Puts(buf);
 }
 
 int main()
@@ -95,9 +96,11 @@ int main()
     CyDelay(500);
     RGB_LED_OFF;
     
-    LCD_Char_Start();  
+    // Init I2C LCD
+    I2CM_LCD_Start();
+    LCD_Init(0x3e, 63);
     LCD_printf(0, "Sequencer Board Test");
-    
+       
     // Sequence Boardをリセット
     Pin_I2CM_Reset_Write(0u);
     CyDelay(1);
