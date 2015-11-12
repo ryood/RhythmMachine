@@ -13,10 +13,11 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Sequencer_Master_CQ_PSoC5LP_I2C_LCD.cydwr">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP\Source Files\main.c">
 <ExpandedNodeIds>
 <v>Sequencer_Master-000</v>
 <v>Sequencer_Master-000\Sequencer_Master\TopDesign</v>
+<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP</v>
 <v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP\TopDesign</v>
 <v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP\Header Files</v>
 <v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP\Header Files\utility.h</v>
@@ -30,7 +31,6 @@
 <v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP\Generated_Source\PSoC5\LCD_Char_LCDPort\LCD_Char_LCDPort.c</v>
 <v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP\Generated_Source\PSoC5\LCD_Char_LCDPort\LCD_Char_LCDPort.h</v>
 <v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP\Generated_Source\PSoC5\LCD_Char_LCDPort\LCD_Char_LCDPort_aliases.h</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD</v>
 <v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\TopDesign</v>
 <v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Sequencer_Master_CQ_PSoC5LP_I2C_LCD.cydwr</v>
 <v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Header Files</v>
@@ -40,7 +40,6 @@
 <v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Source Files\main.c</v>
 <v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Source Files\SPLC792-I2C.c</v>
 <v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Source Files\utility.c</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source</v>
 <v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4</v>
 <v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot</v>
 <v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot\cm0gcc.ld</v>
@@ -257,51 +256,15 @@
 <v>Sequencer_Master-000</v>
 <v>Sequencer_Master-000\Sequencer_Master</v>
 <v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP</v>
+<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP\TopDesign</v>
+<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP\Sequencer_Master_CQ_PSoC5LP.cydwr</v>
+<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP\Header Files</v>
+<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP\Header Files\utility.h</v>
+<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP\Source Files</v>
+<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP\Source Files\main.c</v>
+<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP\Source Files\utility.c</v>
+<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP\Generated_Source</v>
 <v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\TopDesign</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Sequencer_Master_CQ_PSoC5LP_I2C_LCD.cydwr</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Header Files</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Header Files\SPLC792-I2C.h</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Header Files\utility.h</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Source Files</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Source Files\main.c</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Source Files\SPLC792-I2C.c</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Source Files\utility.c</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot\cm0gcc.ld</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot\Cm0Iar.icf</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot\Cm0RealView.scat</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot\Cm0Start.c</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot\core_cm0.h</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot\core_cm0_psoc4.h</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot\core_cmFunc.h</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot\core_cmInstr.h</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot\CyBootAsmGnu.s</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot\CyBootAsmIar.s</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot\CyBootAsmRv.s</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot\CyFlash.c</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot\CyFlash.h</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot\CyLib.c</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot\CyLib.h</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot\cypins.h</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot\cyPm.c</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot\cyPm.h</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot\cytypes.h</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\cy_boot\cyutils.c</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\I2CM</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\I2CM\I2CM.c</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\I2CM\I2CM.h</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\I2CM\I2CM_BOOT.c</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\I2CM\I2CM_BOOT.h</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\I2CM\I2CM_I2C.c</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\I2CM\I2CM_I2C.h</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\I2CM\I2CM_I2C_BOOT.c</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\I2CM\I2CM_I2C_INT.c</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\I2CM\I2CM_I2C_MASTER.c</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\I2CM\I2CM_I2C_PVT.h</v>
-<v>Sequencer_Master-000\Sequencer_Master_CQ_PSoC5LP_I2C_LCD\Generated_Source\PSoC4\I2CM\I2CM_PINS.h</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
@@ -583,11 +546,9 @@
 </CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
 <Unloaded />
 <OpenDocs>
-<name v="..\Sequencer_Master_CQ_PSoC5LP_I2C_LCD.cydsn\TopDesign\TopDesign.cysch" />
-<name v="..\Sequencer_Master_CQ_PSoC5LP_I2C_LCD.cydsn\Sequencer_Master_CQ_PSoC5LP_I2C_LCD.cydwr" />
-<name v="..\Sequencer_Master_CQ_PSoC5LP_I2C_LCD.cydsn\main.c" />
-<name v="..\Sequencer_Master_CQ_PSoC5LP_I2C_LCD.cydsn\SPLC792-I2C.h" />
-<name v="..\Sequencer_Master_CQ_PSoC5LP_I2C_LCD.cydsn\SPLC792-I2C.c" />
+<name v="..\Sequencer_Master_CQ_PSoC5LP.cydsn\main.c" />
+<name v="..\Sequencer_Master_CQ_PSoC5LP.cydsn\Sequencer_Master_CQ_PSoC5LP.cydwr" />
+<name v="..\Sequencer_Master_CQ_PSoC5LP.cydsn\TopDesign\TopDesign.cysch" />
 </OpenDocs>
 <config v="" />
 <AutoUpdate v="true" />

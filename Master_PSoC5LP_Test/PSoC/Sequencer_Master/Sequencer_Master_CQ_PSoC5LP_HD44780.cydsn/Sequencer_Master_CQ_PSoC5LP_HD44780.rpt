@@ -1,13 +1,13 @@
-Loading plugins phase: Elapsed time ==> 0s.307ms
+Loading plugins phase: Elapsed time ==> 0s.303ms
 Initializing data phase: Elapsed time ==> 0s.000ms
 <CYPRESSTAG name="CyDsfit arguments...">
-cydsfit arguments: -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -p D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Board__Test\Sequencer_Master_CQ_PSoC5LP.cydsn\Sequencer_Master_CQ_PSoC5LP.cyprj -d CY8C5868AXI-LP035 -s D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Board__Test\Sequencer_Master_CQ_PSoC5LP.cydsn\Generated_Source\PSoC5 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE</CYPRESSTAG>
+cydsfit arguments: -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -p D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780.cydsn\Sequencer_Master_CQ_PSoC5LP_HD44780.cyprj -d CY8C5868AXI-LP035 -s D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780.cydsn\Generated_Source\PSoC5 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE</CYPRESSTAG>
 <CYPRESSTAG name="Design elaboration results...">
 </CYPRESSTAG>
-Elaboration phase: Elapsed time ==> 1s.494ms
+Elaboration phase: Elapsed time ==> 1s.528ms
 <CYPRESSTAG name="HDL generation results...">
 </CYPRESSTAG>
-HDL generation phase: Elapsed time ==> 0s.038ms
+HDL generation phase: Elapsed time ==> 0s.039ms
 <CYPRESSTAG name="Synthesis results...">
 
      | | | | | | |
@@ -23,35 +23,35 @@ HDL generation phase: Elapsed time ==> 0s.038ms
      | | | | | | |
 
 ======================================================================
-Compiling:  Sequencer_Master_CQ_PSoC5LP.v
+Compiling:  Sequencer_Master_CQ_PSoC5LP_HD44780.v
 Program  :   C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\bin/warp.exe
-Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Board__Test\Sequencer_Master_CQ_PSoC5LP.cydsn\Sequencer_Master_CQ_PSoC5LP.cyprj -dcpsoc3 Sequencer_Master_CQ_PSoC5LP.v -verilog
+Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780.cydsn\Sequencer_Master_CQ_PSoC5LP_HD44780.cyprj -dcpsoc3 Sequencer_Master_CQ_PSoC5LP_HD44780.v -verilog
 ======================================================================
 
 ======================================================================
-Compiling:  Sequencer_Master_CQ_PSoC5LP.v
+Compiling:  Sequencer_Master_CQ_PSoC5LP_HD44780.v
 Program  :   C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\bin/warp.exe
-Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Board__Test\Sequencer_Master_CQ_PSoC5LP.cydsn\Sequencer_Master_CQ_PSoC5LP.cyprj -dcpsoc3 Sequencer_Master_CQ_PSoC5LP.v -verilog
+Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780.cydsn\Sequencer_Master_CQ_PSoC5LP_HD44780.cyprj -dcpsoc3 Sequencer_Master_CQ_PSoC5LP_HD44780.v -verilog
 ======================================================================
 
 ======================================================================
-Compiling:  Sequencer_Master_CQ_PSoC5LP.v
+Compiling:  Sequencer_Master_CQ_PSoC5LP_HD44780.v
 Program  :   vlogfe
-Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Board__Test\Sequencer_Master_CQ_PSoC5LP.cydsn\Sequencer_Master_CQ_PSoC5LP.cyprj -dcpsoc3 -verilog Sequencer_Master_CQ_PSoC5LP.v
+Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780.cydsn\Sequencer_Master_CQ_PSoC5LP_HD44780.cyprj -dcpsoc3 -verilog Sequencer_Master_CQ_PSoC5LP_HD44780.v
 ======================================================================
 
 vlogfe V6.3 IR 41:  Verilog parser
-Thu Nov 12 21:37:42 2015
+Thu Nov 12 22:26:21 2015
 
 
 ======================================================================
-Compiling:  Sequencer_Master_CQ_PSoC5LP.v
+Compiling:  Sequencer_Master_CQ_PSoC5LP_HD44780.v
 Program  :   vpp
-Options  :    -yv2 -q10 Sequencer_Master_CQ_PSoC5LP.v
+Options  :    -yv2 -q10 Sequencer_Master_CQ_PSoC5LP_HD44780.v
 ======================================================================
 
 vpp V6.3 IR 41:  Verilog Pre-Processor
-Thu Nov 12 21:37:42 2015
+Thu Nov 12 22:26:21 2015
 
 Flattening file 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\cy_virtualmux_v1_0\cy_virtualmux_v1_0.v'
 Flattening file 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\OneTerminal\OneTerminal.v'
@@ -72,19 +72,19 @@ Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\c
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\stdlogic\mod_cnst.vif'.
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\stdlogic\mod_mthv.vif'.
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\stdlogic\mod_genv.vif'.
-Using control file 'Sequencer_Master_CQ_PSoC5LP.ctl'.
+Using control file 'Sequencer_Master_CQ_PSoC5LP_HD44780.ctl'.
 
 vlogfe:  No errors.
 
 
 ======================================================================
-Compiling:  Sequencer_Master_CQ_PSoC5LP.v
+Compiling:  Sequencer_Master_CQ_PSoC5LP_HD44780.v
 Program  :   tovif
-Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Board__Test\Sequencer_Master_CQ_PSoC5LP.cydsn\Sequencer_Master_CQ_PSoC5LP.cyprj -dcpsoc3 -verilog Sequencer_Master_CQ_PSoC5LP.v
+Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780.cydsn\Sequencer_Master_CQ_PSoC5LP_HD44780.cyprj -dcpsoc3 -verilog Sequencer_Master_CQ_PSoC5LP_HD44780.v
 ======================================================================
 
 tovif V6.3 IR 41:  High-level synthesis
-Thu Nov 12 21:37:42 2015
+Thu Nov 12 22:26:21 2015
 
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\std.vhd'.
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\cypress.vhd'.
@@ -95,9 +95,9 @@ Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\c
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\stdlogic\mod_cnst.vif'.
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\stdlogic\mod_mthv.vif'.
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\stdlogic\mod_genv.vif'.
-Linking 'D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Board__Test\Sequencer_Master_CQ_PSoC5LP.cydsn\codegentemp\Sequencer_Master_CQ_PSoC5LP.ctl'.
+Linking 'D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780.cydsn\codegentemp\Sequencer_Master_CQ_PSoC5LP_HD44780.ctl'.
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\cy_virtualmux_v1_0\cy_virtualmux_v1_0.v'.
-Linking 'D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Board__Test\Sequencer_Master_CQ_PSoC5LP.cydsn\codegentemp\Sequencer_Master_CQ_PSoC5LP.v'.
+Linking 'D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780.cydsn\codegentemp\Sequencer_Master_CQ_PSoC5LP_HD44780.v'.
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\OneTerminal\OneTerminal.v'.
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\or_v1_0\or_v1_0.v'.
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\ZeroTerminal\ZeroTerminal.v'.
@@ -106,13 +106,13 @@ tovif:  No errors.
 
 
 ======================================================================
-Compiling:  Sequencer_Master_CQ_PSoC5LP.v
+Compiling:  Sequencer_Master_CQ_PSoC5LP_HD44780.v
 Program  :   topld
-Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Board__Test\Sequencer_Master_CQ_PSoC5LP.cydsn\Sequencer_Master_CQ_PSoC5LP.cyprj -dcpsoc3 -verilog Sequencer_Master_CQ_PSoC5LP.v
+Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780.cydsn\Sequencer_Master_CQ_PSoC5LP_HD44780.cyprj -dcpsoc3 -verilog Sequencer_Master_CQ_PSoC5LP_HD44780.v
 ======================================================================
 
 topld V6.3 IR 41:  Synthesis and optimization
-Thu Nov 12 21:37:42 2015
+Thu Nov 12 22:26:21 2015
 
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\std.vhd'.
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\cypress.vhd'.
@@ -123,9 +123,9 @@ Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\c
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\stdlogic\mod_cnst.vif'.
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\stdlogic\mod_mthv.vif'.
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\stdlogic\mod_genv.vif'.
-Linking 'D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Board__Test\Sequencer_Master_CQ_PSoC5LP.cydsn\codegentemp\Sequencer_Master_CQ_PSoC5LP.ctl'.
+Linking 'D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780.cydsn\codegentemp\Sequencer_Master_CQ_PSoC5LP_HD44780.ctl'.
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\cy_virtualmux_v1_0\cy_virtualmux_v1_0.v'.
-Linking 'D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Board__Test\Sequencer_Master_CQ_PSoC5LP.cydsn\codegentemp\Sequencer_Master_CQ_PSoC5LP.v'.
+Linking 'D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780.cydsn\codegentemp\Sequencer_Master_CQ_PSoC5LP_HD44780.v'.
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\OneTerminal\OneTerminal.v'.
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\or_v1_0\or_v1_0.v'.
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\ZeroTerminal\ZeroTerminal.v'.
@@ -135,14 +135,14 @@ Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\l
 Detecting unused logic.
 ----------------------------------------------------------
     User names
-	\I2CM:udb_clk\
+	\I2CM_Sequencer:udb_clk\
 	Net_151
-	\I2CM:Net_973\
+	\I2CM_Sequencer:Net_973\
 	Net_152
-	\I2CM:Net_974\
-	\I2CM:timeout_clk\
+	\I2CM_Sequencer:Net_974\
+	\I2CM_Sequencer:timeout_clk\
 	Net_157
-	\I2CM:Net_975\
+	\I2CM_Sequencer:Net_975\
 	Net_156
 	Net_155
 
@@ -153,48 +153,46 @@ Deleted 0 Synthesized equations/components.
 ------------------------------------------------------
 Alias Detection
 ------------------------------------------------------
-Aliasing one to tmpOE__RST_1_net_0
-Aliasing tmpOE__Pin_I2CM_Reset_net_0 to tmpOE__RST_1_net_0
-Aliasing \I2CM:Net_969\ to tmpOE__RST_1_net_0
-Aliasing \I2CM:Net_968\ to tmpOE__RST_1_net_0
-Aliasing tmpOE__LED_RED_net_0 to tmpOE__RST_1_net_0
-Aliasing tmpOE__LED_GREEN_net_0 to tmpOE__RST_1_net_0
-Aliasing tmpOE__Pin_I2CM_SCL_net_0 to tmpOE__RST_1_net_0
-Aliasing tmpOE__Pin_I2CM_SDA_net_0 to tmpOE__RST_1_net_0
-Aliasing tmpOE__LED_BLUE_net_0 to tmpOE__RST_1_net_0
-Aliasing \LCD_Char:tmpOE__LCDPort_net_6\ to tmpOE__RST_1_net_0
-Aliasing \LCD_Char:tmpOE__LCDPort_net_5\ to tmpOE__RST_1_net_0
-Aliasing \LCD_Char:tmpOE__LCDPort_net_4\ to tmpOE__RST_1_net_0
-Aliasing \LCD_Char:tmpOE__LCDPort_net_3\ to tmpOE__RST_1_net_0
-Aliasing \LCD_Char:tmpOE__LCDPort_net_2\ to tmpOE__RST_1_net_0
-Aliasing \LCD_Char:tmpOE__LCDPort_net_1\ to tmpOE__RST_1_net_0
-Aliasing \LCD_Char:tmpOE__LCDPort_net_0\ to tmpOE__RST_1_net_0
-Removing Lhs of wire one[6] = tmpOE__RST_1_net_0[1]
-Removing Lhs of wire tmpOE__Pin_I2CM_Reset_net_0[9] = tmpOE__RST_1_net_0[1]
-Removing Rhs of wire \I2CM:sda_x_wire\[14] = \I2CM:Net_643_1\[15]
-Removing Rhs of wire \I2CM:Net_697\[17] = \I2CM:Net_643_2\[23]
-Removing Rhs of wire \I2CM:Net_1109_0\[20] = \I2CM:scl_yfb\[33]
-Removing Rhs of wire \I2CM:Net_1109_1\[21] = \I2CM:sda_yfb\[34]
-Removing Lhs of wire \I2CM:scl_x_wire\[24] = \I2CM:Net_643_0\[22]
-Removing Lhs of wire \I2CM:Net_969\[25] = tmpOE__RST_1_net_0[1]
-Removing Lhs of wire \I2CM:Net_968\[26] = tmpOE__RST_1_net_0[1]
-Removing Lhs of wire \I2CM:tmpOE__Bufoe_scl_net_0\[36] = tmpOE__RST_1_net_0[1]
-Removing Lhs of wire \I2CM:tmpOE__Bufoe_sda_net_0\[39] = tmpOE__RST_1_net_0[1]
-Removing Lhs of wire tmpOE__LED_RED_net_0[47] = tmpOE__RST_1_net_0[1]
-Removing Lhs of wire tmpOE__LED_GREEN_net_0[53] = tmpOE__RST_1_net_0[1]
-Removing Lhs of wire tmpOE__Pin_I2CM_SCL_net_0[61] = tmpOE__RST_1_net_0[1]
-Removing Lhs of wire tmpOE__Pin_I2CM_SDA_net_0[66] = tmpOE__RST_1_net_0[1]
-Removing Lhs of wire tmpOE__LED_BLUE_net_0[71] = tmpOE__RST_1_net_0[1]
-Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_6\[77] = tmpOE__RST_1_net_0[1]
-Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_5\[78] = tmpOE__RST_1_net_0[1]
-Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_4\[79] = tmpOE__RST_1_net_0[1]
-Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_3\[80] = tmpOE__RST_1_net_0[1]
-Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_2\[81] = tmpOE__RST_1_net_0[1]
-Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_1\[82] = tmpOE__RST_1_net_0[1]
-Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_0\[83] = tmpOE__RST_1_net_0[1]
+Aliasing one to tmpOE__Pin_Sequencer_Reset_net_0
+Aliasing \I2CM_Sequencer:Net_969\ to tmpOE__Pin_Sequencer_Reset_net_0
+Aliasing \I2CM_Sequencer:Net_968\ to tmpOE__Pin_Sequencer_Reset_net_0
+Aliasing tmpOE__LED_RED_net_0 to tmpOE__Pin_Sequencer_Reset_net_0
+Aliasing tmpOE__LED_GREEN_net_0 to tmpOE__Pin_Sequencer_Reset_net_0
+Aliasing tmpOE__Pin_Sequencer_SCL_net_0 to tmpOE__Pin_Sequencer_Reset_net_0
+Aliasing tmpOE__Pin_Sequencer_SDA_net_0 to tmpOE__Pin_Sequencer_Reset_net_0
+Aliasing tmpOE__LED_BLUE_net_0 to tmpOE__Pin_Sequencer_Reset_net_0
+Aliasing \LCD_Char:tmpOE__LCDPort_net_6\ to tmpOE__Pin_Sequencer_Reset_net_0
+Aliasing \LCD_Char:tmpOE__LCDPort_net_5\ to tmpOE__Pin_Sequencer_Reset_net_0
+Aliasing \LCD_Char:tmpOE__LCDPort_net_4\ to tmpOE__Pin_Sequencer_Reset_net_0
+Aliasing \LCD_Char:tmpOE__LCDPort_net_3\ to tmpOE__Pin_Sequencer_Reset_net_0
+Aliasing \LCD_Char:tmpOE__LCDPort_net_2\ to tmpOE__Pin_Sequencer_Reset_net_0
+Aliasing \LCD_Char:tmpOE__LCDPort_net_1\ to tmpOE__Pin_Sequencer_Reset_net_0
+Aliasing \LCD_Char:tmpOE__LCDPort_net_0\ to tmpOE__Pin_Sequencer_Reset_net_0
+Removing Lhs of wire one[6] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Rhs of wire \I2CM_Sequencer:sda_x_wire\[8] = \I2CM_Sequencer:Net_643_1\[9]
+Removing Rhs of wire \I2CM_Sequencer:Net_697\[11] = \I2CM_Sequencer:Net_643_2\[17]
+Removing Rhs of wire \I2CM_Sequencer:Net_1109_0\[14] = \I2CM_Sequencer:scl_yfb\[27]
+Removing Rhs of wire \I2CM_Sequencer:Net_1109_1\[15] = \I2CM_Sequencer:sda_yfb\[28]
+Removing Lhs of wire \I2CM_Sequencer:scl_x_wire\[18] = \I2CM_Sequencer:Net_643_0\[16]
+Removing Lhs of wire \I2CM_Sequencer:Net_969\[19] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire \I2CM_Sequencer:Net_968\[20] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire \I2CM_Sequencer:tmpOE__Bufoe_scl_net_0\[30] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire \I2CM_Sequencer:tmpOE__Bufoe_sda_net_0\[33] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__LED_RED_net_0[41] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__LED_GREEN_net_0[47] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__Pin_Sequencer_SCL_net_0[53] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__Pin_Sequencer_SDA_net_0[58] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__LED_BLUE_net_0[63] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_6\[69] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_5\[70] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_4\[71] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_3\[72] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_2\[73] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_1\[74] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_0\[75] = tmpOE__Pin_Sequencer_Reset_net_0[1]
 
 ------------------------------------------------------
-Aliased 0 equations, 23 wires.
+Aliased 0 equations, 22 wires.
 ------------------------------------------------------
 
 ----------------------------------------------------------
@@ -216,28 +214,25 @@ topld:  No errors.
 
 CYPRESS_DIR    : C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp
 Warp Program   : C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\bin/warp.exe
-Warp Arguments : -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya "-.fftprj=D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Board__Test\Sequencer_Master_CQ_PSoC5LP.cydsn\Sequencer_Master_CQ_PSoC5LP.cyprj" -dcpsoc3 Sequencer_Master_CQ_PSoC5LP.v -verilog
+Warp Arguments : -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya "-.fftprj=D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780.cydsn\Sequencer_Master_CQ_PSoC5LP_HD44780.cyprj" -dcpsoc3 Sequencer_Master_CQ_PSoC5LP_HD44780.v -verilog
 </CYPRESSTAG>
-Warp synthesis phase: Elapsed time ==> 0s.382ms
+Warp synthesis phase: Elapsed time ==> 0s.353ms
 <CYPRESSTAG name="Fitter results...">
 <CYPRESSTAG name="Fitter startup details...">
-cyp3fit: V3.3.0.410, Family: PSoC3, Started at: Thursday, 12 November 2015 21:37:42
-Options: -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Board__Test\Sequencer_Master_CQ_PSoC5LP.cydsn\Sequencer_Master_CQ_PSoC5LP.cyprj -d CY8C5868AXI-LP035 Sequencer_Master_CQ_PSoC5LP.v -verilog
+cyp3fit: V3.3.0.410, Family: PSoC3, Started at: Thursday, 12 November 2015 22:26:21
+Options: -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780.cydsn\Sequencer_Master_CQ_PSoC5LP_HD44780.cyprj -d CY8C5868AXI-LP035 Sequencer_Master_CQ_PSoC5LP_HD44780.v -verilog
 </CYPRESSTAG>
 <CYPRESSTAG name="Design parsing">
-Design parsing phase: Elapsed time ==> 0s.006ms
+Design parsing phase: Elapsed time ==> 0s.014ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Tech mapping">
 <CYPRESSTAG name="Initial Mapping" icon="FILE_RPT_TECHM">
-Assigning clock I2CM_BusClock to clock BUS_CLK because it is a pass-through
+Assigning clock I2CM_Sequencer_BusClock to clock BUS_CLK because it is a pass-through
 <CYPRESSTAG name="Global Clock Selection" icon="FILE_RPT_TECHM">
     Analog  Clock 0: Forced-assignment of clock 'ScBoostClk'. Fanout=0, Signal=ClockBlock_ScBoostClk
-    Digital Clock 0: Automatic-assigning  clock 'Clock_1'. Fanout=0, Signal=Net_10
 </CYPRESSTAG>
 <CYPRESSTAG name="UDB Clock/Enable Remapping Results">
 </CYPRESSTAG>
-ADD: pft.M0040: information: The following 1 pin(s) will be assigned a location by the fitter: RST_1(0)
-
 <CYPRESSTAG name="Duplicate Macrocell detection">
 </CYPRESSTAG>
 </CYPRESSTAG>
@@ -254,43 +249,7 @@ Design Equations
     Pin listing
     ------------------------------------------------------------
 
-    Pin : Name = RST_1(0)
-        Attributes:
-            In Group/Port: True
-            In Sync Option: SYNC
-            Out Sync Option: AUTO
-            Interrupt generated: False
-            Interrupt mode: NONE
-            Drive mode: HI_Z_DIGITAL
-            VTrip: CMOS
-            Slew: FAST
-            Input Sync needed: True
-            Output Sync needed: False
-            SC shield enabled: False
-            POR State: ANY
-            LCD Mode: COMMON
-            Register Mode: RegComb
-            CaSense Mode: NEITHER
-            Treat as pin: True
-            Is OE Registered: False
-            Uses Analog: False
-            Can contain Digital: True
-            Is SIO: False
-            SIO Output Buf: NONREGULATED
-            SIO Input Buf: SINGLE_ENDED
-            SIO HiFreq: LOW
-            SIO Hyst: DISABLED
-            SIO Vtrip: MULTIPLIER_0_5
-            SIO Multiplier Index: 0
-            SIO RefSel: VCC_IO
-            Required Capabilitites: DIGITAL, ROUTABLE
-            Initial Value: 0
-            IO Voltage: 0
-        PORT MAP (
-            pa_out => RST_1(0)__PA ,
-            pad => RST_1(0)_PAD );
-
-    Pin : Name = Pin_I2CM_Reset(0)
+    Pin : Name = Pin_Sequencer_Reset(0)
         Attributes:
             In Group/Port: True
             In Sync Option: AUTO
@@ -323,8 +282,8 @@ Design Equations
             Initial Value: 0
             IO Voltage: 0
         PORT MAP (
-            pa_out => Pin_I2CM_Reset(0)__PA ,
-            pad => Pin_I2CM_Reset(0)_PAD );
+            pa_out => Pin_Sequencer_Reset(0)__PA ,
+            pad => Pin_Sequencer_Reset(0)_PAD );
         Properties:
         {
         }
@@ -407,7 +366,7 @@ Design Equations
         {
         }
 
-    Pin : Name = Pin_I2CM_SCL(0)
+    Pin : Name = Pin_Sequencer_SCL(0)
         Attributes:
             In Group/Port: True
             In Sync Option: SYNC
@@ -440,15 +399,15 @@ Design Equations
             Initial Value: 1
             IO Voltage: 0
         PORT MAP (
-            pa_out => Pin_I2CM_SCL(0)__PA ,
-            fb => \I2CM:Net_1109_0\ ,
-            input => \I2CM:Net_643_0\ ,
-            pad => Pin_I2CM_SCL(0)_PAD );
+            pa_out => Pin_Sequencer_SCL(0)__PA ,
+            fb => \I2CM_Sequencer:Net_1109_0\ ,
+            input => \I2CM_Sequencer:Net_643_0\ ,
+            pad => Pin_Sequencer_SCL(0)_PAD );
         Properties:
         {
         }
 
-    Pin : Name = Pin_I2CM_SDA(0)
+    Pin : Name = Pin_Sequencer_SDA(0)
         Attributes:
             In Group/Port: True
             In Sync Option: SYNC
@@ -481,10 +440,10 @@ Design Equations
             Initial Value: 1
             IO Voltage: 0
         PORT MAP (
-            pa_out => Pin_I2CM_SDA(0)__PA ,
-            fb => \I2CM:Net_1109_1\ ,
-            input => \I2CM:sda_x_wire\ ,
-            pad => Pin_I2CM_SDA(0)_PAD );
+            pa_out => Pin_Sequencer_SDA(0)__PA ,
+            fb => \I2CM_Sequencer:Net_1109_1\ ,
+            input => \I2CM_Sequencer:sda_x_wire\ ,
+            pad => Pin_Sequencer_SDA(0)_PAD );
         Properties:
         {
         }
@@ -815,18 +774,18 @@ Design Equations
     Sync listing
     ------------------------------------------------------------
 
-    synccell: Name =Pin_I2CM_SDA(0)_SYNC
+    synccell: Name =Pin_Sequencer_SCL(0)_SYNC
         PORT MAP (
-            in => \I2CM:Net_1109_1\ ,
-            out => \I2CM:Net_1109_1_SYNCOUT\ ,
+            in => \I2CM_Sequencer:Net_1109_0\ ,
+            out => \I2CM_Sequencer:Net_1109_0_SYNCOUT\ ,
             clock => ClockBlock_BUS_CLK );
         Clock Polarity: Active High
         Clock Enable: True
 
-    synccell: Name =Pin_I2CM_SCL(0)_SYNC
+    synccell: Name =Pin_Sequencer_SDA(0)_SYNC
         PORT MAP (
-            in => \I2CM:Net_1109_0\ ,
-            out => \I2CM:Net_1109_0_SYNCOUT\ ,
+            in => \I2CM_Sequencer:Net_1109_1\ ,
+            out => \I2CM_Sequencer:Net_1109_1_SYNCOUT\ ,
             clock => ClockBlock_BUS_CLK );
         Clock Polarity: Active High
         Clock Enable: True
@@ -843,9 +802,9 @@ Design Equations
     Interrupt listing
     ------------------------------------------------------------
 
-    interrupt: Name =\I2CM:I2C_IRQ\
+    interrupt: Name =\I2CM_Sequencer:I2C_IRQ\
         PORT MAP (
-            interrupt => \I2CM:Net_697\ );
+            interrupt => \I2CM_Sequencer:Net_697\ );
         Properties:
         {
             int_type = "00"
@@ -860,12 +819,12 @@ Technology mapping summary
 
 Resource Type                 : Used : Free :  Max :  % Used
 ============================================================
-Digital Clocks                :    1 :    7 :    8 : 12.50 %
+Digital Clocks                :    0 :    8 :    8 :  0.00 %
 Analog Clocks                 :    1 :    3 :    4 : 25.00 %
 CapSense Buffers              :    0 :    2 :    2 :  0.00 %
 Digital Filter Block          :    0 :    1 :    1 :  0.00 %
 Interrupts                    :    1 :   31 :   32 :  3.13 %
-IO                            :   16 :   56 :   72 : 22.22 %
+IO                            :   15 :   57 :   72 : 20.83 %
 Segment LCD                   :    0 :    1 :    1 :  0.00 %
 CAN 2.0b                      :    0 :    1 :    1 :  0.00 %
 I2C                           :    1 :    0 :    1 : 100.00 %
@@ -897,9 +856,9 @@ Initial Analog Placement Results:
 IO_2@[IOP=(3)][IoId=(2)] : LED_BLUE(0) (fixed)
 IO_1@[IOP=(3)][IoId=(1)] : LED_GREEN(0) (fixed)
 IO_0@[IOP=(3)][IoId=(0)] : LED_RED(0) (fixed)
-IO_2@[IOP=(6)][IoId=(2)] : Pin_I2CM_Reset(0) (fixed)
-IO_0@[IOP=(6)][IoId=(0)] : Pin_I2CM_SCL(0) (fixed)
-IO_1@[IOP=(6)][IoId=(1)] : Pin_I2CM_SDA(0) (fixed)
+IO_2@[IOP=(6)][IoId=(2)] : Pin_Sequencer_Reset(0) (fixed)
+IO_0@[IOP=(6)][IoId=(0)] : Pin_Sequencer_SCL(0) (fixed)
+IO_1@[IOP=(6)][IoId=(1)] : Pin_Sequencer_SDA(0) (fixed)
 IO_0@[IOP=(2)][IoId=(0)] : \LCD_Char:LCDPort(0)\ (fixed)
 IO_1@[IOP=(2)][IoId=(1)] : \LCD_Char:LCDPort(1)\ (fixed)
 IO_2@[IOP=(2)][IoId=(2)] : \LCD_Char:LCDPort(2)\ (fixed)
@@ -907,10 +866,10 @@ IO_3@[IOP=(2)][IoId=(3)] : \LCD_Char:LCDPort(3)\ (fixed)
 IO_4@[IOP=(2)][IoId=(4)] : \LCD_Char:LCDPort(4)\ (fixed)
 IO_5@[IOP=(2)][IoId=(5)] : \LCD_Char:LCDPort(5)\ (fixed)
 IO_6@[IOP=(2)][IoId=(6)] : \LCD_Char:LCDPort(6)\ (fixed)
-Analog Placement phase: Elapsed time ==> 0s.018ms
+Analog Placement phase: Elapsed time ==> 0s.020ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Analog Routing">
-Analog Routing phase: Elapsed time ==> 0s.000ms
+Analog Routing phase: Elapsed time ==> 0s.001ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Analog Code Generation">
 ============ Analog Final Answer Routes ============
@@ -925,29 +884,29 @@ Dump of CyP35AnalogRoutingResultsDB
 IsVddaHalfUsedForComp = False
 IsVddaHalfUsedForSar0 = False
 IsVddaHalfUsedForSar1 = False
-Analog Code Generation phase: Elapsed time ==> 0s.438ms
+Analog Code Generation phase: Elapsed time ==> 0s.446ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Digital Placement">
 <CYPRESSTAG name="Detailed placement messages">
 I2659: No Constrained paths were found. The placer will run in non-timing driven mode.
-I2076: Total run-time: 0.6 sec.
+I2076: Total run-time: 0.5 sec.
 
 </CYPRESSTAG>
 <CYPRESSTAG name="PLD Packing">
 <CYPRESSTAG name="PLD Packing Summary">
 No PLDs were packed.
 </CYPRESSTAG>
-PLD Packing: Elapsed time ==> 0s.001ms
+PLD Packing: Elapsed time ==> 0s.000ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Partitioning">
 <CYPRESSTAG name="Initial Partitioning Summary">
 Initial Partitioning Summary not displayed at this verbose level.</CYPRESSTAG>
 <CYPRESSTAG name="Final Partitioning Summary">
 Final Partitioning Summary not displayed at this verbose level.</CYPRESSTAG>
-Partitioning: Elapsed time ==> 0s.014ms
+Partitioning: Elapsed time ==> 0s.013ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Simulated Annealing">
-Annealing: Elapsed time ==> 0s.000ms
+Annealing: Elapsed time ==> 0s.001ms
 <CYPRESSTAG name="Simulated Annealing Results">
 The seed used for moves was 114161200.
 Inital cost was 48, final cost is 48 (0.00% improvement).</CYPRESSTAG>
@@ -973,10 +932,10 @@ UDB [UDB=(0,2)] is empty.
 UDB [UDB=(0,3)] is empty.
 UDB [UDB=(0,4)] is empty.
 UDB [UDB=(0,5)] contents:
-synccell: Name =Pin_I2CM_SCL(0)_SYNC
+synccell: Name =Pin_Sequencer_SDA(0)_SYNC
     PORT MAP (
-        in => \I2CM:Net_1109_0\ ,
-        out => \I2CM:Net_1109_0_SYNCOUT\ ,
+        in => \I2CM_Sequencer:Net_1109_1\ ,
+        out => \I2CM_Sequencer:Net_1109_1_SYNCOUT\ ,
         clock => ClockBlock_BUS_CLK );
     Properties:
     {
@@ -984,10 +943,10 @@ synccell: Name =Pin_I2CM_SCL(0)_SYNC
     Clock Polarity: Active High
     Clock Enable: True
 
-synccell: Name =Pin_I2CM_SDA(0)_SYNC
+synccell: Name =Pin_Sequencer_SCL(0)_SYNC
     PORT MAP (
-        in => \I2CM:Net_1109_1\ ,
-        out => \I2CM:Net_1109_1_SYNCOUT\ ,
+        in => \I2CM_Sequencer:Net_1109_0\ ,
+        out => \I2CM_Sequencer:Net_1109_0_SYNCOUT\ ,
         clock => ClockBlock_BUS_CLK );
     Properties:
     {
@@ -1015,55 +974,15 @@ UDB [UDB=(3,4)] is empty.
 UDB [UDB=(3,5)] is empty.
 Intr container @ [IntrContainer=(0)]: 
   Intr@ [IntrContainer=(0)][IntrId=(15)] 
-    interrupt: Name =\I2CM:I2C_IRQ\
+    interrupt: Name =\I2CM_Sequencer:I2C_IRQ\
         PORT MAP (
-            interrupt => \I2CM:Net_697\ );
+            interrupt => \I2CM_Sequencer:Net_697\ );
         Properties:
         {
             int_type = "00"
         }
 Drq container @ [DrqContainer=(0)]: empty
-Port 0 contains the following IO cells:
-[IoId=0]: 
-Pin : Name = RST_1(0)
-    Attributes:
-        In Group/Port: True
-        In Sync Option: SYNC
-        Out Sync Option: AUTO
-        Interrupt generated: False
-        Interrupt mode: NONE
-        Drive mode: HI_Z_DIGITAL
-        VTrip: CMOS
-        Slew: FAST
-        Input Sync needed: True
-        Output Sync needed: False
-        SC shield enabled: False
-        POR State: ANY
-        LCD Mode: COMMON
-        Register Mode: RegComb
-        CaSense Mode: NEITHER
-        Treat as pin: True
-        Is OE Registered: False
-        Uses Analog: False
-        Can contain Digital: True
-        Is SIO: False
-        SIO Output Buf: NONREGULATED
-        SIO Input Buf: SINGLE_ENDED
-        SIO HiFreq: LOW
-        SIO Hyst: DISABLED
-        SIO Vtrip: MULTIPLIER_0_5
-        SIO Multiplier Index: 0
-        SIO RefSel: VCC_IO
-        Required Capabilitites: DIGITAL, ROUTABLE
-        Initial Value: 0
-        IO Voltage: 0
-    PORT MAP (
-        pa_out => RST_1(0)__PA ,
-        pad => RST_1(0)_PAD );
-    Properties:
-    {
-    }
-
+Port 0 is empty
 Port 1 is empty
 Port 2 contains the following IO cells:
 [IoId=0]: 
@@ -1471,7 +1390,7 @@ Port 4 is empty
 Port 5 is empty
 Port 6 contains the following IO cells:
 [IoId=0]: 
-Pin : Name = Pin_I2CM_SCL(0)
+Pin : Name = Pin_Sequencer_SCL(0)
     Attributes:
         In Group/Port: True
         In Sync Option: SYNC
@@ -1504,16 +1423,16 @@ Pin : Name = Pin_I2CM_SCL(0)
         Initial Value: 1
         IO Voltage: 0
     PORT MAP (
-        pa_out => Pin_I2CM_SCL(0)__PA ,
-        fb => \I2CM:Net_1109_0\ ,
-        input => \I2CM:Net_643_0\ ,
-        pad => Pin_I2CM_SCL(0)_PAD );
+        pa_out => Pin_Sequencer_SCL(0)__PA ,
+        fb => \I2CM_Sequencer:Net_1109_0\ ,
+        input => \I2CM_Sequencer:Net_643_0\ ,
+        pad => Pin_Sequencer_SCL(0)_PAD );
     Properties:
     {
     }
 
 [IoId=1]: 
-Pin : Name = Pin_I2CM_SDA(0)
+Pin : Name = Pin_Sequencer_SDA(0)
     Attributes:
         In Group/Port: True
         In Sync Option: SYNC
@@ -1546,16 +1465,16 @@ Pin : Name = Pin_I2CM_SDA(0)
         Initial Value: 1
         IO Voltage: 0
     PORT MAP (
-        pa_out => Pin_I2CM_SDA(0)__PA ,
-        fb => \I2CM:Net_1109_1\ ,
-        input => \I2CM:sda_x_wire\ ,
-        pad => Pin_I2CM_SDA(0)_PAD );
+        pa_out => Pin_Sequencer_SDA(0)__PA ,
+        fb => \I2CM_Sequencer:Net_1109_1\ ,
+        input => \I2CM_Sequencer:sda_x_wire\ ,
+        pad => Pin_Sequencer_SDA(0)_PAD );
     Properties:
     {
     }
 
 [IoId=2]: 
-Pin : Name = Pin_I2CM_Reset(0)
+Pin : Name = Pin_Sequencer_Reset(0)
     Attributes:
         In Group/Port: True
         In Sync Option: AUTO
@@ -1588,8 +1507,8 @@ Pin : Name = Pin_I2CM_Reset(0)
         Initial Value: 0
         IO Voltage: 0
     PORT MAP (
-        pa_out => Pin_I2CM_Reset(0)__PA ,
-        pad => Pin_I2CM_Reset(0)_PAD );
+        pa_out => Pin_Sequencer_Reset(0)__PA ,
+        pad => Pin_Sequencer_Reset(0)_PAD );
     Properties:
     {
     }
@@ -1617,9 +1536,7 @@ Clock group 0:
             aclk_glb_0 => ClockBlock_ScBoostClk ,
             aclk_0 => ClockBlock_ScBoostClk_local ,
             clk_a_dig_glb_0 => ClockBlock_ScBoostClk_adig ,
-            clk_a_dig_0 => ClockBlock_ScBoostClk_adig_local ,
-            dclk_glb_0 => Net_10 ,
-            dclk_0 => Net_10_local );
+            clk_a_dig_0 => ClockBlock_ScBoostClk_adig_local );
         Properties:
         {
         }
@@ -1630,14 +1547,14 @@ Decimator group 0: empty
 EMIF group 0: empty
 I2C group 0: 
     I2C Block @ F(I2C,0): 
-    i2ccell: Name =\I2CM:I2C_FF\
+    i2ccell: Name =\I2CM_Sequencer:I2C_FF\
         PORT MAP (
             clock => ClockBlock_BUS_CLK ,
-            scl_in => \I2CM:Net_1109_0\ ,
-            sda_in => \I2CM:Net_1109_1\ ,
-            scl_out => \I2CM:Net_643_0\ ,
-            sda_out => \I2CM:sda_x_wire\ ,
-            interrupt => \I2CM:Net_697\ );
+            scl_in => \I2CM_Sequencer:Net_1109_0\ ,
+            sda_in => \I2CM_Sequencer:Net_1109_1\ ,
+            scl_out => \I2CM_Sequencer:Net_643_0\ ,
+            sda_out => \I2CM_Sequencer:sda_x_wire\ ,
+            interrupt => \I2CM_Sequencer:Net_697\ );
         Properties:
         {
             cy_registers = ""
@@ -1662,56 +1579,54 @@ SAR ADC group 0: empty
 ------------------------------------------------------------
 Port Configuration report
 ------------------------------------------------------------
-     |     |       | Interrupt |                  |                       | 
-Port | Pin | Fixed |      Type |       Drive Mode |                  Name | Connections
------+-----+-------+-----------+------------------+-----------------------+---------------------------------------------
-   0 |   0 |       |      NONE |     HI_Z_DIGITAL |              RST_1(0) | 
------+-----+-------+-----------+------------------+-----------------------+---------------------------------------------
-   2 |   0 |     * |      NONE |         CMOS_OUT | \LCD_Char:LCDPort(0)\ | 
-     |   1 |     * |      NONE |         CMOS_OUT | \LCD_Char:LCDPort(1)\ | 
-     |   2 |     * |      NONE |         CMOS_OUT | \LCD_Char:LCDPort(2)\ | 
-     |   3 |     * |      NONE |         CMOS_OUT | \LCD_Char:LCDPort(3)\ | 
-     |   4 |     * |      NONE |         CMOS_OUT | \LCD_Char:LCDPort(4)\ | 
-     |   5 |     * |      NONE |         CMOS_OUT | \LCD_Char:LCDPort(5)\ | 
-     |   6 |     * |      NONE |         CMOS_OUT | \LCD_Char:LCDPort(6)\ | 
------+-----+-------+-----------+------------------+-----------------------+---------------------------------------------
-   3 |   0 |     * |      NONE |         CMOS_OUT |            LED_RED(0) | 
-     |   1 |     * |      NONE |         CMOS_OUT |          LED_GREEN(0) | 
-     |   2 |     * |      NONE |         CMOS_OUT |           LED_BLUE(0) | 
------+-----+-------+-----------+------------------+-----------------------+---------------------------------------------
-   6 |   0 |     * |      NONE |    OPEN_DRAIN_LO |       Pin_I2CM_SCL(0) | FB(\I2CM:Net_1109_0\), In(\I2CM:Net_643_0\)
-     |   1 |     * |      NONE |    OPEN_DRAIN_LO |       Pin_I2CM_SDA(0) | FB(\I2CM:Net_1109_1\), In(\I2CM:sda_x_wire\)
-     |   2 |     * |      NONE |         CMOS_OUT |     Pin_I2CM_Reset(0) | 
-------------------------------------------------------------------------------------------------------------------------
+     |     |       | Interrupt |                  |                        | 
+Port | Pin | Fixed |      Type |       Drive Mode |                   Name | Connections
+-----+-----+-------+-----------+------------------+------------------------+-----------------------------------------------------------------
+   2 |   0 |     * |      NONE |         CMOS_OUT |  \LCD_Char:LCDPort(0)\ | 
+     |   1 |     * |      NONE |         CMOS_OUT |  \LCD_Char:LCDPort(1)\ | 
+     |   2 |     * |      NONE |         CMOS_OUT |  \LCD_Char:LCDPort(2)\ | 
+     |   3 |     * |      NONE |         CMOS_OUT |  \LCD_Char:LCDPort(3)\ | 
+     |   4 |     * |      NONE |         CMOS_OUT |  \LCD_Char:LCDPort(4)\ | 
+     |   5 |     * |      NONE |         CMOS_OUT |  \LCD_Char:LCDPort(5)\ | 
+     |   6 |     * |      NONE |         CMOS_OUT |  \LCD_Char:LCDPort(6)\ | 
+-----+-----+-------+-----------+------------------+------------------------+-----------------------------------------------------------------
+   3 |   0 |     * |      NONE |         CMOS_OUT |             LED_RED(0) | 
+     |   1 |     * |      NONE |         CMOS_OUT |           LED_GREEN(0) | 
+     |   2 |     * |      NONE |         CMOS_OUT |            LED_BLUE(0) | 
+-----+-----+-------+-----------+------------------+------------------------+-----------------------------------------------------------------
+   6 |   0 |     * |      NONE |    OPEN_DRAIN_LO |   Pin_Sequencer_SCL(0) | FB(\I2CM_Sequencer:Net_1109_0\), In(\I2CM_Sequencer:Net_643_0\)
+     |   1 |     * |      NONE |    OPEN_DRAIN_LO |   Pin_Sequencer_SDA(0) | FB(\I2CM_Sequencer:Net_1109_1\), In(\I2CM_Sequencer:sda_x_wire\)
+     |   2 |     * |      NONE |         CMOS_OUT | Pin_Sequencer_Reset(0) | 
+---------------------------------------------------------------------------------------------------------------------------------------------
 </CYPRESSTAG>
 </CYPRESSTAG>
 </CYPRESSTAG>
-Digital component placer commit/Report: Elapsed time ==> 0s.001ms
-Digital Placement phase: Elapsed time ==> 0s.895ms
+Digital component placer commit/Report: Elapsed time ==> 0s.002ms
+Digital Placement phase: Elapsed time ==> 0s.837ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Digital Routing">
 Routing successful.
-Digital Routing phase: Elapsed time ==> 1s.369ms
+Digital Routing phase: Elapsed time ==> 1s.368ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Bitstream and API generation">
-Bitstream and API generation phase: Elapsed time ==> 0s.173ms
+Bitstream and API generation phase: Elapsed time ==> 0s.180ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Bitstream verification">
-Bitstream verification phase: Elapsed time ==> 0s.036ms
+Bitstream verification phase: Elapsed time ==> 0s.034ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Static timing analysis">
-Timing report is in Sequencer_Master_CQ_PSoC5LP_timing.html.
-Static timing analysis phase: Elapsed time ==> 0s.262ms
+Timing report is in Sequencer_Master_CQ_PSoC5LP_HD44780_timing.html.
+Static timing analysis phase: Elapsed time ==> 0s.293ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Data reporting">
 Data reporting phase: Elapsed time ==> 0s.000ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Database update...">
-Design database save phase: Elapsed time ==> 0s.156ms
+Design database save phase: Elapsed time ==> 0s.151ms
 </CYPRESSTAG>
-cydsfit: Elapsed time ==> 3s.471ms
+cydsfit: Elapsed time ==> 3s.455ms
 </CYPRESSTAG>
-Fitter phase: Elapsed time ==> 3s.508ms
-API generation phase: Elapsed time ==> 0s.864ms
-Dependency generation phase: Elapsed time ==> 0s.011ms
+Fitter phase: Elapsed time ==> 3s.489ms
+API generation phase: Elapsed time ==> 0s.895ms
+Dependency generation phase: Elapsed time ==> 0s.008ms
 Cleanup phase: Elapsed time ==> 0s.001ms
