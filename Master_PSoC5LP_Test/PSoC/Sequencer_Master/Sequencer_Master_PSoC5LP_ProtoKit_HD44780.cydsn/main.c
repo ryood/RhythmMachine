@@ -7,6 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.11.13 PSoC 5LP Prototyping Kitに移植
  * 2015.11.13 Sampling Timerをインプリメント
  * 2015.11.13 Sequencer Board, Char LCDをインプリメント
  * 2015.11.12 新規作成
@@ -140,6 +141,7 @@ void error(uint32 code, uint32 ext)
         "Sequencre Wt Err",   // 0x02
     };
     
+    LCD_Char_ClearDisplay();
     LCD_printf(0, "%s", error_str[code]);
     LCD_printf(1, "%ld", ext);
     
