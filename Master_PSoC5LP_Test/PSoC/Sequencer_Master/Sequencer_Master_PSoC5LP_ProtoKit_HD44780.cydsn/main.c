@@ -7,6 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.11.13 ロータリーエンコーダをインプリメント
  * 2015.11.13 Master Clockを72MHzに変更
  * 2015.11.13 PSoC 5LP Prototyping Kitに移植
  * 2015.11.13 Sampling Timerをインプリメント
@@ -37,8 +38,9 @@
 
 // Error
 //
-#define ERR_SEQUENCER_READ  (0x01)
-#define ERR_SEQUENCER_WRITE (0x02)
+#define ERR_SEQUENCER_READ      (0x01)
+#define ERR_SEQUENCER_WRITE     (0x02)
+#define ERR_RE_OUT_OF_BOUNDS    (0x03)
 
 /**************************************************
 waveLookupTable   : fp32 Q16 : -1.0 .. +1.0
@@ -299,6 +301,99 @@ CY_ISR(Timer_Sampling_interrupt_handler)
 }
 
 //=================================================
+// Rotary Encoder
+//
+//=================================================
+//-------------------------------------------------
+// ロータリーエンコーダの読み取り
+// return: ロータリーエンコーダーの回転方向
+//         0:変化なし 1:時計回り -1:反時計回り
+//
+int readRE_1(int RE_n)
+{
+    static uint8_t index[3];
+    uint8_t rd = 0;
+    int retval = 0;
+    
+    switch (RE_n) {
+    case 0:
+        rd = Pin_RE1_Read();
+        break;
+    case 1:
+        rd = Pin_RE2_Read();
+        break;
+    case 2:
+        //rd = Pin_RE3_Read();
+        break;
+    default:
+        error(ERR_RE_OUT_OF_BOUNDS, RE_n);
+    }
+
+    index[RE_n] = (index[RE_n] << 2) | rd;
+	index[RE_n] &= 0b1111;
+
+	switch (index[RE_n]) {
+	// 時計回り
+	case 0b0001:	// 00 -> 01
+	case 0b1110:	// 11 -> 10
+	    retval = 1;
+	    break;
+	// 反時計回り
+	case 0b0010:	// 00 -> 10
+	case 0b1101:	// 11 -> 01
+	    retval = -1;
+	    break;
+    }
+    return retval;
+}
+//-------------------------------------------------
+// Decay値を取得
+// return: ロータリーエンコーダーの回転方向
+//         0:変化なし 1:時計回り -1:反時計回り
+//
+uint8 readDecay()
+{   
+    int rv;
+    static int16 amt;
+    
+    rv = readRE_1(0);
+    if (rv != 0) {
+        amt += rv;
+        /*
+        amt = tracks[sequencerRdBuffer.track].decayAmount;
+        amt += rv << 2;
+        if (amt > 0 && amt <= UINT8_MAX) {
+            isREDirty |= (1 << 0);
+            tracks[sequencerRdBuffer.track].decayAmount = amt;
+            setModDDSParameter(sequencerRdBuffer.track);
+        }
+        */
+        //LCD_printf(1, "%d %d  ", rv, amt); 
+    }
+    
+}
+
+void readLevel()
+{
+    int rv;
+    static int16 amt;
+    
+    rv = readRE_1(1);
+    if (rv != 0) {
+        amt += rv;
+        /*
+        amt = tracks[sequencerRdBuffer.track].ampAmount;
+        amt += rv << 2;
+        if (amt >= 0 && amt <= UINT8_MAX) { 
+            isREDirty |= (1 << 1);
+            tracks[sequencerRdBuffer.track].ampAmount = amt;
+        }
+        */
+        //LCD_printf(1, "%d %d  ", rv, amt); 
+    }
+}
+
+//=================================================
 // メインルーチン
 //
 //=================================================
@@ -349,13 +444,16 @@ int main()
             error(ERR_SEQUENCER_WRITE, sequencerWrStatus);
         }            
         
-        displaySequencerParameter();
+        readDecay();
+        readLevel();
+        
+        //displaySequencerParameter();
         
         sequencerWrBuffer[0]++;
         if (sequencerWrBuffer[0] == 16)
             sequencerWrBuffer[0] = 0;
         
-        CyDelay(125);
+        CyDelay(1);
     }
 }
 
