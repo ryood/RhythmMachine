@@ -7,6 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.11.13 Master Clockを72MHzに変更
  * 2015.11.13 PSoC 5LP Prototyping Kitに移植
  * 2015.11.13 Sampling Timerをインプリメント
  * 2015.11.13 Sequencer Board, Char LCDをインプリメント
