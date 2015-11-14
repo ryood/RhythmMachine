@@ -65,6 +65,7 @@ volumeAmount      : 8bit
 // マクロ関数
 // 
 //=================================================
+/* Set LED RED color */
 #define RGB_LED_ON_RED  \
                 do{     \
                     LED_RED_Write  (1u); \
@@ -323,7 +324,7 @@ int readRE_1(int RE_n)
         rd = Pin_RE2_Read();
         break;
     case 2:
-        //rd = Pin_RE3_Read();
+        rd = Pin_RE3_Read();
         break;
     default:
         error(ERR_RE_OUT_OF_BOUNDS, RE_n);
@@ -348,8 +349,7 @@ int readRE_1(int RE_n)
 }
 //-------------------------------------------------
 // Decay値を取得
-// return: ロータリーエンコーダーの回転方向
-//         0:変化なし 1:時計回り -1:反時計回り
+// return: decay値
 //
 uint8 readDecay()
 {   
@@ -370,10 +370,14 @@ uint8 readDecay()
         */
         //LCD_printf(1, "%d %d  ", rv, amt); 
     }
-    
+    return amt;
 }
 
-void readLevel()
+//-------------------------------------------------
+// Level値を取得
+// return: level値
+//
+uint8 readLevel()
 {
     int rv;
     static int16 amt;
@@ -391,6 +395,32 @@ void readLevel()
         */
         //LCD_printf(1, "%d %d  ", rv, amt); 
     }
+    return amt;
+}
+
+//-------------------------------------------------
+// Tone値を取得
+// return: tone値
+//
+uint8 readTone()
+{
+    int rv;
+    static int16 amt;
+    
+    rv = readRE_1(2);
+    if (rv != 0) {
+        amt += rv;
+        /*
+        amt = tracks[sequencerRdBuffer.track].ampAmount;
+        amt += rv << 2;
+        if (amt >= 0 && amt <= UINT8_MAX) { 
+            isREDirty |= (1 << 1);
+            tracks[sequencerRdBuffer.track].ampAmount = amt;
+        }
+        */
+        //LCD_printf(1, "%d %d  ", rv, amt); 
+    }
+    return amt;
 }
 
 //=================================================
@@ -444,8 +474,7 @@ int main()
             error(ERR_SEQUENCER_WRITE, sequencerWrStatus);
         }            
         
-        readDecay();
-        readLevel();
+        LCD_printf(1, "%3d %3d %3d     ", readDecay(), readLevel(), readTone());
         
         //displaySequencerParameter();
         

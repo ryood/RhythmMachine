@@ -15,7 +15,28 @@
 #include "fixedpoint.h"
 #include <stdint.h>
     
-#define SEQUENCE_LEN    (16)
+//-------------------------------------------------
+// 波形生成
+//
+#define SAMPLE_CLOCK			(8000u)	    // 8kHz
+
+#define TRACK_N					(3)		    // トラックの個数
+#define WAVE_LOOKUP_TABLE_SIZE	(1024u)		// Lookup Table の要素数
+#define MOD_LOOKUP_TABLE_SIZE	(128u)
+#define SEQUENCE_LEN		 	(16u)
+#define INITIAL_BPM				(120u)
+
+#define POW_2_32			    (4294967296ull) // 2の32乗
+
+//-------------------------------------------------
+// シーケンサーパラメータ
+//
+#define UPDATE_TRACK        (0x02)
+#define UPDATE_PLAY         (0x04)
+#define UPDATE_SEQUENCE1    (0x08)
+#define UPDATE_SEQUENCE2    (0x10)
+#define UPDATE_POT1         (0x20)
+#define UPDATE_POT2         (0x40)
     
 struct sequencer_parameter {
     uint8_t update;
@@ -32,8 +53,8 @@ struct track {
 	const fp32 *decayLookupTable;
 	double waveFrequency;
 	uint8_t decayAmount;
-	uint8_t ampAmount;
-	uint8_t toneAmount;
+	uint8_t levelAmount;
+	int8_t toneAmount;
 	
 	uint32_t wavePhaseRegister;
 	uint32_t waveTuningWord;
@@ -47,7 +68,7 @@ struct track {
 	
 	uint8_t sequence[SEQUENCE_LEN];	// Velocity
 };
-    
+
 #endif // _DDS_H_
 
 /* [] END OF FILE */

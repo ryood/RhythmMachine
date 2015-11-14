@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <blockRegMap version="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://cypress.com/xsd/cyblockregmap cyblockregmap.xsd" xmlns="http://cypress.com/xsd/cyblockregmap">
-  <block name="Pin_RE1_in" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Debouncer_RE1_B" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Clock_Debouncer" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="ISR_Timer_Sampling" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Pin_ISR_Check" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Debouncer_RE1_A" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Debouncer_RE2_B" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Pin_RE2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="cy_boot" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Pin_RE1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Clock_Debouncer" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Debouncer_RE1_B" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Debouncer_RE2_A" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Pin_RE2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Debouncer_RE2_B" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Pin_RE2_in" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="LED_GREEN" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Debouncer_RE3_B" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Pin_RE3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="cy_boot" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Pin_RE3_in" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Pin_RE1_in" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Debouncer_RE1_A" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Debouncer_RE3_A" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Pin_Sequencer_SCL" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Pin_Sequencer_SDA" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="LED_BLUE" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="LED_GREEN" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Pin_Sequencer_Reset" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="I2CM_Sequencer" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="BusClock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -101,7 +104,9 @@
     </register>
   </block>
   <block name="LED_RED" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="ZeroTerminal_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Pin_Timer_Sampling_TC" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="ISR_Timer_Sampling" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Pin_ISR_Check" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Timer_Sampling" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="VirtualMux_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="ZeroTerminal_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -159,10 +164,9 @@
     <register name="Timer_Sampling_PERIOD" address="0x40004F04" bitWidth="16" desc="TMRx.PER0 - Assigned Period" hidden="false" />
     <register name="Timer_Sampling_COUNTER" address="0x40004F06" bitWidth="16" desc="TMRx.CNT_CMP0 - Current Down Counter Value" hidden="false" />
   </block>
-  <block name="Pin_Timer_Sampling_TC" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="LED_BLUE" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="LCD_Char" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="LCDPort" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   </block>
   <block name="timer_clock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="ZeroTerminal_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
 </blockRegMap>
