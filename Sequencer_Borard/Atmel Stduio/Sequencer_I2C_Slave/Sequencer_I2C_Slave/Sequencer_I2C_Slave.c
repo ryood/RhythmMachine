@@ -29,6 +29,7 @@
  *
  * AtmelStudio 6.2
  *
+ * 2015.11.15 トラック数を8に変更
  * 2015.10.31 POT1/POT2を4bit精度に
  * 2015.10.29 I2C送信前にパラメータをストア
  * 2015.10.29 トラックの管理
@@ -74,7 +75,7 @@
 #define SHIFT_SCK PC0
 
 // Track Data
-#define TRACK_N	3
+#define TRACK_N	8
 
 // ADC
 #define ADC_BUFFER_LEN	8
@@ -462,7 +463,7 @@ int8_t read_re(void)
 	
 	rd = ((PINB & 0b00001100) >> 2);
 	
-	_delay_ms(1);
+	_delay_us(500);
 	
 	if (rd == ((PINB & 0b00001100) >> 2)) {
 		//PORTC ^= (1 << PC3);	// (デバッグ用)
