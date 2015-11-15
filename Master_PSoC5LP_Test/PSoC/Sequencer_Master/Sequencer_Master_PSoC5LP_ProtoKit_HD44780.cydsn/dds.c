@@ -32,13 +32,24 @@ static int tick = -1;  // 初回に0にインクリメント
 static int noteCount = 0;
 
 //=================================================
+// getter / setter
+// 
+//=================================================
+int getNoteCount()
+{
+    return noteCount;
+}
+
+//=================================================
 // DDSパラメータ
 // 
 //=================================================
 //-------------------------------------------------
 // BPMの設定
-inline void setBPM()
+//
+inline void setBPM(uint8_t _bpm)
 {
+    bpm = _bpm;
     ticksPerNote = SAMPLE_CLOCK * 60 / (bpm * 4);
     // ↑整数演算のため丸めているので注意
 }
@@ -66,7 +77,7 @@ inline void setWaveDDSParameter(struct track *track)
 {
     //tracks[n].waveTuningWord = tracks[n].waveFrequency * POW_2_32 / SAMPLE_CLOCK;
     track->waveTuningWord = (track->waveFrequency
-        + (track->waveFrequency * (((double)track->toneAmount - 128.0f) / 128.0f)))
+        + (track->waveFrequency * (((double)track->toneAmount/* - 128.0f*/) / 128.0f)))
         * POW_2_32 / SAMPLE_CLOCK;
 }
 
@@ -79,8 +90,7 @@ void initDDSParameter(struct track* tracks)
 {
     uint8_t i;
     
-    bpm = INITIAL_BPM;
-    setBPM(); 
+    setBPM(INITIAL_BPM); 
     
     for (i = 0; i < TRACK_N; i++) {
         // 波形
@@ -146,8 +156,7 @@ void setTrack(struct track *tracks, int track_n, struct sequencer_parameter *par
     int i;
     
     if (param->update & (UPDATE_POT1 | UPDATE_POT2)) {
-        bpm = (param->pot2 << 4) | param->pot1;
-        setBPM();
+        setBPM((param->pot2 << 4) | param->pot1);
         for (i = 0; i < TRACK_N; i++) {
             setModDDSParameter(&tracks[i]);
         } 

@@ -69,6 +69,12 @@ struct track {
 	uint8_t sequence[SEQUENCE_LEN];	// Velocity
 };
 
+int getNoteCount();
+void initTracks(struct track *tracks);
+void initDDSParameter(struct track* tracks);
+inline void setModDDSParameter(struct track *track);
+fp32 generateWave(struct track *tracks);
+
 #endif // _DDS_H_
 
 /* [] END OF FILE */

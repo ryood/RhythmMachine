@@ -7,6 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.11.15 VDAC8からの出力をインプリメント
  * 2015.11.13 ロータリーエンコーダをインプリメント
  * 2015.11.13 Master Clockを72MHzに変更
  * 2015.11.13 PSoC 5LP Prototyping Kitに移植
@@ -23,7 +24,7 @@
 #include "dds.h"
 
 #define TITLE_STR   ("Rhythm Machine")
-#define VERSION_STR ("2015.11.13")
+#define VERSION_STR ("2015.11.15")
 
 // Sequencer
 //
@@ -36,6 +37,11 @@
 
 #define TRACK_N (3)
 
+// Rotary Encoder
+#define RE_DECAY    (0x00)
+#define RE_LEVEL    (0x01)
+#define RE_TONE     (0x02)
+
 // Error
 //
 #define ERR_SEQUENCER_READ      (0x01)
@@ -43,6 +49,8 @@
 #define ERR_RE_OUT_OF_BOUNDS    (0x03)
 
 /**************************************************
+ データ型
+***************************************************
 waveLookupTable   : fp32 Q16 : -1.0 .. +1.0
 decayLookupTable  : fp32 Q16 : -1.0 .. +1.0
 
@@ -108,7 +116,12 @@ uint8 sequencerWrBuffer[SEQUENCER_I2C_WR_BUFFER_SIZE] = {0};
 uint8 sequencerRdStatus;
 uint8 sequencerWrStatus;
 
-//struct track tracks[TRACK_N];
+struct track tracks[TRACK_N];
+
+//-------------------------------------------------
+// Rotary Encoder                
+//
+uint8 isREDirty;
 
 //=================================================
 // LCD
@@ -143,6 +156,7 @@ void error(uint32 code, uint32 ext)
         "",
         "Sequencer Rd Err",   // 0x01
         "Sequencre Wt Err",   // 0x02
+        "RE Out of Bounds",   // 0x03
     };
     
     LCD_Char_ClearDisplay();
@@ -183,10 +197,9 @@ void displaySequencerParameter()
     LCD_printf(0, "%03d %s %2u %2u %2u",
         (sequencerRdBuffer.pot2 << 4) | sequencerRdBuffer.pot1,
         strTracks[sequencerRdBuffer.track],
-        //tracks[sequencerRdBuffer.track].ampAmount >> 2,
-        //tracks[sequencerRdBuffer.track].toneAmount >> 2,
-        //tracks[sequencerRdBuffer.track].decayAmount >> 2
-        0, 0, 0
+        tracks[sequencerRdBuffer.track].levelAmount >> 2,
+        tracks[sequencerRdBuffer.track].toneAmount >> 2,
+        tracks[sequencerRdBuffer.track].decayAmount >> 2
     );
     
     sequenceString(lineBuffer, sequencerRdBuffer.sequence1, sequencerRdBuffer.sequence2);
@@ -282,26 +295,6 @@ uint32 writeSequencerBoard(void)
 }
 
 //=================================================
-// Sampling Timer
-//
-//=================================================
-//-------------------------------------------------
-// 割り込み処理ルーチン
-//
-CY_ISR(Timer_Sampling_interrupt_handler)
-{
-    // デバッグ用
-    Pin_ISR_Check_Write(1u);
-    Pin_ISR_Check_Write(0u);
-    
-    /* Read Status register in order to clear the sticky Terminal Count (TC) bit 
-	 * in the status register. Note that the function is not called, but rather 
-	 * the status is read directly.
-	 */
-   	Timer_Sampling_STATUS;
-}
-
-//=================================================
 // Rotary Encoder
 //
 //=================================================
@@ -356,18 +349,16 @@ uint8 readDecay()
     int rv;
     static int16 amt;
     
-    rv = readRE_1(0);
+    rv = readRE_1(RE_DECAY);
     if (rv != 0) {
         amt += rv;
-        /*
         amt = tracks[sequencerRdBuffer.track].decayAmount;
         amt += rv << 2;
         if (amt > 0 && amt <= UINT8_MAX) {
-            isREDirty |= (1 << 0);
+            isREDirty |= (1 << RE_DECAY);
             tracks[sequencerRdBuffer.track].decayAmount = amt;
-            setModDDSParameter(sequencerRdBuffer.track);
+            setModDDSParameter(&tracks[sequencerRdBuffer.track]);
         }
-        */
         //LCD_printf(1, "%d %d  ", rv, amt); 
     }
     return amt;
@@ -382,17 +373,15 @@ uint8 readLevel()
     int rv;
     static int16 amt;
     
-    rv = readRE_1(1);
+    rv = readRE_1(RE_LEVEL);
     if (rv != 0) {
         amt += rv;
-        /*
-        amt = tracks[sequencerRdBuffer.track].ampAmount;
+        amt = tracks[sequencerRdBuffer.track].levelAmount;
         amt += rv << 2;
         if (amt >= 0 && amt <= UINT8_MAX) { 
-            isREDirty |= (1 << 1);
-            tracks[sequencerRdBuffer.track].ampAmount = amt;
+            isREDirty |= (1 << RE_LEVEL);
+            tracks[sequencerRdBuffer.track].levelAmount = amt;
         }
-        */
         //LCD_printf(1, "%d %d  ", rv, amt); 
     }
     return amt;
@@ -407,28 +396,63 @@ uint8 readTone()
     int rv;
     static int16 amt;
     
-    rv = readRE_1(2);
+    rv = readRE_1(RE_TONE);
     if (rv != 0) {
         amt += rv;
-        /*
-        amt = tracks[sequencerRdBuffer.track].ampAmount;
+        amt = tracks[sequencerRdBuffer.track].toneAmount;
         amt += rv << 2;
         if (amt >= 0 && amt <= UINT8_MAX) { 
-            isREDirty |= (1 << 1);
-            tracks[sequencerRdBuffer.track].ampAmount = amt;
+            isREDirty |= (1 << RE_TONE);
+            tracks[sequencerRdBuffer.track].toneAmount = amt;
         }
-        */
         //LCD_printf(1, "%d %d  ", rv, amt); 
     }
     return amt;
 }
 
 //=================================================
+// Sampling Timer
+//
+//=================================================
+//-------------------------------------------------
+// 割り込み処理ルーチン
+//
+CY_ISR(Timer_Sampling_interrupt_handler)
+{
+    fp32 fv, fv8;
+    uint8 i8v;
+    
+    // デバッグ用
+    Pin_ISR_Check_Write(1u);
+    
+    /* Read Status register in order to clear the sticky Terminal Count (TC) bit 
+	 * in the status register. Note that the function is not called, but rather 
+	 * the status is read directly.
+	 */
+   	Timer_Sampling_STATUS;
+
+    fv = generateWave(tracks);
+    
+    // for 8bit output (0..255)
+	// 128で乗算すると8bit幅を超えるため127で乗算
+	fv8 = fp32_mul(fv + int_to_fp32(1), int_to_fp32(127));
+    i8v = fp32_to_int(fv8);   
+    VDAC8_1_SetValue(i8v);
+    
+    // デバッグ用
+    Pin_ISR_Check_Write(0u);
+}
+    
+//=================================================
 // メインルーチン
 //
 //=================================================
 int main()
 {
+    // パラメータの初期化
+    initTracks(tracks);
+    initDDSParameter(tracks);
+    
     // LCDを初期化
     LCD_Char_Start();  
     LCD_printf(0, TITLE_STR);
@@ -455,6 +479,10 @@ int main()
     Timer_Sampling_Start();
     ISR_Timer_Sampling_StartEx(Timer_Sampling_interrupt_handler);
     
+    // VDAC8を初期化
+    VDAC8_1_Start();
+    //VDAC8_2_Start();
+    
     CyGlobalIntEnable;
     
     // Sequencerの初期化待ち
@@ -474,15 +502,15 @@ int main()
             error(ERR_SEQUENCER_WRITE, sequencerWrStatus);
         }            
         
-        LCD_printf(1, "%3d %3d %3d     ", readDecay(), readLevel(), readTone());
+        // Read Rotary Encoder
+        readDecay();
+        readLevel();
+        readTone();
         
-        //displaySequencerParameter();
+        sequencerWrBuffer[0] = getNoteCount() % 16;
+        displaySequencerParameter();
         
-        sequencerWrBuffer[0]++;
-        if (sequencerWrBuffer[0] == 16)
-            sequencerWrBuffer[0] = 0;
-        
-        CyDelay(1);
+        //CyDelay(1);
     }
 }
 
