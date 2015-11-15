@@ -157,13 +157,13 @@ void error(uint32 code, uint32 ext)
     char8 error_str[][17] = {
         "",
         "Sequencer Rd Err",   // 0x01
-        "Sequencre Wt Err",   // 0x02
+        "Sequencer Wt Err",   // 0x02
         "RE Out of Bounds",   // 0x03
     };
     
     LCD_Char_ClearDisplay();
     LCD_printf(0, "%s", error_str[code]);
-    LCD_printf(1, "%ld", ext);
+    LCD_printf(1, "%08x", ext);
     
     // loop for ever
     for (;;);
@@ -179,7 +179,7 @@ void error(uint32 code, uint32 ext)
 //            sequence2: シーケンス2
 void sequenceString(char *buffer, uint8 sequence1, uint8 sequence2)
 {
-    const char charOnOff[2] = { '.', 'o' };
+    const char charOnOff[] = { '.', 'o' };
     int i;
     
     for (i = 0; i < 8; i++) {
@@ -188,6 +188,7 @@ void sequenceString(char *buffer, uint8 sequence1, uint8 sequence2)
     for (i = 0; i < 8; i++) {
         buffer[i + 8] = charOnOff[(sequence2 & (1 << i)) >> i];
     }
+    buffer[sequencerWrBuffer[0]] = '^';
 }
 
 void displaySequencerParameter()
