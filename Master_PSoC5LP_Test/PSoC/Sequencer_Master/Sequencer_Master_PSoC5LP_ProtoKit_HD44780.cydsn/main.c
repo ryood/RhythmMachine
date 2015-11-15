@@ -7,6 +7,8 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.11.15 波形をLED表示用に出力
+ * 2015.11.15 Track数を8に変更
  * 2015.11.15 VDAC8からの出力をインプリメント
  * 2015.11.13 ロータリーエンコーダをインプリメント
  * 2015.11.13 Master Clockを72MHzに変更
@@ -22,6 +24,8 @@
 
 #include "utility.h"
 #include "dds.h"
+#include "WaveTableFP32.h"
+#include "ModTableFP32.h"
 
 #define TITLE_STR   ("Rhythm Machine")
 #define VERSION_STR ("2015.11.15")
@@ -34,8 +38,6 @@
 #define SEQUENCER_TRANSFER_CMPLT    (0x00u)
 #define SEQUENCER_RX_TRANSFER_ERROR (0xFEu)
 #define SEQUENCER_TX_TRANSFER_ERROR (0xFFu)
-
-#define TRACK_N (3)
 
 // Rotary Encoder
 #define RE_DECAY    (0x00)
@@ -190,7 +192,9 @@ void sequenceString(char *buffer, uint8 sequence1, uint8 sequence2)
 
 void displaySequencerParameter()
 {
-    const char *strTracks[] = { "KIK", "SNR", "HHC" };
+    const char *strTracks[] = { 
+        "KIK", "SNR", "HHC", "HHO", "LOT", "MIT", "HIT", "RIM"
+    };
     char lineBuffer[17];
     
     LCD_Char_Position(0, 0);
@@ -420,7 +424,7 @@ uint8 readTone()
 CY_ISR(Timer_Sampling_interrupt_handler)
 {
     fp32 fv, fv8;
-    uint8 i8v;
+    uint8 i8v, i8v_plus;
     
     // デバッグ用
     Pin_ISR_Check_Write(1u);
@@ -436,13 +440,99 @@ CY_ISR(Timer_Sampling_interrupt_handler)
     // for 8bit output (0..255)
 	// 128で乗算すると8bit幅を超えるため127で乗算
 	fv8 = fp32_mul(fv + int_to_fp32(1), int_to_fp32(127));
-    i8v = fp32_to_int(fv8);   
+    i8v = fp32_to_int(fv8);
+    
+    // LED表示用に正側のみを取得
+    i8v_plus = (i8v - 128) > 0 ? (i8v -128) << 1 : 0;
+    
     VDAC8_1_SetValue(i8v);
+    VDAC8_2_SetValue(i8v_plus);
     
     // デバッグ用
     Pin_ISR_Check_Write(0u);
 }
+
+//=================================================
+// 波形の初期化
+// parameter: tracks: トラックデータの配列
+//
+//================================================= 
+void initTracks(struct track *tracks)
+{
+    /*
+ 	const uint8_t kickSequence[]  = { 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 };
+	const uint8_t snareSequence[] = { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 };
+	const uint8_t hihatSequnce[]  = { 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1 };
+    */
     
+	// Kick
+	tracks[0].waveLookupTable = waveTableSine;
+	tracks[0].decayLookupTable = modTableLinerDown01;
+	tracks[0].waveFrequency = 50.0f;
+	tracks[0].decayAmount = 200;
+	tracks[0].levelAmount = 200;
+	tracks[0].toneAmount = 0;
+	//memcpy(tracks[0].sequence, kickSequence, SEQUENCE_LEN);
+
+	// Snare
+	tracks[1].waveLookupTable = waveTableSine;
+	tracks[1].decayLookupTable = modTableRampDown01;
+	tracks[1].waveFrequency = 120.0f;
+	tracks[1].decayAmount = 200;
+	tracks[1].levelAmount = 200;
+	tracks[1].toneAmount = 0;
+	//memcpy(tracks[1].sequence, snareSequence, SEQUENCE_LEN);
+
+	// HiHat Close
+	tracks[2].waveLookupTable = waveTableSine;	// unused
+	tracks[2].decayLookupTable = modTableLinerDown01;
+	tracks[2].waveFrequency = 2500.0f;			// unused
+	tracks[2].decayAmount = 16;
+	tracks[2].levelAmount = 8;
+	tracks[2].toneAmount = 0;
+	//memcpy(tracks[2].sequence, hihatSequnce, SEQUENCE_LEN);
+
+	// HiHat Open
+	tracks[3].waveLookupTable = waveTableSine;	// unused
+	tracks[3].decayLookupTable = modTableSustainBeforeRampDown01;
+	tracks[3].waveFrequency = 2500.0f;			// unused
+	tracks[3].decayAmount = 16;
+	tracks[3].levelAmount = 8;
+	tracks[3].toneAmount = 0;
+
+	// Low Tom
+	tracks[4].waveLookupTable = waveTableSine;
+	tracks[4].decayLookupTable = modTableSustainBeforeRampDown01;
+	tracks[4].waveFrequency = 100.0f;
+	tracks[4].decayAmount = 16;
+	tracks[4].levelAmount = 8;
+	tracks[4].toneAmount = 0;
+
+	// Mid Tom
+	tracks[5].waveLookupTable = waveTableSine;
+	tracks[5].decayLookupTable = modTableSustainBeforeRampDown01;
+	tracks[5].waveFrequency = 1000.0f;
+	tracks[5].decayAmount = 16;
+	tracks[5].levelAmount = 8;
+	tracks[5].toneAmount = 0;
+	
+	// High Tom
+	tracks[6].waveLookupTable = waveTableSine;
+	tracks[6].decayLookupTable = modTableSustainBeforeRampDown01;
+	tracks[6].waveFrequency = 2000.0f;
+	tracks[6].decayAmount = 16;
+	tracks[6].levelAmount = 8;
+	tracks[6].toneAmount = 0;
+
+	// Rimshot
+	tracks[7].waveLookupTable = waveTableSine;
+	tracks[7].decayLookupTable = modTableSustainBeforeRampDown01;
+	tracks[7].waveFrequency = 1000.0f;
+	tracks[7].decayAmount = 16;
+	tracks[7].levelAmount = 8;
+	tracks[7].toneAmount = 0;
+}
+
 //=================================================
 // メインルーチン
 //
@@ -481,7 +571,11 @@ int main()
     
     // VDAC8を初期化
     VDAC8_1_Start();
-    //VDAC8_2_Start();
+    VDAC8_2_Start();
+    
+    // Opampを初期化
+    Opamp_1_Start();
+    Opamp_2_Start();
     
     CyGlobalIntEnable;
     

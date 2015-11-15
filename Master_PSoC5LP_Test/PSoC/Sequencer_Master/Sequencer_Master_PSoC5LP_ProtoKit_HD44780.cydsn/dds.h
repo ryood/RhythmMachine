@@ -20,7 +20,7 @@
 //
 #define SAMPLE_CLOCK			(8000u)	    // 8kHz
 
-#define TRACK_N					(3)		    // トラックの個数
+#define TRACK_N					(8)		    // トラックの個数
 #define WAVE_LOOKUP_TABLE_SIZE	(1024u)		// Lookup Table の要素数
 #define MOD_LOOKUP_TABLE_SIZE	(128u)
 #define SEQUENCE_LEN		 	(16u)

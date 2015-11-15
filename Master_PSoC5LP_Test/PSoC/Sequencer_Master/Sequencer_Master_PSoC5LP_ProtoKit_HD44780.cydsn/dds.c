@@ -17,8 +17,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "dds.h"
-#include "WaveTableFP32.h"
-#include "ModTableFP32.h"
 
 //-------------------------------------------------
 // BPM
@@ -104,47 +102,6 @@ void initDDSParameter(struct track* tracks)
 		tracks[i].decayStop = 0;
 	}
 }    
-
-//=================================================
-// 波形の初期化
-// parameter: tracks: トラックデータの配列
-//
-//================================================= 
-void initTracks(struct track *tracks)
-{
-    /*
- 	const uint8_t kickSequence[]  = { 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 };
-	const uint8_t snareSequence[] = { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 };
-	const uint8_t hihatSequnce[]  = { 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1 };
-    */
-    
-	// Kick
-	tracks[0].waveLookupTable = waveTableSine;
-	tracks[0].decayLookupTable = modTableLinerDown01;
-	tracks[0].waveFrequency = 50.0f;
-	tracks[0].decayAmount = 200;
-	tracks[0].levelAmount = 200;
-	tracks[0].toneAmount = 0;
-	//memcpy(tracks[0].sequence, kickSequence, SEQUENCE_LEN);
-
-	// Snare
-	tracks[1].waveLookupTable = waveTableSine;
-	tracks[1].decayLookupTable = modTableRampDown01;
-	tracks[1].waveFrequency = 120.0f;
-	tracks[1].decayAmount = 200;
-	tracks[1].levelAmount = 200;
-	tracks[1].toneAmount = 0;
-	//memcpy(tracks[1].sequence, snareSequence, SEQUENCE_LEN);
-
-	// HiHat
-	tracks[2].waveLookupTable = waveTableSine;	// unused
-	tracks[2].decayLookupTable = modTableSustainBeforeRampDown01;
-	tracks[2].waveFrequency = 2500.0f;			// unused
-	tracks[2].decayAmount = 16;
-	tracks[2].levelAmount = 8;
-	tracks[2].toneAmount = 0;
-	//memcpy(tracks[2].sequence, hihatSequnce, SEQUENCE_LEN);
-}
 
 //=================================================
 // シーケンサー基板からのパラメーターの設定
@@ -284,25 +241,19 @@ fp32 generateWave(struct track *tracks)
 		//************************************************************************
 		switch (i) {
 		case 0:	// kick
+		case 1:	// snare
+		case 4:	// low tom
+		case 5:	// mid tom
+		case 6:	// high tom
+		case 7:	// rimshot
 			tracks[i].waveValue = generateDDSWave(
 				&(tracks[i].wavePhaseRegister),
 				tracks[i].waveTuningWord,
 				tracks[i].waveLookupTable);
 			break;
-		case 1:	// snare
-            tracks[i].waveValue = generateDDSWave(
-				&(tracks[i].wavePhaseRegister),
-				tracks[i].waveTuningWord,
-				tracks[i].waveLookupTable);
-            break;
-		case 2:	// hihat
+		case 2:	// hihat close
+		case 3:	// hihat open
 			tracks[i].waveValue = generateNoise();
-            /*
-            tracks[i].waveValue = generateDDSWave(
-				&(tracks[i].wavePhaseRegister),
-				tracks[i].waveTuningWord,
-				tracks[i].waveLookupTable);
-            */
             break;
 		default:
                 ;
