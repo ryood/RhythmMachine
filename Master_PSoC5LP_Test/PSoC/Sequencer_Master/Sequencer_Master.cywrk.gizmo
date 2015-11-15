@@ -563,6 +563,53 @@
 <VisibleNodeIds>
 <v>Sequencer_Master</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Clock_1.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Clock_2.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Clock_Debouncer1.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Clock_SPIM.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Cm3Start.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\CyDmac.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\CyFlash.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\CyLib.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\cymetadata.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\cyPm.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\CySpc.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\cyutils.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_BOOT.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_INT.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_MASTER.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_PM.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_LCD_SLAVE.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_BOOT.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_INT.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_MASTER.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_PM.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\I2CM_Sequencer_SLAVE.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\ISR_Timer_Sampling.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\main.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_I2CM_LCD_Reset.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_I2CM_Sequencer_Reset.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_ISR_Check.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LCD_Reset.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LCD_SCL.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LCD_SDA.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LDAC.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LED_BLUE.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LED_GREEN.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_LED_RED.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_MISO.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_MOSI.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_RE1.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_RE1_in.lst</v>
+<v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_RE2.lst</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStates>

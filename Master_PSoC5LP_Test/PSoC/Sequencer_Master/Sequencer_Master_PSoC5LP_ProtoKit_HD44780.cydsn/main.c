@@ -507,6 +507,8 @@ int main()
         readLevel();
         readTone();
         
+        setTrack(tracks, sequencerRdBuffer.track, &sequencerRdBuffer);
+        
         sequencerWrBuffer[0] = getNoteCount() % 16;
         displaySequencerParameter();
         

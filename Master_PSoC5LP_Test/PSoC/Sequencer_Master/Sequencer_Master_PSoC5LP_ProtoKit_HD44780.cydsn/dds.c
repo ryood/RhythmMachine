@@ -112,9 +112,11 @@ void initDDSParameter(struct track* tracks)
 //================================================= 
 void initTracks(struct track *tracks)
 {
+    /*
  	const uint8_t kickSequence[]  = { 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 };
 	const uint8_t snareSequence[] = { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 };
 	const uint8_t hihatSequnce[]  = { 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1 };
+    */
     
 	// Kick
 	tracks[0].waveLookupTable = waveTableSine;
@@ -123,7 +125,7 @@ void initTracks(struct track *tracks)
 	tracks[0].decayAmount = 200;
 	tracks[0].levelAmount = 200;
 	tracks[0].toneAmount = 0;
-	memcpy(tracks[0].sequence, kickSequence, SEQUENCE_LEN);
+	//memcpy(tracks[0].sequence, kickSequence, SEQUENCE_LEN);
 
 	// Snare
 	tracks[1].waveLookupTable = waveTableSine;
@@ -132,7 +134,7 @@ void initTracks(struct track *tracks)
 	tracks[1].decayAmount = 200;
 	tracks[1].levelAmount = 200;
 	tracks[1].toneAmount = 0;
-	memcpy(tracks[1].sequence, snareSequence, SEQUENCE_LEN);
+	//memcpy(tracks[1].sequence, snareSequence, SEQUENCE_LEN);
 
 	// HiHat
 	tracks[2].waveLookupTable = waveTableSine;	// unused
@@ -141,7 +143,7 @@ void initTracks(struct track *tracks)
 	tracks[2].decayAmount = 16;
 	tracks[2].levelAmount = 8;
 	tracks[2].toneAmount = 0;
-	memcpy(tracks[2].sequence, hihatSequnce, SEQUENCE_LEN);
+	//memcpy(tracks[2].sequence, hihatSequnce, SEQUENCE_LEN);
 }
 
 //=================================================
