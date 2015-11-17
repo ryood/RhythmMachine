@@ -54,6 +54,7 @@ struct track {
 	double waveFrequency;
 	uint8_t decayAmount;
 	uint8_t levelAmount;
+    uint8_t levelMax;
 	int8_t toneAmount;
 	
 	uint32_t wavePhaseRegister;

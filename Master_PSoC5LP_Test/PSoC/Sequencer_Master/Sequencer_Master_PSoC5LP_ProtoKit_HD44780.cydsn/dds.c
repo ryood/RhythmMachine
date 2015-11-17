@@ -9,6 +9,7 @@
  *
  * 波形の生成
  *
+ * 2015.11.17 Levelの重み付けを修正
  * 2015.11.17 Toneの計算を修正
  * 2015.11.15 Created
  *
@@ -280,7 +281,9 @@ fp32 generateWave(struct track *tracks)
 		fv = fp32_mul(tracks[i].waveValue, int_to_fp32(tracks[i].sequence[noteCount % SEQUENCE_LEN]));
 		fv = fp32_mul(fv, int_to_fp32(tracks[i].levelAmount));
 		fv = fp32_div(fv, int_to_fp32(UINT8_MAX));
-        // ToDo: ↑シフト演算で除算？
+		fv = fp32_mul(fv, int_to_fp32(tracks[i].levelMax));
+		fv = fp32_div(fv, int_to_fp32(UINT8_MAX));
+		// ↑シフト演算で除算?
 
 		synthWaveValue = fp32_add(synthWaveValue, fv); 
 	}

@@ -7,6 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.11.17 Levelの重み付けを修正
  * 2015.11.17 Toneの設定を修正
  * 2015.11.15 波形をLED表示用に出力
  * 2015.11.15 Track数を8に変更
@@ -475,9 +476,10 @@ void initTracks(struct track *tracks)
 	// Kick
 	tracks[0].waveLookupTable = waveTableSine;
 	tracks[0].decayLookupTable = modTableLinerDown01;
-	tracks[0].waveFrequency = 50.0f;
+	tracks[0].waveFrequency = 60.0f;
 	tracks[0].decayAmount = 200;
 	tracks[0].levelAmount = 200;
+    tracks[0].levelMax = 255;
 	tracks[0].toneAmount = 0;
 	//memcpy(tracks[0].sequence, kickSequence, SEQUENCE_LEN);
 
@@ -487,6 +489,7 @@ void initTracks(struct track *tracks)
 	tracks[1].waveFrequency = 120.0f;
 	tracks[1].decayAmount = 200;
 	tracks[1].levelAmount = 200;
+    tracks[1].levelMax = 255;
 	tracks[1].toneAmount = 0;
 	//memcpy(tracks[1].sequence, snareSequence, SEQUENCE_LEN);
 
@@ -495,7 +498,8 @@ void initTracks(struct track *tracks)
 	tracks[2].decayLookupTable = modTableLinerDown01;
 	tracks[2].waveFrequency = 2500.0f;			// unused
 	tracks[2].decayAmount = 16;
-	tracks[2].levelAmount = 8;
+	tracks[2].levelAmount = 64;
+    tracks[2].levelMax = 128;
 	tracks[2].toneAmount = 0;
 	//memcpy(tracks[2].sequence, hihatSequnce, SEQUENCE_LEN);
 
@@ -503,8 +507,9 @@ void initTracks(struct track *tracks)
 	tracks[3].waveLookupTable = waveTableSine;	// unused
 	tracks[3].decayLookupTable = modTableSustainBeforeRampDown01;
 	tracks[3].waveFrequency = 2500.0f;			// unused
-	tracks[3].decayAmount = 16;
-	tracks[3].levelAmount = 8;
+	tracks[3].decayAmount = 64;
+	tracks[3].levelAmount = 64;
+    tracks[3].levelMax = 128;
 	tracks[3].toneAmount = 0;
 
 	// Low Tom
@@ -512,7 +517,8 @@ void initTracks(struct track *tracks)
 	tracks[4].decayLookupTable = modTableSustainBeforeRampDown01;
 	tracks[4].waveFrequency = 100.0f;
 	tracks[4].decayAmount = 16;
-	tracks[4].levelAmount = 8;
+	tracks[4].levelAmount = 64;
+    tracks[4].levelMax = 255;
 	tracks[4].toneAmount = 0;
 
 	// Mid Tom
@@ -520,7 +526,8 @@ void initTracks(struct track *tracks)
 	tracks[5].decayLookupTable = modTableSustainBeforeRampDown01;
 	tracks[5].waveFrequency = 1000.0f;
 	tracks[5].decayAmount = 16;
-	tracks[5].levelAmount = 8;
+	tracks[5].levelAmount = 64;
+    tracks[5].levelMax = 255;
 	tracks[5].toneAmount = 0;
 	
 	// High Tom
@@ -528,7 +535,8 @@ void initTracks(struct track *tracks)
 	tracks[6].decayLookupTable = modTableSustainBeforeRampDown01;
 	tracks[6].waveFrequency = 2000.0f;
 	tracks[6].decayAmount = 16;
-	tracks[6].levelAmount = 8;
+	tracks[6].levelAmount = 64;
+    tracks[6].levelMax = 255;
 	tracks[6].toneAmount = 0;
 
 	// Rimshot
@@ -536,7 +544,8 @@ void initTracks(struct track *tracks)
 	tracks[7].decayLookupTable = modTableSustainBeforeRampDown01;
 	tracks[7].waveFrequency = 1000.0f;
 	tracks[7].decayAmount = 16;
-	tracks[7].levelAmount = 8;
+	tracks[7].levelAmount = 64;
+    tracks[7].levelMax = 255;
 	tracks[7].toneAmount = 0;
 }
 
@@ -546,9 +555,6 @@ void initTracks(struct track *tracks)
 //=================================================
 int main()
 {
-    int noteCount;
-    uint8 isNoteCountChanged;
-    
     // パラメータの初期化
     initTracks(tracks);
     initDDSParameter(tracks);
@@ -579,6 +585,11 @@ int main()
     Timer_Sampling_Start();
     ISR_Timer_Sampling_StartEx(Timer_Sampling_interrupt_handler);
     
+    CyGlobalIntEnable;
+    
+    // Sequencerの初期化待ち
+    CyDelay(2000);
+    
     // VDAC8を初期化
     VDAC8_1_Start();
     VDAC8_2_Start();
@@ -586,11 +597,6 @@ int main()
     // Opampを初期化
     Opamp_1_Start();
     Opamp_2_Start();
-    
-    CyGlobalIntEnable;
-    
-    // Sequencerの初期化待ち
-    CyDelay(2000);
     
     for(;;)
     {
