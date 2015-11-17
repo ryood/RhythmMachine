@@ -7,6 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.11.17 Toneの設定を修正
  * 2015.11.15 波形をLED表示用に出力
  * 2015.11.15 Track数を8に変更
  * 2015.11.15 VDAC8からの出力をインプリメント
@@ -28,7 +29,7 @@
 #include "ModTableFP32.h"
 
 #define TITLE_STR   ("Rhythm Machine")
-#define VERSION_STR ("2015.11.15")
+#define VERSION_STR ("2015.11.17")
 
 // Sequencer
 //
@@ -188,7 +189,9 @@ void sequenceString(char *buffer, uint8 sequence1, uint8 sequence2)
     for (i = 0; i < 8; i++) {
         buffer[i + 8] = charOnOff[(sequence2 & (1 << i)) >> i];
     }
-    buffer[sequencerWrBuffer[0]] = '^';
+    if (sequencerRdBuffer.play) {
+        buffer[sequencerWrBuffer[0]] = '^';
+    }        
 }
 
 void displaySequencerParameter()
@@ -199,7 +202,7 @@ void displaySequencerParameter()
     char lineBuffer[17];
     
     LCD_Char_Position(0, 0);
-    LCD_printf(0, "%03d %s %2u %2u %2u",
+    LCD_printf(0, "%03d %s %2u%3d %2u",
         (sequencerRdBuffer.pot2 << 4) | sequencerRdBuffer.pot1,
         strTracks[sequencerRdBuffer.track],
         tracks[sequencerRdBuffer.track].levelAmount >> 2,
@@ -382,7 +385,7 @@ uint8 readLevel()
     if (rv != 0) {
         amt += rv;
         amt = tracks[sequencerRdBuffer.track].levelAmount;
-        amt += rv << 2;
+        amt += rv << 1;
         if (amt >= 0 && amt <= UINT8_MAX) { 
             isREDirty |= (1 << RE_LEVEL);
             tracks[sequencerRdBuffer.track].levelAmount = amt;
@@ -406,7 +409,7 @@ uint8 readTone()
         amt += rv;
         amt = tracks[sequencerRdBuffer.track].toneAmount;
         amt += rv << 2;
-        if (amt >= 0 && amt <= UINT8_MAX) { 
+        if (amt >= INT8_MIN && amt <= INT8_MAX) { 
             isREDirty |= (1 << RE_TONE);
             tracks[sequencerRdBuffer.track].toneAmount = amt;
         }
@@ -435,19 +438,22 @@ CY_ISR(Timer_Sampling_interrupt_handler)
 	 * the status is read directly.
 	 */
    	Timer_Sampling_STATUS;
+    
+    if (sequencerRdBuffer.play) {
 
-    fv = generateWave(tracks);
+        fv = generateWave(tracks);
     
-    // for 8bit output (0..255)
-	// 128で乗算すると8bit幅を超えるため127で乗算
-	fv8 = fp32_mul(fv + int_to_fp32(1), int_to_fp32(127));
-    i8v = fp32_to_int(fv8);
-    
-    // LED表示用に正側のみを取得
-    i8v_plus = (i8v - 128) > 0 ? (i8v -128) << 1 : 0;
-    
-    VDAC8_1_SetValue(i8v);
-    VDAC8_2_SetValue(i8v_plus);
+        // for 8bit output (0..255)
+    	// 128で乗算すると8bit幅を超えるため127で乗算
+    	fv8 = fp32_mul(fv + int_to_fp32(1), int_to_fp32(127));
+        i8v = fp32_to_int(fv8);
+        
+        // LED表示用に正側のみを取得
+        i8v_plus = (i8v - 128) > 0 ? (i8v -128) << 1 : 0;
+        
+        VDAC8_1_SetValue(i8v);
+        VDAC8_2_SetValue(i8v_plus);
+    }        
     
     // デバッグ用
     Pin_ISR_Check_Write(0u);
@@ -540,6 +546,9 @@ void initTracks(struct track *tracks)
 //=================================================
 int main()
 {
+    int noteCount;
+    uint8 isNoteCountChanged;
+    
     // パラメータの初期化
     initTracks(tracks);
     initDDSParameter(tracks);
@@ -602,12 +611,17 @@ int main()
         readLevel();
         readTone();
         
+        if (isREDirty & RE_TONE) {
+            setWaveDDSParameter(&tracks[sequencerRdBuffer.track]);
+        }
+        
         setTrack(tracks, sequencerRdBuffer.track, &sequencerRdBuffer);
         
         sequencerWrBuffer[0] = getNoteCount() % 16;
+
         displaySequencerParameter();
-        
-        //CyDelay(1);
+                
+        CyDelay(1);
     }
 }
 

@@ -73,6 +73,7 @@ int getNoteCount();
 void initTracks(struct track *tracks);
 void initDDSParameter(struct track* tracks);
 inline void setModDDSParameter(struct track *track);
+inline void setWaveDDSParameter(struct track *track);
 void setTrack(struct track *tracks, int track_n, struct sequencer_parameter *param);
 fp32 generateWave(struct track *tracks);
 

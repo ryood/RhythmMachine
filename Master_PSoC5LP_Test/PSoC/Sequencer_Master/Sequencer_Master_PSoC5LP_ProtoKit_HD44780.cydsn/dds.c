@@ -8,15 +8,18 @@
  * WHICH IS THE PROPERTY OF your company.
  *
  * 波形の生成
+ *
+ * 2015.11.17 Toneの計算を修正
  * 2015.11.15 Created
  *
  * ========================================
 */
-
+#include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include "dds.h"
+#include "utility.h"
 
 //-------------------------------------------------
 // BPM
@@ -75,8 +78,9 @@ inline void setWaveDDSParameter(struct track *track)
 {
     //tracks[n].waveTuningWord = tracks[n].waveFrequency * POW_2_32 / SAMPLE_CLOCK;
     track->waveTuningWord = (track->waveFrequency
-        + (track->waveFrequency * (((double)track->toneAmount/* - 128.0f*/) / 128.0f)))
+        + (track->waveFrequency * (((double)track->toneAmount) / 128.0f)))
         * POW_2_32 / SAMPLE_CLOCK;
+	
 }
 
 //-------------------------------------------------
