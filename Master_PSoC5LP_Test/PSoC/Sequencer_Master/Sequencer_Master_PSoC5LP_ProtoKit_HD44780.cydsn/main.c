@@ -7,6 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.11.19 Tact Switchの読み取りを追加
  * 2015.11.17 Levelの重み付けを修正
  * 2015.11.17 Toneの設定を修正
  * 2015.11.15 波形をLED表示用に出力
@@ -30,7 +31,7 @@
 #include "ModTableFP32.h"
 
 #define TITLE_STR   ("Rhythm Machine")
-#define VERSION_STR ("2015.11.17")
+#define VERSION_STR ("2015.11.19")
 
 // Sequencer
 //
@@ -45,6 +46,11 @@
 #define RE_DECAY    (0x00)
 #define RE_TONE     (0x01)
 #define RE_LEVEL    (0x02)
+
+// Tact Switch
+#define TACT_SW1    (0x00)
+#define TACT_SW2    (0x01)
+#define TACT_SW3    (0x02)
 
 // Error
 //
@@ -126,6 +132,11 @@ struct track tracks[TRACK_N];
 // Rotary Encoder                
 //
 uint8 isREDirty;
+
+//-------------------------------------------------
+// 
+//
+uint8 tactSwitch;
 
 //=================================================
 // LCD
@@ -419,6 +430,16 @@ uint8 readTone()
     return amt;
 }
 
+
+//=================================================
+// Tact Switch
+//
+//=================================================
+void readTactSwitch()
+{
+    tactSwitch = Pin_SW_Read();    
+}
+
 //=================================================
 // Sampling Timer
 //
@@ -617,6 +638,15 @@ int main()
         readLevel();
         readTone();
         
+        // Read tact switches
+        readTactSwitch();
+        
+        LCD_printf(1, "%d %d %d ", 
+            tactSwitch & (1 << TACT_SW1),
+            tactSwitch & (1 << TACT_SW2),
+            tactSwitch & (1 << TACT_SW3));
+        
+        
         if (isREDirty & RE_TONE) {
             setWaveDDSParameter(&tracks[sequencerRdBuffer.track]);
         }
@@ -625,7 +655,7 @@ int main()
         
         sequencerWrBuffer[0] = getNoteCount() % 16;
 
-        displaySequencerParameter();
+        //displaySequencerParameter();
                 
         CyDelay(1);
     }
