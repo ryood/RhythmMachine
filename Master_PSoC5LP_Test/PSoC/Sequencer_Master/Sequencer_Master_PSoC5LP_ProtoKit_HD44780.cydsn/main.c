@@ -43,8 +43,8 @@
 
 // Rotary Encoder
 #define RE_DECAY    (0x00)
-#define RE_LEVEL    (0x01)
-#define RE_TONE     (0x02)
+#define RE_TONE     (0x01)
+#define RE_LEVEL    (0x02)
 
 // Error
 //
