@@ -539,7 +539,7 @@ function getElementsByClass(rootNode, elemName, className)
 <tr> <td class="prop"> Project :</td>
 <td class="proptext"> Sequencer_Master_PSoC5LP_ProtoKit_HD44780</td></tr>
 <tr> <td class="prop"> Build Time :</td>
-<td class="proptext"> 11/19/15 03:49:59</td></tr>
+<td class="proptext"> 11/19/15 04:38:07</td></tr>
 <tr> <td class="prop"> Device :</td>
 <td class="proptext"> CY8C5888LTI-LP097</td></tr>
 <tr> <td class="prop"> Temperature :</td>
@@ -645,7 +645,7 @@ Clock Summary Section</span>
  <td class = "text_info"> </td>
 </tr>
 <tr> 
- <td class = "text_info">SPIM_1_IntClock</td>
+ <td class = "text_info">SPIM_IntClock</td>
  <td class = "text_info">CyMASTER_CLK</td>
  <td class = "number">2.000&nbsp;MHz</td>
  <td class = "number">2.000&nbsp;MHz</td>
@@ -1335,13 +1335,13 @@ Destination Clock : Clock_SW : Positive edge(Required Frequency 200&nbsp;&nbsp;H
 <div>
 <a href="#" style="text-decoration: none; color: inherit;">
 <span class="sec_head"><span style="font-family: monospace;">+</span>
-Source Clock : SPIM_1_IntClock : Positive edge(Required Frequency 2&nbsp;MHz)</span>
+Source Clock : SPIM_IntClock : Positive edge(Required Frequency 2&nbsp;MHz)</span>
 </a>
 </div><div class="sta_secbody"><div class="sta_sec" >
 <div>
 <a href="#" style="text-decoration: none; color: inherit;">
 <span class="sec_head"><span style="font-family: monospace;">+</span>
-Destination Clock : SPIM_1_IntClock : Positive edge(Required Frequency 2&nbsp;MHz)</span>
+Destination Clock : SPIM_IntClock : Positive edge(Required Frequency 2&nbsp;MHz)</span>
 </a>
 </div><div class="sta_secbody"><div class="sta_sec_desc">Path Delay Requirement : 500ns(2&nbsp;MHz)</div>
 <table class="sta_tscs">
@@ -1357,8 +1357,8 @@ Destination Clock : SPIM_1_IntClock : Positive edge(Required Frequency 2&nbsp;MH
 </thead> 
 <tbody>
 <tr> 
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_0</td>
- <td class = "text_info">\SPIM_1:BSPIM:sR8:Dp:u0\/f1_load</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_0</td>
+ <td class = "text_info">\SPIM:BSPIM:sR8:Dp:u0\/f1_load</td>
  <td class = "number">55.788&nbsp;MHz</td>
  <td class = "number">17.925</td>
  <td class = "number">482.075</td>
@@ -1383,43 +1383,43 @@ Destination Clock : SPIM_1_IntClock : Positive edge(Required Frequency 2&nbsp;MH
  <td class = "text_info">count7cell</td>
  <td class = "text_info">U(2,0)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/clock</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_0</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/clock</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_0</td>
  <td class = "number">1.940</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"> </td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:count_0\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_0</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/main_4</td>
+ <td class = "text_info">\SPIM:BSPIM:count_0\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_0</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/main_4</td>
  <td class = "number">6.986</td>
 </tr>
 <tr> 
  <td class = "text_info">macrocell1</td>
  <td class = "text_info">U(2,3)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/main_4</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/main_4</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/q</td>
  <td class = "number">3.350</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"> </td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/q</td>
- <td class = "text_info">\SPIM_1:BSPIM:sR8:Dp:u0\/f1_load</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:sR8:Dp:u0\/f1_load</td>
  <td class = "number">2.799</td>
 </tr>
 <tr> 
  <td class = "text_info">datapathcell1</td>
  <td class = "text_info">U(2,3)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:sR8:Dp:u0\</td>
+ <td class = "text_info">\SPIM:BSPIM:sR8:Dp:u0\</td>
  <td class = "text_info"></td>
  <td class = "text_info">SETUP</td>
  <td class = "number">2.850</td>
@@ -1438,8 +1438,8 @@ Destination Clock : SPIM_1_IntClock : Positive edge(Required Frequency 2&nbsp;MH
 </td>
 </tr>
 <tr> 
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_2</td>
- <td class = "text_info">\SPIM_1:BSPIM:sR8:Dp:u0\/f1_load</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_2</td>
+ <td class = "text_info">\SPIM:BSPIM:sR8:Dp:u0\/f1_load</td>
  <td class = "number">58.011&nbsp;MHz</td>
  <td class = "number">17.238</td>
  <td class = "number">482.762</td>
@@ -1464,43 +1464,43 @@ Destination Clock : SPIM_1_IntClock : Positive edge(Required Frequency 2&nbsp;MH
  <td class = "text_info">count7cell</td>
  <td class = "text_info">U(2,0)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/clock</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_2</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/clock</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_2</td>
  <td class = "number">1.940</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"> </td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:count_2\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_2</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/main_2</td>
+ <td class = "text_info">\SPIM:BSPIM:count_2\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_2</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/main_2</td>
  <td class = "number">6.299</td>
 </tr>
 <tr> 
  <td class = "text_info">macrocell1</td>
  <td class = "text_info">U(2,3)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/main_2</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/main_2</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/q</td>
  <td class = "number">3.350</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"> </td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/q</td>
- <td class = "text_info">\SPIM_1:BSPIM:sR8:Dp:u0\/f1_load</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:sR8:Dp:u0\/f1_load</td>
  <td class = "number">2.799</td>
 </tr>
 <tr> 
  <td class = "text_info">datapathcell1</td>
  <td class = "text_info">U(2,3)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:sR8:Dp:u0\</td>
+ <td class = "text_info">\SPIM:BSPIM:sR8:Dp:u0\</td>
  <td class = "text_info"></td>
  <td class = "text_info">SETUP</td>
  <td class = "number">2.850</td>
@@ -1519,8 +1519,8 @@ Destination Clock : SPIM_1_IntClock : Positive edge(Required Frequency 2&nbsp;MH
 </td>
 </tr>
 <tr> 
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_1</td>
- <td class = "text_info">\SPIM_1:BSPIM:sR8:Dp:u0\/f1_load</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_1</td>
+ <td class = "text_info">\SPIM:BSPIM:sR8:Dp:u0\/f1_load</td>
  <td class = "number">59.270&nbsp;MHz</td>
  <td class = "number">16.872</td>
  <td class = "number">483.128</td>
@@ -1545,43 +1545,43 @@ Destination Clock : SPIM_1_IntClock : Positive edge(Required Frequency 2&nbsp;MH
  <td class = "text_info">count7cell</td>
  <td class = "text_info">U(2,0)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/clock</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_1</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/clock</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_1</td>
  <td class = "number">1.940</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"> </td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:count_1\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/main_3</td>
+ <td class = "text_info">\SPIM:BSPIM:count_1\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_1</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/main_3</td>
  <td class = "number">5.933</td>
 </tr>
 <tr> 
  <td class = "text_info">macrocell1</td>
  <td class = "text_info">U(2,3)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/main_3</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/main_3</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/q</td>
  <td class = "number">3.350</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"> </td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/q</td>
- <td class = "text_info">\SPIM_1:BSPIM:sR8:Dp:u0\/f1_load</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:sR8:Dp:u0\/f1_load</td>
  <td class = "number">2.799</td>
 </tr>
 <tr> 
  <td class = "text_info">datapathcell1</td>
  <td class = "text_info">U(2,3)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:sR8:Dp:u0\</td>
+ <td class = "text_info">\SPIM:BSPIM:sR8:Dp:u0\</td>
  <td class = "text_info"></td>
  <td class = "text_info">SETUP</td>
  <td class = "number">2.850</td>
@@ -1600,8 +1600,8 @@ Destination Clock : SPIM_1_IntClock : Positive edge(Required Frequency 2&nbsp;MH
 </td>
 </tr>
 <tr> 
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_3</td>
- <td class = "text_info">\SPIM_1:BSPIM:sR8:Dp:u0\/f1_load</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_3</td>
+ <td class = "text_info">\SPIM:BSPIM:sR8:Dp:u0\/f1_load</td>
  <td class = "number">59.648&nbsp;MHz</td>
  <td class = "number">16.765</td>
  <td class = "number">483.235</td>
@@ -1626,43 +1626,43 @@ Destination Clock : SPIM_1_IntClock : Positive edge(Required Frequency 2&nbsp;MH
  <td class = "text_info">count7cell</td>
  <td class = "text_info">U(2,0)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/clock</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_3</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/clock</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_3</td>
  <td class = "number">1.940</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"> </td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:count_3\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_3</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/main_1</td>
+ <td class = "text_info">\SPIM:BSPIM:count_3\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_3</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/main_1</td>
  <td class = "number">5.826</td>
 </tr>
 <tr> 
  <td class = "text_info">macrocell1</td>
  <td class = "text_info">U(2,3)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/main_1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/main_1</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/q</td>
  <td class = "number">3.350</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"> </td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/q</td>
- <td class = "text_info">\SPIM_1:BSPIM:sR8:Dp:u0\/f1_load</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:sR8:Dp:u0\/f1_load</td>
  <td class = "number">2.799</td>
 </tr>
 <tr> 
  <td class = "text_info">datapathcell1</td>
  <td class = "text_info">U(2,3)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:sR8:Dp:u0\</td>
+ <td class = "text_info">\SPIM:BSPIM:sR8:Dp:u0\</td>
  <td class = "text_info"></td>
  <td class = "text_info">SETUP</td>
  <td class = "number">2.850</td>
@@ -1681,8 +1681,8 @@ Destination Clock : SPIM_1_IntClock : Positive edge(Required Frequency 2&nbsp;MH
 </td>
 </tr>
 <tr> 
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_4</td>
- <td class = "text_info">\SPIM_1:BSPIM:sR8:Dp:u0\/f1_load</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_4</td>
+ <td class = "text_info">\SPIM:BSPIM:sR8:Dp:u0\/f1_load</td>
  <td class = "number">60.481&nbsp;MHz</td>
  <td class = "number">16.534</td>
  <td class = "number">483.466</td>
@@ -1707,43 +1707,43 @@ Destination Clock : SPIM_1_IntClock : Positive edge(Required Frequency 2&nbsp;MH
  <td class = "text_info">count7cell</td>
  <td class = "text_info">U(2,0)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/clock</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_4</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/clock</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_4</td>
  <td class = "number">1.940</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"> </td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:count_4\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_4</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/main_0</td>
+ <td class = "text_info">\SPIM:BSPIM:count_4\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_4</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/main_0</td>
  <td class = "number">5.595</td>
 </tr>
 <tr> 
  <td class = "text_info">macrocell1</td>
  <td class = "text_info">U(2,3)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/main_0</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/main_0</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/q</td>
  <td class = "number">3.350</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"> </td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/q</td>
- <td class = "text_info">\SPIM_1:BSPIM:sR8:Dp:u0\/f1_load</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:sR8:Dp:u0\/f1_load</td>
  <td class = "number">2.799</td>
 </tr>
 <tr> 
  <td class = "text_info">datapathcell1</td>
  <td class = "text_info">U(2,3)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:sR8:Dp:u0\</td>
+ <td class = "text_info">\SPIM:BSPIM:sR8:Dp:u0\</td>
  <td class = "text_info"></td>
  <td class = "text_info">SETUP</td>
  <td class = "number">2.850</td>
@@ -1762,8 +1762,8 @@ Destination Clock : SPIM_1_IntClock : Positive edge(Required Frequency 2&nbsp;MH
 </td>
 </tr>
 <tr> 
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_0</td>
- <td class = "text_info">\SPIM_1:BSPIM:RxStsReg\/status_6</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_0</td>
+ <td class = "text_info">\SPIM:BSPIM:RxStsReg\/status_6</td>
  <td class = "number">61.618&nbsp;MHz</td>
  <td class = "number">16.229</td>
  <td class = "number">483.771</td>
@@ -1788,43 +1788,43 @@ Destination Clock : SPIM_1_IntClock : Positive edge(Required Frequency 2&nbsp;MH
  <td class = "text_info">count7cell</td>
  <td class = "text_info">U(2,0)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/clock</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_0</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/clock</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_0</td>
  <td class = "number">1.940</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"> </td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:count_0\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_0</td>
- <td class = "text_info">\SPIM_1:BSPIM:rx_status_6\/main_4</td>
+ <td class = "text_info">\SPIM:BSPIM:count_0\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_0</td>
+ <td class = "text_info">\SPIM:BSPIM:rx_status_6\/main_4</td>
  <td class = "number">7.544</td>
 </tr>
 <tr> 
  <td class = "text_info">macrocell4</td>
  <td class = "text_info">U(2,3)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:rx_status_6\</td>
- <td class = "text_info">\SPIM_1:BSPIM:rx_status_6\/main_4</td>
- <td class = "text_info">\SPIM_1:BSPIM:rx_status_6\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:rx_status_6\</td>
+ <td class = "text_info">\SPIM:BSPIM:rx_status_6\/main_4</td>
+ <td class = "text_info">\SPIM:BSPIM:rx_status_6\/q</td>
  <td class = "number">3.350</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"> </td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:rx_status_6\</td>
- <td class = "text_info">\SPIM_1:BSPIM:rx_status_6\/q</td>
- <td class = "text_info">\SPIM_1:BSPIM:RxStsReg\/status_6</td>
+ <td class = "text_info">\SPIM:BSPIM:rx_status_6\</td>
+ <td class = "text_info">\SPIM:BSPIM:rx_status_6\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:RxStsReg\/status_6</td>
  <td class = "number">2.895</td>
 </tr>
 <tr> 
  <td class = "text_info">statusicell2</td>
  <td class = "text_info">U(2,2)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:RxStsReg\</td>
+ <td class = "text_info">\SPIM:BSPIM:RxStsReg\</td>
  <td class = "text_info"></td>
  <td class = "text_info">SETUP</td>
  <td class = "number">0.500</td>
@@ -1843,8 +1843,8 @@ Destination Clock : SPIM_1_IntClock : Positive edge(Required Frequency 2&nbsp;MH
 </td>
 </tr>
 <tr> 
- <td class = "text_info">\SPIM_1:BSPIM:state_1\/q</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_0\/main_1</td>
+ <td class = "text_info">\SPIM:BSPIM:state_1\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\/main_1</td>
  <td class = "number">61.958&nbsp;MHz</td>
  <td class = "number">16.140</td>
  <td class = "number">483.860</td>
@@ -1869,25 +1869,25 @@ Destination Clock : SPIM_1_IntClock : Positive edge(Required Frequency 2&nbsp;MH
  <td class = "text_info">macrocell18</td>
  <td class = "text_info">U(2,2)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_1\</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_1\/clock_0</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_1\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:state_1\</td>
+ <td class = "text_info">\SPIM:BSPIM:state_1\/clock_0</td>
+ <td class = "text_info">\SPIM:BSPIM:state_1\/q</td>
  <td class = "number">1.250</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"> </td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_1\</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_1\/q</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_0\/main_1</td>
+ <td class = "text_info">\SPIM:BSPIM:state_1\</td>
+ <td class = "text_info">\SPIM:BSPIM:state_1\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\/main_1</td>
  <td class = "number">11.380</td>
 </tr>
 <tr> 
  <td class = "text_info">macrocell19</td>
  <td class = "text_info">U(2,1)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_0\</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\</td>
  <td class = "text_info"></td>
  <td class = "text_info">SETUP</td>
  <td class = "number">3.510</td>
@@ -1906,8 +1906,8 @@ Destination Clock : SPIM_1_IntClock : Positive edge(Required Frequency 2&nbsp;MH
 </td>
 </tr>
 <tr> 
- <td class = "text_info">\SPIM_1:BSPIM:state_2\/q</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_1\/main_0</td>
+ <td class = "text_info">\SPIM:BSPIM:state_2\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:state_1\/main_0</td>
  <td class = "number">62.653&nbsp;MHz</td>
  <td class = "number">15.961</td>
  <td class = "number">484.039</td>
@@ -1932,25 +1932,25 @@ Destination Clock : SPIM_1_IntClock : Positive edge(Required Frequency 2&nbsp;MH
  <td class = "text_info">macrocell17</td>
  <td class = "text_info">U(2,1)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_2\</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_2\/clock_0</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_2\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:state_2\</td>
+ <td class = "text_info">\SPIM:BSPIM:state_2\/clock_0</td>
+ <td class = "text_info">\SPIM:BSPIM:state_2\/q</td>
  <td class = "number">1.250</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"> </td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_2\</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_2\/q</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_1\/main_0</td>
+ <td class = "text_info">\SPIM:BSPIM:state_2\</td>
+ <td class = "text_info">\SPIM:BSPIM:state_2\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:state_1\/main_0</td>
  <td class = "number">11.201</td>
 </tr>
 <tr> 
  <td class = "text_info">macrocell18</td>
  <td class = "text_info">U(2,2)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_1\</td>
+ <td class = "text_info">\SPIM:BSPIM:state_1\</td>
  <td class = "text_info"></td>
  <td class = "text_info">SETUP</td>
  <td class = "number">3.510</td>
@@ -1969,8 +1969,8 @@ Destination Clock : SPIM_1_IntClock : Positive edge(Required Frequency 2&nbsp;MH
 </td>
 </tr>
 <tr> 
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_0</td>
- <td class = "text_info">\SPIM_1:BSPIM:TxStsReg\/status_3</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_0</td>
+ <td class = "text_info">\SPIM:BSPIM:TxStsReg\/status_3</td>
  <td class = "number">64.172&nbsp;MHz</td>
  <td class = "number">15.583</td>
  <td class = "number">484.417</td>
@@ -1995,43 +1995,43 @@ Destination Clock : SPIM_1_IntClock : Positive edge(Required Frequency 2&nbsp;MH
  <td class = "text_info">count7cell</td>
  <td class = "text_info">U(2,0)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/clock</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_0</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/clock</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_0</td>
  <td class = "number">1.940</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"> </td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:count_0\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_0</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/main_4</td>
+ <td class = "text_info">\SPIM:BSPIM:count_0\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_0</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/main_4</td>
  <td class = "number">6.986</td>
 </tr>
 <tr> 
  <td class = "text_info">macrocell1</td>
  <td class = "text_info">U(2,3)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/main_4</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/main_4</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/q</td>
  <td class = "number">3.350</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"> </td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_rx_data\/q</td>
- <td class = "text_info">\SPIM_1:BSPIM:TxStsReg\/status_3</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\</td>
+ <td class = "text_info">\SPIM:BSPIM:load_rx_data\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:TxStsReg\/status_3</td>
  <td class = "number">2.807</td>
 </tr>
 <tr> 
  <td class = "text_info">statusicell1</td>
  <td class = "text_info">U(2,3)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:TxStsReg\</td>
+ <td class = "text_info">\SPIM:BSPIM:TxStsReg\</td>
  <td class = "text_info"></td>
  <td class = "text_info">SETUP</td>
  <td class = "number">0.500</td>
@@ -2050,8 +2050,8 @@ Destination Clock : SPIM_1_IntClock : Positive edge(Required Frequency 2&nbsp;MH
 </td>
 </tr>
 <tr> 
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_2</td>
- <td class = "text_info">\SPIM_1:BSPIM:RxStsReg\/status_6</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_2</td>
+ <td class = "text_info">\SPIM:BSPIM:RxStsReg\/status_6</td>
  <td class = "number">64.292&nbsp;MHz</td>
  <td class = "number">15.554</td>
  <td class = "number">484.446</td>
@@ -2076,43 +2076,43 @@ Destination Clock : SPIM_1_IntClock : Positive edge(Required Frequency 2&nbsp;MH
  <td class = "text_info">count7cell</td>
  <td class = "text_info">U(2,0)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/clock</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_2</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/clock</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_2</td>
  <td class = "number">1.940</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"> </td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:count_2\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_2</td>
- <td class = "text_info">\SPIM_1:BSPIM:rx_status_6\/main_2</td>
+ <td class = "text_info">\SPIM:BSPIM:count_2\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_2</td>
+ <td class = "text_info">\SPIM:BSPIM:rx_status_6\/main_2</td>
  <td class = "number">6.869</td>
 </tr>
 <tr> 
  <td class = "text_info">macrocell4</td>
  <td class = "text_info">U(2,3)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:rx_status_6\</td>
- <td class = "text_info">\SPIM_1:BSPIM:rx_status_6\/main_2</td>
- <td class = "text_info">\SPIM_1:BSPIM:rx_status_6\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:rx_status_6\</td>
+ <td class = "text_info">\SPIM:BSPIM:rx_status_6\/main_2</td>
+ <td class = "text_info">\SPIM:BSPIM:rx_status_6\/q</td>
  <td class = "number">3.350</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"> </td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:rx_status_6\</td>
- <td class = "text_info">\SPIM_1:BSPIM:rx_status_6\/q</td>
- <td class = "text_info">\SPIM_1:BSPIM:RxStsReg\/status_6</td>
+ <td class = "text_info">\SPIM:BSPIM:rx_status_6\</td>
+ <td class = "text_info">\SPIM:BSPIM:rx_status_6\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:RxStsReg\/status_6</td>
  <td class = "number">2.895</td>
 </tr>
 <tr> 
  <td class = "text_info">statusicell2</td>
  <td class = "text_info">U(2,2)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:RxStsReg\</td>
+ <td class = "text_info">\SPIM:BSPIM:RxStsReg\</td>
  <td class = "text_info"></td>
  <td class = "text_info">SETUP</td>
  <td class = "number">0.500</td>
@@ -2745,13 +2745,13 @@ Destination Clock : Clock_SW : Positive edge</span>
 <div>
 <a href="#" style="text-decoration: none; color: inherit;">
 <span class="sec_head"><span style="font-family: monospace;">+</span>
-Source Clock : SPIM_1_IntClock : Positive edge</span>
+Source Clock : SPIM_IntClock : Positive edge</span>
 </a>
 </div><div class="sta_secbody"><div class="sta_sec" >
 <div>
 <a href="#" style="text-decoration: none; color: inherit;">
 <span class="sec_head"><span style="font-family: monospace;">+</span>
-Destination Clock : SPIM_1_IntClock : Positive edge</span>
+Destination Clock : SPIM_IntClock : Positive edge</span>
 </a>
 </div><div class="sta_secbody"><table class="sta_tscs">
  <thead> 
@@ -2764,8 +2764,8 @@ Destination Clock : SPIM_1_IntClock : Positive edge</span>
 </thead> 
 <tbody>
 <tr> 
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_2</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_cond\/main_5</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_2</td>
+ <td class = "text_info">\SPIM:BSPIM:load_cond\/main_5</td>
  <td class = "number">3.151</td>
  <td class = "text_info"></td>
 </tr>
@@ -2788,25 +2788,25 @@ Destination Clock : SPIM_1_IntClock : Positive edge</span>
  <td class = "text_info">count7cell</td>
  <td class = "text_info">U(2,0)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/clock</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_2</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/clock</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_2</td>
  <td class = "number">0.620</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"></td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:count_2\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_2</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_cond\/main_5</td>
+ <td class = "text_info">\SPIM:BSPIM:count_2\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_2</td>
+ <td class = "text_info">\SPIM:BSPIM:load_cond\/main_5</td>
  <td class = "number">2.531</td>
 </tr>
 <tr> 
  <td class = "text_info">macrocell21</td>
  <td class = "text_info">U(2,0)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_cond\</td>
+ <td class = "text_info">\SPIM:BSPIM:load_cond\</td>
  <td class = "text_info"> </td>
  <td class = "text_info">HOLD</td>
  <td class = "number">0.000</td>
@@ -2825,8 +2825,8 @@ Destination Clock : SPIM_1_IntClock : Positive edge</span>
 </td>
 </tr>
 <tr> 
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_4</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_cond\/main_3</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_4</td>
+ <td class = "text_info">\SPIM:BSPIM:load_cond\/main_3</td>
  <td class = "number">3.152</td>
  <td class = "text_info"></td>
 </tr>
@@ -2849,25 +2849,25 @@ Destination Clock : SPIM_1_IntClock : Positive edge</span>
  <td class = "text_info">count7cell</td>
  <td class = "text_info">U(2,0)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/clock</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_4</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/clock</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_4</td>
  <td class = "number">0.620</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"></td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:count_4\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_4</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_cond\/main_3</td>
+ <td class = "text_info">\SPIM:BSPIM:count_4\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_4</td>
+ <td class = "text_info">\SPIM:BSPIM:load_cond\/main_3</td>
  <td class = "number">2.532</td>
 </tr>
 <tr> 
  <td class = "text_info">macrocell21</td>
  <td class = "text_info">U(2,0)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_cond\</td>
+ <td class = "text_info">\SPIM:BSPIM:load_cond\</td>
  <td class = "text_info"> </td>
  <td class = "text_info">HOLD</td>
  <td class = "number">0.000</td>
@@ -2886,8 +2886,8 @@ Destination Clock : SPIM_1_IntClock : Positive edge</span>
 </td>
 </tr>
 <tr> 
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_3</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_cond\/main_4</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_3</td>
+ <td class = "text_info">\SPIM:BSPIM:load_cond\/main_4</td>
  <td class = "number">3.178</td>
  <td class = "text_info"></td>
 </tr>
@@ -2910,25 +2910,25 @@ Destination Clock : SPIM_1_IntClock : Positive edge</span>
  <td class = "text_info">count7cell</td>
  <td class = "text_info">U(2,0)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/clock</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_3</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/clock</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_3</td>
  <td class = "number">0.620</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"></td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:count_3\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_3</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_cond\/main_4</td>
+ <td class = "text_info">\SPIM:BSPIM:count_3\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_3</td>
+ <td class = "text_info">\SPIM:BSPIM:load_cond\/main_4</td>
  <td class = "number">2.558</td>
 </tr>
 <tr> 
  <td class = "text_info">macrocell21</td>
  <td class = "text_info">U(2,0)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_cond\</td>
+ <td class = "text_info">\SPIM:BSPIM:load_cond\</td>
  <td class = "text_info"> </td>
  <td class = "text_info">HOLD</td>
  <td class = "number">0.000</td>
@@ -2947,8 +2947,8 @@ Destination Clock : SPIM_1_IntClock : Positive edge</span>
 </td>
 </tr>
 <tr> 
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_cond\/main_6</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_1</td>
+ <td class = "text_info">\SPIM:BSPIM:load_cond\/main_6</td>
  <td class = "number">3.439</td>
  <td class = "text_info"></td>
 </tr>
@@ -2971,25 +2971,25 @@ Destination Clock : SPIM_1_IntClock : Positive edge</span>
  <td class = "text_info">count7cell</td>
  <td class = "text_info">U(2,0)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/clock</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_1</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/clock</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_1</td>
  <td class = "number">0.620</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"></td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:count_1\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_cond\/main_6</td>
+ <td class = "text_info">\SPIM:BSPIM:count_1\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_1</td>
+ <td class = "text_info">\SPIM:BSPIM:load_cond\/main_6</td>
  <td class = "number">2.819</td>
 </tr>
 <tr> 
  <td class = "text_info">macrocell21</td>
  <td class = "text_info">U(2,0)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_cond\</td>
+ <td class = "text_info">\SPIM:BSPIM:load_cond\</td>
  <td class = "text_info"> </td>
  <td class = "text_info">HOLD</td>
  <td class = "number">0.000</td>
@@ -3008,8 +3008,8 @@ Destination Clock : SPIM_1_IntClock : Positive edge</span>
 </td>
 </tr>
 <tr> 
- <td class = "text_info">\SPIM_1:BSPIM:load_cond\/q</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_cond\/main_8</td>
+ <td class = "text_info">\SPIM:BSPIM:load_cond\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:load_cond\/main_8</td>
  <td class = "number">3.484</td>
  <td class = "text_info"></td>
 </tr>
@@ -3032,25 +3032,25 @@ Destination Clock : SPIM_1_IntClock : Positive edge</span>
  <td class = "text_info">macrocell21</td>
  <td class = "text_info">U(2,0)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_cond\</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_cond\/clock_0</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_cond\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:load_cond\</td>
+ <td class = "text_info">\SPIM:BSPIM:load_cond\/clock_0</td>
+ <td class = "text_info">\SPIM:BSPIM:load_cond\/q</td>
  <td class = "number">1.250</td>
 </tr>
 <tr> 
  <td class = "text_info">macrocell21</td>
  <td class = "text_info">U(2,0)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_cond\</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_cond\/q</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_cond\/main_8</td>
+ <td class = "text_info">\SPIM:BSPIM:load_cond\</td>
+ <td class = "text_info">\SPIM:BSPIM:load_cond\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:load_cond\/main_8</td>
  <td class = "number">2.234</td>
 </tr>
 <tr> 
  <td class = "text_info">macrocell21</td>
  <td class = "text_info">U(2,0)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:load_cond\</td>
+ <td class = "text_info">\SPIM:BSPIM:load_cond\</td>
  <td class = "text_info"> </td>
  <td class = "text_info">HOLD</td>
  <td class = "number">0.000</td>
@@ -3130,8 +3130,8 @@ Destination Clock : SPIM_1_IntClock : Positive edge</span>
 </td>
 </tr>
 <tr> 
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_4</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_2\/main_3</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_4</td>
+ <td class = "text_info">\SPIM:BSPIM:state_2\/main_3</td>
  <td class = "number">3.904</td>
  <td class = "text_info"></td>
 </tr>
@@ -3154,25 +3154,25 @@ Destination Clock : SPIM_1_IntClock : Positive edge</span>
  <td class = "text_info">count7cell</td>
  <td class = "text_info">U(2,0)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/clock</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_4</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/clock</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_4</td>
  <td class = "number">0.620</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"></td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:count_4\</td>
- <td class = "text_info">\SPIM_1:BSPIM:BitCounter\/count_4</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_2\/main_3</td>
+ <td class = "text_info">\SPIM:BSPIM:count_4\</td>
+ <td class = "text_info">\SPIM:BSPIM:BitCounter\/count_4</td>
+ <td class = "text_info">\SPIM:BSPIM:state_2\/main_3</td>
  <td class = "number">3.284</td>
 </tr>
 <tr> 
  <td class = "text_info">macrocell17</td>
  <td class = "text_info">U(2,1)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_2\</td>
+ <td class = "text_info">\SPIM:BSPIM:state_2\</td>
  <td class = "text_info"> </td>
  <td class = "text_info">HOLD</td>
  <td class = "number">0.000</td>
@@ -3191,8 +3191,8 @@ Destination Clock : SPIM_1_IntClock : Positive edge</span>
 </td>
 </tr>
 <tr> 
- <td class = "text_info">\SPIM_1:BSPIM:state_0\/q</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_0\/main_2</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\/main_2</td>
  <td class = "number">4.138</td>
  <td class = "text_info"></td>
 </tr>
@@ -3215,25 +3215,25 @@ Destination Clock : SPIM_1_IntClock : Positive edge</span>
  <td class = "text_info">macrocell19</td>
  <td class = "text_info">U(2,1)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_0\</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_0\/clock_0</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_0\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\/clock_0</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\/q</td>
  <td class = "number">1.250</td>
 </tr>
 <tr> 
  <td class = "text_info">macrocell19</td>
  <td class = "text_info">U(2,1)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_0\</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_0\/q</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_0\/main_2</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\/main_2</td>
  <td class = "number">2.888</td>
 </tr>
 <tr> 
  <td class = "text_info">macrocell19</td>
  <td class = "text_info">U(2,1)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_0\</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\</td>
  <td class = "text_info"> </td>
  <td class = "text_info">HOLD</td>
  <td class = "number">0.000</td>
@@ -3252,8 +3252,8 @@ Destination Clock : SPIM_1_IntClock : Positive edge</span>
 </td>
 </tr>
 <tr> 
- <td class = "text_info">\SPIM_1:BSPIM:state_0\/q</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_2\/main_2</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:state_2\/main_2</td>
  <td class = "number">4.143</td>
  <td class = "text_info"></td>
 </tr>
@@ -3276,25 +3276,25 @@ Destination Clock : SPIM_1_IntClock : Positive edge</span>
  <td class = "text_info">macrocell19</td>
  <td class = "text_info">U(2,1)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_0\</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_0\/clock_0</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_0\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\/clock_0</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\/q</td>
  <td class = "number">1.250</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"></td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_0\</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_0\/q</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_2\/main_2</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:state_2\/main_2</td>
  <td class = "number">2.893</td>
 </tr>
 <tr> 
  <td class = "text_info">macrocell17</td>
  <td class = "text_info">U(2,1)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_2\</td>
+ <td class = "text_info">\SPIM:BSPIM:state_2\</td>
  <td class = "text_info"> </td>
  <td class = "text_info">HOLD</td>
  <td class = "number">0.000</td>
@@ -3313,7 +3313,7 @@ Destination Clock : SPIM_1_IntClock : Positive edge</span>
 </td>
 </tr>
 <tr> 
- <td class = "text_info">\SPIM_1:BSPIM:state_0\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\/q</td>
  <td class = "text_info">Net_336/main_2</td>
  <td class = "number">4.147</td>
  <td class = "text_info"></td>
@@ -3337,17 +3337,17 @@ Destination Clock : SPIM_1_IntClock : Positive edge</span>
  <td class = "text_info">macrocell19</td>
  <td class = "text_info">U(2,1)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_0\</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_0\/clock_0</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_0\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\/clock_0</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\/q</td>
  <td class = "number">1.250</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"></td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_0\</td>
- <td class = "text_info">\SPIM_1:BSPIM:state_0\/q</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\</td>
+ <td class = "text_info">\SPIM:BSPIM:state_0\/q</td>
  <td class = "text_info">Net_336/main_2</td>
  <td class = "number">2.897</td>
 </tr>
@@ -3393,7 +3393,7 @@ Input To Clock Section</span>
 <div>
 <a href="#" style="text-decoration: none; color: inherit;">
 <span class="sec_head"><span style="font-family: monospace;">+</span>
-SPIM_1_IntClock</span>
+SPIM_IntClock</span>
 </a>
 </div><div class="sta_secbody"><table class="sta_tscs">
  <thead> 
@@ -3405,8 +3405,8 @@ SPIM_1_IntClock</span>
 </thead> 
 <tbody>
 <tr> 
- <td class = "text_info">MISO_1(0)_PAD</td>
- <td class = "text_info">\SPIM_1:BSPIM:sR8:Dp:u0\/route_si</td>
+ <td class = "text_info">Pin_SPI_MISO(0)_PAD</td>
+ <td class = "text_info">\SPIM:BSPIM:sR8:Dp:u0\/route_si</td>
  <td class = "number">15.552</td>
 </tr>
 <tr class="sta_path">
@@ -3428,18 +3428,18 @@ SPIM_1_IntClock</span>
  <td class = "text_info">Route</td>
  <td class = "text_info"></td>
  <td class = "number">1</td>
- <td class = "text_info">MISO_1(0)_PAD</td>
- <td class = "text_info">MISO_1(0)_PAD</td>
- <td class = "text_info">MISO_1(0)/pad_in</td>
+ <td class = "text_info">Pin_SPI_MISO(0)_PAD</td>
+ <td class = "text_info">Pin_SPI_MISO(0)_PAD</td>
+ <td class = "text_info">Pin_SPI_MISO(0)/pad_in</td>
  <td class = "number">0.000</td>
 </tr>
 <tr> 
  <td class = "text_info">iocell30</td>
  <td class = "text_info">P12[2]</td>
  <td class = "number">1</td>
- <td class = "text_info">MISO_1(0)</td>
- <td class = "text_info">MISO_1(0)/pad_in</td>
- <td class = "text_info">MISO_1(0)/fb</td>
+ <td class = "text_info">Pin_SPI_MISO(0)</td>
+ <td class = "text_info">Pin_SPI_MISO(0)/pad_in</td>
+ <td class = "text_info">Pin_SPI_MISO(0)/fb</td>
  <td class = "number">7.315</td>
 </tr>
 <tr> 
@@ -3447,15 +3447,15 @@ SPIM_1_IntClock</span>
  <td class = "text_info"></td>
  <td class = "number">1</td>
  <td class = "text_info">Net_19</td>
- <td class = "text_info">MISO_1(0)/fb</td>
- <td class = "text_info">\SPIM_1:BSPIM:sR8:Dp:u0\/route_si</td>
+ <td class = "text_info">Pin_SPI_MISO(0)/fb</td>
+ <td class = "text_info">\SPIM:BSPIM:sR8:Dp:u0\/route_si</td>
  <td class = "number">4.737</td>
 </tr>
 <tr> 
  <td class = "text_info">datapathcell1</td>
  <td class = "text_info">U(2,3)</td>
  <td class = "number">1</td>
- <td class = "text_info">\SPIM_1:BSPIM:sR8:Dp:u0\</td>
+ <td class = "text_info">\SPIM:BSPIM:sR8:Dp:u0\</td>
  <td class = "text_info"> </td>
  <td class = "text_info">SETUP</td>
  <td class = "number">3.500</td>
@@ -4359,7 +4359,7 @@ CyBUS_CLK(fixed-function)</span>
 <div>
 <a href="#" style="text-decoration: none; color: inherit;">
 <span class="sec_head"><span style="font-family: monospace;">+</span>
-SPIM_1_IntClock</span>
+SPIM_IntClock</span>
 </a>
 </div><div class="sta_secbody"><table class="sta_tscs">
  <thead> 
@@ -4371,8 +4371,8 @@ SPIM_1_IntClock</span>
 </thead> 
 <tbody>
 <tr> 
- <td class = "text_info">Net_23/q</td>
- <td class = "text_info">MOSI_1(0)_PAD</td>
+ <td class = "text_info">Net_483/q</td>
+ <td class = "text_info">Pin_SPI_MOSI(0)_PAD</td>
  <td class = "number">24.096</td>
 </tr>
 <tr class="sta_path">
@@ -4394,36 +4394,36 @@ SPIM_1_IntClock</span>
  <td class = "text_info">macrocell16</td>
  <td class = "text_info">U(3,2)</td>
  <td class = "number">1</td>
- <td class = "text_info">Net_23</td>
- <td class = "text_info">Net_23/clock_0</td>
- <td class = "text_info">Net_23/q</td>
+ <td class = "text_info">Net_483</td>
+ <td class = "text_info">Net_483/clock_0</td>
+ <td class = "text_info">Net_483/q</td>
  <td class = "number">1.250</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"></td>
  <td class = "number">1</td>
- <td class = "text_info">Net_23</td>
- <td class = "text_info">Net_23/q</td>
- <td class = "text_info">MOSI_1(0)/pin_input</td>
+ <td class = "text_info">Net_483</td>
+ <td class = "text_info">Net_483/q</td>
+ <td class = "text_info">Pin_SPI_MOSI(0)/pin_input</td>
  <td class = "number">6.913</td>
 </tr>
 <tr> 
  <td class = "text_info">iocell31</td>
  <td class = "text_info">P12[1]</td>
  <td class = "number">1</td>
- <td class = "text_info">MOSI_1(0)</td>
- <td class = "text_info">MOSI_1(0)/pin_input</td>
- <td class = "text_info">MOSI_1(0)/pad_out</td>
+ <td class = "text_info">Pin_SPI_MOSI(0)</td>
+ <td class = "text_info">Pin_SPI_MOSI(0)/pin_input</td>
+ <td class = "text_info">Pin_SPI_MOSI(0)/pad_out</td>
  <td class = "number">15.933</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"></td>
  <td class = "number">1</td>
- <td class = "text_info">MOSI_1(0)_PAD</td>
- <td class = "text_info">MOSI_1(0)/pad_out</td>
- <td class = "text_info">MOSI_1(0)_PAD</td>
+ <td class = "text_info">Pin_SPI_MOSI(0)_PAD</td>
+ <td class = "text_info">Pin_SPI_MOSI(0)/pad_out</td>
+ <td class = "text_info">Pin_SPI_MOSI(0)_PAD</td>
  <td class = "number">0.000</td>
 </tr>
 <tr> 
@@ -4441,7 +4441,7 @@ SPIM_1_IntClock</span>
 </tr>
 <tr> 
  <td class = "text_info">Net_25/q</td>
- <td class = "text_info">SCLK_1(0)_PAD</td>
+ <td class = "text_info">Pin_SPI_SCLK(0)_PAD</td>
  <td class = "number">22.880</td>
 </tr>
 <tr class="sta_path">
@@ -4474,25 +4474,25 @@ SPIM_1_IntClock</span>
  <td class = "number">1</td>
  <td class = "text_info">Net_25</td>
  <td class = "text_info">Net_25/q</td>
- <td class = "text_info">SCLK_1(0)/pin_input</td>
+ <td class = "text_info">Pin_SPI_SCLK(0)/pin_input</td>
  <td class = "number">5.775</td>
 </tr>
 <tr> 
  <td class = "text_info">iocell32</td>
  <td class = "text_info">P12[0]</td>
  <td class = "number">1</td>
- <td class = "text_info">SCLK_1(0)</td>
- <td class = "text_info">SCLK_1(0)/pin_input</td>
- <td class = "text_info">SCLK_1(0)/pad_out</td>
+ <td class = "text_info">Pin_SPI_SCLK(0)</td>
+ <td class = "text_info">Pin_SPI_SCLK(0)/pin_input</td>
+ <td class = "text_info">Pin_SPI_SCLK(0)/pad_out</td>
  <td class = "number">15.855</td>
 </tr>
 <tr> 
  <td class = "text_info">Route</td>
  <td class = "text_info"></td>
  <td class = "number">1</td>
- <td class = "text_info">SCLK_1(0)_PAD</td>
- <td class = "text_info">SCLK_1(0)/pad_out</td>
- <td class = "text_info">SCLK_1(0)_PAD</td>
+ <td class = "text_info">Pin_SPI_SCLK(0)_PAD</td>
+ <td class = "text_info">Pin_SPI_SCLK(0)/pad_out</td>
+ <td class = "text_info">Pin_SPI_SCLK(0)_PAD</td>
  <td class = "number">0.000</td>
 </tr>
 <tr> 

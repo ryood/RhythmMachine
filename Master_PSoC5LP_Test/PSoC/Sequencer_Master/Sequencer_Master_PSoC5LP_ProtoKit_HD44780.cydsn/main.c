@@ -640,12 +640,12 @@ int main()
         
         // Read tact switches
         readTactSwitch();
-        
+        /*
         LCD_printf(1, "%d %d %d ", 
             tactSwitch & (1 << TACT_SW1),
             tactSwitch & (1 << TACT_SW2),
             tactSwitch & (1 << TACT_SW3));
-        
+        */
         
         if (isREDirty & RE_TONE) {
             setWaveDDSParameter(&tracks[sequencerRdBuffer.track]);
@@ -655,7 +655,7 @@ int main()
         
         sequencerWrBuffer[0] = getNoteCount() % 16;
 
-        //displaySequencerParameter();
+        displaySequencerParameter();
                 
         CyDelay(1);
     }
