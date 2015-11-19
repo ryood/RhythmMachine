@@ -306,10 +306,6 @@
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Pin_SW2_in\Pin_SW2_in.c</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Pin_SW2_in\Pin_SW2_in.h</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Pin_SW2_in\Pin_SW2_in_aliases.h</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Pin_SW3_in</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Pin_SW3_in\Pin_SW3_in.c</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Pin_SW3_in\Pin_SW3_in.h</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Pin_SW3_in\Pin_SW3_in_aliases.h</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Pin_Timer_Sampling_TC</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Pin_Timer_Sampling_TC\Pin_Timer_Sampling_TC.c</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Pin_Timer_Sampling_TC\Pin_Timer_Sampling_TC.h</v>
@@ -624,7 +620,6 @@
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_SW.lst</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_SW1_in.lst</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_SW2_in.lst</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_SW3_in.lst</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_Timer_Sampling_TC.lst</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_VDAC8_1_Out.lst</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\Pin_VDAC8_2_Out.lst</v>

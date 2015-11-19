@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <blockRegMap version="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://cypress.com/xsd/cyblockregmap cyblockregmap.xsd" xmlns="http://cypress.com/xsd/cyblockregmap">
+  <block name="Pin_SPI_SCLK" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Pin_SPI_MOSI" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Pin_SPI_MISO" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Clock_SW" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Debouncer_SW1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="SPIM" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="VirtualMux_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -9,12 +13,10 @@
     <block name="IntClock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="BSPIM" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   </block>
-  <block name="Pin_SPI_SCLK" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Pin_SW" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Pin_SW1_in" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Clock_SW" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Pin_SPI_MOSI" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="VDAC8_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
+  <block name="Pin_VDAC8_1_Out" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Pin_RE3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Debouncer_RE3_B" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="VDAC8_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="viDAC8" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="ZeroTerminal_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="ZeroTerminal_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -127,10 +129,72 @@
       <field name="data" from="7" to="0" access="RW" resetVal="" desc="8 DAC Data bits" />
     </register>
   </block>
-  <block name="Pin_VDAC8_1_Out" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Pin_RE3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Pin_SPI_MISO" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="VDAC8_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
+  <block name="Opamp_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
+    <block name="ABuf" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="abuf_negInput_mux" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <register name="PM_ACT_CFG4" address="0x400043A4" bitWidth="8" desc="Active Power Mode Configuration Register 4" hidden="false">
+      <field name="EN_OPAMP" from="3" to="0" access="RW" resetVal="" desc="Enables subsystems during active power mode">
+        <value name="Blk 0" value="0000" desc="Enables analog linear output buffer for Opamp block 0" />
+        <value name="Blk 1" value="0010" desc="Enables analog linear output buffer for Opamp block 1" />
+        <value name="Blk 2" value="0100" desc="Enables analog linear output buffer for Opamp block 2" />
+        <value name="Blk 3" value="1000" desc="Enables analog linear output buffer for Opamp block 3" />
+      </field>
+    </register>
+    <register name="PM_STBY_CFG4" address="0x400043B4" bitWidth="8" desc="Standby Power Mode Configuration Register 4" hidden="false">
+      <field name="EN_OPAMP" from="3" to="0" access="RW" resetVal="" desc="Enables subsystems during standby power mode">
+        <value name="Blk 0" value="0000" desc="Enables analog linear output buffer for Opamp block 0" />
+        <value name="Blk 1" value="0010" desc="Enables analog linear output buffer for Opamp block 1" />
+        <value name="Blk 2" value="0100" desc="Enables analog linear output buffer for Opamp block 2" />
+        <value name="Blk 3" value="1000" desc="Enables analog linear output buffer for Opamp block 3" />
+      </field>
+    </register>
+    <register name="OPAMP__TR0" address="0x40004622" bitWidth="8" desc="Analog Output Buffer Trim Register 0" hidden="false">
+      <field name="offset_trim" from="4" to="0" access="RW" resetVal="" desc="Offset Trim: 420uV typical step size; +/- 6.8mV offset trimmable range" />
+    </register>
+    <register name="OPAMP__TR1" address="0x40004623" bitWidth="8" desc="Analog Output Buffer Trim Register 1" hidden="false">
+      <field name="RSVD" from="7" to="0" access="RW" resetVal="" desc="RSVD" />
+    </register>
+    <register name="OPAMP__CR" address="0x4000585A" bitWidth="8" desc="Analog Output Buffer Configuration Register" hidden="false">
+      <field name="pwr_mode" from="1" to="0" access="RW" resetVal="" desc="Power Mode">
+        <value name="Default Fast" value="00" desc="Default Power mode Fast" />
+        <value name="Slow" value="01" desc="Power Mode Slow" />
+        <value name="Medium" value="10" desc="Power Mode Medium" />
+        <value name="Fast" value="11" desc="Power Mode Fast" />
+      </field>
+    </register>
+    <register name="OPAMP__MX" address="0x40005B42" bitWidth="8" desc="Analog Buffer Input Selection Register" hidden="false">
+      <field name="MX_VP_ENUM" from="3" to="0" access="RW" resetVal="" desc="MUX select VP (Positive terminal input)">
+        <value name="OPAMP0_MX_VP_DEFAULT" value="0000" desc="Default - Not Connected (NC)" />
+        <value name="OPAMP0_MX_VP_AG4" value="0001" desc="MUX Selection AGL(4)" />
+        <value name="OPAMP0_MX_VP_AG5" value="0010" desc="MUX Selection AGL(5)" />
+        <value name="OPAMP0_MX_VP_AG6" value="0011" desc="MUX Selection AGL(6)" />
+        <value name="OPAMP0_MX_VP_AG7" value="0100" desc="MUX Selection AGL(7)" />
+        <value name="OPAMP0_MX_VP_ABUS0" value="0101" desc="MUX Selection ABUSL(0)" />
+        <value name="OPAMP0_MX_VP_ABUS1" value="0110" desc="MUX Selection ABUSL(1)" />
+        <value name="OPAMP0_MX_VP_ABUS2" value="0111" desc="MUX Selection ABUSL(2)" />
+        <value name="OPAMP0_MX_VP_ABUS3" value="1000" desc="MUX Selection ABUSL(3)" />
+        <value name="OPAMP0_MX_VP_VREF" value="1001" desc="MUX Selection: OPAMP Voltage Reference" />
+        <value name="OPAMP0_MX_VP_H_0xA" value="1010" desc="Reserved (NC)" />
+        <value name="OPAMP0_MX_VP_H_0xB" value="1011" desc="Reserved (NC)" />
+        <value name="OPAMP0_MX_VP_H_0xC" value="1100" desc="Reserved (NC)" />
+        <value name="OPAMP0_MX_VP_H_0xD" value="1101" desc="Reserved (NC)" />
+        <value name="OPAMP0_MX_VP_H_0xE" value="1110" desc="Reserved (NC)" />
+        <value name="OPAMP0_MX_VP_H_0xF" value="1111" desc="Reserved (NC)" />
+      </field>
+      <field name="MX_VN_ENUM" from="5" to="4" access="RW" resetVal="" desc="MUX select VN (Negative terminal input)">
+        <value name="OPAMP0_MX_VN_DEFAULT" value="00" desc="Default - Not Connected (NC)" />
+        <value name="OPAMP0_MX_VN_AG4" value="01" desc="MUX Selection AGL(4)" />
+        <value name="OPAMP0_MX_VN_AG6" value="10" desc="MUX Selection AGL(6)" />
+        <value name="OPAMP0_MX_VN_0x3" value="11" desc="Reserved (NC)" />
+      </field>
+    </register>
+    <register name="OPAMP__SW" address="0x40005B43" bitWidth="8" desc="Analog Buffer Routing Switch Register" hidden="false">
+      <field name="swfol" from="0" to="0" access="RW" resetVal="" desc="Switch Enable Follow" />
+      <field name="swinn" from="1" to="1" access="RW" resetVal="" desc="Switch Enable Negative Input" />
+      <field name="swinp" from="2" to="2" access="RW" resetVal="" desc="Switch Enable Positive Input" />
+    </register>
+  </block>
+  <block name="VDAC8_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="viDAC8" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="ZeroTerminal_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="ZeroTerminal_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -243,7 +307,7 @@
       <field name="data" from="7" to="0" access="RW" resetVal="" desc="8 DAC Data bits" />
     </register>
   </block>
-  <block name="Opamp_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
+  <block name="Opamp_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="ABuf" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="abuf_negInput_mux" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <register name="PM_ACT_CFG4" address="0x400043A4" bitWidth="8" desc="Active Power Mode Configuration Register 4" hidden="false">
@@ -303,72 +367,6 @@
       </field>
     </register>
     <register name="OPAMP__SW" address="0x40005B45" bitWidth="8" desc="Analog Buffer Routing Switch Register" hidden="false">
-      <field name="swfol" from="0" to="0" access="RW" resetVal="" desc="Switch Enable Follow" />
-      <field name="swinn" from="1" to="1" access="RW" resetVal="" desc="Switch Enable Negative Input" />
-      <field name="swinp" from="2" to="2" access="RW" resetVal="" desc="Switch Enable Positive Input" />
-    </register>
-  </block>
-  <block name="not_3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Opamp_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
-    <block name="ABuf" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-    <block name="abuf_negInput_mux" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-    <register name="PM_ACT_CFG4" address="0x400043A4" bitWidth="8" desc="Active Power Mode Configuration Register 4" hidden="false">
-      <field name="EN_OPAMP" from="3" to="0" access="RW" resetVal="" desc="Enables subsystems during active power mode">
-        <value name="Blk 0" value="0000" desc="Enables analog linear output buffer for Opamp block 0" />
-        <value name="Blk 1" value="0010" desc="Enables analog linear output buffer for Opamp block 1" />
-        <value name="Blk 2" value="0100" desc="Enables analog linear output buffer for Opamp block 2" />
-        <value name="Blk 3" value="1000" desc="Enables analog linear output buffer for Opamp block 3" />
-      </field>
-    </register>
-    <register name="PM_STBY_CFG4" address="0x400043B4" bitWidth="8" desc="Standby Power Mode Configuration Register 4" hidden="false">
-      <field name="EN_OPAMP" from="3" to="0" access="RW" resetVal="" desc="Enables subsystems during standby power mode">
-        <value name="Blk 0" value="0000" desc="Enables analog linear output buffer for Opamp block 0" />
-        <value name="Blk 1" value="0010" desc="Enables analog linear output buffer for Opamp block 1" />
-        <value name="Blk 2" value="0100" desc="Enables analog linear output buffer for Opamp block 2" />
-        <value name="Blk 3" value="1000" desc="Enables analog linear output buffer for Opamp block 3" />
-      </field>
-    </register>
-    <register name="OPAMP__TR0" address="0x40004626" bitWidth="8" desc="Analog Output Buffer Trim Register 0" hidden="false">
-      <field name="offset_trim" from="4" to="0" access="RW" resetVal="" desc="Offset Trim: 420uV typical step size; +/- 6.8mV offset trimmable range" />
-    </register>
-    <register name="OPAMP__TR1" address="0x40004627" bitWidth="8" desc="Analog Output Buffer Trim Register 1" hidden="false">
-      <field name="RSVD" from="7" to="0" access="RW" resetVal="" desc="RSVD" />
-    </register>
-    <register name="OPAMP__CR" address="0x4000585E" bitWidth="8" desc="Analog Output Buffer Configuration Register" hidden="false">
-      <field name="pwr_mode" from="1" to="0" access="RW" resetVal="" desc="Power Mode">
-        <value name="Default Fast" value="00" desc="Default Power mode Fast" />
-        <value name="Slow" value="01" desc="Power Mode Slow" />
-        <value name="Medium" value="10" desc="Power Mode Medium" />
-        <value name="Fast" value="11" desc="Power Mode Fast" />
-      </field>
-    </register>
-    <register name="OPAMP__MX" address="0x40005B46" bitWidth="8" desc="Analog Buffer Input Selection Register" hidden="false">
-      <field name="MX_VP_ENUM" from="3" to="0" access="RW" resetVal="" desc="MUX select VP (Positive terminal input)">
-        <value name="OPAMP0_MX_VP_DEFAULT" value="0000" desc="Default - Not Connected (NC)" />
-        <value name="OPAMP0_MX_VP_AG4" value="0001" desc="MUX Selection AGL(4)" />
-        <value name="OPAMP0_MX_VP_AG5" value="0010" desc="MUX Selection AGL(5)" />
-        <value name="OPAMP0_MX_VP_AG6" value="0011" desc="MUX Selection AGL(6)" />
-        <value name="OPAMP0_MX_VP_AG7" value="0100" desc="MUX Selection AGL(7)" />
-        <value name="OPAMP0_MX_VP_ABUS0" value="0101" desc="MUX Selection ABUSL(0)" />
-        <value name="OPAMP0_MX_VP_ABUS1" value="0110" desc="MUX Selection ABUSL(1)" />
-        <value name="OPAMP0_MX_VP_ABUS2" value="0111" desc="MUX Selection ABUSL(2)" />
-        <value name="OPAMP0_MX_VP_ABUS3" value="1000" desc="MUX Selection ABUSL(3)" />
-        <value name="OPAMP0_MX_VP_VREF" value="1001" desc="MUX Selection: OPAMP Voltage Reference" />
-        <value name="OPAMP0_MX_VP_H_0xA" value="1010" desc="Reserved (NC)" />
-        <value name="OPAMP0_MX_VP_H_0xB" value="1011" desc="Reserved (NC)" />
-        <value name="OPAMP0_MX_VP_H_0xC" value="1100" desc="Reserved (NC)" />
-        <value name="OPAMP0_MX_VP_H_0xD" value="1101" desc="Reserved (NC)" />
-        <value name="OPAMP0_MX_VP_H_0xE" value="1110" desc="Reserved (NC)" />
-        <value name="OPAMP0_MX_VP_H_0xF" value="1111" desc="Reserved (NC)" />
-      </field>
-      <field name="MX_VN_ENUM" from="5" to="4" access="RW" resetVal="" desc="MUX select VN (Negative terminal input)">
-        <value name="OPAMP0_MX_VN_DEFAULT" value="00" desc="Default - Not Connected (NC)" />
-        <value name="OPAMP0_MX_VN_AG4" value="01" desc="MUX Selection AGL(4)" />
-        <value name="OPAMP0_MX_VN_AG6" value="10" desc="MUX Selection AGL(6)" />
-        <value name="OPAMP0_MX_VN_0x3" value="11" desc="Reserved (NC)" />
-      </field>
-    </register>
-    <register name="OPAMP__SW" address="0x40005B47" bitWidth="8" desc="Analog Buffer Routing Switch Register" hidden="false">
       <field name="swfol" from="0" to="0" access="RW" resetVal="" desc="Switch Enable Follow" />
       <field name="swinn" from="1" to="1" access="RW" resetVal="" desc="Switch Enable Negative Input" />
       <field name="swinp" from="2" to="2" access="RW" resetVal="" desc="Switch Enable Positive Input" />
@@ -632,22 +630,22 @@
       </field>
     </register>
   </block>
+  <block name="Pin_VDAC8_2_Out" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="cy_boot" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Pin_SPI_SS2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Pin_SPI_SS1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Pin_VDAC8_2_Out" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Pin_SW2_in" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Debouncer_SW3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Debouncer_SW2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Pin_SW" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Pin_SW1_in" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="not_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Pin_SW3_in" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="not_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="ZeroTerminal_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Pin_SW2_in" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Pin_RE3_in" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="timer_clock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="LCD_Char" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="LCDPort" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   </block>
-  <block name="ISR_Timer_Sampling" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="LED_BLUE" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Pin_Timer_Sampling_TC" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Timer_Sampling" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="VirtualMux_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -706,7 +704,7 @@
     <register name="Timer_Sampling_PERIOD" address="0x40004F04" bitWidth="16" desc="TMRx.PER0 - Assigned Period" hidden="false" />
     <register name="Timer_Sampling_COUNTER" address="0x40004F06" bitWidth="16" desc="TMRx.CNT_CMP0 - Current Down Counter Value" hidden="false" />
   </block>
-  <block name="LED_BLUE" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="ZeroTerminal_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="LED_RED" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="I2CM_Sequencer" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="BusClock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -796,17 +794,16 @@
   <block name="Pin_Sequencer_SDA" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Pin_Sequencer_SCL" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="LED_GREEN" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Debouncer_RE1_B" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Clock_RE" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Pin_RE1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Debouncer_RE3_A" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Debouncer_RE1_A" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Pin_RE1_in" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Debouncer_RE1_B" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Debouncer_RE3_B" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Pin_RE3_in" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Debouncer_RE3_A" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Clock_RE" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Debouncer_RE2_B" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Pin_RE2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Pin_ISR_Check" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Pin_RE1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="ISR_Timer_Sampling" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Debouncer_RE2_A" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Pin_RE2_in" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Debouncer_RE2_B" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
 </blockRegMap>

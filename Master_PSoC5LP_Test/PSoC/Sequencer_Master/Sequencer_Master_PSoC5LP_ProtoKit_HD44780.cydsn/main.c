@@ -7,6 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.11.19 ピンアサインを変更、Tact Switchを2個に変更
  * 2015.11.19 Tact Switchの読み取りを追加
  * 2015.11.17 Levelの重み付けを修正
  * 2015.11.17 Toneの設定を修正
@@ -50,7 +51,6 @@
 // Tact Switch
 #define TACT_SW1    (0x00)
 #define TACT_SW2    (0x01)
-#define TACT_SW3    (0x02)
 
 // Error
 //
@@ -641,10 +641,11 @@ int main()
         // Read tact switches
         readTactSwitch();
         /*
-        LCD_printf(1, "%d %d %d ", 
+        LCD_printf(1, "%x: %d %d ",
+            tactSwitch,
             tactSwitch & (1 << TACT_SW1),
-            tactSwitch & (1 << TACT_SW2),
-            tactSwitch & (1 << TACT_SW3));
+            tactSwitch & (1 << TACT_SW2)
+        );
         */
         
         if (isREDirty & RE_TONE) {
