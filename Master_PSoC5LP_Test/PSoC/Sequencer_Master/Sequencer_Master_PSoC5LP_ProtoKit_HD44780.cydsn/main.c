@@ -7,6 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.11.20 Filterを追加
  * 2015.11.19 ピンアサインを変更、Tact Switchを2個に変更
  * 2015.11.19 Tact Switchの読み取りを追加
  * 2015.11.17 Levelの重み付けを修正
@@ -32,7 +33,7 @@
 #include "ModTableFP32.h"
 
 #define TITLE_STR   ("Rhythm Machine")
-#define VERSION_STR ("2015.11.19")
+#define VERSION_STR ("2015.11.20 ")
 
 // Sequencer
 //
@@ -497,8 +498,8 @@ void initTracks(struct track *tracks)
 	// Kick
 	tracks[0].waveLookupTable = waveTableSine;
 	tracks[0].decayLookupTable = modTableLinerDown01;
-	tracks[0].waveFrequency = 60.0f;
-	tracks[0].decayAmount = 200;
+	tracks[0].waveFrequency = 50.0f;
+	tracks[0].decayAmount = 64;
 	tracks[0].levelAmount = 200;
     tracks[0].levelMax = 255;
 	tracks[0].toneAmount = 0;
@@ -528,7 +529,7 @@ void initTracks(struct track *tracks)
 	tracks[3].waveLookupTable = waveTableSine;	// unused
 	tracks[3].decayLookupTable = modTableSustainBeforeRampDown01;
 	tracks[3].waveFrequency = 2500.0f;			// unused
-	tracks[3].decayAmount = 64;
+	tracks[3].decayAmount = 16;
 	tracks[3].levelAmount = 64;
     tracks[3].levelMax = 128;
 	tracks[3].toneAmount = 0;
@@ -571,6 +572,47 @@ void initTracks(struct track *tracks)
 }
 
 //=================================================
+// フィルター
+//
+//=================================================
+uint16_t filterFunc(uint16_t sample)
+{
+    uint16_t f_sample;
+    
+    // Debug用
+    Pin_Ext_Clock_Write(1u);
+    
+    // Debug用
+    //LCD_printf(1, "filterFunc:0 ");
+    
+    /* Enable the interrupt register bit to poll
+     Value 1 for Channel A, Value 2 for Channel B */
+    Filter_INT_CTRL_REG |= (1 << Filter_CHANNEL_A);
+    
+    Filter_Write16(Filter_CHANNEL_A, sample);
+    
+    // Debug用
+    //LCD_printf(1, "filterFunc:1 ");
+    
+    /* Poll waiting for the holding register to have data to read */
+    while (Filter_IsInterruptChannelA() == 0) ;
+    
+    // Debug用
+    //LCD_printf(1, "filterFunc:2 ");
+    
+    f_sample = Filter_Read16(Filter_CHANNEL_A);
+    
+    // Debug用
+    //LCD_printf(1, "filterFunc:3 ");
+    
+    // Debug用
+    Pin_Ext_Clock_Write(0u);
+    
+    return f_sample;
+}
+
+
+//=================================================
 // メインルーチン
 //
 //=================================================
@@ -579,6 +621,7 @@ int main()
     // パラメータの初期化
     initTracks(tracks);
     initDDSParameter(tracks);
+    setFilterRoutine(&filterFunc);
     
     // LCDを初期化
     LCD_Char_Start();  
@@ -605,6 +648,9 @@ int main()
     // Sampling Timerを初期化
     Timer_Sampling_Start();
     ISR_Timer_Sampling_StartEx(Timer_Sampling_interrupt_handler);
+    
+    // Filterを初期化
+    Filter_Start();
     
     CyGlobalIntEnable;
     

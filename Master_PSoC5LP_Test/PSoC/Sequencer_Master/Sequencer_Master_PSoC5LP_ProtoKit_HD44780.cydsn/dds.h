@@ -70,13 +70,16 @@ struct track {
 	uint8_t sequence[SEQUENCE_LEN];	// Velocity
 };
 
-int getNoteCount();
+typedef uint16_t (*FILTER16_FUNC_PTR)(uint16_t sample);
+
 void initTracks(struct track *tracks);
 void initDDSParameter(struct track* tracks);
 inline void setModDDSParameter(struct track *track);
 inline void setWaveDDSParameter(struct track *track);
 void setTrack(struct track *tracks, int track_n, struct sequencer_parameter *param);
 fp32 generateWave(struct track *tracks);
+int getNoteCount();
+void setFilterRoutine(FILTER16_FUNC_PTR _filterFunc);
 
 #endif // _DDS_H_
 

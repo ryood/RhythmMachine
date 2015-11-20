@@ -22,6 +22,9 @@
 #include "dds.h"
 #include "utility.h"
 
+//デバッグ用
+void LCD_printf(int line, const char *format, ...);
+
 //-------------------------------------------------
 // BPM
 //
@@ -32,6 +35,10 @@ static uint32_t ticksPerNote;	// noteあたりのサンプリング数
 // カウンタ
 static int tick = -1;  // 初回に0にインクリメント
 static int noteCount = 0;
+
+//-------------------------------------------------
+// フィルター
+static FILTER16_FUNC_PTR filterFunc;
 
 //=================================================
 // getter / setter
@@ -138,6 +145,15 @@ void setTrack(struct track *tracks, int track_n, struct sequencer_parameter *par
 }
 
 //=================================================
+// フィルター
+//
+//=================================================
+void setFilterRoutine(FILTER16_FUNC_PTR _filterFunc)
+{
+    filterFunc = _filterFunc;
+}
+
+//=================================================
 // 波形の生成
 //
 //=================================================
@@ -184,6 +200,28 @@ inline fp32 generateNoise()
 	
     //r = my_rand();
     r = rand() >> 15;
+    v = (r & 0x8000) ? (0xffff0000 | (r << 1)) : (r << 1);
+	fv = (fp32)v;
+
+    return fv;
+}
+
+//-------------------------------------------------
+// フィルターされた乱数生成
+// return: fp32型の-1.0 .. 1.0の乱数
+//
+inline fp32 generateFilteredNoise()
+{
+    int32_t r, filtered_r, v;
+	fp32 fv;
+	
+    // Debug用
+    //LCD_printf(1, "generateFilteredNoise()");
+    
+    //r = my_rand();
+    r = rand() >> 15;
+    filtered_r = (filterFunc)((int16_t)(0xffff & r));
+    r = (r & 0x8000) | filtered_r;
     v = (r & 0x8000) ? (0xffff0000 | (r << 1)) : (r << 1);
 	fv = (fp32)v;
 
@@ -257,8 +295,10 @@ fp32 generateWave(struct track *tracks)
 				tracks[i].waveLookupTable);
 			break;
 		case 2:	// hihat close
-		case 3:	// hihat open
 			tracks[i].waveValue = generateNoise();
+            break;
+		case 3:	// hihat open
+			tracks[i].waveValue = generateFilteredNoise();
             break;
 		default:
                 ;
