@@ -87,7 +87,7 @@ void test_generateFilteredNoise()
     setFilterRoutine(&filterFunc);
     
     for (int i = 0; i < LOOP_N_GENERATE_NOISE; i++) {
-        fr = generateNoise();
+        fr = generateFilteredNoise();
         UART_printf("%d\r\n", (int32)fr);
     }
     

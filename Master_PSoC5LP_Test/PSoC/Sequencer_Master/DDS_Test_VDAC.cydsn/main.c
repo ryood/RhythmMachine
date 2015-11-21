@@ -9,6 +9,7 @@
  *
  * DDS モジュール テストプログラム
  *
+ * 2015.11.21 Timer割り込みではなくループでfilterd noiseをテスト
  * 2015.11.21 Created.
  *
  * ========================================
@@ -57,19 +58,22 @@ uint16_t filterFunc(uint16_t sample)
     uint16_t f_sample;
     
     // Debug用
-    //Pin_Ext_Clock_Write(1u);
+    Pin_Ext_Check_Write(1u);
     
     /* Enable the interrupt register bit to poll
      Value 1 for Channel A, Value 2 for Channel B */
     Filter_INT_CTRL_REG |= (1 << Filter_CHANNEL_A);
-    
+          
     Filter_Write16(Filter_CHANNEL_A, sample);
+    
     /* Poll waiting for the holding register to have data to read */
+    
     while (Filter_IsInterruptChannelA() == 0) ;
+    
     f_sample = Filter_Read16(Filter_CHANNEL_A);
     
     // Debug用
-    //Pin_Ext_Clock_Write(0u);
+    Pin_Ext_Check_Write(0u);
     
     return f_sample;
 }
@@ -113,18 +117,20 @@ int main()
     
     VDAC8_1_Start();
     Opamp_1_Start();
-    Timer_1_Start();
-    ISR_Timer_1_StartEx(timer_interrupt_handler);
+    //Timer_1_Start();
+    //ISR_Timer_1_StartEx(timer_interrupt_handler);
 
     Filter_Start();
     setFilterRoutine(&filterFunc);
 
     for(;;)
     {
-        Pin_UserLED_Write(1u);
-        CyDelay(500);
-        Pin_UserLED_Write(0u);
-        CyDelay(500);
+        //Pin_UserLED_Write(1u);
+        Pin_ISR_Check_Write(1u);
+        //test_generateFilteredNoise();
+        test_generateFilteredNoise();
+        Pin_ISR_Check_Write(0u);
+        //Pin_UserLED_Write(0u);
     }
 }
 

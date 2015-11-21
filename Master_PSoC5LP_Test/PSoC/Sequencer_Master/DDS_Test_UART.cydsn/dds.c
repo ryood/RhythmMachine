@@ -9,6 +9,7 @@
  *
  * 波形の生成
  *
+ * 2015.11.21 フィルターの処理を追加
  * 2015.11.17 Levelの重み付けを修正
  * 2015.11.17 Toneの計算を修正
  * 2015.11.15 Created
@@ -24,6 +25,7 @@
 
 //デバッグ用
 //void LCD_printf(int line, const char *format, ...);
+void UART_printf(const char *format, ...);
 
 //-------------------------------------------------
 // BPM
@@ -213,16 +215,32 @@ fp32 generateNoise()
 fp32 generateFilteredNoise()
 {
     int32_t r, filtered_r, v;
-	fp32 fv;
+    fp32 fv;
 	
     // Debug用
-    //LCD_printf(1, "generateFilteredNoise()");
+    //UART_printf(1, "generateFilteredNoise()");
     
     //r = my_rand();
     r = rand() >> 15;
-    filtered_r = (filterFunc)((int16_t)(0x7fff & r));
-    r = (r & 0x8000) | filtered_r;
+    
+    // Debug用
+    //UART_printf("%d\t", r);
+    
+    filtered_r = (filterFunc)((int16_t)r);
+    
+    // Debug用
+    //UART_printf("%d\t", filtered_r);
+    
+    r = (r & 0x8000) | (filtered_r >> 1);
+    
+    // Debug用
+    //UART_printf("%d\t", r);
+    
     v = (r & 0x8000) ? (0xffff0000 | (r << 1)) : (r << 1);
+    
+    // Debug用
+    //UART_printf("%d\r\n", v);
+    
 	fv = (fp32)v;
 
     return fv;
