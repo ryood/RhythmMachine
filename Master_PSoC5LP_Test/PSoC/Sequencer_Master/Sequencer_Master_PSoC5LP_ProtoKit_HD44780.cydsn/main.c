@@ -33,7 +33,7 @@
 #include "ModTableFP32.h"
 
 #define TITLE_STR   ("Rhythm Machine")
-#define VERSION_STR ("2015.11.20 ")
+#define VERSION_STR ("2015.11.2 ")
 
 // Sequencer
 //
@@ -489,11 +489,11 @@ CY_ISR(Timer_Sampling_interrupt_handler)
 //================================================= 
 void initTracks(struct track *tracks)
 {
-    /*
- 	const uint8_t kickSequence[]  = { 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 };
-	const uint8_t snareSequence[] = { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 };
-	const uint8_t hihatSequnce[]  = { 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1 };
-    */
+ 	//const uint8_t kickSequence[]  = { 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 };
+	//const uint8_t snareSequence[] = { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 };
+	//const uint8_t hihatCloseSequnce[] = { 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1};
+    //const uint8_t hihatOpenSequence[]  = { 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0};
+    const uint8_t allOnSequence[] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
     
 	// Kick
 	tracks[0].waveLookupTable = waveTableSine;
@@ -519,20 +519,21 @@ void initTracks(struct track *tracks)
 	tracks[2].waveLookupTable = waveTableSine;	// unused
 	tracks[2].decayLookupTable = modTableLinerDown01;
 	tracks[2].waveFrequency = 2500.0f;			// unused
-	tracks[2].decayAmount = 16;
+	tracks[2].decayAmount = 255;
 	tracks[2].levelAmount = 64;
-    tracks[2].levelMax = 128;
+    tracks[2].levelMax = 255;
 	tracks[2].toneAmount = 0;
-	//memcpy(tracks[2].sequence, hihatSequnce, SEQUENCE_LEN);
+	//memcpy(tracks[2].sequence, hihatCloseSequnce, SEQUENCE_LEN);
 
 	// HiHat Open
 	tracks[3].waveLookupTable = waveTableSine;	// unused
-	tracks[3].decayLookupTable = modTableSustainBeforeRampDown01;
+	tracks[3].decayLookupTable = modTableAllMax;
 	tracks[3].waveFrequency = 2500.0f;			// unused
-	tracks[3].decayAmount = 16;
+	tracks[3].decayAmount = 255;
 	tracks[3].levelAmount = 64;
-    tracks[3].levelMax = 128;
+    tracks[3].levelMax = 255;
 	tracks[3].toneAmount = 0;
+    memcpy(tracks[3].sequence, allOnSequence, SEQUENCE_LEN);
 
 	// Low Tom
 	tracks[4].waveLookupTable = waveTableSine;
