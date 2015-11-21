@@ -33,7 +33,7 @@
 #include "ModTableFP32.h"
 
 #define TITLE_STR   ("Rhythm Machine")
-#define VERSION_STR ("2015.11.2 ")
+#define VERSION_STR ("2015.11.21")
 
 // Sequencer
 //
@@ -533,7 +533,7 @@ void initTracks(struct track *tracks)
 	tracks[3].levelAmount = 64;
     tracks[3].levelMax = 255;
 	tracks[3].toneAmount = 0;
-    memcpy(tracks[3].sequence, allOnSequence, SEQUENCE_LEN);
+    //memcpy(tracks[3].sequence, allOnSequence, SEQUENCE_LEN);
 
 	// Low Tom
 	tracks[4].waveLookupTable = waveTableSine;

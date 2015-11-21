@@ -17,9 +17,6 @@
 #include "dds.h"
 #include "utility.h"
 
-#define LOOP_N_GENERATE_NOISE           30000
-#define LOOP_N_FILTERED_GENERATE_NOISE  30000
-
 fp32 generateNoise();
 fp32 generateFilteredNoise();
 
@@ -41,14 +38,14 @@ void UART_printf(const char *format, ...)
 //=================================================
 void test_generateNoise()
 {
-    fp32 fr;
+    fp32 fv, fv8;
+    uint8 i8v;
     
-    UART_printf("test generateNoise()\r\n");
+    fv = generateNoise();
+    fv8 = fp32_mul(fv + int_to_fp32(1), int_to_fp32(127));
+    i8v = fp32_to_int(fv8);
     
-    for (int i = 0; i < LOOP_N_GENERATE_NOISE; i++) {
-        fr = generateNoise();
-        UART_printf("%d\r\n", (int32)fr);
-    }
+    VDAC8_1_SetValue(i8v);
 }
 
 //=================================================
@@ -79,19 +76,31 @@ uint16_t filterFunc(uint16_t sample)
 
 void test_generateFilteredNoise()
 {
-    fp32 fr;
-  
-    UART_printf("test generateFilteredNoise()\r\n");
+    fp32 fv, fv8;
+    uint8 i8v;
     
-    Filter_Start();
-    setFilterRoutine(&filterFunc);
+    fv = generateFilteredNoise();
+    fv8 = fp32_mul(fv + int_to_fp32(1), int_to_fp32(127));
+    i8v = fp32_to_int(fv8);
     
-    for (int i = 0; i < LOOP_N_GENERATE_NOISE; i++) {
-        fr = generateNoise();
-        UART_printf("%d\r\n", (int32)fr);
-    }
+    VDAC8_1_SetValue(i8v);
+}
+
+//=================================================
+// Timer
+// 
+//=================================================
+CY_ISR(timer_interrupt_handler)
+{
+     /* Read Status register in order to clear the sticky Terminal Count (TC) bit 
+	 * in the status register. Note that the function is not called, but rather 
+	 * the status is read directly.
+	 */
+   	Timer_1_STATUS;
     
-    Filter_Stop();
+    Pin_ISR_Check_Write(1u);
+    test_generateFilteredNoise();
+    Pin_ISR_Check_Write(0u);
 }
 
 //=================================================
@@ -101,13 +110,15 @@ void test_generateFilteredNoise()
 int main()
 {
     CyGlobalIntEnable; /* Enable global interrupts. */
-
-    UART_Start();
-    UART_PutString("dds module test..\r\n");
-
-    //test_generateNoise();
-    test_generateFilteredNoise();
     
+    VDAC8_1_Start();
+    Opamp_1_Start();
+    Timer_1_Start();
+    ISR_Timer_1_StartEx(timer_interrupt_handler);
+
+    Filter_Start();
+    setFilterRoutine(&filterFunc);
+
     for(;;)
     {
         Pin_UserLED_Write(1u);
