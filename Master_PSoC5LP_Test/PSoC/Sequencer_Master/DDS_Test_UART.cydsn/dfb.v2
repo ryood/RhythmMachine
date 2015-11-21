@@ -1,0 +1,123 @@
+
+initialize:
+    acu(setmod,setmod) dmux(sa,sa) alu(set0) mac(clra)
+    acu(clear,clear) dmux(sa,sa) alu(hold) mac(hold) jmp(eob, WaitForNew)
+
+WaitForNew:
+    acu(hold,hold) dmux(sa,sa) alu(hold) mac(hold) jmpl(in1, PROGRAM)
+
+
+ChA_init:
+    acu(loadm, loadm) addr(ChA_MAX) dmux(sa,sa) alu(hold) mac(hold)
+    acu(loadl, loadl) addr(ChA_MIN) dmux(sa,sa) alu(hold) mac(hold) 
+    acu(hold, hold) addr(1) dmux(ba,sa) alu(hold) mac(hold) 
+    acu(read, clear) addr(ChA_START) dmux(sra,sra) alu(setb) mac(clra) write(da) jmp(eob,ChA_fir)
+
+ChA_firFinish:
+    acu(write, clear) addr(ChA_START) dmux(sa, srm) alu(setb) mac(hold)
+    acu(hold, hold) dmux(sa, sa) alu(hold) mac(hold)
+    acu(hold, hold) addr(1) dmux(sa, sa) alu(hold) mac(hold) write(bus) jmp(eob, ChA_EXIT)
+
+ChA_fir:
+    acu(incr,incr) dmux(sra,srm) alu(setb) mac(macc) jmpl(eob,acubeq, ChA_firFinish)
+
+
+area acu
+    ChA_MAX: dw  ChA_LAST,ChA_LAST
+    ChA_MIN: dw  ChA_FIRST, ChA_FIRST
+    ChA_START: dw ChA_FIRST, ChA_FIRST
+
+
+area data_b
+ChA_FIRST:dw 346
+dw 16776919
+dw 0
+dw 563
+dw 16776100
+dw 1091
+dw 0
+dw 16775251
+dw 3629
+dw 16773916
+dw 0
+dw 5243
+dw 16768027
+dw 7977
+dw 0
+dw 16765493
+dw 19879
+dw 16760471
+dw 0
+dw 23359
+dw 16738496
+dw 31949
+dw 0
+dw 16734214
+dw 70211
+dw 16720047
+dw 0
+dw 75384
+dw 16654983
+dw 99096
+dw 0
+dw 16646451
+dw 213385
+dw 16602192
+dw 0
+dw 241834
+dw 16366431
+dw 357223
+dw 0
+dw 16160282
+dw 1323309
+dw 14893294
+dw 2097150
+dw 14893294
+dw 1323309
+dw 16160282
+dw 0
+dw 357223
+dw 16366431
+dw 241834
+dw 0
+dw 16602192
+dw 213385
+dw 16646451
+dw 0
+dw 99096
+dw 16654983
+dw 75384
+dw 0
+dw 16720047
+dw 70211
+dw 16734214
+dw 0
+dw 31949
+dw 16738496
+dw 23359
+dw 0
+dw 16760471
+dw 19879
+dw 16765493
+dw 0
+dw 7977
+dw 16768027
+dw 5243
+dw 0
+dw 16773916
+dw 3629
+dw 16775251
+dw 0
+dw 1091
+dw 16776100
+dw 563
+dw 0
+dw 16776919
+ChA_LAST: dw 346
+
+
+
+PROGRAM = ChA_init
+ChA_EXIT = WaitForNew
+
+
