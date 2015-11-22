@@ -1,4 +1,4 @@
-Loading plugins phase: Elapsed time ==> 0s.250ms
+Loading plugins phase: Elapsed time ==> 0s.419ms
 Initializing data phase: Elapsed time ==> 0s.000ms
 <CYPRESSTAG name="CyDsfit arguments...">
 cydsfit arguments: -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -p D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780.cydsn\Sequencer_Master_PSoC5LP_ProtoKit_HD44780.cyprj -d CY8C5888LTI-LP097 -s D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780.cydsn\Generated_Source\PSoC5 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE</CYPRESSTAG>
@@ -16,10 +16,10 @@ ADD: sdb.M0061: information: Info from component: VDAC8_2. System VDDA voltage i
  * D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780.cydsn\TopDesign\TopDesign.cysch (Instance:VDAC8_2)
 
 </CYPRESSTAG>
-Elaboration phase: Elapsed time ==> 2s.078ms
+Elaboration phase: Elapsed time ==> 3s.017ms
 <CYPRESSTAG name="HDL generation results...">
 </CYPRESSTAG>
-HDL generation phase: Elapsed time ==> 0s.062ms
+HDL generation phase: Elapsed time ==> 0s.082ms
 <CYPRESSTAG name="Synthesis results...">
 
      | | | | | | |
@@ -53,7 +53,7 @@ Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\Users\gizmo
 ======================================================================
 
 vlogfe V6.3 IR 41:  Verilog parser
-Sun Nov 22 11:33:41 2015
+Mon Nov 23 03:32:26 2015
 
 
 ======================================================================
@@ -63,7 +63,7 @@ Options  :    -yv2 -q10 Sequencer_Master_PSoC5LP_ProtoKit_HD44780.v
 ======================================================================
 
 vpp V6.3 IR 41:  Verilog Pre-Processor
-Sun Nov 22 11:33:41 2015
+Mon Nov 23 03:32:26 2015
 
 Flattening file 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\cy_virtualmux_v1_0\cy_virtualmux_v1_0.v'
 Flattening file 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\OneTerminal\OneTerminal.v'
@@ -105,7 +105,7 @@ Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\Users\gizmo
 ======================================================================
 
 tovif V6.3 IR 41:  High-level synthesis
-Sun Nov 22 11:33:41 2015
+Mon Nov 23 03:32:26 2015
 
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\std.vhd'.
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\cypress.vhd'.
@@ -141,7 +141,7 @@ Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\Users\gizmo
 ======================================================================
 
 topld V6.3 IR 41:  Synthesis and optimization
-Sun Nov 22 11:33:42 2015
+Mon Nov 23 03:32:27 2015
 
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\std.vhd'.
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\cypress.vhd'.
@@ -209,11 +209,11 @@ Alias Detection
 Aliasing one to tmpOE__Pin_Sequencer_Reset_net_0
 Aliasing \I2CM_Sequencer:Net_969\ to tmpOE__Pin_Sequencer_Reset_net_0
 Aliasing \I2CM_Sequencer:Net_968\ to tmpOE__Pin_Sequencer_Reset_net_0
-Aliasing tmpOE__LED_RED_net_0 to tmpOE__Pin_Sequencer_Reset_net_0
-Aliasing tmpOE__LED_GREEN_net_0 to tmpOE__Pin_Sequencer_Reset_net_0
+Aliasing tmpOE__LED_RGB_net_2 to tmpOE__Pin_Sequencer_Reset_net_0
+Aliasing tmpOE__LED_RGB_net_1 to tmpOE__Pin_Sequencer_Reset_net_0
+Aliasing tmpOE__LED_RGB_net_0 to tmpOE__Pin_Sequencer_Reset_net_0
 Aliasing tmpOE__Pin_Sequencer_SCL_net_0 to tmpOE__Pin_Sequencer_Reset_net_0
 Aliasing tmpOE__Pin_Sequencer_SDA_net_0 to tmpOE__Pin_Sequencer_Reset_net_0
-Aliasing tmpOE__LED_BLUE_net_0 to tmpOE__Pin_Sequencer_Reset_net_0
 Aliasing \LCD_Char:tmpOE__LCDPort_net_6\ to tmpOE__Pin_Sequencer_Reset_net_0
 Aliasing \LCD_Char:tmpOE__LCDPort_net_5\ to tmpOE__Pin_Sequencer_Reset_net_0
 Aliasing \LCD_Char:tmpOE__LCDPort_net_4\ to tmpOE__Pin_Sequencer_Reset_net_0
@@ -313,130 +313,130 @@ Removing Lhs of wire \I2CM_Sequencer:Net_969\[19] = tmpOE__Pin_Sequencer_Reset_n
 Removing Lhs of wire \I2CM_Sequencer:Net_968\[20] = tmpOE__Pin_Sequencer_Reset_net_0[1]
 Removing Lhs of wire \I2CM_Sequencer:tmpOE__Bufoe_scl_net_0\[30] = tmpOE__Pin_Sequencer_Reset_net_0[1]
 Removing Lhs of wire \I2CM_Sequencer:tmpOE__Bufoe_sda_net_0\[33] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire tmpOE__LED_RED_net_0[41] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire tmpOE__LED_GREEN_net_0[47] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__LED_RGB_net_2[41] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__LED_RGB_net_1[42] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__LED_RGB_net_0[43] = tmpOE__Pin_Sequencer_Reset_net_0[1]
 Removing Lhs of wire tmpOE__Pin_Sequencer_SCL_net_0[53] = tmpOE__Pin_Sequencer_Reset_net_0[1]
 Removing Lhs of wire tmpOE__Pin_Sequencer_SDA_net_0[58] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire tmpOE__LED_BLUE_net_0[63] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_6\[69] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_5\[70] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_4\[71] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_3\[72] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_2\[73] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_1\[74] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_0\[75] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire Net_12[94] = zero[2]
-Removing Lhs of wire \Timer_Sampling:Net_260\[96] = zero[2]
-Removing Lhs of wire \Timer_Sampling:Net_266\[97] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Rhs of wire Net_187[101] = \Timer_Sampling:Net_57\[100]
-Removing Rhs of wire Net_192[102] = \Timer_Sampling:Net_51\[98]
-Removing Lhs of wire \Timer_Sampling:Net_102\[103] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire tmpOE__Pin_Timer_Sampling_TC_net_0[105] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire tmpOE__Pin_ISR_Check_net_0[112] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire tmpOE__Pin_RE2_net_1[118] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire tmpOE__Pin_RE2_net_0[119] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Rhs of wire Net_259[120] = \Debouncer_RE2_B:DEBOUNCER[0]:d_sync_0\[131]
-Removing Rhs of wire Net_254[121] = \Debouncer_RE2_A:DEBOUNCER[0]:d_sync_0\[147]
-Removing Lhs of wire tmpOE__Pin_RE2_in_net_1[138] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire tmpOE__Pin_RE2_in_net_0[139] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire tmpOE__Pin_RE1_net_1[153] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire tmpOE__Pin_RE1_net_0[154] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Rhs of wire Net_236[155] = \Debouncer_RE1_B:DEBOUNCER[0]:d_sync_0\[166]
-Removing Rhs of wire Net_235[156] = \Debouncer_RE1_A:DEBOUNCER[0]:d_sync_0\[182]
-Removing Lhs of wire tmpOE__Pin_RE1_in_net_1[173] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire tmpOE__Pin_RE1_in_net_0[174] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Rhs of wire Net_287[192] = \Debouncer_RE3_A:DEBOUNCER[0]:d_sync_0\[189]
-Removing Lhs of wire tmpOE__Pin_RE3_in_net_1[197] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire tmpOE__Pin_RE3_in_net_0[198] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Rhs of wire Net_292[208] = \Debouncer_RE3_B:DEBOUNCER[0]:d_sync_0\[206]
-Removing Lhs of wire tmpOE__Pin_RE3_net_1[213] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire tmpOE__Pin_RE3_net_0[214] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire tmpOE__Pin_VDAC8_1_Out_net_0[222] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire \VDAC8_1:Net_83\[229] = zero[2]
-Removing Lhs of wire \VDAC8_1:Net_81\[230] = zero[2]
-Removing Lhs of wire \VDAC8_1:Net_82\[231] = zero[2]
-Removing Lhs of wire \VDAC8_2:Net_83\[239] = zero[2]
-Removing Lhs of wire \VDAC8_2:Net_81\[240] = zero[2]
-Removing Lhs of wire \VDAC8_2:Net_82\[241] = zero[2]
-Removing Lhs of wire tmpOE__Pin_SPI_MISO_net_0[246] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire tmpOE__Pin_SPI_MOSI_net_0[252] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Rhs of wire Net_483[253] = \SPIM:BSPIM:mosi_reg\[278]
-Removing Lhs of wire tmpOE__Pin_SPI_SCLK_net_0[259] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Rhs of wire \SPIM:Net_276\[265] = \SPIM:Net_288\[266]
-Removing Rhs of wire \SPIM:BSPIM:load_rx_data\[270] = \SPIM:BSPIM:dpcounter_one\[271]
-Removing Lhs of wire \SPIM:BSPIM:pol_supprt\[272] = zero[2]
-Removing Lhs of wire \SPIM:BSPIM:miso_to_dp\[273] = \SPIM:Net_244\[274]
-Removing Lhs of wire \SPIM:Net_244\[274] = Net_19[247]
-Removing Rhs of wire \SPIM:BSPIM:tx_status_1\[300] = \SPIM:BSPIM:dpMOSI_fifo_empty\[301]
-Removing Rhs of wire \SPIM:BSPIM:tx_status_2\[302] = \SPIM:BSPIM:dpMOSI_fifo_not_full\[303]
-Removing Lhs of wire \SPIM:BSPIM:tx_status_3\[304] = \SPIM:BSPIM:load_rx_data\[270]
-Removing Rhs of wire \SPIM:BSPIM:rx_status_4\[306] = \SPIM:BSPIM:dpMISO_fifo_full\[307]
-Removing Rhs of wire \SPIM:BSPIM:rx_status_5\[308] = \SPIM:BSPIM:dpMISO_fifo_not_empty\[309]
-Removing Lhs of wire \SPIM:BSPIM:tx_status_6\[311] = zero[2]
-Removing Lhs of wire \SPIM:BSPIM:tx_status_5\[312] = zero[2]
-Removing Lhs of wire \SPIM:BSPIM:rx_status_3\[313] = zero[2]
-Removing Lhs of wire \SPIM:BSPIM:rx_status_2\[314] = zero[2]
-Removing Lhs of wire \SPIM:BSPIM:rx_status_1\[315] = zero[2]
-Removing Lhs of wire \SPIM:BSPIM:rx_status_0\[316] = zero[2]
-Removing Lhs of wire \SPIM:Net_273\[326] = zero[2]
-Removing Lhs of wire \SPIM:Net_289\[365] = zero[2]
-Removing Rhs of wire Net_359[372] = \Debouncer_SW1:DEBOUNCER[0]:d_sync_0\[369]
-Removing Lhs of wire tmpOE__Pin_SW1_in_net_0[378] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire tmpOE__Pin_SW_net_1[383] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire tmpOE__Pin_SW_net_0[384] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Rhs of wire Net_474[398] = \Debouncer_SW2:DEBOUNCER[0]:d_sync_0\[395]
-Removing Lhs of wire tmpOE__Pin_SW2_in_net_0[403] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire tmpOE__Pin_VDAC8_2_Out_net_0[408] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire \Filter:Net_1\[414] = zero[2]
-Removing Lhs of wire \Filter:Net_4\[416] = zero[2]
-Removing Lhs of wire \Filter:Net_5\[417] = zero[2]
-Removing Lhs of wire tmpOE__Pin_SPI_EX1_net_0[427] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire tmpOE__Pin_SPI_EX2_net_0[433] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire tmpOE__Pin_Ext_Clock_net_0[439] = tmpOE__Pin_Sequencer_Reset_net_0[1]
-Removing Lhs of wire \Debouncer_RE2_B:DEBOUNCER[0]:d_sync_0\\D\[444] = Net_258[132]
-Removing Lhs of wire \Debouncer_RE2_B:DEBOUNCER[0]:d_sync_1\\D\[445] = Net_259[120]
-Removing Lhs of wire Net_283D[446] = zero[2]
-Removing Lhs of wire Net_281D[447] = zero[2]
-Removing Lhs of wire Net_282D[448] = zero[2]
-Removing Lhs of wire \Debouncer_RE2_A:DEBOUNCER[0]:d_sync_0\\D\[449] = Net_252[140]
-Removing Lhs of wire \Debouncer_RE2_A:DEBOUNCER[0]:d_sync_1\\D\[450] = Net_254[121]
-Removing Lhs of wire Net_280D[451] = zero[2]
-Removing Lhs of wire Net_278D[452] = zero[2]
-Removing Lhs of wire Net_279D[453] = zero[2]
-Removing Lhs of wire \Debouncer_RE1_B:DEBOUNCER[0]:d_sync_0\\D\[454] = Net_220[167]
-Removing Lhs of wire \Debouncer_RE1_B:DEBOUNCER[0]:d_sync_1\\D\[455] = Net_236[155]
-Removing Lhs of wire Net_276D[456] = zero[2]
-Removing Lhs of wire Net_274D[457] = zero[2]
-Removing Lhs of wire Net_275D[458] = zero[2]
-Removing Lhs of wire \Debouncer_RE1_A:DEBOUNCER[0]:d_sync_0\\D\[459] = Net_198[175]
-Removing Lhs of wire \Debouncer_RE1_A:DEBOUNCER[0]:d_sync_1\\D\[460] = Net_235[156]
-Removing Lhs of wire Net_273D[461] = zero[2]
-Removing Lhs of wire Net_271D[462] = zero[2]
-Removing Lhs of wire Net_272D[463] = zero[2]
-Removing Lhs of wire \Debouncer_RE3_A:DEBOUNCER[0]:d_sync_0\\D\[464] = Net_285[190]
-Removing Lhs of wire \Debouncer_RE3_A:DEBOUNCER[0]:d_sync_1\\D\[465] = Net_287[192]
-Removing Lhs of wire Net_298D[466] = zero[2]
-Removing Lhs of wire Net_296D[467] = zero[2]
-Removing Lhs of wire Net_297D[468] = zero[2]
-Removing Lhs of wire \Debouncer_RE3_B:DEBOUNCER[0]:d_sync_0\\D\[469] = Net_291[199]
-Removing Lhs of wire \Debouncer_RE3_B:DEBOUNCER[0]:d_sync_1\\D\[470] = Net_292[208]
-Removing Lhs of wire Net_301D[471] = zero[2]
-Removing Lhs of wire Net_299D[472] = zero[2]
-Removing Lhs of wire Net_300D[473] = zero[2]
-Removing Lhs of wire \SPIM:BSPIM:so_send_reg\\D\[475] = zero[2]
-Removing Lhs of wire \SPIM:BSPIM:mosi_pre_reg\\D\[481] = zero[2]
-Removing Lhs of wire \SPIM:BSPIM:dpcounter_one_reg\\D\[483] = \SPIM:BSPIM:load_rx_data\[270]
-Removing Lhs of wire \SPIM:BSPIM:mosi_from_dp_reg\\D\[484] = \SPIM:BSPIM:mosi_from_dp\[284]
-Removing Lhs of wire \Debouncer_SW1:DEBOUNCER[0]:d_sync_0\\D\[487] = Net_348[370]
-Removing Lhs of wire \Debouncer_SW1:DEBOUNCER[0]:d_sync_1\\D\[488] = Net_359[372]
-Removing Lhs of wire Net_362D[489] = zero[2]
-Removing Lhs of wire Net_360D[490] = zero[2]
-Removing Lhs of wire Net_361D[491] = zero[2]
-Removing Lhs of wire \Debouncer_SW2:DEBOUNCER[0]:d_sync_0\\D\[492] = Net_363[396]
-Removing Lhs of wire \Debouncer_SW2:DEBOUNCER[0]:d_sync_1\\D\[493] = Net_474[398]
-Removing Lhs of wire Net_376D[494] = zero[2]
-Removing Lhs of wire Net_374D[495] = zero[2]
-Removing Lhs of wire Net_375D[496] = zero[2]
+Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_6\[63] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_5\[64] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_4\[65] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_3\[66] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_2\[67] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_1\[68] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire \LCD_Char:tmpOE__LCDPort_net_0\[69] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire Net_12[88] = zero[2]
+Removing Lhs of wire \Timer_Sampling:Net_260\[90] = zero[2]
+Removing Lhs of wire \Timer_Sampling:Net_266\[91] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Rhs of wire Net_187[95] = \Timer_Sampling:Net_57\[94]
+Removing Rhs of wire Net_192[96] = \Timer_Sampling:Net_51\[92]
+Removing Lhs of wire \Timer_Sampling:Net_102\[97] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__Pin_Timer_Sampling_TC_net_0[99] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__Pin_ISR_Check_net_0[106] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__Pin_RE2_net_1[112] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__Pin_RE2_net_0[113] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Rhs of wire Net_259[114] = \Debouncer_RE2_B:DEBOUNCER[0]:d_sync_0\[125]
+Removing Rhs of wire Net_254[115] = \Debouncer_RE2_A:DEBOUNCER[0]:d_sync_0\[141]
+Removing Lhs of wire tmpOE__Pin_RE2_in_net_1[132] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__Pin_RE2_in_net_0[133] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__Pin_RE1_net_1[147] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__Pin_RE1_net_0[148] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Rhs of wire Net_236[149] = \Debouncer_RE1_B:DEBOUNCER[0]:d_sync_0\[160]
+Removing Rhs of wire Net_235[150] = \Debouncer_RE1_A:DEBOUNCER[0]:d_sync_0\[176]
+Removing Lhs of wire tmpOE__Pin_RE1_in_net_1[167] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__Pin_RE1_in_net_0[168] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Rhs of wire Net_287[186] = \Debouncer_RE3_A:DEBOUNCER[0]:d_sync_0\[183]
+Removing Lhs of wire tmpOE__Pin_RE3_in_net_1[191] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__Pin_RE3_in_net_0[192] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Rhs of wire Net_292[202] = \Debouncer_RE3_B:DEBOUNCER[0]:d_sync_0\[200]
+Removing Lhs of wire tmpOE__Pin_RE3_net_1[207] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__Pin_RE3_net_0[208] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__Pin_VDAC8_1_Out_net_0[216] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire \VDAC8_1:Net_83\[223] = zero[2]
+Removing Lhs of wire \VDAC8_1:Net_81\[224] = zero[2]
+Removing Lhs of wire \VDAC8_1:Net_82\[225] = zero[2]
+Removing Lhs of wire \VDAC8_2:Net_83\[233] = zero[2]
+Removing Lhs of wire \VDAC8_2:Net_81\[234] = zero[2]
+Removing Lhs of wire \VDAC8_2:Net_82\[235] = zero[2]
+Removing Lhs of wire tmpOE__Pin_SPI_MISO_net_0[240] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__Pin_SPI_MOSI_net_0[246] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Rhs of wire Net_483[247] = \SPIM:BSPIM:mosi_reg\[272]
+Removing Lhs of wire tmpOE__Pin_SPI_SCLK_net_0[253] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Rhs of wire \SPIM:Net_276\[259] = \SPIM:Net_288\[260]
+Removing Rhs of wire \SPIM:BSPIM:load_rx_data\[264] = \SPIM:BSPIM:dpcounter_one\[265]
+Removing Lhs of wire \SPIM:BSPIM:pol_supprt\[266] = zero[2]
+Removing Lhs of wire \SPIM:BSPIM:miso_to_dp\[267] = \SPIM:Net_244\[268]
+Removing Lhs of wire \SPIM:Net_244\[268] = Net_19[241]
+Removing Rhs of wire \SPIM:BSPIM:tx_status_1\[294] = \SPIM:BSPIM:dpMOSI_fifo_empty\[295]
+Removing Rhs of wire \SPIM:BSPIM:tx_status_2\[296] = \SPIM:BSPIM:dpMOSI_fifo_not_full\[297]
+Removing Lhs of wire \SPIM:BSPIM:tx_status_3\[298] = \SPIM:BSPIM:load_rx_data\[264]
+Removing Rhs of wire \SPIM:BSPIM:rx_status_4\[300] = \SPIM:BSPIM:dpMISO_fifo_full\[301]
+Removing Rhs of wire \SPIM:BSPIM:rx_status_5\[302] = \SPIM:BSPIM:dpMISO_fifo_not_empty\[303]
+Removing Lhs of wire \SPIM:BSPIM:tx_status_6\[305] = zero[2]
+Removing Lhs of wire \SPIM:BSPIM:tx_status_5\[306] = zero[2]
+Removing Lhs of wire \SPIM:BSPIM:rx_status_3\[307] = zero[2]
+Removing Lhs of wire \SPIM:BSPIM:rx_status_2\[308] = zero[2]
+Removing Lhs of wire \SPIM:BSPIM:rx_status_1\[309] = zero[2]
+Removing Lhs of wire \SPIM:BSPIM:rx_status_0\[310] = zero[2]
+Removing Lhs of wire \SPIM:Net_273\[320] = zero[2]
+Removing Lhs of wire \SPIM:Net_289\[359] = zero[2]
+Removing Rhs of wire Net_359[366] = \Debouncer_SW1:DEBOUNCER[0]:d_sync_0\[363]
+Removing Lhs of wire tmpOE__Pin_SW1_in_net_0[372] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__Pin_SW_net_1[377] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__Pin_SW_net_0[378] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Rhs of wire Net_474[392] = \Debouncer_SW2:DEBOUNCER[0]:d_sync_0\[389]
+Removing Lhs of wire tmpOE__Pin_SW2_in_net_0[397] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__Pin_VDAC8_2_Out_net_0[402] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire \Filter:Net_1\[408] = zero[2]
+Removing Lhs of wire \Filter:Net_4\[410] = zero[2]
+Removing Lhs of wire \Filter:Net_5\[411] = zero[2]
+Removing Lhs of wire tmpOE__Pin_SPI_EX1_net_0[421] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__Pin_SPI_EX2_net_0[427] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire tmpOE__Pin_Ext_Clock_net_0[433] = tmpOE__Pin_Sequencer_Reset_net_0[1]
+Removing Lhs of wire \Debouncer_RE2_B:DEBOUNCER[0]:d_sync_0\\D\[438] = Net_258[126]
+Removing Lhs of wire \Debouncer_RE2_B:DEBOUNCER[0]:d_sync_1\\D\[439] = Net_259[114]
+Removing Lhs of wire Net_283D[440] = zero[2]
+Removing Lhs of wire Net_281D[441] = zero[2]
+Removing Lhs of wire Net_282D[442] = zero[2]
+Removing Lhs of wire \Debouncer_RE2_A:DEBOUNCER[0]:d_sync_0\\D\[443] = Net_252[134]
+Removing Lhs of wire \Debouncer_RE2_A:DEBOUNCER[0]:d_sync_1\\D\[444] = Net_254[115]
+Removing Lhs of wire Net_280D[445] = zero[2]
+Removing Lhs of wire Net_278D[446] = zero[2]
+Removing Lhs of wire Net_279D[447] = zero[2]
+Removing Lhs of wire \Debouncer_RE1_B:DEBOUNCER[0]:d_sync_0\\D\[448] = Net_220[161]
+Removing Lhs of wire \Debouncer_RE1_B:DEBOUNCER[0]:d_sync_1\\D\[449] = Net_236[149]
+Removing Lhs of wire Net_276D[450] = zero[2]
+Removing Lhs of wire Net_274D[451] = zero[2]
+Removing Lhs of wire Net_275D[452] = zero[2]
+Removing Lhs of wire \Debouncer_RE1_A:DEBOUNCER[0]:d_sync_0\\D\[453] = Net_198[169]
+Removing Lhs of wire \Debouncer_RE1_A:DEBOUNCER[0]:d_sync_1\\D\[454] = Net_235[150]
+Removing Lhs of wire Net_273D[455] = zero[2]
+Removing Lhs of wire Net_271D[456] = zero[2]
+Removing Lhs of wire Net_272D[457] = zero[2]
+Removing Lhs of wire \Debouncer_RE3_A:DEBOUNCER[0]:d_sync_0\\D\[458] = Net_285[184]
+Removing Lhs of wire \Debouncer_RE3_A:DEBOUNCER[0]:d_sync_1\\D\[459] = Net_287[186]
+Removing Lhs of wire Net_298D[460] = zero[2]
+Removing Lhs of wire Net_296D[461] = zero[2]
+Removing Lhs of wire Net_297D[462] = zero[2]
+Removing Lhs of wire \Debouncer_RE3_B:DEBOUNCER[0]:d_sync_0\\D\[463] = Net_291[193]
+Removing Lhs of wire \Debouncer_RE3_B:DEBOUNCER[0]:d_sync_1\\D\[464] = Net_292[202]
+Removing Lhs of wire Net_301D[465] = zero[2]
+Removing Lhs of wire Net_299D[466] = zero[2]
+Removing Lhs of wire Net_300D[467] = zero[2]
+Removing Lhs of wire \SPIM:BSPIM:so_send_reg\\D\[469] = zero[2]
+Removing Lhs of wire \SPIM:BSPIM:mosi_pre_reg\\D\[475] = zero[2]
+Removing Lhs of wire \SPIM:BSPIM:dpcounter_one_reg\\D\[477] = \SPIM:BSPIM:load_rx_data\[264]
+Removing Lhs of wire \SPIM:BSPIM:mosi_from_dp_reg\\D\[478] = \SPIM:BSPIM:mosi_from_dp\[278]
+Removing Lhs of wire \Debouncer_SW1:DEBOUNCER[0]:d_sync_0\\D\[481] = Net_348[364]
+Removing Lhs of wire \Debouncer_SW1:DEBOUNCER[0]:d_sync_1\\D\[482] = Net_359[366]
+Removing Lhs of wire Net_362D[483] = zero[2]
+Removing Lhs of wire Net_360D[484] = zero[2]
+Removing Lhs of wire Net_361D[485] = zero[2]
+Removing Lhs of wire \Debouncer_SW2:DEBOUNCER[0]:d_sync_0\\D\[486] = Net_363[390]
+Removing Lhs of wire \Debouncer_SW2:DEBOUNCER[0]:d_sync_1\\D\[487] = Net_474[392]
+Removing Lhs of wire Net_376D[488] = zero[2]
+Removing Lhs of wire Net_374D[489] = zero[2]
+Removing Lhs of wire Net_375D[490] = zero[2]
 
 ------------------------------------------------------
 Aliased 0 equations, 134 wires.
@@ -486,14 +486,14 @@ CYPRESS_DIR    : C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\wa
 Warp Program   : C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\bin/warp.exe
 Warp Arguments : -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya "-.fftprj=D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780.cydsn\Sequencer_Master_PSoC5LP_ProtoKit_HD44780.cyprj" -dcpsoc3 Sequencer_Master_PSoC5LP_ProtoKit_HD44780.v -verilog
 </CYPRESSTAG>
-Warp synthesis phase: Elapsed time ==> 0s.765ms
+Warp synthesis phase: Elapsed time ==> 0s.944ms
 <CYPRESSTAG name="Fitter results...">
 <CYPRESSTAG name="Fitter startup details...">
-cyp3fit: V3.3.0.410, Family: PSoC3, Started at: Sunday, 22 November 2015 11:33:42
+cyp3fit: V3.3.0.410, Family: PSoC3, Started at: Monday, 23 November 2015 03:32:27
 Options: -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\Users\gizmo\Documents\Develop\Rhythm Machine\Master_PSoC5LP_Test\PSoC\Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780.cydsn\Sequencer_Master_PSoC5LP_ProtoKit_HD44780.cyprj -d CY8C5888LTI-LP097 Sequencer_Master_PSoC5LP_ProtoKit_HD44780.v -verilog
 </CYPRESSTAG>
 <CYPRESSTAG name="Design parsing">
-Design parsing phase: Elapsed time ==> 0s.015ms
+Design parsing phase: Elapsed time ==> 0s.030ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Tech mapping">
 <CYPRESSTAG name="Initial Mapping" icon="FILE_RPT_TECHM">
@@ -632,7 +632,7 @@ Design Equations
         {
         }
 
-    Pin : Name = LED_RED(0)
+    Pin : Name = LED_RGB(0)
         Attributes:
             In Group/Port: True
             In Sync Option: AUTO
@@ -649,7 +649,7 @@ Design Equations
             LCD Mode: COMMON
             Register Mode: RegComb
             CaSense Mode: NEITHER
-            Treat as pin: True
+            Treat as pin: False
             Is OE Registered: False
             Uses Analog: False
             Can contain Digital: True
@@ -665,13 +665,13 @@ Design Equations
             Initial Value: 0
             IO Voltage: 0
         PORT MAP (
-            pa_out => LED_RED(0)__PA ,
-            pad => LED_RED(0)_PAD );
+            pa_out => LED_RGB(0)__PA ,
+            pad => LED_RGB(0)_PAD );
         Properties:
         {
         }
 
-    Pin : Name = LED_GREEN(0)
+    Pin : Name = LED_RGB(1)
         Attributes:
             In Group/Port: True
             In Sync Option: AUTO
@@ -688,7 +688,7 @@ Design Equations
             LCD Mode: COMMON
             Register Mode: RegComb
             CaSense Mode: NEITHER
-            Treat as pin: True
+            Treat as pin: False
             Is OE Registered: False
             Uses Analog: False
             Can contain Digital: True
@@ -704,8 +704,47 @@ Design Equations
             Initial Value: 0
             IO Voltage: 0
         PORT MAP (
-            pa_out => LED_GREEN(0)__PA ,
-            pad => LED_GREEN(0)_PAD );
+            pa_out => LED_RGB(1)__PA ,
+            pad => LED_RGB(1)_PAD );
+        Properties:
+        {
+        }
+
+    Pin : Name = LED_RGB(2)
+        Attributes:
+            In Group/Port: True
+            In Sync Option: AUTO
+            Out Sync Option: NOSYNC
+            Interrupt generated: False
+            Interrupt mode: NONE
+            Drive mode: CMOS_OUT
+            VTrip: EITHER
+            Slew: FAST
+            Input Sync needed: False
+            Output Sync needed: False
+            SC shield enabled: False
+            POR State: ANY
+            LCD Mode: COMMON
+            Register Mode: RegComb
+            CaSense Mode: NEITHER
+            Treat as pin: False
+            Is OE Registered: False
+            Uses Analog: False
+            Can contain Digital: True
+            Is SIO: False
+            SIO Output Buf: NONREGULATED
+            SIO Input Buf: SINGLE_ENDED
+            SIO HiFreq: LOW
+            SIO Hyst: DISABLED
+            SIO Vtrip: MULTIPLIER_0_5
+            SIO Multiplier Index: 0
+            SIO RefSel: VCC_IO
+            Required Capabilitites: DIGITAL
+            Initial Value: 0
+            IO Voltage: 0
+        PORT MAP (
+            pa_out => LED_RGB(2)__PA ,
+            pad => LED_RGB(2)_PAD );
         Properties:
         {
         }
@@ -788,45 +827,6 @@ Design Equations
             fb => \I2CM_Sequencer:Net_1109_1\ ,
             input => \I2CM_Sequencer:sda_x_wire\ ,
             pad => Pin_Sequencer_SDA(0)_PAD );
-        Properties:
-        {
-        }
-
-    Pin : Name = LED_BLUE(0)
-        Attributes:
-            In Group/Port: True
-            In Sync Option: AUTO
-            Out Sync Option: NOSYNC
-            Interrupt generated: False
-            Interrupt mode: NONE
-            Drive mode: CMOS_OUT
-            VTrip: EITHER
-            Slew: FAST
-            Input Sync needed: False
-            Output Sync needed: False
-            SC shield enabled: False
-            POR State: ANY
-            LCD Mode: COMMON
-            Register Mode: RegComb
-            CaSense Mode: NEITHER
-            Treat as pin: True
-            Is OE Registered: False
-            Uses Analog: False
-            Can contain Digital: True
-            Is SIO: False
-            SIO Output Buf: NONREGULATED
-            SIO Input Buf: SINGLE_ENDED
-            SIO HiFreq: LOW
-            SIO Hyst: DISABLED
-            SIO Vtrip: MULTIPLIER_0_5
-            SIO Multiplier Index: 0
-            SIO RefSel: VCC_IO
-            Required Capabilitites: DIGITAL
-            Initial Value: 0
-            IO Voltage: 0
-        PORT MAP (
-            pa_out => LED_BLUE(0)__PA ,
-            pad => LED_BLUE(0)_PAD );
         Properties:
         {
         }
@@ -2739,14 +2739,14 @@ Analog (SC/CT) Blocks         :    0 :    4 :    4 :  0.00 %
 DAC                           :      :      :      :        
   VIDAC                       :    2 :    2 :    4 : 50.00 %
 </CYPRESSTAG>
-Technology Mapping: Elapsed time ==> 0s.093ms
-Tech mapping phase: Elapsed time ==> 0s.171ms
+Technology Mapping: Elapsed time ==> 0s.076ms
+Tech mapping phase: Elapsed time ==> 0s.154ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Analog Placement">
 Initial Analog Placement Results:
-IO_6@[IOP=(12)][IoId=(6)] : LED_BLUE(0) (fixed)
-IO_5@[IOP=(12)][IoId=(5)] : LED_GREEN(0) (fixed)
-IO_7@[IOP=(12)][IoId=(7)] : LED_RED(0) (fixed)
+IO_5@[IOP=(12)][IoId=(5)] : LED_RGB(0) (fixed)
+IO_6@[IOP=(12)][IoId=(6)] : LED_RGB(1) (fixed)
+IO_7@[IOP=(12)][IoId=(7)] : LED_RGB(2) (fixed)
 IO_5@[IOP=(3)][IoId=(5)] : Pin_Ext_Clock(0) (fixed)
 IO_3@[IOP=(3)][IoId=(3)] : Pin_ISR_Check(0) (fixed)
 IO_0@[IOP=(15)][IoId=(0)] : Pin_RE1_in(0) (fixed)
@@ -2784,9 +2784,9 @@ IO_7@[IOP=(3)][IoId=(7)] : Dedicated_Output_1 (OPAMP-GPIO)
 Log: apr.M0058: The analog placement iterative improvement is 45% done. (App=cydsfit)
 Log: apr.M0058: The analog placement iterative improvement is 76% done. (App=cydsfit)
 Analog Placement Results:
-IO_6@[IOP=(12)][IoId=(6)] : LED_BLUE(0) (fixed)
-IO_5@[IOP=(12)][IoId=(5)] : LED_GREEN(0) (fixed)
-IO_7@[IOP=(12)][IoId=(7)] : LED_RED(0) (fixed)
+IO_5@[IOP=(12)][IoId=(5)] : LED_RGB(0) (fixed)
+IO_6@[IOP=(12)][IoId=(6)] : LED_RGB(1) (fixed)
+IO_7@[IOP=(12)][IoId=(7)] : LED_RGB(2) (fixed)
 IO_5@[IOP=(3)][IoId=(5)] : Pin_Ext_Clock(0) (fixed)
 IO_3@[IOP=(3)][IoId=(3)] : Pin_ISR_Check(0) (fixed)
 IO_0@[IOP=(15)][IoId=(0)] : Pin_RE1_in(0) (fixed)
@@ -2822,10 +2822,10 @@ VIDAC[2]@[FFB(VIDAC,2)] : \VDAC8_2:viDAC8\
 IO_0@[IOP=(0)][IoId=(0)] : Dedicated_Output (OPAMP-GPIO)
 IO_6@[IOP=(3)][IoId=(6)] : Dedicated_Output_1 (OPAMP-GPIO)
 
-Analog Placement phase: Elapsed time ==> 1s.428ms
+Analog Placement phase: Elapsed time ==> 1s.531ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Analog Routing">
-Analog Routing phase: Elapsed time ==> 0s.000ms
+Analog Routing phase: Elapsed time ==> 0s.006ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Analog Code Generation">
 ============ Analog Final Answer Routes ============
@@ -2904,11 +2904,11 @@ Dump of CyP35AnalogRoutingResultsDB
 IsVddaHalfUsedForComp = False
 IsVddaHalfUsedForSar0 = False
 IsVddaHalfUsedForSar1 = False
-Analog Code Generation phase: Elapsed time ==> 0s.359ms
+Analog Code Generation phase: Elapsed time ==> 0s.408ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Digital Placement">
 <CYPRESSTAG name="Detailed placement messages">
-I2076: Total run-time: 0.9 sec.
+I2076: Total run-time: 1.0 sec.
 
 </CYPRESSTAG>
 <CYPRESSTAG name="PLD Packing">
@@ -2932,17 +2932,17 @@ PLD Packing Summary
 <CYPRESSTAG name="Packed PLD Contents">
 Packed PLD Contents not displayed at this verbose level.</CYPRESSTAG>
 </CYPRESSTAG>
-PLD Packing: Elapsed time ==> 0s.000ms
+PLD Packing: Elapsed time ==> 0s.002ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Partitioning">
 <CYPRESSTAG name="Initial Partitioning Summary">
 Initial Partitioning Summary not displayed at this verbose level.</CYPRESSTAG>
 <CYPRESSTAG name="Final Partitioning Summary">
 Final Partitioning Summary not displayed at this verbose level.</CYPRESSTAG>
-Partitioning: Elapsed time ==> 0s.093ms
+Partitioning: Elapsed time ==> 0s.095ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Simulated Annealing">
-Annealing: Elapsed time ==> 0s.000ms
+Annealing: Elapsed time ==> 0s.001ms
 <CYPRESSTAG name="Simulated Annealing Results">
 The seed used for moves was 114161200.
 Inital cost was 367, final cost is 367 (0.00% improvement).</CYPRESSTAG>
@@ -4955,7 +4955,7 @@ Pin : Name = Pin_SPI_EX2(0)
     }
 
 [IoId=5]: 
-Pin : Name = LED_GREEN(0)
+Pin : Name = LED_RGB(0)
     Attributes:
         In Group/Port: True
         In Sync Option: AUTO
@@ -4972,7 +4972,7 @@ Pin : Name = LED_GREEN(0)
         LCD Mode: COMMON
         Register Mode: RegComb
         CaSense Mode: NEITHER
-        Treat as pin: True
+        Treat as pin: False
         Is OE Registered: False
         Uses Analog: False
         Can contain Digital: True
@@ -4988,14 +4988,14 @@ Pin : Name = LED_GREEN(0)
         Initial Value: 0
         IO Voltage: 0
     PORT MAP (
-        pa_out => LED_GREEN(0)__PA ,
-        pad => LED_GREEN(0)_PAD );
+        pa_out => LED_RGB(0)__PA ,
+        pad => LED_RGB(0)_PAD );
     Properties:
     {
     }
 
 [IoId=6]: 
-Pin : Name = LED_BLUE(0)
+Pin : Name = LED_RGB(1)
     Attributes:
         In Group/Port: True
         In Sync Option: AUTO
@@ -5012,7 +5012,7 @@ Pin : Name = LED_BLUE(0)
         LCD Mode: COMMON
         Register Mode: RegComb
         CaSense Mode: NEITHER
-        Treat as pin: True
+        Treat as pin: False
         Is OE Registered: False
         Uses Analog: False
         Can contain Digital: True
@@ -5028,14 +5028,14 @@ Pin : Name = LED_BLUE(0)
         Initial Value: 0
         IO Voltage: 0
     PORT MAP (
-        pa_out => LED_BLUE(0)__PA ,
-        pad => LED_BLUE(0)_PAD );
+        pa_out => LED_RGB(1)__PA ,
+        pad => LED_RGB(1)_PAD );
     Properties:
     {
     }
 
 [IoId=7]: 
-Pin : Name = LED_RED(0)
+Pin : Name = LED_RGB(2)
     Attributes:
         In Group/Port: True
         In Sync Option: AUTO
@@ -5052,7 +5052,7 @@ Pin : Name = LED_RED(0)
         LCD Mode: COMMON
         Register Mode: RegComb
         CaSense Mode: NEITHER
-        Treat as pin: True
+        Treat as pin: False
         Is OE Registered: False
         Uses Analog: False
         Can contain Digital: True
@@ -5068,8 +5068,8 @@ Pin : Name = LED_RED(0)
         Initial Value: 0
         IO Voltage: 0
     PORT MAP (
-        pa_out => LED_RED(0)__PA ,
-        pad => LED_RED(0)_PAD );
+        pa_out => LED_RGB(2)__PA ,
+        pad => LED_RGB(2)_PAD );
     Properties:
     {
     }
@@ -5578,9 +5578,9 @@ Port | Pin | Fixed |      Type |       Drive Mode |                     Name | C
      |   2 |     * |      NONE |     HI_Z_DIGITAL |          Pin_SPI_MISO(0) | FB(Net_19)
      |   3 |     * |      NONE |         CMOS_OUT |           Pin_SPI_EX1(0) | 
      |   4 |     * |      NONE |         CMOS_OUT |           Pin_SPI_EX2(0) | 
-     |   5 |     * |      NONE |         CMOS_OUT |             LED_GREEN(0) | 
-     |   6 |     * |      NONE |         CMOS_OUT |              LED_BLUE(0) | 
-     |   7 |     * |      NONE |         CMOS_OUT |               LED_RED(0) | 
+     |   5 |     * |      NONE |         CMOS_OUT |               LED_RGB(0) | 
+     |   6 |     * |      NONE |         CMOS_OUT |               LED_RGB(1) | 
+     |   7 |     * |      NONE |         CMOS_OUT |               LED_RGB(2) | 
 -----+-----+-------+-----------+------------------+--------------------------+-----------------------------------------------------------------
   15 |   0 |     * |      NONE |      RES_PULL_UP |            Pin_RE1_in(0) | FB(Net_198)
      |   1 |     * |      NONE |      RES_PULL_UP |            Pin_RE1_in(1) | FB(Net_220)
@@ -5594,32 +5594,32 @@ Port | Pin | Fixed |      Type |       Drive Mode |                     Name | C
 </CYPRESSTAG>
 </CYPRESSTAG>
 </CYPRESSTAG>
-Digital component placer commit/Report: Elapsed time ==> 0s.000ms
-Digital Placement phase: Elapsed time ==> 1s.234ms
+Digital component placer commit/Report: Elapsed time ==> 0s.004ms
+Digital Placement phase: Elapsed time ==> 1s.465ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Digital Routing">
 Routing successful.
-Digital Routing phase: Elapsed time ==> 2s.093ms
+Digital Routing phase: Elapsed time ==> 2s.281ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Bitstream and API generation">
-Bitstream and API generation phase: Elapsed time ==> 0s.185ms
+Bitstream and API generation phase: Elapsed time ==> 0s.213ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Bitstream verification">
-Bitstream verification phase: Elapsed time ==> 0s.031ms
+Bitstream verification phase: Elapsed time ==> 0s.041ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Static timing analysis">
 Timing report is in Sequencer_Master_PSoC5LP_ProtoKit_HD44780_timing.html.
-Static timing analysis phase: Elapsed time ==> 0s.359ms
+Static timing analysis phase: Elapsed time ==> 0s.385ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Data reporting">
 Data reporting phase: Elapsed time ==> 0s.000ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Database update...">
-Design database save phase: Elapsed time ==> 0s.203ms
+Design database save phase: Elapsed time ==> 0s.236ms
 </CYPRESSTAG>
-cydsfit: Elapsed time ==> 6s.082ms
+cydsfit: Elapsed time ==> 6s.771ms
 </CYPRESSTAG>
-Fitter phase: Elapsed time ==> 6s.114ms
-API generation phase: Elapsed time ==> 1s.868ms
-Dependency generation phase: Elapsed time ==> 0s.015ms
-Cleanup phase: Elapsed time ==> 0s.000ms
+Fitter phase: Elapsed time ==> 6s.813ms
+API generation phase: Elapsed time ==> 2s.168ms
+Dependency generation phase: Elapsed time ==> 0s.022ms
+Cleanup phase: Elapsed time ==> 0s.002ms

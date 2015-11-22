@@ -13,7 +13,7 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Source Files\main.c">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Source Files\dds.c">
 <ExpandedNodeIds>
 <v>Sequencer_Master</v>
 <v>Sequencer_Master\DDS_Test_UART\TopDesign</v>
@@ -202,7 +202,6 @@
 <v>Sequencer_Master\DDS_Test_VDAC\Generated_Source\PSoC5\cyfitterrv.inc</v>
 <v>Sequencer_Master\DDS_Test_VDAC\Generated_Source\PSoC5\cymetadata.c</v>
 <v>Sequencer_Master\DDS_Test_VDAC\Generated_Source\PSoC5\project.h</v>
-<v>Sequencer_Master\MCP4922_Test</v>
 <v>Sequencer_Master\MCP4922_Test\TopDesign</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\TopDesign</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP\Source Files</v>
@@ -338,7 +337,6 @@
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Source Files\dds.c</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Source Files\main.c</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Source Files\utility.c</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Clock_RE</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Clock_RE\Clock_RE.c</v>
@@ -346,7 +344,6 @@
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Clock_SW</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Clock_SW\Clock_SW.c</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Clock_SW\Clock_SW.h</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\cy_boot</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\cy_boot\cm3gcc.ld</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\cy_boot\Cm3Iar.icf</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\cy_boot\Cm3RealView.scat</v>
@@ -402,18 +399,10 @@
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\LCD_Char_LCDPort\LCD_Char_LCDPort.c</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\LCD_Char_LCDPort\LCD_Char_LCDPort.h</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\LCD_Char_LCDPort\LCD_Char_LCDPort_aliases.h</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\LED_BLUE</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\LED_BLUE\LED_BLUE.c</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\LED_BLUE\LED_BLUE.h</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\LED_BLUE\LED_BLUE_aliases.h</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\LED_GREEN</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\LED_GREEN\LED_GREEN.c</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\LED_GREEN\LED_GREEN.h</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\LED_GREEN\LED_GREEN_aliases.h</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\LED_RED</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\LED_RED\LED_RED.c</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\LED_RED\LED_RED.h</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\LED_RED\LED_RED_aliases.h</v>
+<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\LED_RGB</v>
+<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\LED_RGB\LED_RGB.c</v>
+<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\LED_RGB\LED_RGB.h</v>
+<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\LED_RGB\LED_RGB_aliases.h</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Opamp_1</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Opamp_1\Opamp_1.c</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Opamp_1\Opamp_1.h</v>
@@ -559,11 +548,6 @@
 <v>Sequencer_Master\DDS_Test_UART</v>
 <v>Sequencer_Master\DDS_Test_VDAC</v>
 <v>Sequencer_Master\MCP4922_Test</v>
-<v>Sequencer_Master\MCP4922_Test\TopDesign</v>
-<v>Sequencer_Master\MCP4922_Test\MCP4922_Test.cydwr</v>
-<v>Sequencer_Master\MCP4922_Test\Header Files</v>
-<v>Sequencer_Master\MCP4922_Test\Source Files</v>
-<v>Sequencer_Master\MCP4922_Test\Generated_Source</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP</v>
 <v>Sequencer_Master\Sequencer_Master_CQ_PSoC5LP_HD44780</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780</v>
@@ -580,30 +564,6 @@
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Source Files\main.c</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Source Files\utility.c</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Clock_RE</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Clock_RE\Clock_RE.c</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Clock_RE\Clock_RE.h</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Clock_SW</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Clock_SW\Clock_SW.c</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\Clock_SW\Clock_SW.h</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\cy_boot</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\cy_boot\cm3gcc.ld</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\cy_boot\Cm3Iar.icf</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\cy_boot\Cm3RealView.scat</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\cy_boot\Cm3Start.c</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\cy_boot\core_cm3.h</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\cy_boot\core_cm3_psoc5.h</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\cy_boot\core_cmFunc.h</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\cy_boot\core_cmInstr.h</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\cy_boot\CyBootAsmGnu.s</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\cy_boot\CyBootAsmIar.s</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\cy_boot\CyBootAsmRv.s</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\cy_boot\CyDmac.c</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\cy_boot\CyDmac.h</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\cy_boot\CyFlash.c</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\cy_boot\CyFlash.h</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source\PSoC5\cy_boot\CyLib.c</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
@@ -970,9 +930,7 @@
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\LCD_Char.lst</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\LCD_Char_LCDPort.lst</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\LCD_Char_PM.lst</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\LED_BLUE.lst</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\LED_GREEN.lst</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\LED_RED.lst</v>
+<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\LED_RGB.lst</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\main.lst</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\Opamp_1.lst</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\CortexM3\ARM_GCC_493\Debug\Listing Files\Opamp_1_PM.lst</v>

@@ -40,6 +40,10 @@ static int noteCount = 0;
 // フィルター
 static FILTER16_FUNC_PTR filterFunc;
 
+//-------------------------------------------------
+// ノート変更
+static NOTE_CHANGE_FUNC_PTR noteChangeFunc;
+
 //=================================================
 // getter / setter
 // 
@@ -229,6 +233,14 @@ fp32 generateFilteredNoise()
 }
 
 //-------------------------------------------------
+// ノート変更通知
+//
+void setNoteChangeRoutine(NOTE_CHANGE_FUNC_PTR _noteChangeFunc)
+{
+    noteChangeFunc = _noteChangeFunc;
+}
+
+//-------------------------------------------------
 // 波形生成ルーチン
 // return: fp32型の波形値 
 // parameter: tracks: トラックデータの配列
@@ -251,6 +263,10 @@ fp32 generateWave(struct track *tracks)
 			tracks[i].decayPhaseRegister = 0;
 			tracks[i].decayStop = 0;
 		}
+        
+        // note変更通知
+        if (noteChangeFunc != 0)
+            (noteChangeFunc)();
 	}
 	// トラックの処理
 	//

@@ -7,6 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.11.23 RGB_LEDのピンアサインを変更
  * 2015.11.20 Filterを追加
  * 2015.11.19 ピンアサインを変更、Tact Switchを2個に変更
  * 2015.11.19 Tact Switchの読み取りを追加
@@ -33,7 +34,7 @@
 #include "ModTableFP32.h"
 
 #define TITLE_STR   ("Rhythm Machine")
-#define VERSION_STR ("2015.11.22")
+#define VERSION_STR ("2015.11.23")
 
 // Sequencer
 //
@@ -84,35 +85,10 @@ volumeAmount      : 8bit
 // マクロ関数
 // 
 //=================================================
-/* Set LED RED color */
-#define RGB_LED_ON_RED  \
-                do{     \
-                    LED_RED_Write  (1u); \
-                    LED_GREEN_Write(0u); \
-                    LED_BLUE_Write (0u); \
-                }while(0)
-
-/* Set LED GREEN color */
-#define RGB_LED_ON_GREEN \
-                do{      \
-                    LED_RED_Write  (0u); \
-                    LED_GREEN_Write(1u); \
-                    LED_BLUE_Write (0u); \
-                }while(0)
-/* Set LED BLUE color */
-#define RGB_LED_ON_BLUE  \
-                do{      \
-                    LED_RED_Write  (0u); \
-                    LED_GREEN_Write(0u); \
-                    LED_BLUE_Write (1u); \
-                }while(0)
-/* Set LED BLUE color */
-#define RGB_LED_OFF      \
-                do{      \
-                    LED_RED_Write  (0u); \
-                    LED_GREEN_Write(0u); \
-                    LED_BLUE_Write (0u); \
-                }while(0)
+#define RGB_LED_ON_RED      LED_RGB_Write(0x04);
+#define RGB_LED_ON_BLUE     LED_RGB_Write(0x02);
+#define RGB_LED_ON_GREEN    LED_RGB_Write(0x01);
+#define RGB_LED_OFF         LED_RGB_Write(0x00);
 
 //=================================================
 // 大域変数
@@ -472,7 +448,7 @@ CY_ISR(Timer_Sampling_interrupt_handler)
         i8v = fp32_to_int(fv8);
         
         // LED表示用に正側のみを取得
-        i8v_plus = (i8v - 128) > 0 ? (i8v -128) << 1 : 0;
+        i8v_plus = (i8v - 128) > 0 ? (i8v - 128) << 1 : 0;
         
         VDAC8_1_SetValue(i8v);
         VDAC8_2_SetValue(i8v_plus);
@@ -624,7 +600,7 @@ int main()
     setFilterRoutine(&filterFunc);
     
     // LCDを初期化
-    LCD_Char_Start();  
+    LCD_Char_Start();
     LCD_printf(0, TITLE_STR);
     LCD_printf(1, VERSION_STR);
     
