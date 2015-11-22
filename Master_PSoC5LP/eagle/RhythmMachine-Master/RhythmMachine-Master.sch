@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="7.5.0">
+<eagle version="7.2.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="dots" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
@@ -15040,9 +15040,9 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <part name="SUPPLY9" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY10" library="supply2" deviceset="GND" device=""/>
 <part name="RGB_LED" library="pinhead" deviceset="PINHD-1X4" device=""/>
-<part name="R1" library="rcl" deviceset="R-EU_" device="0207/7"/>
-<part name="R2" library="rcl" deviceset="R-EU_" device="0207/7"/>
-<part name="R3" library="rcl" deviceset="R-EU_" device="0207/7"/>
+<part name="R1" library="rcl" deviceset="R-EU_" device="0207/7" value="1k"/>
+<part name="R2" library="rcl" deviceset="R-EU_" device="0207/7" value="1k"/>
+<part name="R3" library="rcl" deviceset="R-EU_" device="0207/7" value="1.5k"/>
 <part name="SUPPLY13" library="supply2" deviceset="GND" device=""/>
 <part name="JP1" library="pinhead" deviceset="PINHD-1X5" device="/90" value="SEQUENCER"/>
 <part name="VCC3" library="supply1" deviceset="VCCIO" device=""/>
@@ -15052,12 +15052,12 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <part name="SUPPLY17" library="supply2" deviceset="GND" device=""/>
 <part name="JP3" library="pinhead" deviceset="PINHD-1X5" device="/90" value="SPI"/>
 <part name="SUPPLY18" library="supply2" deviceset="GND" device=""/>
-<part name="R4" library="rcl" deviceset="R-EU_" device="0207/7"/>
+<part name="R4" library="rcl" deviceset="R-EU_" device="0207/7" value="220"/>
 <part name="VCC5" library="supply1" deviceset="VCCIO" device=""/>
-<part name="R5" library="rcl" deviceset="R-TRIMM" device="3339P"/>
+<part name="R5" library="rcl" deviceset="R-TRIMM" device="3339P" value="10k"/>
 <part name="SUPPLY19" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY20" library="supply2" deviceset="GND" device=""/>
-<part name="R6" library="rcl" deviceset="R-EU_" device="0207/7"/>
+<part name="R6" library="rcl" deviceset="R-EU_" device="0207/7" value="220"/>
 <part name="LED1" library="led" deviceset="LED" device="3MM"/>
 <part name="SUPPLY21" library="supply2" deviceset="GND" device=""/>
 <part name="C1" library="rcl" deviceset="CPOL-EU" device="E2.5-7"/>
@@ -15115,9 +15115,9 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <instance part="R5" gate="G$1" x="30.48" y="119.38"/>
 <instance part="SUPPLY19" gate="GND" x="30.48" y="109.22"/>
 <instance part="SUPPLY20" gate="GND" x="190.5" y="33.02"/>
-<instance part="R6" gate="G$1" x="160.02" y="48.26" rot="R90"/>
-<instance part="LED1" gate="G$1" x="160.02" y="40.64"/>
-<instance part="SUPPLY21" gate="GND" x="160.02" y="33.02"/>
+<instance part="R6" gate="G$1" x="144.78" y="48.26" rot="R90"/>
+<instance part="LED1" gate="G$1" x="144.78" y="40.64"/>
+<instance part="SUPPLY21" gate="GND" x="144.78" y="33.02"/>
 <instance part="C1" gate="G$1" x="167.64" y="55.88" rot="R90"/>
 <instance part="RCA_HOT" gate="A" x="180.34" y="50.8"/>
 <instance part="RCA_GND" gate="A" x="205.74" y="50.8"/>
@@ -15128,7 +15128,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <instance part="TP1" gate="G$1" x="93.98" y="106.68"/>
 <instance part="TP2" gate="G$1" x="93.98" y="93.98" rot="R180"/>
 <instance part="TP3" gate="G$1" x="25.4" y="50.8"/>
-<instance part="TP4" gate="G$1" x="35.56" y="50.8"/>
+<instance part="TP4" gate="G$1" x="132.08" y="60.96"/>
 </instances>
 <busses>
 </busses>
@@ -15386,14 +15386,9 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 </net>
 <net name="VDAC8_2" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="24"/>
-<wire x1="50.8" y1="43.18" x2="35.56" y2="43.18" width="0.1524" layer="91"/>
-<label x="38.1" y="43.18" size="1.778" layer="95"/>
 <pinref part="TP4" gate="G$1" pin="TP"/>
-<wire x1="35.56" y1="48.26" x2="35.56" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="132.08" y1="58.42" x2="132.08" y2="55.88" width="0.1524" layer="91"/>
 </segment>
-</net>
-<net name="VDAC8_1" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="23"/>
 <wire x1="50.8" y1="45.72" x2="38.1" y2="45.72" width="0.1524" layer="91"/>
@@ -15401,10 +15396,21 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 </segment>
 <segment>
 <pinref part="R6" gate="G$1" pin="2"/>
-<wire x1="160.02" y1="53.34" x2="160.02" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="144.78" y1="53.34" x2="144.78" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="144.78" y1="55.88" x2="132.08" y2="55.88" width="0.1524" layer="91"/>
+<label x="132.08" y="55.88" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="VDAC8_1" class="0">
+<segment>
 <pinref part="C1" gate="G$1" pin="+"/>
-<wire x1="160.02" y1="55.88" x2="165.1" y2="55.88" width="0.1524" layer="91"/>
-<label x="160.02" y="58.42" size="1.778" layer="95" rot="R180"/>
+<wire x1="149.86" y1="55.88" x2="165.1" y2="55.88" width="0.1524" layer="91"/>
+<label x="162.56" y="58.42" size="1.778" layer="95" rot="R180"/>
+</segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="22"/>
+<wire x1="50.8" y1="48.26" x2="38.1" y2="48.26" width="0.1524" layer="91"/>
+<label x="38.1" y="48.26" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="RE1_A" class="0">
