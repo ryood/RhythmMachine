@@ -308,7 +308,7 @@
     </register>
   </block>
   <block name="Pin_SW1_in" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Pin_SPI_EX1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Pin_SPI_SS1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Opamp_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="ABuf" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="abuf_negInput_mux" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -634,7 +634,7 @@
   </block>
   <block name="cy_boot" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Pin_Ext_Clock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Pin_SPI_EX2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Pin_SPI_SS2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Pin_SW2_in" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Debouncer_SW2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Pin_SW" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />

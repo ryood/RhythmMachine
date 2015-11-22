@@ -78,7 +78,7 @@ uint16_t filterFunc(uint16_t sample)
     return f_sample;
 }
 
-void test_generateFilteredNoise()
+void test_generateDFBFilteredNoise()
 {
     fp32 fv, fv8;
     uint8 i8v;
@@ -103,7 +103,7 @@ CY_ISR(timer_interrupt_handler)
    	Timer_1_STATUS;
     
     Pin_ISR_Check_Write(1u);
-    test_generateFilteredNoise();
+    test_generateDFBFilteredNoise();
     Pin_ISR_Check_Write(0u);
 }
 
@@ -128,7 +128,7 @@ int main()
         //Pin_UserLED_Write(1u);
         Pin_ISR_Check_Write(1u);
         //test_generateFilteredNoise();
-        test_generateFilteredNoise();
+        test_generateDFBFilteredNoise();
         Pin_ISR_Check_Write(0u);
         //Pin_UserLED_Write(0u);
     }

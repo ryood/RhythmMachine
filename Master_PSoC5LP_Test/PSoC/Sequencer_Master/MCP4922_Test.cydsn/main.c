@@ -33,7 +33,7 @@
 #include "ModTableFP32.h"
 
 #define TITLE_STR   ("Rhythm Machine")
-#define VERSION_STR ("2015.11.22")
+#define VERSION_STR ("2015.11.21")
 
 // Sequencer
 //
@@ -612,6 +612,7 @@ uint16_t filterFunc(uint16_t sample)
     return f_sample;
 }
 
+
 //=================================================
 // メインルーチン
 //
@@ -651,9 +652,6 @@ int main()
     
     // Filterを初期化
     Filter_Start();
-    
-    // SPI Masterを初期化
-    //SPIM_Start();
     
     CyGlobalIntEnable;
     
