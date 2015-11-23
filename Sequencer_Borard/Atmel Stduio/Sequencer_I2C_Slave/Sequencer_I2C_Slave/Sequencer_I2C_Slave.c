@@ -395,7 +395,8 @@ void pin_change_interrupt_handler()
 	
 	// Timer0を起動
 	TCCR0B = 0x05;	// プリスケーラ－:1024, 1/(8MHz/1024)=128us
-	TCNT0 = 100;	// 128us*(256-100)=19.968ms
+	//TCNT0 = 100;	// 128us*(256-100)=19.968ms
+	TCNT0 = 0;	    // 128us*(256-  0)=32.768ms
 }
 
 ISR (PCINT0_vect)
