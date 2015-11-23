@@ -7,6 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+ * 2015.11.23 シーケンス表示をカスタムフォントに変更
  * 2015.11.23 RGB_LEDのピンアサインを変更
  * 2015.11.20 Filterを追加
  * 2015.11.19 ピンアサインを変更、Tact Switchを2個に変更
@@ -183,6 +184,32 @@ void sequenceString(char *buffer, uint8 sequence1, uint8 sequence2)
     }        
 }
 
+//-------------------------------------------------
+// シーケンス表示用カスタム文字列生成
+// parameter: buffer: 文字列格納バッファ
+//            sequence1: シーケンス1
+//            sequence2: シーケンス2
+void sequenceCustomFontString(char *buffer, uint8 sequence1, uint8 sequence2)
+{
+    const char charOnOff[]        = { LCD_Char_CUSTOM_1, LCD_Char_CUSTOM_2 };
+    const char charPlayingOnOff[] = { LCD_Char_CUSTOM_3, LCD_Char_CUSTOM_4 };
+    int i;
+    
+    for (i = 0; i < 8; i++) {
+        if (sequencerWrBuffer[0] == i) {
+            buffer[i] = charPlayingOnOff[(sequence1 & (1 << i)) >> i];
+        } else {
+            buffer[i] = charOnOff[(sequence1 & (1 << i)) >> i];
+        }
+    }
+    for (i = 0; i < 8; i++) {
+        if (sequencerWrBuffer[0] == i + 8) {
+            buffer[i + 8] = charPlayingOnOff[(sequence2 & (1 << i)) >> i];
+        } else {
+            buffer[i + 8] = charOnOff[(sequence2 & (1 << i)) >> i];
+        }
+    }
+}
 void displaySequencerParameter()
 {
     const char *strTracks[] = { 
@@ -199,7 +226,8 @@ void displaySequencerParameter()
         tracks[sequencerRdBuffer.track].decayAmount >> 2
     );
     
-    sequenceString(lineBuffer, sequencerRdBuffer.sequence1, sequencerRdBuffer.sequence2);
+    //sequenceString(lineBuffer, sequencerRdBuffer.sequence1, sequencerRdBuffer.sequence2);
+    sequenceCustomFontString(lineBuffer, sequencerRdBuffer.sequence1, sequencerRdBuffer.sequence2);
     LCD_Char_Position(1, 0);
     LCD_Char_PrintString(lineBuffer);
 }
