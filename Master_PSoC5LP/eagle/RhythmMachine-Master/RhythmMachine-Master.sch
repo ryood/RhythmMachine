@@ -15509,20 +15509,6 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <label x="139.7" y="121.92" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
-<net name="SW3" class="0">
-<segment>
-<pinref part="U$1" gate="G$1" pin="4"/>
-<wire x1="38.1" y1="93.98" x2="50.8" y2="93.98" width="0.1524" layer="91"/>
-<label x="38.1" y="93.98" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="SW4" class="0">
-<segment>
-<pinref part="U$1" gate="G$1" pin="5"/>
-<wire x1="38.1" y1="91.44" x2="50.8" y2="91.44" width="0.1524" layer="91"/>
-<label x="38.1" y="91.44" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="VCCIO" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="52"/>
