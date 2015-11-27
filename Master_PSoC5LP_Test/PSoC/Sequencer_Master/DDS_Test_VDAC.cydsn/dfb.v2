@@ -1,0 +1,123 @@
+
+initialize:
+    acu(setmod,setmod) dmux(sa,sa) alu(set0) mac(clra)
+    acu(clear,clear) dmux(sa,sa) alu(hold) mac(hold) jmp(eob, WaitForNew)
+
+WaitForNew:
+    acu(hold,hold) dmux(sa,sa) alu(hold) mac(hold) jmpl(in1, PROGRAM)
+
+
+ChA_init:
+    acu(loadm, loadm) addr(ChA_MAX) dmux(sa,sa) alu(hold) mac(hold)
+    acu(loadl, loadl) addr(ChA_MIN) dmux(sa,sa) alu(hold) mac(hold) 
+    acu(hold, hold) addr(1) dmux(ba,sa) alu(hold) mac(hold) 
+    acu(read, clear) addr(ChA_START) dmux(sra,sra) alu(setb) mac(clra) write(da) jmp(eob,ChA_fir)
+
+ChA_firFinish:
+    acu(write, clear) addr(ChA_START) dmux(sa, srm) alu(setb) mac(hold)
+    acu(hold, hold) dmux(sa, sa) alu(hold) mac(hold)
+    acu(hold, hold) addr(1) dmux(sa, sa) alu(hold) mac(hold) write(bus) jmp(eob, ChA_EXIT)
+
+ChA_fir:
+    acu(incr,incr) dmux(sra,srm) alu(setb) mac(macc) jmpl(eob,acubeq, ChA_firFinish)
+
+
+area acu
+    ChA_MAX: dw  ChA_LAST,ChA_LAST
+    ChA_MIN: dw  ChA_FIRST, ChA_FIRST
+    ChA_START: dw ChA_FIRST, ChA_FIRST
+
+
+area data_b
+ChA_FIRST:dw 4880
+dw 5179
+dw 5589
+dw 6098
+dw 6681
+dw 7299
+dw 7898
+dw 8410
+dw 8756
+dw 8844
+dw 8573
+dw 7836
+dw 6524
+dw 4524
+dw 1728
+dw 16775251
+dw 16770569
+dw 16764818
+dw 16757936
+dw 16749882
+dw 16740634
+dw 16730196
+dw 16718598
+dw 16705896
+dw 16692172
+dw 16677538
+dw 16662127
+dw 16646100
+dw 16629637
+dw 16612936
+dw 16596211
+dw 16579686
+dw 16563592
+dw 16548161
+dw 16533622
+dw 16520195
+dw 16508089
+dw 16497495
+dw 16488582
+dw 16481493
+dw 16476346
+dw 16473222
+dw 8083568
+dw 16473222
+dw 16476346
+dw 16481493
+dw 16488582
+dw 16497495
+dw 16508089
+dw 16520195
+dw 16533622
+dw 16548161
+dw 16563592
+dw 16579686
+dw 16596211
+dw 16612936
+dw 16629637
+dw 16646100
+dw 16662127
+dw 16677538
+dw 16692172
+dw 16705896
+dw 16718598
+dw 16730196
+dw 16740634
+dw 16749882
+dw 16757936
+dw 16764818
+dw 16770569
+dw 16775251
+dw 1728
+dw 4524
+dw 6524
+dw 7836
+dw 8573
+dw 8844
+dw 8756
+dw 8410
+dw 7898
+dw 7299
+dw 6681
+dw 6098
+dw 5589
+dw 5179
+ChA_LAST: dw 4880
+
+
+
+PROGRAM = ChA_init
+ChA_EXIT = WaitForNew
+
+

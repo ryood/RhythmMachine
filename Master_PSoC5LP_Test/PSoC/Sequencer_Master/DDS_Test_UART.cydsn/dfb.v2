@@ -1,0 +1,123 @@
+
+initialize:
+    acu(setmod,setmod) dmux(sa,sa) alu(set0) mac(clra)
+    acu(clear,clear) dmux(sa,sa) alu(hold) mac(hold) jmp(eob, WaitForNew)
+
+WaitForNew:
+    acu(hold,hold) dmux(sa,sa) alu(hold) mac(hold) jmpl(in1, PROGRAM)
+
+
+ChA_init:
+    acu(loadm, loadm) addr(ChA_MAX) dmux(sa,sa) alu(hold) mac(hold)
+    acu(loadl, loadl) addr(ChA_MIN) dmux(sa,sa) alu(hold) mac(hold) 
+    acu(hold, hold) addr(1) dmux(ba,sa) alu(hold) mac(hold) 
+    acu(read, clear) addr(ChA_START) dmux(sra,sra) alu(setb) mac(clra) write(da) jmp(eob,ChA_fir)
+
+ChA_firFinish:
+    acu(write, clear) addr(ChA_START) dmux(sa, srm) alu(setb) mac(hold)
+    acu(hold, hold) dmux(sa, sa) alu(hold) mac(hold)
+    acu(hold, hold) addr(1) dmux(sa, sa) alu(hold) mac(hold) write(bus) jmp(eob, ChA_EXIT)
+
+ChA_fir:
+    acu(incr,incr) dmux(sra,srm) alu(setb) mac(macc) jmpl(eob,acubeq, ChA_firFinish)
+
+
+area acu
+    ChA_MAX: dw  ChA_LAST,ChA_LAST
+    ChA_MIN: dw  ChA_FIRST, ChA_FIRST
+    ChA_START: dw ChA_FIRST, ChA_FIRST
+
+
+area data_b
+ChA_FIRST:dw 245
+dw 161
+dw 0
+dw 16776911
+dw 16776427
+dw 16775791
+dw 16775125
+dw 16774649
+dw 16774650
+dw 16775430
+dw 0
+dw 2837
+dw 6498
+dw 10422
+dw 13729
+dw 15317
+dw 14056
+dw 9063
+dw 0
+dw 16764574
+dw 16749837
+dw 16735473
+dw 16724704
+dw 16721031
+dw 16727570
+dw 16746276
+dw 0
+dw 40798
+dw 86432
+dw 129475
+dw 160823
+dw 170853
+dw 150886
+dw 94722
+dw 0
+dw 16646336
+dw 16486747
+dw 16310482
+dw 16132953
+dw 15971152
+dw 15841495
+dw 15757645
+dw 7340025
+dw 15757645
+dw 15841495
+dw 15971152
+dw 16132953
+dw 16310482
+dw 16486747
+dw 16646336
+dw 0
+dw 94722
+dw 150886
+dw 170853
+dw 160823
+dw 129475
+dw 86432
+dw 40798
+dw 0
+dw 16746276
+dw 16727570
+dw 16721031
+dw 16724704
+dw 16735473
+dw 16749837
+dw 16764574
+dw 0
+dw 9063
+dw 14056
+dw 15317
+dw 13729
+dw 10422
+dw 6498
+dw 2837
+dw 0
+dw 16775430
+dw 16774650
+dw 16774649
+dw 16775125
+dw 16775791
+dw 16776427
+dw 16776911
+dw 0
+dw 161
+ChA_LAST: dw 245
+
+
+
+PROGRAM = ChA_init
+ChA_EXIT = WaitForNew
+
+
