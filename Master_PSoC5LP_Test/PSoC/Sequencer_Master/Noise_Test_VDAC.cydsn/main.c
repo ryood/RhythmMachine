@@ -9,12 +9,14 @@
  *
  * DDS モジュール テストプログラム
  *
+ * 2015.11.28 PRSモジュールをテスト(rand()関数の方が周期性が少ない)
  * 2015.11.21 Timer割り込みではなくループでfilterd noiseをテスト
  * 2015.11.21 Created.
  *
  * ========================================
 */
 #include <project.h>
+#include <stdlib.h>
 #include "dds.h"
 #include "utility.h"
 
@@ -39,55 +41,41 @@ void UART_printf(const char *format, ...)
 //=================================================
 void test_generateNoise()
 {
-    fp32 fv, fv8;
-    uint8 i8v;
+    uint16 r;
     
-    fv = generateNoise();
-    fv8 = fp32_mul(fv + int_to_fp32(1), int_to_fp32(127));
-    i8v = fp32_to_int(fv8);
+    //r = PRS_1_Read();
+    r = rand() & UINT16_MAX;
+    VDAC8_1_SetValue(r >> 8);
     
-    VDAC8_1_SetValue(i8v);
+    //UART_printf("%u\r\n", r);
 }
 
 //=================================================
 // Test generateFilteredNoise()
 // 
 //=================================================
-uint16_t filterFunc(uint16_t sample)
+void test_generateFilteredNoise()
 {
-    uint16_t f_sample;
+    uint16 r;
+    uint8 fr;
     
-    // Debug用
-    Pin_Ext_Check_Write(1u);
+    //r = PRS_1_Read();    
+    r = rand() % UINT16_MAX;
     
     /* Enable the interrupt register bit to poll
-     Value 1 for Channel A, Value 2 for Channel B */
+       Value 1 for Channel A, Value 2 for Channel B */
     Filter_INT_CTRL_REG |= (1 << Filter_CHANNEL_A);
           
-    Filter_Write16(Filter_CHANNEL_A, sample);
+    Filter_Write8(Filter_CHANNEL_A, r >> 8);
     
     /* Poll waiting for the holding register to have data to read */
-    
     while (Filter_IsInterruptChannelA() == 0) ;
     
-    f_sample = Filter_Read16(Filter_CHANNEL_A);
+    fr = Filter_Read8(Filter_CHANNEL_A);
     
-    // Debug用
-    Pin_Ext_Check_Write(0u);
+    VDAC8_1_SetValue(fr);
     
-    return f_sample;
-}
-
-void test_generateDFBFilteredNoise()
-{
-    fp32 fv, fv8;
-    uint8 i8v;
-    
-    fv = generateFilteredNoise();
-    fv8 = fp32_mul(fv + int_to_fp32(1), int_to_fp32(127));
-    i8v = fp32_to_int(fv8);
-    
-    VDAC8_1_SetValue(i8v);
+    //UART_printf("%u\r\n", fr >> 8);   
 }
 
 //=================================================
@@ -103,7 +91,8 @@ CY_ISR(timer_interrupt_handler)
    	Timer_1_STATUS;
     
     Pin_ISR_Check_Write(1u);
-    test_generateDFBFilteredNoise();
+    //test_generateNoise();
+    test_generateFilteredNoise();
     Pin_ISR_Check_Write(0u);
 }
 
@@ -117,20 +106,24 @@ int main()
     
     VDAC8_1_Start();
     Opamp_1_Start();
-    //Timer_1_Start();
-    //ISR_Timer_1_StartEx(timer_interrupt_handler);
 
     Filter_Start();
-    setFilterRoutine(&filterFunc);
+    PRS_1_Start();
+    UART_Start();
+    
+    UART_printf("Noise_Test_VDAC...\r\n");
 
+    CyDelay(100);
+    
+    Timer_1_Start();
+    ISR_Timer_1_StartEx(timer_interrupt_handler);
+    
     for(;;)
     {
-        //Pin_UserLED_Write(1u);
-        Pin_ISR_Check_Write(1u);
-        //test_generateFilteredNoise();
-        test_generateDFBFilteredNoise();
-        Pin_ISR_Check_Write(0u);
-        //Pin_UserLED_Write(0u);
+        Pin_UserLED_Write(1u);
+        CyDelay(100);
+        Pin_UserLED_Write(0u);
+        CyDelay(100);
     }
 }
 

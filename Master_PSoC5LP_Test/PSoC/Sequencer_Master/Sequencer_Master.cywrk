@@ -3,13 +3,13 @@
 <!--This file is machine generated and read. It is not intended to be edited by hand.-->
 <!--Due to this, there is no schema for this file.-->
 <CyGuid_2867d519-54d2-4c01-9830-c51cb08bc3dd type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWrkspc" version="5" xml_contents_version="3" name="Sequencer_Master" persistent="" platform="NOT_USED">
-<current_project name=".\DDS_Test_UART.cydsn\DDS_Test_UART.cyprj" />
+<current_project name=".\Sequencer_Master_PSoC5LP_ProtoKit_HD44780.cydsn\Sequencer_Master_PSoC5LP_ProtoKit_HD44780.cyprj" />
 <wrkspc_folders />
 <files />
 <projects>
 <v>.\Sequencer_Master_PSoC5LP_ProtoKit_HD44780.cydsn\Sequencer_Master_PSoC5LP_ProtoKit_HD44780.cyprj</v>
-<v>.\DDS_Test_UART.cydsn\DDS_Test_UART.cyprj</v>
-<v>.\DDS_Test_VDAC.cydsn\DDS_Test_VDAC.cyprj</v>
+<v>.\Noise_Test_UART.cydsn\Noise_Test_UART.cyprj</v>
+<v>.\Noise_Test_VDAC.cydsn\Noise_Test_VDAC.cyprj</v>
 <v>.\MCP4922_Test.cydsn\MCP4922_Test.cyprj</v>
 </projects>
 <workspace_id v="313d24f7-080a-4112-9859-ee6bd83b64af" />

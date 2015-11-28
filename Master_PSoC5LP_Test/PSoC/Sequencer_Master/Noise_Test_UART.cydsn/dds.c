@@ -39,8 +39,9 @@ static int tick = -1;  // 初回に0にインクリメント
 static int noteCount = 0;
 
 //-------------------------------------------------
-// フィルター
-static FILTER16_FUNC_PTR filterFunc;
+// ノイズ生成ルーチン
+static NOISE_GEN_FUNC_PTR noiseGenFuncWhite;
+static NOISE_GEN_FUNC_PTR noiseGenFuncBlue;
 
 //=================================================
 // getter / setter
@@ -146,6 +147,7 @@ void setTrack(struct track *tracks, int track_n, struct sequencer_parameter *par
     }
 }
 
+#if 0
 //=================================================
 // フィルター
 //
@@ -153,6 +155,21 @@ void setTrack(struct track *tracks, int track_n, struct sequencer_parameter *par
 void setFilterRoutine(FILTER16_FUNC_PTR _filterFunc)
 {
     filterFunc = _filterFunc;
+}
+# endif
+
+//=================================================
+// 乱数生成
+//
+//=================================================
+void setNoiseGenFuncWhite(NOISE_GEN_FUNC_PTR _noiseGenFunc)
+{
+    noiseGenFuncWhite = _noiseGenFunc;
+}
+
+void setNoiseGenFuncBule(NOISE_GEN_FUNC_PTR _noiseGenFunc)
+{
+    noiseGenFuncBlue = _noiseGenFunc;
 }
 
 //=================================================
@@ -189,7 +206,6 @@ uint32_t my_rand(void)
 	next = next * 1103515245 + 12345;
 	return (uint32_t)(next >> 16) & MY_RAND_MAX;
 }
-#endif
 
 //-------------------------------------------------
 // 乱数生成
@@ -245,6 +261,7 @@ fp32 generateFilteredNoise()
 
     return fv;
 }
+# endif
 
 //-------------------------------------------------
 // 波形生成ルーチン
@@ -313,10 +330,10 @@ fp32 generateWave(struct track *tracks)
 				tracks[i].waveLookupTable);
 			break;
 		case 2:	// hihat close
-			tracks[i].waveValue = generateNoise();
+			tracks[i].waveValue = (noiseGenFuncWhite)();
             break;
 		case 3:	// hihat open
-			tracks[i].waveValue = generateFilteredNoise();
+			tracks[i].waveValue = (noiseGenFuncBlue)();
             break;
 		default:
                 ;

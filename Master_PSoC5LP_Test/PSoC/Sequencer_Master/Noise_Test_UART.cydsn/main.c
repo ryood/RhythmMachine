@@ -9,6 +9,7 @@
  *
  * DDS モジュール テストプログラム
  *
+ * 2015.11.28 ノイズ生成をDDSモジュールから外出し
  * 2015.11.21 Created.
  *
  * ========================================
@@ -20,8 +21,8 @@
 #define LOOP_N_GENERATE_NOISE           30000
 #define LOOP_N_FILTERED_GENERATE_NOISE  30000
 
-fp32 generateNoise();
-fp32 generateFilteredNoise();
+fp32 generateNoiseWhite();
+fp32 generateNoiseBlue();
 
 void UART_printf(const char *format, ...)
 {
@@ -41,56 +42,49 @@ void UART_printf(const char *format, ...)
 //=================================================
 void test_generateNoise()
 {
-    fp32 fr;
+    uint16 r;
     
+    PRS_Start();
     UART_printf("test generateNoise()\r\n");
     
     for (int i = 0; i < LOOP_N_GENERATE_NOISE; i++) {
-        fr = generateNoise();
-        UART_printf("%d\r\n", (int32)fr);
+        Pin_Check0_Write(1u);
+        r = PRS_Read();
+        Pin_Check0_Write(0u);
+        UART_printf("%d\r\n", (int32)r - 32768);
     }
+    
+    PRS_Stop();
 }
 
 //=================================================
 // Test generateFilteredNoise()
 // 
 //=================================================
-uint16_t filterFunc(uint16_t sample)
-{
-    uint16_t f_sample;
-    
-    // Debug用
-    //Pin_Ext_Clock_Write(1u);
-    
-    /* Enable the interrupt register bit to poll
-     Value 1 for Channel A, Value 2 for Channel B */
-    Filter_INT_CTRL_REG |= (1 << Filter_CHANNEL_A);
-    
-    Filter_Write16(Filter_CHANNEL_A, sample);
-    /* Poll waiting for the holding register to have data to read */
-    while (Filter_IsInterruptChannelA() == 0) ;
-    f_sample = Filter_Read16(Filter_CHANNEL_A);
-    
-    // Debug用
-    //Pin_Ext_Clock_Write(0u);
-    
-    return f_sample;
-}
-
 void test_generateFilteredNoise()
 {
-    fp32 fr;
-  
+    uint16 r, fr;
+    
+    PRS_Start();
+    Filter_Start();
     UART_printf("test generateFilteredNoise()\r\n");
     
-    Filter_Start();
-    setFilterRoutine(&filterFunc);
+    /* Enable the interrupt register bit to poll
+    Value 1 for Channel A, Value 2 for Channel B */
+    Filter_INT_CTRL_REG |= (1 << Filter_CHANNEL_A);
     
     for (int i = 0; i < LOOP_N_GENERATE_NOISE; i++) {
-        fr = generateFilteredNoise();
-        UART_printf("%d\r\n", (int32)fr);
+        Pin_Check0_Write(1u);
+        r = PRS_Read();
+        Filter_Write16(Filter_CHANNEL_A, r);
+        /* Poll waiting for the holding register to have data to read */
+        while (Filter_IsInterruptChannelA() == 0) ;
+        fr = Filter_Read16(Filter_CHANNEL_A);
+        Pin_Check0_Write(0u);
+        UART_printf("%d\r\n", (int32)fr - 32768);
     }
     
+    PRS_Stop();
     Filter_Stop();
 }
 
@@ -103,8 +97,7 @@ int main()
     CyGlobalIntEnable; /* Enable global interrupts. */
 
     UART_Start();
-    UART_PutString("dds module test..\r\n");
-
+    
     //test_generateNoise();
     test_generateFilteredNoise();
     
