@@ -7,6 +7,7 @@
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
  * WHICH IS THE PROPERTY OF your company.
  *
+　* 2015.11.28 ノイズ生成ルーチンをDDSモジュールから除外
  * 2015.11.23 シーケンス表示をカスタムフォントに変更
  * 2015.11.23 RGB_LEDのピンアサインを変更
  * 2015.11.20 Filterを追加
@@ -28,6 +29,7 @@
 */
 #include <project.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "utility.h"
 #include "dds.h"
@@ -35,7 +37,7 @@
 #include "ModTableFP32.h"
 
 #define TITLE_STR   ("Rhythm Machine")
-#define VERSION_STR ("2015.11.23")
+#define VERSION_STR ("2015.11.28")
 
 // Sequencer
 //
@@ -521,7 +523,7 @@ void initTracks(struct track *tracks)
 
 	// HiHat Close
 	tracks[2].waveLookupTable = waveTableSine;	// unused
-	tracks[2].decayLookupTable = modTableLinerDown01;
+	tracks[2].decayLookupTable = modTableAllMax;
 	tracks[2].waveFrequency = 2500.0f;			// unused
 	tracks[2].decayAmount = 255;
 	tracks[2].levelAmount = 64;
@@ -576,6 +578,7 @@ void initTracks(struct track *tracks)
 	tracks[7].toneAmount = 0;
 }
 
+#if 0
 //=================================================
 // フィルター
 //
@@ -615,6 +618,39 @@ uint16_t filterFunc(uint16_t sample)
     
     return f_sample;
 }
+#endif
+
+//=================================================
+// ノイズ生成
+//
+//=================================================
+uint16_t generateNoise()
+{
+    return rand() % (UINT16_MAX + 1);    
+}
+
+uint16_t generateFilteredNoise()
+{
+    uint16 r, fr;
+    
+    //r = PRS_1_Read();    
+    r = rand() % (UINT16_MAX + 1);
+    
+    /* Enable the interrupt register bit to poll
+       Value 1 for Channel A, Value 2 for Channel B */
+    Filter_INT_CTRL_REG |= (1 << Filter_CHANNEL_A);
+          
+    Filter_Write16(Filter_CHANNEL_A, r);
+    
+    /* Poll waiting for the holding register to have data to read */
+    while (Filter_IsInterruptChannelA() == 0) ;
+    
+    fr = Filter_Read16(Filter_CHANNEL_A);
+    
+    //UART_printf("%u\r\n", fr);   
+    
+    return fr;
+}
 
 //=================================================
 // メインルーチン
@@ -625,7 +661,8 @@ int main()
     // パラメータの初期化
     initTracks(tracks);
     initDDSParameter(tracks);
-    setFilterRoutine(&filterFunc);
+    setNoiseGenFuncWhite(generateNoise);
+    setNoiseGenFuncBule(generateFilteredNoise);
     
     // LCDを初期化
     LCD_Char_Start();

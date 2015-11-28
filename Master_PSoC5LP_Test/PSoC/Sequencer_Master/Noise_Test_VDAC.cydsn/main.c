@@ -57,7 +57,7 @@ void test_generateNoise()
 void test_generateFilteredNoise()
 {
     uint16 r;
-    uint8 fr;
+    uint16 fr;
     
     //r = PRS_1_Read();    
     r = rand() % UINT16_MAX;
@@ -66,16 +66,16 @@ void test_generateFilteredNoise()
        Value 1 for Channel A, Value 2 for Channel B */
     Filter_INT_CTRL_REG |= (1 << Filter_CHANNEL_A);
           
-    Filter_Write8(Filter_CHANNEL_A, r >> 8);
+    Filter_Write16(Filter_CHANNEL_A, r);
     
     /* Poll waiting for the holding register to have data to read */
     while (Filter_IsInterruptChannelA() == 0) ;
     
-    fr = Filter_Read8(Filter_CHANNEL_A);
+    fr = Filter_Read16(Filter_CHANNEL_A);
     
-    VDAC8_1_SetValue(fr);
+    VDAC8_1_SetValue(fr >> 8);
     
-    //UART_printf("%u\r\n", fr >> 8);   
+    //UART_printf("%u\r\n", fr);   
 }
 
 //=================================================

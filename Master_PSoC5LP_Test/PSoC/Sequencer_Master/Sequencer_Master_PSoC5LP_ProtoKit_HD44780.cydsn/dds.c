@@ -9,6 +9,7 @@
  *
  * 波形の生成
  *
+ * 2015.11.21 フィルターの処理を追加
  * 2015.11.17 Levelの重み付けを修正
  * 2015.11.17 Toneの計算を修正
  * 2015.11.15 Created
@@ -24,6 +25,7 @@
 
 //デバッグ用
 //void LCD_printf(int line, const char *format, ...);
+//void UART_printf(const char *format, ...);
 
 //-------------------------------------------------
 // BPM
@@ -37,12 +39,9 @@ static int tick = -1;  // 初回に0にインクリメント
 static int noteCount = 0;
 
 //-------------------------------------------------
-// フィルター
-static FILTER16_FUNC_PTR filterFunc;
-
-//-------------------------------------------------
-// ノート変更
-static NOTE_CHANGE_FUNC_PTR noteChangeFunc;
+// ノイズ生成ルーチン
+static NOISE_GEN_FUNC_PTR noiseGenFuncWhite;
+static NOISE_GEN_FUNC_PTR noiseGenFuncBlue;
 
 //=================================================
 // getter / setter
@@ -51,6 +50,16 @@ static NOTE_CHANGE_FUNC_PTR noteChangeFunc;
 int getNoteCount()
 {
     return noteCount;
+}
+
+void setNoiseGenFuncWhite(NOISE_GEN_FUNC_PTR _noiseGenFunc)
+{
+    noiseGenFuncWhite = _noiseGenFunc;
+}
+
+void setNoiseGenFuncBule(NOISE_GEN_FUNC_PTR _noiseGenFunc)
+{
+    noiseGenFuncBlue = _noiseGenFunc;
 }
 
 //=================================================
@@ -148,6 +157,7 @@ void setTrack(struct track *tracks, int track_n, struct sequencer_parameter *par
     }
 }
 
+#if 0
 //=================================================
 // フィルター
 //
@@ -156,6 +166,7 @@ void setFilterRoutine(FILTER16_FUNC_PTR _filterFunc)
 {
     filterFunc = _filterFunc;
 }
+# endif
 
 //=================================================
 // 波形の生成
@@ -191,7 +202,6 @@ uint32_t my_rand(void)
 	next = next * 1103515245 + 12345;
 	return (uint32_t)(next >> 16) & MY_RAND_MAX;
 }
-#endif
 
 //-------------------------------------------------
 // 乱数生成
@@ -217,28 +227,37 @@ fp32 generateNoise()
 fp32 generateFilteredNoise()
 {
     int32_t r, filtered_r, v;
-	fp32 fv;
+    fp32 fv;
 	
     // Debug用
-    //LCD_printf(1, "generateFilteredNoise()");
+    //UART_printf(1, "generateFilteredNoise()");
     
     //r = my_rand();
     r = rand() >> 15;
-    filtered_r = (filterFunc)((int16_t)(0x7fff & r));
-    r = (r & 0x8000) | filtered_r;
+    
+    // Debug用
+    //UART_printf("%d\t", r);
+    
+    filtered_r = (filterFunc)((int16_t)r);
+    
+    // Debug用
+    //UART_printf("%d\t", filtered_r);
+    
+    r = (r & 0x8000) | (filtered_r >> 1);
+    
+    // Debug用
+    //UART_printf("%d\t", r);
+    
     v = (r & 0x8000) ? (0xffff0000 | (r << 1)) : (r << 1);
+    
+    // Debug用
+    //UART_printf("%d\r\n", v);
+    
 	fv = (fp32)v;
 
     return fv;
 }
-
-//-------------------------------------------------
-// ノート変更通知
-//
-void setNoteChangeRoutine(NOTE_CHANGE_FUNC_PTR _noteChangeFunc)
-{
-    noteChangeFunc = _noteChangeFunc;
-}
+# endif
 
 //-------------------------------------------------
 // 波形生成ルーチン
@@ -263,10 +282,6 @@ fp32 generateWave(struct track *tracks)
 			tracks[i].decayPhaseRegister = 0;
 			tracks[i].decayStop = 0;
 		}
-        
-        // note変更通知
-        if (noteChangeFunc != 0)
-            (noteChangeFunc)();
 	}
 	// トラックの処理
 	//
@@ -311,10 +326,10 @@ fp32 generateWave(struct track *tracks)
 				tracks[i].waveLookupTable);
 			break;
 		case 2:	// hihat close
-			tracks[i].waveValue = generateNoise();
+			tracks[i].waveValue = (noiseGenFuncWhite)();
             break;
 		case 3:	// hihat open
-			tracks[i].waveValue = generateFilteredNoise();
+			tracks[i].waveValue = (noiseGenFuncBlue)();
             break;
 		default:
                 ;

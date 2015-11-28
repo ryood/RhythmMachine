@@ -70,8 +70,7 @@ struct track {
 	uint8_t sequence[SEQUENCE_LEN];	// Velocity
 };
 
-typedef uint16_t (*FILTER16_FUNC_PTR)(uint16_t sample);
-typedef void (*NOTE_CHANGE_FUNC_PTR)();
+typedef uint16_t (*NOISE_GEN_FUNC_PTR)();
 
 void initTracks(struct track *tracks);
 void initDDSParameter(struct track* tracks);
@@ -80,8 +79,8 @@ void setWaveDDSParameter(struct track *track);
 void setTrack(struct track *tracks, int track_n, struct sequencer_parameter *param);
 fp32 generateWave(struct track *tracks);
 int getNoteCount();
-void setFilterRoutine(FILTER16_FUNC_PTR _filterFunc);
-void setNoteChangeRoutine(NOTE_CHANGE_FUNC_PTR _noteChageFunc);
+void setNoiseGenFuncWhite(NOISE_GEN_FUNC_PTR _noiseGenFunc);
+void setNoiseGenFuncBule(NOISE_GEN_FUNC_PTR _noiseGenFunc);
 
 #endif // _DDS_H_
 

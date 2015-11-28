@@ -13,17 +13,16 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Sequencer_Master\Noise_Test_VDAC">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Sequencer_Master_PSoC5LP_ProtoKit_HD44780.cydwr">
 <ExpandedNodeIds>
 <v>Sequencer_Master</v>
 <v>Sequencer_Master\MCP4922_Test\TopDesign</v>
 <v>Sequencer_Master\Noise_Test_UART\TopDesign</v>
-<v>Sequencer_Master\Noise_Test_VDAC</v>
 <v>Sequencer_Master\Noise_Test_VDAC\TopDesign</v>
 <v>Sequencer_Master\Noise_Test_VDAC\Header Files</v>
 <v>Sequencer_Master\Noise_Test_VDAC\Source Files</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\TopDesign</v>
+<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Header Files</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Source Files</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
@@ -31,27 +30,7 @@
 <v>Sequencer_Master\MCP4922_Test</v>
 <v>Sequencer_Master\Noise_Test_UART</v>
 <v>Sequencer_Master\Noise_Test_VDAC</v>
-<v>Sequencer_Master\Noise_Test_VDAC\TopDesign</v>
-<v>Sequencer_Master\Noise_Test_VDAC\Noise_Test_VDAC.cydwr</v>
-<v>Sequencer_Master\Noise_Test_VDAC\Header Files</v>
-<v>Sequencer_Master\Noise_Test_VDAC\Header Files\cyapicallbacks.h</v>
-<v>Sequencer_Master\Noise_Test_VDAC\Header Files\dds.h</v>
-<v>Sequencer_Master\Noise_Test_VDAC\Header Files\fixedpoint.h</v>
-<v>Sequencer_Master\Noise_Test_VDAC\Header Files\utility.h</v>
-<v>Sequencer_Master\Noise_Test_VDAC\Source Files</v>
-<v>Sequencer_Master\Noise_Test_VDAC\Source Files\dds.c</v>
-<v>Sequencer_Master\Noise_Test_VDAC\Source Files\main.c</v>
-<v>Sequencer_Master\Noise_Test_VDAC\Source Files\utility.c</v>
-<v>Sequencer_Master\Noise_Test_VDAC\Generated_Source</v>
 <v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\TopDesign</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Sequencer_Master_PSoC5LP_ProtoKit_HD44780.cydwr</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Header Files</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Source Files</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Source Files\dds.c</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Source Files\main.c</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Source Files\utility.c</v>
-<v>Sequencer_Master\Sequencer_Master_PSoC5LP_ProtoKit_HD44780\Generated_Source</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
@@ -423,9 +402,11 @@
 </CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
 <Unloaded />
 <OpenDocs>
-<name v=".\Sequencer_Master_PSoC5LP_ProtoKit_HD44780.cydsn\TopDesign\TopDesign.cysch" />
 <name v=".\Sequencer_Master_PSoC5LP_ProtoKit_HD44780.cydsn\main.c" />
-<name v=".\Noise_Test_VDAC.cydsn\dds.h" />
+<name v=".\Sequencer_Master_PSoC5LP_ProtoKit_HD44780.cydsn\dds.h" />
+<name v=".\Sequencer_Master_PSoC5LP_ProtoKit_HD44780.cydsn\dds.c" />
+<name v=".\Sequencer_Master_PSoC5LP_ProtoKit_HD44780.cydsn\TopDesign\TopDesign.cysch" />
+<name v=".\Sequencer_Master_PSoC5LP_ProtoKit_HD44780.cydsn\Sequencer_Master_PSoC5LP_ProtoKit_HD44780.cydwr" />
 </OpenDocs>
 <config v="" />
 <AutoUpdate v="true" />
