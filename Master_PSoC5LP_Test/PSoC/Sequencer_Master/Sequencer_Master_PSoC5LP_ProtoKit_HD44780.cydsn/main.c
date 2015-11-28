@@ -523,21 +523,21 @@ void initTracks(struct track *tracks)
 
 	// HiHat Close
 	tracks[2].waveLookupTable = waveTableSine;	// unused
-	tracks[2].decayLookupTable = modTableAllMax;
+	tracks[2].decayLookupTable = modTableRampDown01;
 	tracks[2].waveFrequency = 2500.0f;			// unused
-	tracks[2].decayAmount = 255;
-	tracks[2].levelAmount = 64;
-    tracks[2].levelMax = 255;
+	tracks[2].decayAmount = 128;
+	tracks[2].levelAmount = 128;
+    tracks[2].levelMax = 128;
 	tracks[2].toneAmount = 0;
 	//memcpy(tracks[2].sequence, hihatCloseSequnce, SEQUENCE_LEN);
 
 	// HiHat Open
 	tracks[3].waveLookupTable = waveTableSine;	// unused
-	tracks[3].decayLookupTable = modTableAllMax;
+	tracks[3].decayLookupTable = modTableSustainBeforeRampDown01;
 	tracks[3].waveFrequency = 2500.0f;			// unused
-	tracks[3].decayAmount = 255;
-	tracks[3].levelAmount = 64;
-    tracks[3].levelMax = 255;
+	tracks[3].decayAmount = 128;
+	tracks[3].levelAmount = 32;
+    tracks[3].levelMax = 100;
 	tracks[3].toneAmount = 0;
     //memcpy(tracks[3].sequence, allOnSequence, SEQUENCE_LEN);
 
