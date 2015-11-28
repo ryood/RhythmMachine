@@ -380,7 +380,7 @@ uint8 readDecay()
     if (rv != 0) {
         amt += rv;
         amt = tracks[sequencerRdBuffer.track].decayAmount;
-        amt += rv << 2;
+        amt += rv << 1;
         if (amt > 0 && amt <= UINT8_MAX) {
             isREDirty |= (1 << RE_DECAY);
             tracks[sequencerRdBuffer.track].decayAmount = amt;
@@ -427,7 +427,7 @@ uint8 readTone()
     if (rv != 0) {
         amt += rv;
         amt = tracks[sequencerRdBuffer.track].toneAmount;
-        amt += rv << 2;
+        amt += rv << 1;
         if (amt >= INT8_MIN && amt <= INT8_MAX) { 
             isREDirty |= (1 << RE_TONE);
             tracks[sequencerRdBuffer.track].toneAmount = amt;
@@ -513,9 +513,9 @@ void initTracks(struct track *tracks)
 
 	// Snare
 	tracks[1].waveLookupTable = waveTableSine;
-	tracks[1].decayLookupTable = modTableRampDown01;
+	tracks[1].decayLookupTable = modTableLinerDown01;
 	tracks[1].waveFrequency = 120.0f;
-	tracks[1].decayAmount = 200;
+	tracks[1].decayAmount = 64;
 	tracks[1].levelAmount = 200;
     tracks[1].levelMax = 255;
 	tracks[1].toneAmount = 0;
@@ -525,8 +525,8 @@ void initTracks(struct track *tracks)
 	tracks[2].waveLookupTable = waveTableSine;	// unused
 	tracks[2].decayLookupTable = modTableRampDown01;
 	tracks[2].waveFrequency = 2500.0f;			// unused
-	tracks[2].decayAmount = 128;
-	tracks[2].levelAmount = 128;
+	tracks[2].decayAmount = 64;
+	tracks[2].levelAmount = 64;
     tracks[2].levelMax = 128;
 	tracks[2].toneAmount = 0;
 	//memcpy(tracks[2].sequence, hihatCloseSequnce, SEQUENCE_LEN);
@@ -542,17 +542,17 @@ void initTracks(struct track *tracks)
     //memcpy(tracks[3].sequence, allOnSequence, SEQUENCE_LEN);
 
 	// Low Tom
-	tracks[4].waveLookupTable = waveTableSine;
-	tracks[4].decayLookupTable = modTableSustainBeforeRampDown01;
-	tracks[4].waveFrequency = 100.0f;
-	tracks[4].decayAmount = 16;
-	tracks[4].levelAmount = 64;
+	tracks[4].waveLookupTable = waveTableTriangle;
+	tracks[4].decayLookupTable =  modTableRampDown01;
+	tracks[4].waveFrequency = 80.0f;
+	tracks[4].decayAmount = 128;
+	tracks[4].levelAmount = 192;
     tracks[4].levelMax = 255;
 	tracks[4].toneAmount = 0;
 
 	// Mid Tom
 	tracks[5].waveLookupTable = waveTableSine;
-	tracks[5].decayLookupTable = modTableSustainBeforeRampDown01;
+	tracks[5].decayLookupTable = modTableRampDown01;
 	tracks[5].waveFrequency = 1000.0f;
 	tracks[5].decayAmount = 16;
 	tracks[5].levelAmount = 64;
@@ -569,10 +569,10 @@ void initTracks(struct track *tracks)
 	tracks[6].toneAmount = 0;
 
 	// Rimshot
-	tracks[7].waveLookupTable = waveTableSine;
-	tracks[7].decayLookupTable = modTableSustainBeforeRampDown01;
+	tracks[7].waveLookupTable = waveTableSawUp;
+	tracks[7].decayLookupTable = modTableRampDown01;
 	tracks[7].waveFrequency = 1000.0f;
-	tracks[7].decayAmount = 16;
+	tracks[7].decayAmount = 64;
 	tracks[7].levelAmount = 64;
     tracks[7].levelMax = 255;
 	tracks[7].toneAmount = 0;
@@ -738,7 +738,7 @@ int main()
         );
         */
         
-        if (isREDirty & RE_TONE) {
+        if (isREDirty & (1 << RE_TONE)) {
             setWaveDDSParameter(&tracks[sequencerRdBuffer.track]);
         }
         

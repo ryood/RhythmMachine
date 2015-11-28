@@ -326,7 +326,7 @@ fp32 generateWave(struct track *tracks)
 				tracks[i].waveLookupTable);
 			break;
 		case 2:	// hihat close
-			tracks[i].waveValue = (noiseGenFuncWhite)();
+			tracks[i].waveValue = (noiseGenFuncBlue)();
             break;
 		case 3:	// hihat open
 			tracks[i].waveValue = (noiseGenFuncBlue)();
